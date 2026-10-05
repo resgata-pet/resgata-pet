@@ -8,6 +8,7 @@
 namespace ResgataWP\Modules\Settings;
 
 use ResgataWP\Core\Modules;
+use ResgataWP\Core\Schema;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,8 +21,6 @@ final class SettingsModule {
 	public const GROUP      = 'rwp_settings_group';
 	public const PAGE       = 'resgata-wp';
 	public const CAPABILITY = 'manage_options';
-
-	private const FLUSH_FLAG = 'rwp_flush_rewrite';
 
 	/**
 	 * Registra os hooks do módulo.
@@ -239,15 +238,15 @@ final class SettingsModule {
 	 * Marca que as regras de URL precisam ser recriadas (módulo ligado/desligado).
 	 */
 	public function schedule_rewrite_flush(): void {
-		update_option( self::FLUSH_FLAG, 1, false );
+		update_option( Schema::FLUSH_FLAG, 1, false );
 	}
 
 	/**
 	 * Recria as regras de URL depois que os tipos de conteúdo foram registrados.
 	 */
 	public function maybe_flush_rewrite(): void {
-		if ( get_option( self::FLUSH_FLAG ) ) {
-			delete_option( self::FLUSH_FLAG );
+		if ( get_option( Schema::FLUSH_FLAG ) ) {
+			delete_option( Schema::FLUSH_FLAG );
 			flush_rewrite_rules();
 		}
 	}

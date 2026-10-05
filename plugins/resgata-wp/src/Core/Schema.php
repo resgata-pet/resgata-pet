@@ -21,6 +21,11 @@ final class Schema {
 	public const OPTION = 'rwp_db_version';
 
 	/**
+	 * Marca que as regras de URL precisam ser recriadas no próximo `init`.
+	 */
+	public const FLUSH_FLAG = 'rwp_flush_rewrite';
+
+	/**
 	 * Roda as migrações pendentes, se houver.
 	 */
 	public static function maybe_upgrade(): void {
@@ -41,6 +46,10 @@ final class Schema {
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 			dbDelta( $tables );
 		}
+
+		// Perfis/permissões e regras de URL novas também acompanham a versão.
+		Capabilities::grant();
+		update_option( self::FLUSH_FLAG, 1, false );
 
 		update_option( self::OPTION, RWP_DB_VERSION, false );
 	}

@@ -22,7 +22,6 @@ final class Activator {
 	 */
 	public static function activate(): void {
 		Schema::install();
-		Capabilities::grant();
 
 		if ( false === get_option( Modules::OPTION ) ) {
 			add_option( Modules::OPTION, Modules::defaults() );
@@ -34,6 +33,8 @@ final class Activator {
 			Taxonomies::register_taxonomies();
 			Taxonomies::ensure_default_terms();
 		}
+
+		\ResgataWP\Modules\Panel\Router::add_rewrite_rules();
 
 		flush_rewrite_rules();
 	}

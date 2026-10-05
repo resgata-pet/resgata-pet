@@ -10,6 +10,7 @@ namespace ResgataWP;
 use ResgataWP\Core\Modules;
 use ResgataWP\Core\Schema;
 use ResgataWP\Modules\Animals\AnimalsModule;
+use ResgataWP\Modules\Panel\PanelModule;
 use ResgataWP\Modules\Settings\SettingsModule;
 
 defined( 'ABSPATH' ) || exit;
@@ -39,6 +40,9 @@ final class Plugin {
 
 		// Configurações é o único módulo que não pode ser desligado.
 		( new SettingsModule() )->register();
+
+		// O painel (/painel) também está sempre ligado; cada módulo acrescenta as suas rotas.
+		( new PanelModule() )->register();
 
 		if ( Modules::is_enabled( 'animals' ) ) {
 			( new AnimalsModule() )->register();

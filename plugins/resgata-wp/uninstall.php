@@ -64,6 +64,7 @@ $rwp_caps = array(
 	'delete_private_rwp_animals',
 	'delete_published_rwp_animals',
 	'manage_rwp_animal_terms',
+	'rwp_access_panel',
 );
 
 foreach ( wp_roles()->role_objects as $rwp_role ) {
@@ -71,6 +72,8 @@ foreach ( wp_roles()->role_objects as $rwp_role ) {
 		$rwp_role->remove_cap( $rwp_cap );
 	}
 }
+
+remove_role( 'rwp_protetor_admin' );
 
 // Opções.
 foreach ( array( 'rwp_settings', 'rwp_modules', 'rwp_db_version', 'rwp_flush_rewrite' ) as $rwp_option ) {
