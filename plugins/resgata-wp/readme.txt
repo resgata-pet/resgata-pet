@@ -4,7 +4,7 @@ Tags: animais, adoção, protetora, resgate, ong
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ O plugin funciona com qualquer tema. Temas podem substituir os templates criando
 
 1. Envie a pasta `resgata-wp` para `wp-content/plugins/`.
 2. Ative o plugin em "Plugins".
-3. Cadastre os animais em "Animais → Adicionar animal".
+3. Cadastre os animais em seusite.org/painel (ou em "Animais → Adicionar animal" no WordPress).
 4. A lista pública fica em `/animais/`. Para mostrar animais em outra página, use o bloco "Lista de animais" ou o shortcode `[rwp_animais]`.
 
 == Frequently Asked Questions ==
@@ -45,6 +45,11 @@ Por padrão, os que estão com a situação "Disponível para adoção" ou "Rese
 Nada: os dados são mantidos. Para apagá-los, desmarque "Manter os dados" em "Resgata WP → Configurações" antes de excluir o plugin.
 
 == Changelog ==
+
+= 0.2.0 =
+* Painel próprio em /painel, feito para o celular, com cadastro de animais em quatro passos.
+* Novo perfil "Protetor admin", que usa somente o painel.
+* API própria (resgata-wp/v1) com permissão exigida em todas as rotas.
 
 = 0.1.0 =
 * Primeira versão: esqueleto do plugin, configurações e módulo Animais.
