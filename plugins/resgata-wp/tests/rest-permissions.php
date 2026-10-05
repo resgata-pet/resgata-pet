@@ -27,6 +27,9 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 
 require_once ABSPATH . 'wp-admin/includes/user.php';
 
+// Nenhum e-mail sai durante o teste.
+add_filter( 'pre_wp_mail', '__return_true' );
+
 // Opções que as rotas de configurações podem alterar: guardadas aqui e devolvidas no final.
 $rwp_saved_options = array(
 	'rwp_organization'    => get_option( 'rwp_organization', null ),
@@ -83,6 +86,31 @@ $rwp_new_animal = static function () use ( &$rwp_created ): int {
 	return (int) $post_id;
 };
 
+$rwp_new_request = static function () use ( &$rwp_created, $rwp_new_animal ): int {
+	$post_id = wp_insert_post(
+		array(
+			'post_type'   => 'rwp_adoption',
+			'post_status' => 'private',
+			'post_title'  => 'Pessoa de teste',
+		)
+	);
+
+	update_post_meta( $post_id, 'rwp_adoption_status', 'new' );
+	update_post_meta( $post_id, 'rwp_adoption_animal_id', $rwp_new_animal() );
+	update_post_meta(
+		$post_id,
+		'rwp_adoption_answers',
+		array(
+			'name'     => 'Pessoa de teste',
+			'whatsapp' => '11987654321',
+		)
+	);
+
+	$rwp_created[] = $post_id;
+
+	return (int) $post_id;
+};
+
 $rwp_assert = static function ( bool $ok, string $message ) use ( &$rwp_failures, &$rwp_checks ): void {
 	++$rwp_checks;
 	if ( ! $ok ) {
@@ -109,13 +137,14 @@ foreach ( $rwp_server->get_routes( BaseController::REST_NAMESPACE ) as $rwp_rout
 				wp_set_current_user( $rwp_user_id );
 
 				// Cada chamada usa um animal novo, para o DELETE de um perfil não afetar o seguinte.
-				$rwp_path    = preg_replace( '/\(\?P<id>[^)]+\)/', (string) $rwp_new_animal(), $rwp_route );
+				$rwp_item_id = str_contains( $rwp_route, '/adoptions' ) ? $rwp_new_request() : $rwp_new_animal();
+				$rwp_path    = preg_replace( '/\(\?P<id>[^)]+\)/', (string) $rwp_item_id, $rwp_route );
 				$rwp_request = new WP_REST_Request( $rwp_method, $rwp_path );
 				$rwp_request->set_header( 'content-type', 'application/json' );
 
 				if ( in_array( $rwp_method, array( 'POST', 'PUT', 'PATCH' ), true ) ) {
 					// Nas configurações o corpo vai vazio, para não alterar os dados cadastrados no site.
-					$rwp_body = str_starts_with( $rwp_route, $rwp_prefix . '/settings' )
+					$rwp_body = str_starts_with( $rwp_route, $rwp_prefix . '/settings' ) || str_contains( $rwp_route, '/adoptions' )
 						? new stdClass()
 						: array(
 							'name'    => 'Animal de teste',
@@ -247,6 +276,56 @@ $rwp_request = new WP_REST_Request( 'PUT', "$rwp_prefix/settings" );
 $rwp_request->set_header( 'content-type', 'application/json' );
 $rwp_request->set_body( wp_json_encode( array( 'email' => 'nao-e-email' ) ) );
 $rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'E-mail inválido deveria ser recusado com 400' );
+
+// Pedidos de adoção: Editor comum não acessa; o formulário valida; o pedido não vaza na REST do WordPress.
+$rwp_editor_id = $rwp_make_user( 'editor' );
+wp_set_current_user( $rwp_editor_id );
+$rwp_request_id = $rwp_new_request();
+$rwp_assert( 403 === $rwp_server->dispatch( new WP_REST_Request( 'GET', "$rwp_prefix/adoptions" ) )->get_status(), 'Editor comum não deveria listar pedidos de adoção' );
+$rwp_assert( 403 === $rwp_server->dispatch( new WP_REST_Request( 'GET', "$rwp_prefix/adoptions/$rwp_request_id" ) )->get_status(), 'Editor comum não deveria ler um pedido de adoção' );
+wp_delete_user( $rwp_editor_id );
+
+wp_set_current_user( $rwp_users['protetor admin'] );
+$rwp_assert( 403 === $rwp_server->dispatch( new WP_REST_Request( 'GET', "$rwp_prefix/adoptions/$rwp_animal_id" ) )->get_status(), 'ID de um animal não deveria abrir como pedido de adoção' );
+$rwp_assert( 404 === $rwp_server->dispatch( new WP_REST_Request( 'GET', '/wp/v2/rwp_adoption' ) )->get_status(), 'Pedidos de adoção não podem existir na REST padrão do WordPress' );
+
+wp_set_current_user( 0 );
+$rwp_result = ResgataWP\Modules\Adoptions\Submission::create( array( 'name' => 'Sem dados' ) );
+$rwp_assert( is_wp_error( $rwp_result ) && isset( $rwp_result->get_error_data()['consent'], $rwp_result->get_error_data()['animal_id'], $rwp_result->get_error_data()['whatsapp'] ), 'Pedido incompleto deveria ser recusado (animal, consentimento e WhatsApp)' );
+
+$rwp_adoptable = $rwp_new_animal();
+wp_update_post(
+	array(
+		'ID'          => $rwp_adoptable,
+		'post_status' => 'publish',
+	)
+);
+update_post_meta( $rwp_adoptable, 'rwp_status', 'available' );
+$rwp_valid  = array(
+	'animal_id'        => $rwp_adoptable,
+	'consent'          => '1',
+	'name'             => 'Maria <script>alert(1)</script>',
+	'whatsapp'         => '(11) 98765-4321',
+	'city'             => 'São Paulo',
+	'housing'          => 'house',
+	'safe_home'        => 'yes',
+	'household_agrees' => 'yes',
+	'reason'           => 'Quero adotar.',
+	'adult'            => '1',
+);
+$rwp_result = ResgataWP\Modules\Adoptions\Submission::create( $rwp_valid );
+$rwp_assert( is_int( $rwp_result ) && 'private' === get_post_status( $rwp_result ), 'Pedido válido deveria ser gravado como privado' );
+if ( is_int( $rwp_result ) ) {
+	$rwp_created[] = $rwp_result;
+	$rwp_assert( ! str_contains( (string) get_post_field( 'post_title', $rwp_result ), '<' ), 'O nome do pedido deveria ter o HTML removido' );
+	$rwp_consent = get_post_meta( $rwp_result, 'rwp_adoption_consent', true );
+	$rwp_assert( is_array( $rwp_consent ) && ! empty( $rwp_consent['at'] ) && ! empty( $rwp_consent['text'] ), 'O consentimento (data e texto) deveria ser guardado com o pedido' );
+}
+
+update_post_meta( $rwp_adoptable, 'rwp_status', 'adopted' );
+$rwp_assert( is_wp_error( ResgataWP\Modules\Adoptions\Submission::create( $rwp_valid ) ), 'Animal já adotado não deveria aceitar pedido' );
+
+wp_set_current_user( $rwp_users['protetor admin'] );
 
 // O DELETE só move para a lixeira.
 $rwp_server->dispatch( new WP_REST_Request( 'DELETE', "$rwp_prefix/animals/$rwp_animal_id" ) );

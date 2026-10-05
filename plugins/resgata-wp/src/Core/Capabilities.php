@@ -25,7 +25,12 @@ final class Capabilities {
 	public const SETTINGS = 'rwp_manage_settings';
 
 	/**
-	 * Papéis que podem editar os dados da protetora (o Editor comum não).
+	 * Permissão para ver e responder os pedidos de adoção (dados pessoais).
+	 */
+	public const ADOPTIONS = 'rwp_manage_adoptions';
+
+	/**
+	 * Papéis com acesso às configurações e aos pedidos de adoção (o Editor comum não).
 	 */
 	private const SETTINGS_ROLES = array( 'administrator', self::PANEL_ROLE );
 
@@ -78,6 +83,7 @@ final class Capabilities {
 
 			if ( in_array( $role_name, self::SETTINGS_ROLES, true ) ) {
 				$role->add_cap( self::SETTINGS );
+				$role->add_cap( self::ADOPTIONS );
 			}
 		}
 	}
@@ -119,6 +125,7 @@ final class Capabilities {
 			}
 			$role->remove_cap( self::PANEL );
 			$role->remove_cap( self::SETTINGS );
+			$role->remove_cap( self::ADOPTIONS );
 		}
 
 		remove_role( self::PANEL_ROLE );

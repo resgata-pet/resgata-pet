@@ -22,7 +22,7 @@ final class Modules {
 	 * Fica separado de `all()` porque é consultado antes do hook `init`,
 	 * quando as traduções ainda não podem ser carregadas.
 	 */
-	private const AVAILABLE = array( 'animals' );
+	private const AVAILABLE = array( 'animals', 'adoptions' );
 
 	/**
 	 * Todos os módulos previstos no kit.
@@ -38,8 +38,8 @@ final class Modules {
 			),
 			'adoptions'   => array(
 				'label'       => __( 'Pedidos de adoção', 'resgata-wp' ),
-				'description' => __( 'Questionário público de adoção e fila interna de pedidos.', 'resgata-wp' ),
-				'available'   => false,
+				'description' => __( 'Questionário público de adoção, enviado pelo WhatsApp, e fila interna de pedidos. Precisa do módulo Animais.', 'resgata-wp' ),
+				'available'   => in_array( 'adoptions', self::AVAILABLE, true ),
 			),
 			'sponsorship' => array(
 				'label'       => __( 'Apadrinhamento', 'resgata-wp' ),
@@ -60,7 +60,7 @@ final class Modules {
 	 * @return string[]
 	 */
 	public static function defaults(): array {
-		return array( 'animals' );
+		return array( 'animals', 'adoptions' );
 	}
 
 	/**

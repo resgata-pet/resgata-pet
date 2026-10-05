@@ -4,7 +4,7 @@ Tags: animais, adoção, protetora, resgate, ong
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.3.0
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ O Resgata WP ajuda protetoras independentes de animais a divulgar os animais res
 Módulos:
 
 * **Animais** (disponível): cadastro com ficha, saúde e galeria de fotos (antes e depois), listagem pública com filtros e página individual de cada animal.
-* **Pedidos de adoção** (em breve)
+* **Pedidos de adoção** (disponível): questionário no site, enviado pelo WhatsApp da protetora, com fila de pedidos no painel.
 * **Apadrinhamento** (em breve)
 * **Prestação de contas** (em breve)
 
@@ -45,6 +45,9 @@ Por padrão, os que estão com a situação "Disponível para adoção" ou "Rese
 Nada: os dados são mantidos. Para apagá-los, desmarque "Manter os dados" em "Resgata WP → Configurações" antes de excluir o plugin.
 
 == Changelog ==
+
+= 0.4.0 =
+* Pedidos de adoção: questionário no site com consentimento (LGPD), envio pelo WhatsApp da protetora e fila de pedidos no painel.
 
 = 0.3.0 =
 * Configurações da protetora no painel (contato, redes sociais, localização, adoção, privacidade e Pix).

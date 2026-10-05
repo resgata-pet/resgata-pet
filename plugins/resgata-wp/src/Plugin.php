@@ -9,6 +9,7 @@ namespace ResgataWP;
 
 use ResgataWP\Core\Modules;
 use ResgataWP\Core\Schema;
+use ResgataWP\Modules\Adoptions\AdoptionsModule;
 use ResgataWP\Modules\Animals\AnimalsModule;
 use ResgataWP\Modules\Panel\PanelModule;
 use ResgataWP\Modules\Settings\SettingsModule;
@@ -46,6 +47,11 @@ final class Plugin {
 
 		if ( Modules::is_enabled( 'animals' ) ) {
 			( new AnimalsModule() )->register();
+
+			// Os pedidos de adoção são sempre de um animal: dependem do módulo Animais.
+			if ( Modules::is_enabled( 'adoptions' ) ) {
+				( new AdoptionsModule() )->register();
+			}
 		}
 
 		/**

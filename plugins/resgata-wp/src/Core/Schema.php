@@ -47,6 +47,15 @@ final class Schema {
 			dbDelta( $tables );
 		}
 
+		// Quem atualiza de uma versão anterior ao módulo de adoção (schema 4) o recebe ligado.
+		$previous = (int) get_option( self::OPTION, 0 );
+		$enabled  = get_option( Modules::OPTION );
+
+		if ( $previous > 0 && $previous < 4 && is_array( $enabled ) && ! in_array( 'adoptions', $enabled, true ) ) {
+			$enabled[] = 'adoptions';
+			update_option( Modules::OPTION, $enabled );
+		}
+
 		// Perfis/permissões e regras de URL novas também acompanham a versão.
 		Capabilities::grant();
 		update_option( self::FLUSH_FLAG, 1, false );

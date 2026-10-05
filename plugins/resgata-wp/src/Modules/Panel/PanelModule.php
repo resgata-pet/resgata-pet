@@ -8,6 +8,7 @@
 namespace ResgataWP\Modules\Panel;
 
 use ResgataWP\Core\Modules;
+use ResgataWP\Modules\Panel\Rest\AdoptionsController;
 use ResgataWP\Modules\Panel\Rest\AnimalsController;
 use ResgataWP\Modules\Panel\Rest\SettingsController;
 
@@ -36,6 +37,10 @@ final class PanelModule {
 
 		if ( Modules::is_enabled( 'animals' ) ) {
 			( new AnimalsController() )->register_routes();
+
+			if ( Modules::is_enabled( 'adoptions' ) ) {
+				( new AdoptionsController() )->register_routes();
+			}
 		}
 	}
 }

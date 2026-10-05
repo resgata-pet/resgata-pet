@@ -32,6 +32,20 @@ foreach ( $rwp_post_ids as $rwp_post_id ) {
 	wp_delete_post( (int) $rwp_post_id, true );
 }
 
+// Pedidos de adoção (dados pessoais).
+$rwp_request_ids = get_posts(
+	array(
+		'post_type'   => 'rwp_adoption',
+		'post_status' => array( 'publish', 'private', 'draft', 'trash' ),
+		'numberposts' => -1,
+		'fields'      => 'ids',
+	)
+);
+
+foreach ( $rwp_request_ids as $rwp_request_id ) {
+	wp_delete_post( (int) $rwp_request_id, true );
+}
+
 // Termos das taxonomias (elas não estão registradas durante a desinstalação).
 foreach ( array( 'rwp_species', 'rwp_temperament' ) as $rwp_taxonomy ) {
 	register_taxonomy( $rwp_taxonomy, 'rwp_animal' );
@@ -66,6 +80,7 @@ $rwp_caps = array(
 	'manage_rwp_animal_terms',
 	'rwp_access_panel',
 	'rwp_manage_settings',
+	'rwp_manage_adoptions',
 );
 
 foreach ( wp_roles()->role_objects as $rwp_role ) {
