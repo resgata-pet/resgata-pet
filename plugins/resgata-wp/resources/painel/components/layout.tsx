@@ -31,7 +31,7 @@ function Brand() {
 
 export function Layout() {
 	return (
-		<div className="min-h-dvh md:grid md:grid-cols-[15rem_1fr]">
+		<div className="min-h-dvh md:grid md:grid-cols-[16rem_1fr]">
 			{ /* Computador: menu lateral. */ }
 			<aside className="bg-card sticky top-0 hidden h-dvh flex-col gap-6 border-r p-4 md:flex">
 				<Brand />
@@ -53,13 +53,21 @@ export function Layout() {
 						</NavLink>
 					) ) }
 				</nav>
-				<a
-					href={ config.urls.site }
-					className="text-muted-foreground hover:text-foreground flex items-center gap-2 px-3 text-sm"
-				>
-					<ExternalLinkIcon className="size-4" aria-hidden="true" />
-					{ __( 'Ver o site', 'resgata-wp' ) }
-				</a>
+				<div className="flex flex-col gap-3 border-t pt-4">
+					<a
+						href={ config.urls.site }
+						target="_blank"
+						rel="noreferrer"
+						className="text-muted-foreground hover:text-foreground flex items-center gap-2 px-3 text-sm"
+					>
+						<ExternalLinkIcon className="size-4" aria-hidden="true" />
+						{ __( 'Ver o site', 'resgata-wp' ) }
+					</a>
+					<div className="min-w-0 px-3">
+						<p className="truncate text-sm font-medium">{ config.user.name }</p>
+						<p className="text-muted-foreground truncate text-xs">{ config.user.email }</p>
+					</div>
+				</div>
 			</aside>
 
 			<div className="flex min-w-0 flex-col">
@@ -68,7 +76,7 @@ export function Layout() {
 					<Brand />
 				</header>
 
-				<main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-6 pb-28 md:px-8 md:pb-10">
+				<main className="mx-auto w-full max-w-[1400px] flex-1 px-4 pt-6 pb-28 md:px-10 md:pt-10 md:pb-12">
 					<Outlet />
 				</main>
 			</div>
