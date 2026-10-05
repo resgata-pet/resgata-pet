@@ -1,0 +1,17 @@
+# Ambiente
+.env
+*.log
+
+# Dependências
+vendor/
+node_modules/
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Claude Code (configurações locais)
+.claude/settings.local.json
