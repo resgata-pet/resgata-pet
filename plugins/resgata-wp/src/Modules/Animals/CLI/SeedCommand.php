@@ -78,18 +78,18 @@ final class SeedCommand {
 	 */
 	private function samples(): array {
 		return array(
-			array( 'Mingau', 'gato', 'male', 'small', 'Branco', array( 'dócil', 'carinhoso' ) ),
-			array( 'Pipoca', 'gato', 'female', 'small', 'Tricolor', array( 'brincalhona', 'curiosa' ) ),
-			array( 'Thor', 'cao', 'male', 'large', 'Caramelo', array( 'protetor', 'brincalhão' ) ),
-			array( 'Luna', 'gato', 'female', 'small', 'Preta', array( 'tímida', 'carinhosa' ) ),
-			array( 'Paçoca', 'cao', 'male', 'medium', 'Caramelo', array( 'dócil', 'sociável' ) ),
-			array( 'Frida', 'gato', 'female', 'small', 'Tigrada', array( 'independente' ) ),
-			array( 'Bolinha', 'cao', 'female', 'small', 'Preto e branco', array( 'brincalhona', 'sociável' ) ),
-			array( 'Simba', 'gato', 'male', 'medium', 'Laranja', array( 'brincalhão', 'curioso' ) ),
-			array( 'Mel', 'cao', 'female', 'medium', 'Dourada', array( 'carinhosa', 'calma' ) ),
-			array( 'Fumaça', 'gato', 'male', 'small', 'Cinza', array( 'calmo', 'dócil' ) ),
-			array( 'Amora', 'gato', 'female', 'small', 'Preta e branca', array( 'curiosa', 'sociável' ) ),
-			array( 'Bento', 'cao', 'male', 'small', 'Branco', array( 'tímido', 'carinhoso' ) ),
+			array( 'Mingau', 'gato', 'male', 'small', 'Branco', array( 'Dócil', 'Carinhoso(a)' ) ),
+			array( 'Pipoca', 'gato', 'female', 'small', 'Tricolor', array( 'Brincalhão(ona)', 'Curioso(a)' ) ),
+			array( 'Thor', 'cao', 'male', 'large', 'Caramelo', array( 'Protetor(a)', 'Brincalhão(ona)' ) ),
+			array( 'Luna', 'gato', 'female', 'small', 'Preta', array( 'Tímido(a)', 'Carinhoso(a)' ) ),
+			array( 'Paçoca', 'cao', 'male', 'medium', 'Caramelo', array( 'Dócil', 'Sociável' ) ),
+			array( 'Frida', 'gato', 'female', 'small', 'Tigrada', array( 'Independente' ) ),
+			array( 'Bolinha', 'cao', 'female', 'small', 'Preto e branco', array( 'Brincalhão(ona)', 'Sociável' ) ),
+			array( 'Simba', 'gato', 'male', 'medium', 'Laranja', array( 'Brincalhão(ona)', 'Curioso(a)' ) ),
+			array( 'Mel', 'cao', 'female', 'medium', 'Dourada', array( 'Carinhoso(a)', 'Calmo(a)' ) ),
+			array( 'Fumaça', 'gato', 'male', 'small', 'Cinza', array( 'Calmo(a)', 'Dócil' ) ),
+			array( 'Amora', 'gato', 'female', 'small', 'Preta e branca', array( 'Curioso(a)', 'Sociável' ) ),
+			array( 'Bento', 'cao', 'male', 'small', 'Branco', array( 'Tímido(a)', 'Carinhoso(a)' ) ),
 		);
 	}
 

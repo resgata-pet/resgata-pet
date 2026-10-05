@@ -18,6 +18,7 @@ export interface PanelConfig {
 		tests: OptionMap;
 		photoTypes: OptionMap;
 		species: OptionMap;
+		temperaments: string[];
 	};
 }
 

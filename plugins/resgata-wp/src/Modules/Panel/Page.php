@@ -96,13 +96,14 @@ final class Page {
 			),
 			'modules'       => Modules::enabled(),
 			'options'       => array(
-				'statuses'   => Options::statuses(),
-				'sexes'      => Options::sexes(),
-				'sizes'      => Options::sizes(),
-				'yesNo'      => Options::yes_no(),
-				'tests'      => Options::test_results(),
-				'photoTypes' => Options::photo_types(),
-				'species'    => Modules::is_enabled( 'animals' ) ? Taxonomies::species_options() : array(),
+				'statuses'     => Options::statuses(),
+				'sexes'        => Options::sexes(),
+				'sizes'        => Options::sizes(),
+				'yesNo'        => Options::yes_no(),
+				'tests'        => Options::test_results(),
+				'photoTypes'   => Options::photo_types(),
+				'species'      => Modules::is_enabled( 'animals' ) ? Taxonomies::species_options() : array(),
+				'temperaments' => Options::temperaments(),
 			),
 		);
 	}

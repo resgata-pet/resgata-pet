@@ -100,4 +100,54 @@ final class Options {
 			'before' => __( 'Antes', 'resgata-wp' ),
 		);
 	}
+
+	/**
+	 * Temperamentos sugeridos no cadastro do painel (caixas de seleção).
+	 *
+	 * São gravados como termos da taxonomia de temperamento, pelo nome.
+	 *
+	 * @return string[]
+	 */
+	public static function temperaments(): array {
+		$list = array(
+			__( 'Dócil', 'resgata-wp' ),
+			__( 'Carinhoso(a)', 'resgata-wp' ),
+			__( 'Brincalhão(ona)', 'resgata-wp' ),
+			__( 'Calmo(a)', 'resgata-wp' ),
+			__( 'Tranquilo(a)', 'resgata-wp' ),
+			__( 'Ativo(a)', 'resgata-wp' ),
+			__( 'Agitado(a)', 'resgata-wp' ),
+			__( 'Curioso(a)', 'resgata-wp' ),
+			__( 'Sociável', 'resgata-wp' ),
+			__( 'Companheiro(a)', 'resgata-wp' ),
+			__( 'Independente', 'resgata-wp' ),
+			__( 'Tímido(a)', 'resgata-wp' ),
+			__( 'Medroso(a)', 'resgata-wp' ),
+			__( 'Desconfiado(a) com estranhos', 'resgata-wp' ),
+			__( 'Protetor(a)', 'resgata-wp' ),
+			__( 'Inteligente', 'resgata-wp' ),
+			__( 'Obediente', 'resgata-wp' ),
+			__( 'Bagunceiro(a)', 'resgata-wp' ),
+			__( 'Dorminhoco(a)', 'resgata-wp' ),
+			__( 'Guloso(a)', 'resgata-wp' ),
+			__( 'Gosta de colo', 'resgata-wp' ),
+			__( 'Gosta de passear', 'resgata-wp' ),
+			__( 'Mia ou late bastante', 'resgata-wp' ),
+			__( 'Silencioso(a)', 'resgata-wp' ),
+			__( 'Se dá bem com crianças', 'resgata-wp' ),
+			__( 'Se dá bem com cães', 'resgata-wp' ),
+			__( 'Se dá bem com gatos', 'resgata-wp' ),
+			__( 'Prefere ser o único animal da casa', 'resgata-wp' ),
+			__( 'Adapta-se bem a apartamento', 'resgata-wp' ),
+			__( 'Precisa de espaço para correr', 'resgata-wp' ),
+			__( 'Precisa de paciência na adaptação', 'resgata-wp' ),
+		);
+
+		/**
+		 * Filtra a lista de temperamentos sugeridos no painel.
+		 *
+		 * @param string[] $list Nomes dos temperamentos.
+		 */
+		return array_values( array_filter( array_map( 'strval', (array) apply_filters( 'rwp_temperament_options', $list ) ) ) );
+	}
 }
