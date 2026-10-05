@@ -26,6 +26,8 @@ final class SettingsModule {
 	 * Registra os hooks do módulo.
 	 */
 	public function register(): void {
+		( new ContactBlock() )->register();
+
 		add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'update_option_' . Modules::OPTION, array( $this, 'schedule_rewrite_flush' ) );

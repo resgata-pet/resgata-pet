@@ -4,7 +4,8 @@
  * protetora mudar no Editor do Site.
  */
 .rwp-animals,
-.rwp-animal {
+.rwp-animal,
+.rwp-contact {
 	--rwp-accent: var(--wp--preset--color--accent-3);
 	--rwp-line: var(--wp--preset--color--accent-6);
 	--rwp-muted: var(--wp--preset--color--accent-4);
@@ -247,7 +248,7 @@
 .rwp-facts {
 	display: grid;
 	gap: var(--wp--preset--spacing--20);
-	grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
 	margin: 0;
 }
 
@@ -265,6 +266,7 @@
 .rwp-facts dd {
 	font-weight: 700;
 	margin: 0;
+	overflow-wrap: anywhere;
 }
 
 .rwp-vaccine-list {
@@ -292,4 +294,81 @@
 	height: auto;
 	object-fit: cover;
 	width: 100%;
+}
+
+/* Contato da protetora */
+.rwp-contact > * + * {
+	margin-top: var(--wp--preset--spacing--40);
+}
+
+.rwp-contact__name {
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 700;
+	margin: 0;
+}
+
+.rwp-contact__tagline {
+	color: var(--rwp-muted);
+	margin: 0.25rem 0 0;
+}
+
+.rwp-contact__whatsapp {
+	margin-bottom: 0;
+}
+
+.rwp-contact__whatsapp .rwp-button {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.rwp-contact__items dd a {
+	color: inherit;
+}
+
+.rwp-contact__heading {
+	font-size: var(--wp--preset--font-size--medium);
+	margin: 0 0 var(--wp--preset--spacing--20);
+}
+
+.rwp-contact__networks {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--20);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-contact__networks a {
+	background: var(--rwp-surface);
+	border-radius: 999px;
+	color: inherit;
+	display: inline-block;
+	font-weight: 700;
+	padding: 0.5rem 1.1rem;
+	text-decoration: none;
+}
+
+.rwp-contact__networks a:hover,
+.rwp-contact__networks a:focus-visible {
+	background: var(--wp--preset--color--accent-2);
+}
+
+.rwp-contact__pix {
+	background: var(--rwp-surface);
+	border-radius: var(--rwp-radius);
+	padding: var(--wp--preset--spacing--40);
+}
+
+.rwp-contact__pix .rwp-facts__item {
+	background: var(--wp--preset--color--base);
+}
+
+.rwp-contact__pix-key {
+	overflow-wrap: anywhere;
+	user-select: all;
+}
+
+.rwp-contact__items {
+	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 }

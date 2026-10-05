@@ -5,6 +5,7 @@
  */
 .rwp-animals,
 .rwp-animal,
+.rwp-contact,
 .rwp-page {
 	--rwp-gap: 1.5rem;
 	--rwp-radius: 8px;
@@ -203,6 +204,7 @@
 .rwp-facts dd {
 	font-weight: 600;
 	margin: 0;
+	overflow-wrap: anywhere;
 }
 
 .rwp-vaccine-list {
@@ -248,4 +250,48 @@
 .rwp-page__photo,
 .rwp-page__story {
 	margin-block: 1.5rem;
+}
+
+/* Contato da protetora */
+.rwp-contact > * + * {
+	margin-top: 1.5rem;
+}
+
+.rwp-contact__name {
+	font-size: 1.25em;
+	font-weight: 700;
+	margin: 0;
+}
+
+.rwp-contact__tagline {
+	color: var(--rwp-muted);
+	margin: 0.25rem 0 0;
+}
+
+.rwp-contact__whatsapp {
+	margin-bottom: 0;
+}
+
+.rwp-contact__whatsapp .rwp-button {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.rwp-contact__heading {
+	font-size: 1.15em;
+	margin: 0 0 0.75rem;
+}
+
+.rwp-contact__networks {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1.25rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-contact__pix-key {
+	overflow-wrap: anywhere;
+	user-select: all;
 }

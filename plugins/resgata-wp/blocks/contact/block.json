@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-wp/contact",
+	"version": "0.3.0",
+	"title": "Contato da protetora",
+	"category": "resgata-wp",
+	"icon": "phone",
+	"description": "Mostra WhatsApp, telefone, e-mail, redes sociais, localização e Pix cadastrados nas configurações do painel.",
+	"keywords": [ "contato", "whatsapp", "telefone", "pix", "redes sociais" ],
+	"textdomain": "resgata-wp",
+	"attributes": {
+		"showPix": { "type": "boolean", "default": true }
+	},
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true, "padding": true }
+	},
+	"editorScript": "rwp-blocks-editor",
+	"style": "rwp-frontend",
+	"render": "file:./render.php"
+}
