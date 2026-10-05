@@ -1,0 +1,295 @@
+/*
+ * Resgata Tema – visual dos blocos do plugin Resgata WP.
+ * Usa as cores e os espaçamentos do theme.json, então acompanha o que a
+ * protetora mudar no Editor do Site.
+ */
+.rwp-animals,
+.rwp-animal {
+	--rwp-accent: var(--wp--preset--color--accent-3);
+	--rwp-line: var(--wp--preset--color--accent-6);
+	--rwp-muted: var(--wp--preset--color--accent-4);
+	--rwp-surface: var(--wp--preset--color--accent-5);
+	--rwp-radius: 16px;
+}
+
+/* Filtros */
+.rwp-filters {
+	align-items: flex-end;
+	background: var(--rwp-surface);
+	border-radius: var(--rwp-radius);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--wp--preset--spacing--40);
+	margin: 0 0 var(--wp--preset--spacing--50);
+	padding: var(--wp--preset--spacing--40);
+}
+
+.rwp-filters__field,
+.rwp-filters__actions {
+	margin: 0;
+}
+
+.rwp-filters__field {
+	display: flex;
+	flex: 1 1 10rem;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.rwp-filters__field label {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+}
+
+.rwp-filters__field select {
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--rwp-line);
+	border-radius: 999px;
+	color: inherit;
+	font: inherit;
+	padding: 0.6rem 1rem;
+}
+
+.rwp-filters__field select:focus-visible {
+	outline: 2px solid var(--rwp-accent);
+	outline-offset: 2px;
+}
+
+.rwp-filters__actions {
+	align-items: center;
+	display: flex;
+	gap: var(--wp--preset--spacing--30);
+}
+
+.rwp-button {
+	cursor: pointer;
+}
+
+.rwp-filters__clear {
+	font-size: var(--wp--preset--font-size--small);
+}
+
+/* Cartões */
+.rwp-grid {
+	--rwp-gap: var(--wp--preset--spacing--40);
+	display: grid;
+	gap: var(--rwp-gap);
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, max(15rem, calc((100% - (var(--rwp-columns, 3) - 1) * var(--rwp-gap)) / var(--rwp-columns, 3)))), 1fr));
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-card {
+	background: var(--wp--preset--color--base);
+	border-radius: var(--rwp-radius);
+	box-shadow: 0 1px 2px rgba(46, 34, 25, 0.06), 0 8px 24px rgba(46, 34, 25, 0.08);
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rwp-card:hover,
+.rwp-card:focus-within {
+	box-shadow: 0 2px 4px rgba(46, 34, 25, 0.08), 0 16px 32px rgba(46, 34, 25, 0.14);
+	transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.rwp-card {
+		transition: none;
+	}
+
+	.rwp-card:hover,
+	.rwp-card:focus-within {
+		transform: none;
+	}
+}
+
+.rwp-card__media {
+	aspect-ratio: 4 / 3;
+	background: var(--wp--preset--color--accent-2);
+	display: block;
+}
+
+.rwp-card__media img,
+.rwp-card__placeholder {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.rwp-card__body {
+	padding: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40) var(--wp--preset--spacing--40);
+}
+
+.rwp-card__name {
+	font-size: var(--wp--preset--font-size--large);
+	margin: 0;
+}
+
+.rwp-card__name a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* O cartão inteiro é clicável. */
+.rwp-card__name a::after {
+	content: "";
+	inset: 0;
+	position: absolute;
+}
+
+.rwp-card__name a:focus-visible {
+	outline: none;
+}
+
+.rwp-card:focus-within {
+	outline: 2px solid var(--rwp-accent);
+	outline-offset: 2px;
+}
+
+.rwp-card__meta {
+	color: var(--rwp-muted);
+	font-size: var(--wp--preset--font-size--small);
+	margin: 0.25rem 0 0;
+}
+
+/* Selos de situação */
+.rwp-badge {
+	background: var(--wp--preset--color--accent-1);
+	border-radius: 999px;
+	color: var(--wp--preset--color--contrast);
+	display: inline-block;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+	line-height: 1.4;
+	padding: 0.2rem 0.9rem;
+}
+
+.rwp-badge--available {
+	background: #d9ecd5;
+	color: #1f4a22;
+}
+
+.rwp-badge--adopted {
+	background: var(--wp--preset--color--accent-3);
+	color: var(--wp--preset--color--base);
+}
+
+.rwp-badge--treatment {
+	background: var(--wp--preset--color--accent-2);
+}
+
+.rwp-badge--deceased {
+	background: var(--wp--preset--color--accent-5);
+	color: var(--wp--preset--color--accent-4);
+}
+
+.rwp-card__media .rwp-badge {
+	left: 0.75rem;
+	position: absolute;
+	top: 0.75rem;
+}
+
+.rwp-empty {
+	background: var(--rwp-surface);
+	border-radius: var(--rwp-radius);
+	padding: var(--wp--preset--spacing--50);
+	text-align: center;
+}
+
+/* Paginação */
+.rwp-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+.rwp-pagination .page-numbers {
+	border: 1px solid var(--rwp-line);
+	border-radius: 999px;
+	color: inherit;
+	padding: 0.3rem 0.9rem;
+	text-decoration: none;
+}
+
+.rwp-pagination .page-numbers.current {
+	background: var(--rwp-accent);
+	border-color: var(--rwp-accent);
+	color: var(--wp--preset--color--base);
+}
+
+/* Ficha do animal */
+.rwp-animal__section + .rwp-animal__section {
+	margin-top: var(--wp--preset--spacing--50);
+}
+
+.rwp-animal__status {
+	margin: 0 0 var(--wp--preset--spacing--30);
+}
+
+.rwp-animal__heading {
+	margin: 0 0 var(--wp--preset--spacing--30);
+}
+
+.rwp-animal__subheading {
+	font-size: var(--wp--preset--font-size--medium);
+	margin: var(--wp--preset--spacing--40) 0 var(--wp--preset--spacing--20);
+}
+
+.rwp-facts {
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+	grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+	margin: 0;
+}
+
+.rwp-facts__item {
+	background: var(--rwp-surface);
+	border-radius: 12px;
+	padding: 0.75rem 1rem;
+}
+
+.rwp-facts dt {
+	color: var(--rwp-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.rwp-facts dd {
+	font-weight: 700;
+	margin: 0;
+}
+
+.rwp-vaccine-list {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.rwp-vaccine-list__date {
+	color: var(--rwp-muted);
+}
+
+.rwp-gallery__list {
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+	grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-gallery__list img {
+	aspect-ratio: 1;
+	border-radius: 12px;
+	display: block;
+	height: auto;
+	object-fit: cover;
+	width: 100%;
+}
