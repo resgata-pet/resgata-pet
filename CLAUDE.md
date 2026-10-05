@@ -95,6 +95,7 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
 - Aplicação React em página própria, sem tema e sem `wp_head()`: `Router` cria a regra de URL
   e confere o acesso; `Page` imprime o HTML e os dados iniciais em `window.rwpPainel`.
 - Acesso pela capability `rwp_access_panel` (administrador, editor e Protetor admin).
+  O menu mostra Início, Animais, Configurações (para quem pode) e Minha conta.
 - Perfil **Protetor admin** (`rwp_protetor_admin`): cópia do Editor; `Access` o redireciona de
   qualquer tela do wp-admin para `/painel` (AJAX liberado) e esconde a barra do WordPress.
   O administrador usa os dois, com atalhos de ida e volta.
@@ -156,12 +157,29 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
   `[rwp_animais]`, filtros por GET (`rwp_especie`, `rwp_sexo`, `rwp_porte`, `rwp_pg`).
 - WP-CLI: `wp resgata seed-animals [--count=<n>] [--skip-images] [--delete]`.
 
+## Configurações da protetora (implementado)
+
+- Tela em `/painel/configuracoes`; dados na option `rwp_organization`
+  (`Modules/Settings/Organization.php`: campos, tamanhos máximos e sanitização em um lugar só).
+- Capability `rwp_manage_settings`: Administrador e Protetor admin (o Editor comum não).
+- Campos: identidade (nome, frase, CNPJ), contato (WhatsApp, mensagem inicial, telefone, e-mail,
+  horário), redes (Instagram, Facebook, TikTok, YouTube; aceita link ou @usuario), localização
+  (cidade, UF, bairro; nunca endereço completo), adoção (e-mail interno, taxa, regras),
+  privacidade (responsável, texto) e Pix (tipo, chave, titular).
+- `adoption_email` é interno (`Organization::PRIVATE_FIELDS`) e nunca vai para o site.
+- O link do WhatsApp é gerado por `Organization::whatsapp_url()` (troca `{animal}` na mensagem).
+- Site: bloco `resgata-wp/contact` (template `contact.php`). Ao salvar as configurações pela
+  primeira vez, `ContactPage::ensure()` cria a página "Contato" com esse bloco
+  (option `rwp_contact_page_id`); se a página for apagada, é recriada no próximo salvamento.
+- A tela "Resgata WP → Configurações" do wp-admin (módulos ativos e retenção de dados) continua
+  só para o Administrador.
+
 ## Módulos previstos (ainda não implementados)
 
 Pedidos de adoção (questionário com consentimento LGPD, fila interna, e-mail), Apadrinhamento
 (planos com links de gateway externo, contador manual), Prestação de contas (lançamentos,
-fechamento mensal, página pública), e o restante das Configurações (dados da protetora, Pix,
-redes sociais, texto de privacidade).
+fechamento mensal, página pública). Regras de adoção, taxa e texto de privacidade já são
+cadastrados nas Configurações, mas só serão exibidos pelo módulo de pedidos de adoção.
 
 ## Regras de segurança (obrigatórias)
 

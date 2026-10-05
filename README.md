@@ -19,7 +19,7 @@ O kit tem duas partes, neste repositório:
 |---|---|
 | Animais (cadastro, listagem com filtros, página individual) | Pronto |
 | Painel próprio em `/painel` (cadastro de animais pelo celular) | Pronto |
-| Configurações (módulos ativos, retenção de dados) | Inicial |
+| Configurações da protetora (contato, redes, localização, Pix) e página de contato | Pronto |
 | Pedidos de adoção | Planejado |
 | Apadrinhamento | Planejado |
 | Prestação de contas | Planejado |
@@ -49,6 +49,9 @@ O dia a dia acontece em `seusite.org/painel`, um painel próprio, feito para o c
 - **Fotos** tiradas na hora ou escolhidas do aparelho, reduzidas antes do envio.
 - **Animais**: lista com foto, nome e situação.
 - **Excluir** move o cadastro para a lixeira; o administrador pode restaurar pelo WordPress.
+- **Configurações**: WhatsApp, telefone, e-mail, redes sociais, cidade e chave Pix. Ao salvar
+  pela primeira vez, o site ganha uma página **Contato** com esses dados. Para mostrá-los em
+  outra página, use o bloco **Contato da protetora**.
 
 Para dar acesso a alguém, crie o usuário em **Usuários → Adicionar usuário** com a função
 **Protetor admin**. Essa pessoa entra pelo login normal do site e usa somente o painel; se
