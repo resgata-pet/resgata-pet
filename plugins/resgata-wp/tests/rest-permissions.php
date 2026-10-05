@@ -27,6 +27,12 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 
 require_once ABSPATH . 'wp-admin/includes/user.php';
 
+// Opções que as rotas de configurações podem alterar: guardadas aqui e devolvidas no final.
+$rwp_saved_options = array(
+	'rwp_organization'    => get_option( 'rwp_organization', null ),
+	'rwp_contact_page_id' => get_option( 'rwp_contact_page_id', null ),
+);
+
 $rwp_failures = array();
 $rwp_checks   = 0;
 $rwp_created  = array();
@@ -108,14 +114,15 @@ foreach ( $rwp_server->get_routes( BaseController::REST_NAMESPACE ) as $rwp_rout
 				$rwp_request->set_header( 'content-type', 'application/json' );
 
 				if ( in_array( $rwp_method, array( 'POST', 'PUT', 'PATCH' ), true ) ) {
-					$rwp_request->set_body(
-						wp_json_encode(
-							array(
-								'name'    => 'Animal de teste',
-								'species' => $rwp_species[0] ?? '',
-							)
-						)
-					);
+					// Nas configurações o corpo vai vazio, para não alterar os dados cadastrados no site.
+					$rwp_body = str_starts_with( $rwp_route, $rwp_prefix . '/settings' )
+						? new stdClass()
+						: array(
+							'name'    => 'Animal de teste',
+							'species' => $rwp_species[0] ?? '',
+						);
+
+					$rwp_request->set_body( wp_json_encode( $rwp_body ) );
 				}
 
 				$rwp_response = $rwp_server->dispatch( $rwp_request );
@@ -205,11 +212,59 @@ $rwp_request = new WP_REST_Request( 'GET', "$rwp_prefix/animals" );
 $rwp_request->set_query_params( array( 'rescue_from' => "2026-01-01' OR 1=1" ) );
 $rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'Data inválida no filtro deveria ser recusada com 400' );
 
+// Configurações: o Editor comum não pode alterar; valores são limpos; campo interno não vaza no site.
+$rwp_editor_id = $rwp_make_user( 'editor' );
+wp_set_current_user( $rwp_editor_id );
+$rwp_assert( 403 === $rwp_server->dispatch( new WP_REST_Request( 'GET', "$rwp_prefix/settings" ) )->get_status(), 'Editor comum não deveria ler as configurações' );
+wp_delete_user( $rwp_editor_id );
+
+wp_set_current_user( $rwp_users['protetor admin'] );
+$rwp_request = new WP_REST_Request( 'PUT', "$rwp_prefix/settings" );
+$rwp_request->set_header( 'content-type', 'application/json' );
+$rwp_request->set_body(
+	wp_json_encode(
+		array(
+			'name'           => '<b>Protetora</b> Teste',
+			'whatsapp'       => '(11) 91234-5678',
+			'instagram'      => '@protetora.teste',
+			'facebook'       => 'javascript:alert(1)',
+			'adoption_email' => 'interno@example.org',
+			'pix_key'        => 'pix@example.org',
+		)
+	)
+);
+$rwp_data = $rwp_server->dispatch( $rwp_request )->get_data()['settings'] ?? array();
+$rwp_assert( 'Protetora Teste' === ( $rwp_data['name'] ?? '' ), 'O nome deveria ter o HTML removido' );
+$rwp_assert( '11912345678' === ( $rwp_data['whatsapp'] ?? '' ), 'O WhatsApp deveria guardar só os dígitos' );
+$rwp_assert( 'https://www.instagram.com/protetora.teste' === ( $rwp_data['instagram'] ?? '' ), 'O @usuario do Instagram deveria virar link' );
+$rwp_assert( '' === ( $rwp_data['facebook'] ?? null ), 'Link com javascript: deveria ser recusado' );
+
+$rwp_html = ResgataWP\Modules\Settings\ContactBlock::render();
+$rwp_assert( str_contains( $rwp_html, 'wa.me/5511912345678' ) && str_contains( $rwp_html, 'pix@example.org' ), 'O bloco de contato deveria mostrar WhatsApp e Pix' );
+$rwp_assert( ! str_contains( $rwp_html, 'interno@example.org' ), 'O e-mail interno de adoção não pode aparecer no site' );
+
+$rwp_request = new WP_REST_Request( 'PUT', "$rwp_prefix/settings" );
+$rwp_request->set_header( 'content-type', 'application/json' );
+$rwp_request->set_body( wp_json_encode( array( 'email' => 'nao-e-email' ) ) );
+$rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'E-mail inválido deveria ser recusado com 400' );
+
 // O DELETE só move para a lixeira.
 $rwp_server->dispatch( new WP_REST_Request( 'DELETE', "$rwp_prefix/animals/$rwp_animal_id" ) );
 $rwp_assert( 'trash' === get_post_status( $rwp_animal_id ), 'Excluir deveria mover para a lixeira, não apagar' );
 
 // Limpeza.
+$rwp_new_contact_page = (int) get_option( 'rwp_contact_page_id', 0 );
+if ( $rwp_new_contact_page && (int) $rwp_saved_options['rwp_contact_page_id'] !== $rwp_new_contact_page ) {
+	$rwp_created[] = $rwp_new_contact_page; // Página de contato criada durante o teste.
+}
+foreach ( $rwp_saved_options as $rwp_option => $rwp_value ) {
+	if ( null === $rwp_value ) {
+		delete_option( $rwp_option );
+	} else {
+		update_option( $rwp_option, $rwp_value, false );
+	}
+}
+
 wp_set_current_user( 0 );
 foreach ( array_unique( array_filter( $rwp_created ) ) as $rwp_post_id ) {
 	wp_delete_post( (int) $rwp_post_id, true );

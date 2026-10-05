@@ -20,6 +20,16 @@ final class Capabilities {
 	public const PANEL = 'rwp_access_panel';
 
 	/**
+	 * Permissão para editar os dados da protetora em /painel/configuracoes.
+	 */
+	public const SETTINGS = 'rwp_manage_settings';
+
+	/**
+	 * Papéis que podem editar os dados da protetora (o Editor comum não).
+	 */
+	private const SETTINGS_ROLES = array( 'administrator', self::PANEL_ROLE );
+
+	/**
 	 * Perfil da protetora: usa somente o painel, nunca o wp-admin.
 	 */
 	public const PANEL_ROLE = 'rwp_protetor_admin';
@@ -65,6 +75,10 @@ final class Capabilities {
 				$role->add_cap( $cap );
 			}
 			$role->add_cap( self::PANEL );
+
+			if ( in_array( $role_name, self::SETTINGS_ROLES, true ) ) {
+				$role->add_cap( self::SETTINGS );
+			}
 		}
 	}
 
@@ -104,6 +118,7 @@ final class Capabilities {
 				$role->remove_cap( $cap );
 			}
 			$role->remove_cap( self::PANEL );
+			$role->remove_cap( self::SETTINGS );
 		}
 
 		remove_role( self::PANEL_ROLE );

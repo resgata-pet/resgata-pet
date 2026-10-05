@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Resgata WP
  * Description:       Kit para protetoras independentes de animais: divulgação de animais para adoção, pedidos de adoção, apadrinhamento e prestação de contas.
- * Version:           0.2.0
+ * Version:           0.3.0
  * Requires at least: 6.9
  * Requires PHP:      8.1
  * Author:            Resgata WP
@@ -16,8 +16,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RWP_VERSION', '0.2.0' );
-define( 'RWP_DB_VERSION', 2 );
+define( 'RWP_VERSION', '0.3.0' );
+define( 'RWP_DB_VERSION', 3 );
 define( 'RWP_PLUGIN_FILE', __FILE__ );
 define( 'RWP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'RWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

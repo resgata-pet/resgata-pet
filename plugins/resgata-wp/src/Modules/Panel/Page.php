@@ -8,6 +8,7 @@
 namespace ResgataWP\Modules\Panel;
 
 use ResgataWP\Core\Assets;
+use ResgataWP\Core\Capabilities;
 use ResgataWP\Core\Modules;
 use ResgataWP\Modules\Animals\Options;
 use ResgataWP\Modules\Animals\Taxonomies;
@@ -83,9 +84,10 @@ final class Page {
 			'restNamespace' => BaseController::REST_NAMESPACE,
 			'siteName'      => get_bloginfo( 'name' ),
 			'user'          => array(
-				'name'    => $user->display_name,
-				'email'   => $user->user_email,
-				'isAdmin' => current_user_can( 'manage_options' ),
+				'name'              => $user->display_name,
+				'email'             => $user->user_email,
+				'isAdmin'           => current_user_can( 'manage_options' ),
+				'canManageSettings' => current_user_can( Capabilities::SETTINGS ),
 			),
 			'urls'          => array(
 				'site'         => home_url( '/' ),

@@ -4,7 +4,7 @@ Tags: animais, adoção, protetora, resgate, ong
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,6 +45,11 @@ Por padrão, os que estão com a situação "Disponível para adoção" ou "Rese
 Nada: os dados são mantidos. Para apagá-los, desmarque "Manter os dados" em "Resgata WP → Configurações" antes de excluir o plugin.
 
 == Changelog ==
+
+= 0.3.0 =
+* Configurações da protetora no painel (contato, redes sociais, localização, adoção, privacidade e Pix).
+* Bloco "Contato da protetora" e página de contato criada automaticamente.
+* Busca e filtros na lista de animais do painel.
 
 = 0.2.0 =
 * Painel próprio em /painel, feito para o celular, com cadastro de animais em quatro passos.

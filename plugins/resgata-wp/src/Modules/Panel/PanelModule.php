@@ -9,6 +9,7 @@ namespace ResgataWP\Modules\Panel;
 
 use ResgataWP\Core\Modules;
 use ResgataWP\Modules\Panel\Rest\AnimalsController;
+use ResgataWP\Modules\Panel\Rest\SettingsController;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,6 +32,8 @@ final class PanelModule {
 	 * Registra as rotas da API do painel (`resgata-wp/v1`), só dos módulos ligados.
 	 */
 	public function register_rest_routes(): void {
+		( new SettingsController() )->register_routes();
+
 		if ( Modules::is_enabled( 'animals' ) ) {
 			( new AnimalsController() )->register_routes();
 		}

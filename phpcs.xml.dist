@@ -51,6 +51,7 @@
 				<element value="delete_published_rwp_animals"/>
 				<element value="manage_rwp_animal_terms"/>
 				<element value="rwp_access_panel"/>
+				<element value="rwp_manage_settings"/>
 			</property>
 		</properties>
 	</rule>
