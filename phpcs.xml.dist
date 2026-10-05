@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ruleset name="Resgata WP">
+	<description>WordPress Coding Standards para o plugin e o tema do Resgata WP.</description>
+
+	<file>plugins/resgata-wp</file>
+	<file>themes/resgata-tema</file>
+	<file>docker/mu-plugins</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+	<exclude-pattern>*.asset.php</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="parallel" value="8"/>
+	<arg value="sp"/>
+
+	<config name="minimum_wp_version" value="6.9"/>
+	<config name="testVersion" value="8.1-"/>
+
+	<rule ref="WordPress">
+		<!-- O plugin usa autoload PSR-4 (um arquivo por classe, nome igual ao da classe). -->
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+	</rule>
+	<rule ref="PHPCompatibilityWP"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="resgata-wp"/>
+				<element value="resgata-tema"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!--
+		O prefixo global do projeto é `rwp_` (constantes `RWP_`, namespace `ResgataWP`).
+		O sniff PrefixAllGlobals recusa prefixos com menos de 4 caracteres, então não
+		consegue validar `rwp_`. Ele fica desligado; a regra do prefixo é conferida em revisão.
+	-->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<severity>0</severity>
+	</rule>
+</ruleset>
