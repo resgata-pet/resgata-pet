@@ -9,6 +9,7 @@ namespace ResgataWP\Modules\Panel\Rest;
 
 use ResgataWP\Modules\Animals\Animal;
 use ResgataWP\Modules\Animals\AnimalWriter;
+use ResgataWP\Modules\Animals\Meta;
 use ResgataWP\Modules\Animals\Options;
 use ResgataWP\Modules\Animals\PostType;
 use ResgataWP\Modules\Animals\Taxonomies;
@@ -50,7 +51,7 @@ final class AnimalsController extends BaseController {
 					'enum'    => self::PER_PAGE,
 					'default' => 25,
 				),
-			)
+			) + $this->filter_args()
 		);
 
 		$this->route(
@@ -90,6 +91,52 @@ final class AnimalsController extends BaseController {
 			array( $this, 'trash_item' ),
 			fn( \WP_REST_Request $request ) => $this->can( 'delete_post', $request ),
 			$id_arg
+		);
+	}
+
+	/**
+	 * Filtros aceitos na listagem. Listas chegam separadas por vírgula (`status=reserved,adopted`).
+	 *
+	 * @return array<string, array<string, mixed>>
+	 */
+	private function filter_args(): array {
+		$list = static fn( array $allowed ) => array(
+			'type'    => 'array',
+			'default' => array(),
+			'items'   => array(
+				'type' => 'string',
+				'enum' => $allowed,
+			),
+		);
+
+		$date = array(
+			'type'    => 'string',
+			'pattern' => '^(\d{4}-\d{2}-\d{2})?$',
+			'default' => '',
+		);
+
+		return array(
+			'search'      => array(
+				'type'      => 'string',
+				'maxLength' => 100,
+				'default'   => '',
+			),
+			'species'     => array(
+				'type'     => 'array',
+				'default'  => array(),
+				'maxItems' => 20,
+				'items'    => array(
+					'type'    => 'string',
+					'pattern' => '^[a-z0-9-]+$',
+				),
+			),
+			'status'      => $list( array_keys( Options::statuses() ) ),
+			'post_status' => $list( self::POST_STATUSES ),
+			'sex'         => $list( array_keys( Options::sexes() ) ),
+			'size'        => $list( array_keys( Options::sizes() ) ),
+			'neutered'    => $list( array_keys( Options::yes_no() ) ),
+			'rescue_from' => $date,
+			'rescue_to'   => $date,
 		);
 	}
 
@@ -219,15 +266,70 @@ final class AnimalsController extends BaseController {
 	 * @param \WP_REST_Request $request Requisição.
 	 */
 	public function list_items( \WP_REST_Request $request ): \WP_REST_Response {
+		$post_statuses = array_values( array_intersect( self::POST_STATUSES, (array) $request['post_status'] ) );
+
 		$query_args = array(
 			'post_type'              => PostType::SLUG,
-			'post_status'            => self::POST_STATUSES,
+			'post_status'            => $post_statuses ? $post_statuses : self::POST_STATUSES,
 			'posts_per_page'         => (int) $request['per_page'],
 			'paged'                  => (int) $request['page'],
 			'orderby'                => 'date',
 			'order'                  => 'DESC',
 			'update_post_term_cache' => false,
 		);
+
+		$search = sanitize_text_field( (string) $request['search'] );
+		if ( '' !== $search ) {
+			$query_args['s']              = $search;
+			$query_args['search_columns'] = array( 'post_title' );
+		}
+
+		if ( $request['species'] ) {
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- Filtro do painel; volume pequeno.
+			$query_args['tax_query'] = array(
+				array(
+					'taxonomy' => Taxonomies::SPECIES,
+					'field'    => 'slug',
+					'terms'    => array_map( 'sanitize_title', (array) $request['species'] ),
+				),
+			);
+		}
+
+		$meta_query = array();
+
+		foreach (
+			array(
+				'status'   => Meta::STATUS,
+				'sex'      => Meta::SEX,
+				'size'     => Meta::SIZE,
+				'neutered' => Meta::NEUTERED,
+			) as $param => $meta_key
+		) {
+			if ( $request[ $param ] ) {
+				$meta_query[] = array(
+					'key'     => $meta_key,
+					'value'   => array_map( 'sanitize_key', (array) $request[ $param ] ),
+					'compare' => 'IN',
+				);
+			}
+		}
+
+		$from = Meta::sanitize_date( $request['rescue_from'] );
+		$to   = Meta::sanitize_date( $request['rescue_to'] );
+
+		if ( '' !== $from || '' !== $to ) {
+			$meta_query[] = array(
+				'key'     => Meta::RESCUE_DATE,
+				'value'   => array( '' !== $from ? $from : '0001-01-01', '' !== $to ? $to : '9999-12-31' ),
+				'compare' => 'BETWEEN',
+				'type'    => 'DATE',
+			);
+		}
+
+		if ( $meta_query ) {
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Filtro do painel; volume pequeno.
+			$query_args['meta_query'] = $meta_query;
+		}
 
 		// Quem não pode editar animais de outras pessoas só vê os seus.
 		if ( ! current_user_can( 'edit_others_rwp_animals' ) ) {

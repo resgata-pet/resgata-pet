@@ -182,6 +182,29 @@ $rwp_request = new WP_REST_Request( 'GET', "$rwp_prefix/animals" );
 $rwp_request->set_query_params( array( 'per_page' => 1000 ) );
 $rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'per_page fora da lista deveria ser recusado com 400' );
 
+// Filtros da listagem.
+$rwp_request = new WP_REST_Request( 'GET', "$rwp_prefix/animals" );
+$rwp_request->set_query_params(
+	array(
+		'status'      => 'reserved',
+		'post_status' => 'draft',
+		'search'      => 'Animal de teste',
+		'per_page'    => 100,
+	)
+);
+$rwp_data = $rwp_server->dispatch( $rwp_request )->get_data();
+$rwp_ids  = wp_list_pluck( $rwp_data['items'] ?? array(), 'id' );
+$rwp_assert( in_array( $rwp_animal_id, $rwp_ids, true ), 'O filtro deveria encontrar o animal de teste (reservado, rascunho)' );
+$rwp_assert( array( 'reserved' ) === array_values( array_unique( wp_list_pluck( $rwp_data['items'] ?? array(), 'status' ) ) ), 'O filtro por situação deveria trazer só animais reservados' );
+
+$rwp_request = new WP_REST_Request( 'GET', "$rwp_prefix/animals" );
+$rwp_request->set_query_params( array( 'status' => 'reserved,inexistente' ) );
+$rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'Filtro com situação inválida deveria ser recusado com 400' );
+
+$rwp_request = new WP_REST_Request( 'GET', "$rwp_prefix/animals" );
+$rwp_request->set_query_params( array( 'rescue_from' => "2026-01-01' OR 1=1" ) );
+$rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'Data inválida no filtro deveria ser recusada com 400' );
+
 // O DELETE só move para a lixeira.
 $rwp_server->dispatch( new WP_REST_Request( 'DELETE', "$rwp_prefix/animals/$rwp_animal_id" ) );
 $rwp_assert( 'trash' === get_post_status( $rwp_animal_id ), 'Excluir deveria mover para a lixeira, não apagar' );
