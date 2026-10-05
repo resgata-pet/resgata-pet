@@ -1,0 +1,740 @@
+import { useEffect, useId, useState } from 'react';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { __, sprintf } from '@wordpress/i18n';
+import { toast } from 'sonner';
+import { ArrowLeftIcon, CheckIcon, ExternalLinkIcon, Loader2Icon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react';
+import { api, errorMessage, type Animal, type AnimalImage, type AnimalInput, type GalleryPhoto, type PhotoType, type Vaccine } from '@/lib/api';
+import { config, type OptionMap } from '@/lib/config';
+import { cn } from '@/lib/utils';
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Field } from '@/components/field';
+import { PageHeader } from '@/components/page-header';
+import { PhotoButtons } from '@/components/photo-buttons';
+import { RichText } from '@/components/rich-text';
+
+const STEPS = [
+	__( 'Básico', 'resgata-wp' ),
+	__( 'Ficha', 'resgata-wp' ),
+	__( 'Saúde', 'resgata-wp' ),
+	__( 'História e fotos', 'resgata-wp' ),
+];
+
+/** Estado do formulário: tudo em texto, como os campos da tela. */
+interface FormState {
+	name: string;
+	species: string;
+	sex: string;
+	featured: AnimalImage | null;
+	status: string;
+	ageYears: string;
+	ageMonths: string;
+	size: string;
+	color: string;
+	temperaments: string;
+	rescueDate: string;
+	neutered: string;
+	dewormedDate: string;
+	fiv: string;
+	felv: string;
+	vaccines: Vaccine[];
+	story: string;
+	gallery: GalleryPhoto[];
+}
+
+const emptyForm: FormState = {
+	name: '',
+	species: '',
+	sex: '',
+	featured: null,
+	status: 'available',
+	ageYears: '',
+	ageMonths: '',
+	size: '',
+	color: '',
+	temperaments: '',
+	rescueDate: '',
+	neutered: '',
+	dewormedDate: '',
+	fiv: '',
+	felv: '',
+	vaccines: [],
+	story: '',
+	gallery: [],
+};
+
+function toForm( animal: Animal ): FormState {
+	return {
+		name: animal.name,
+		species: animal.species,
+		sex: animal.sex,
+		featured: animal.featured_image,
+		status: animal.status,
+		ageYears: animal.age_years === null ? '' : String( animal.age_years ),
+		ageMonths: animal.age_months === null ? '' : String( animal.age_months ),
+		size: animal.size,
+		color: animal.color,
+		temperaments: animal.temperaments.join( ', ' ),
+		rescueDate: animal.rescue_date,
+		neutered: animal.neutered,
+		dewormedDate: animal.dewormed_date,
+		fiv: animal.fiv,
+		felv: animal.felv,
+		vaccines: animal.vaccines,
+		story: animal.story,
+		gallery: animal.gallery,
+	};
+}
+
+function toNumber( value: string, max: number ): number | null {
+	if ( value.trim() === '' ) {
+		return null;
+	}
+
+	const number = Math.trunc( Number( value ) );
+
+	return Number.isFinite( number ) ? Math.min( max, Math.max( 0, number ) ) : null;
+}
+
+/** Só os campos do passo informado, no formato que a API espera. */
+function stepPayload( step: number, form: FormState ): AnimalInput {
+	switch ( step ) {
+		case 1:
+			return {
+				name: form.name.trim(),
+				species: form.species,
+				sex: form.sex,
+				featured_media: form.featured?.id ?? 0,
+			};
+		case 2: {
+			const years = toNumber( form.ageYears, 40 );
+			const months = toNumber( form.ageMonths, 11 );
+			const hasAge = years !== null || months !== null;
+
+			return {
+				status: form.status,
+				age_years: hasAge ? years ?? 0 : null,
+				age_months: hasAge ? months ?? 0 : null,
+				size: form.size,
+				color: form.color.trim(),
+				temperaments: form.temperaments
+					.split( ',' )
+					.map( ( item ) => item.trim() )
+					.filter( Boolean ),
+				rescue_date: form.rescueDate,
+			};
+		}
+		case 3:
+			return {
+				neutered: form.neutered,
+				dewormed_date: form.dewormedDate,
+				fiv: form.fiv,
+				felv: form.felv,
+				vaccines: form.vaccines.filter( ( vaccine ) => vaccine.name.trim() !== '' ),
+			};
+		default:
+			return {
+				story: form.story,
+				gallery: form.gallery.map( ( photo ) => ( { id: photo.id, type: photo.type } ) ),
+			};
+	}
+}
+
+function Select( {
+	id,
+	value,
+	options,
+	placeholder,
+	invalid,
+	onChange,
+}: {
+	id: string;
+	value: string;
+	options: OptionMap;
+	placeholder?: string;
+	invalid?: boolean;
+	onChange: ( value: string ) => void;
+} ) {
+	return (
+		<NativeSelect id={ id } value={ value } aria-invalid={ invalid || undefined } onChange={ ( event ) => onChange( event.target.value ) }>
+			{ placeholder !== undefined && <NativeSelectOption value="">{ placeholder }</NativeSelectOption> }
+			{ Object.entries( options ).map( ( [ key, label ] ) => (
+				<NativeSelectOption key={ key } value={ key }>
+					{ label }
+				</NativeSelectOption>
+			) ) }
+		</NativeSelect>
+	);
+}
+
+export function AnimalFormPage() {
+	const params = useParams();
+	const animalId = params.id ? Number( params.id ) : undefined;
+	const navigate = useNavigate();
+	const queryClient = useQueryClient();
+	const [ searchParams, setSearchParams ] = useSearchParams();
+	const uid = useId();
+
+	const step = Math.min( STEPS.length, Math.max( 1, Number( searchParams.get( 'passo' ) ) || 1 ) );
+	const [ form, setForm ] = useState< FormState >( emptyForm );
+	const [ loadedId, setLoadedId ] = useState< number | undefined >();
+	const [ errors, setErrors ] = useState< { name?: string; species?: string } >( {} );
+	const [ confirmDelete, setConfirmDelete ] = useState( false );
+
+	const query = useQuery( {
+		queryKey: [ 'animal', animalId ],
+		queryFn: () => api.getAnimal( animalId as number ),
+		enabled: animalId !== undefined && Number.isInteger( animalId ),
+		staleTime: Infinity,
+	} );
+
+	// Preenche o formulário uma vez por animal carregado (e limpa ao abrir "novo").
+	useEffect( () => {
+		if ( animalId === undefined ) {
+			setForm( emptyForm );
+			setLoadedId( undefined );
+		} else if ( query.data && query.data.id !== loadedId ) {
+			setForm( toForm( query.data ) );
+			setLoadedId( query.data.id );
+		}
+	}, [ animalId, query.data, loadedId ] );
+
+	const set = < K extends keyof FormState >( key: K, value: FormState[ K ] ) =>
+		setForm( ( current ) => ( { ...current, [ key ]: value } ) );
+
+	const goToStep = ( next: number ) => setSearchParams( { passo: String( next ) }, { replace: true } );
+
+	const save = useMutation( {
+		mutationFn: ( input: AnimalInput ) =>
+			animalId === undefined ? api.createAnimal( input ) : api.updateAnimal( animalId, input ),
+		onSuccess: ( animal ) => {
+			queryClient.setQueryData( [ 'animal', animal.id ], animal );
+			void queryClient.invalidateQueries( { queryKey: [ 'animals' ] } );
+		},
+		onError: ( error ) => toast.error( errorMessage( error ) ),
+	} );
+
+	const trash = useMutation( {
+		mutationFn: () => api.trashAnimal( animalId as number ),
+		onSuccess: () => {
+			void queryClient.invalidateQueries( { queryKey: [ 'animals' ] } );
+			queryClient.removeQueries( { queryKey: [ 'animal', animalId ] } );
+			toast.success( __( 'Animal movido para a lixeira.', 'resgata-wp' ) );
+			void navigate( '/animais' );
+		},
+		onError: ( error ) => toast.error( errorMessage( error ) ),
+	} );
+
+	const validate = (): boolean => {
+		const next: typeof errors = {};
+
+		if ( form.name.trim() === '' ) {
+			next.name = __( 'Informe o nome do animal.', 'resgata-wp' );
+		}
+		if ( form.species === '' ) {
+			next.species = __( 'Escolha a espécie.', 'resgata-wp' );
+		}
+		setErrors( next );
+
+		return Object.keys( next ).length === 0;
+	};
+
+	/** Salva o passo atual e segue para `nextStep` (ou conclui, com `extra`). */
+	const saveStep = async ( nextStep: number | null, extra: AnimalInput = {}, successMessage?: string ) => {
+		if ( step === 1 && ! validate() ) {
+			return;
+		}
+
+		try {
+			const animal = await save.mutateAsync( { ...stepPayload( step, form ), ...extra } );
+
+			if ( successMessage ) {
+				toast.success( successMessage );
+			}
+
+			if ( nextStep === null ) {
+				void navigate( '/animais' );
+			} else if ( animalId === undefined ) {
+				// Acabou de ser criado como rascunho: a URL passa a ser a do animal.
+				setLoadedId( animal.id );
+				void navigate( `/animais/${ animal.id }?passo=${ nextStep }`, { replace: true } );
+			} else {
+				goToStep( nextStep );
+			}
+		} catch {
+			// O erro já foi mostrado pelo onError da mutação.
+		}
+	};
+
+	if ( animalId !== undefined && query.isError ) {
+		return (
+			<>
+				<PageHeader title={ __( 'Animal não encontrado', 'resgata-wp' ) } description={ errorMessage( query.error ) } />
+				<Link to="/animais" className="text-primary underline underline-offset-4">
+					{ __( 'Voltar para a lista', 'resgata-wp' ) }
+				</Link>
+			</>
+		);
+	}
+
+	if ( animalId !== undefined && loadedId !== animalId ) {
+		return (
+			<div className="flex flex-col gap-4" aria-busy="true">
+				<Skeleton className="h-9 w-48" />
+				<Skeleton className="h-12 w-full" />
+				<Skeleton className="h-64 w-full" />
+			</div>
+		);
+	}
+
+	const animal = query.data;
+	const isDraft = ! animal || animal.post_status === 'draft';
+	const saving = save.isPending;
+	const isLast = step === STEPS.length;
+	const id = ( name: string ) => `${ uid }-${ name }`;
+
+	return (
+		<>
+			<Link to="/animais" className="text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1 text-sm">
+				<ArrowLeftIcon className="size-4" aria-hidden="true" />
+				{ __( 'Animais', 'resgata-wp' ) }
+			</Link>
+
+			<PageHeader
+				title={ animal ? animal.name : __( 'Cadastrar animal', 'resgata-wp' ) }
+				action={
+					animal && (
+						<div className="flex items-center gap-2">
+							{ isDraft ? (
+								<Badge variant="muted">{ __( 'Rascunho', 'resgata-wp' ) }</Badge>
+							) : (
+								<a
+									href={ animal.permalink }
+									target="_blank"
+									rel="noreferrer"
+									className="text-primary inline-flex items-center gap-1 text-sm underline-offset-4 hover:underline"
+								>
+									{ __( 'Ver no site', 'resgata-wp' ) }
+									<ExternalLinkIcon className="size-4" aria-hidden="true" />
+								</a>
+							) }
+							<Button
+								type="button"
+								variant="ghost"
+								size="icon"
+								aria-label={ __( 'Excluir animal', 'resgata-wp' ) }
+								onClick={ () => setConfirmDelete( true ) }
+							>
+								<Trash2Icon className="text-destructive" aria-hidden="true" />
+							</Button>
+						</div>
+					)
+				}
+			/>
+
+			{ /* Passos: depois que o animal existe, dá para ir direto a qualquer um. */ }
+			<ol className="mb-6 grid grid-cols-4 gap-2" aria-label={ __( 'Passos do cadastro', 'resgata-wp' ) }>
+				{ STEPS.map( ( label, index ) => {
+					const number = index + 1;
+					const current = number === step;
+					const reachable = animalId !== undefined && ! saving;
+
+					return (
+						<li key={ label }>
+							<button
+								type="button"
+								disabled={ ! reachable || current }
+								aria-current={ current ? 'step' : undefined }
+								onClick={ () => void saveStep( number ) }
+								className={ cn(
+									'flex w-full flex-col items-start gap-1 rounded-lg border-t-4 pt-2 text-left text-xs font-medium sm:text-sm',
+									current ? 'border-primary text-foreground' : 'text-muted-foreground border-border',
+									number < step && 'border-brand',
+									reachable && ! current && 'hover:text-foreground cursor-pointer'
+								) }
+							>
+								<span className="text-muted-foreground text-xs">
+									{ /* translators: %d: número do passo. */ }
+									{ sprintf( __( 'Passo %d', 'resgata-wp' ), number ) }
+								</span>
+								{ label }
+							</button>
+						</li>
+					);
+				} ) }
+			</ol>
+
+			<form
+				className="bg-card flex flex-col gap-5 rounded-xl border p-4 sm:p-6"
+				noValidate
+				onSubmit={ ( event ) => {
+					event.preventDefault();
+					void saveStep( isLast ? null : step + 1, {}, isLast ? __( 'Cadastro salvo.', 'resgata-wp' ) : undefined );
+				} }
+			>
+				{ step === 1 && (
+					<>
+						<Field label={ __( 'Nome', 'resgata-wp' ) } htmlFor={ id( 'name' ) } error={ errors.name }>
+							<Input
+								id={ id( 'name' ) }
+								value={ form.name }
+								maxLength={ 200 }
+								autoComplete="off"
+								aria-invalid={ errors.name ? true : undefined }
+								onChange={ ( event ) => set( 'name', event.target.value ) }
+							/>
+						</Field>
+						<Field label={ __( 'Espécie', 'resgata-wp' ) } htmlFor={ id( 'species' ) } error={ errors.species }>
+							<Select
+								id={ id( 'species' ) }
+								value={ form.species }
+								options={ config.options.species }
+								placeholder={ __( 'Escolha', 'resgata-wp' ) }
+								invalid={ Boolean( errors.species ) }
+								onChange={ ( value ) => set( 'species', value ) }
+							/>
+						</Field>
+						<Field label={ __( 'Sexo', 'resgata-wp' ) } htmlFor={ id( 'sex' ) }>
+							<Select
+								id={ id( 'sex' ) }
+								value={ form.sex }
+								options={ config.options.sexes }
+								placeholder={ __( 'Não informado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'sex', value ) }
+							/>
+						</Field>
+						<Field
+							label={ __( 'Foto principal', 'resgata-wp' ) }
+							hint={ __( 'É a foto que aparece na lista de animais do site.', 'resgata-wp' ) }
+						>
+							{ form.featured && (
+								<div className="relative w-40">
+									<img src={ form.featured.url } alt="" className="aspect-square w-40 rounded-xl object-cover" />
+									<Button
+										type="button"
+										variant="secondary"
+										size="icon-sm"
+										className="absolute top-2 right-2"
+										aria-label={ __( 'Remover foto principal', 'resgata-wp' ) }
+										onClick={ () => set( 'featured', null ) }
+									>
+										<XIcon aria-hidden="true" />
+									</Button>
+								</div>
+							) }
+							<PhotoButtons animalId={ animalId } onUploaded={ ( image ) => set( 'featured', image ) } />
+						</Field>
+					</>
+				) }
+
+				{ step === 2 && (
+					<>
+						<Field
+							label={ __( 'Situação', 'resgata-wp' ) }
+							htmlFor={ id( 'status' ) }
+							hint={ __( 'Só "Disponível para adoção" e "Reservado" aparecem na lista pública.', 'resgata-wp' ) }
+						>
+							<Select id={ id( 'status' ) } value={ form.status } options={ config.options.statuses } onChange={ ( value ) => set( 'status', value ) } />
+						</Field>
+						<Field
+							label={ __( 'Idade estimada', 'resgata-wp' ) }
+							htmlFor={ id( 'age-years' ) }
+							hint={ __( 'Informe a idade de hoje. O site atualiza sozinho com o passar do tempo.', 'resgata-wp' ) }
+						>
+							<div className="flex items-center gap-2">
+								<Input
+									id={ id( 'age-years' ) }
+									type="number"
+									inputMode="numeric"
+									min={ 0 }
+									max={ 40 }
+									className="w-20"
+									value={ form.ageYears }
+									onChange={ ( event ) => set( 'ageYears', event.target.value ) }
+								/>
+								<span>{ __( 'anos e', 'resgata-wp' ) }</span>
+								<Input
+									type="number"
+									inputMode="numeric"
+									min={ 0 }
+									max={ 11 }
+									className="w-20"
+									aria-label={ __( 'Meses', 'resgata-wp' ) }
+									value={ form.ageMonths }
+									onChange={ ( event ) => set( 'ageMonths', event.target.value ) }
+								/>
+								<span>{ __( 'meses', 'resgata-wp' ) }</span>
+							</div>
+						</Field>
+						<Field label={ __( 'Porte', 'resgata-wp' ) } htmlFor={ id( 'size' ) }>
+							<Select
+								id={ id( 'size' ) }
+								value={ form.size }
+								options={ config.options.sizes }
+								placeholder={ __( 'Não informado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'size', value ) }
+							/>
+						</Field>
+						<Field label={ __( 'Cor / pelagem', 'resgata-wp' ) } htmlFor={ id( 'color' ) }>
+							<Input
+								id={ id( 'color' ) }
+								value={ form.color }
+								maxLength={ 100 }
+								placeholder={ __( 'Ex.: tigrado, preto e branco', 'resgata-wp' ) }
+								onChange={ ( event ) => set( 'color', event.target.value ) }
+							/>
+						</Field>
+						<Field
+							label={ __( 'Temperamento', 'resgata-wp' ) }
+							htmlFor={ id( 'temperaments' ) }
+							hint={ __( 'Separe com vírgulas. Ex.: dócil, brincalhão, tímido', 'resgata-wp' ) }
+						>
+							<Input id={ id( 'temperaments' ) } value={ form.temperaments } onChange={ ( event ) => set( 'temperaments', event.target.value ) } />
+						</Field>
+						<Field label={ __( 'Data do resgate', 'resgata-wp' ) } htmlFor={ id( 'rescue' ) }>
+							<Input id={ id( 'rescue' ) } type="date" value={ form.rescueDate } onChange={ ( event ) => set( 'rescueDate', event.target.value ) } />
+						</Field>
+					</>
+				) }
+
+				{ step === 3 && (
+					<>
+						<Field label={ __( 'Castrado(a)', 'resgata-wp' ) } htmlFor={ id( 'neutered' ) }>
+							<Select
+								id={ id( 'neutered' ) }
+								value={ form.neutered }
+								options={ config.options.yesNo }
+								placeholder={ __( 'Não informado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'neutered', value ) }
+							/>
+						</Field>
+						<Field label={ __( 'Último vermífugo', 'resgata-wp' ) } htmlFor={ id( 'dewormed' ) }>
+							<Input id={ id( 'dewormed' ) } type="date" value={ form.dewormedDate } onChange={ ( event ) => set( 'dewormedDate', event.target.value ) } />
+						</Field>
+						<Field label={ __( 'Teste de FIV (gatos)', 'resgata-wp' ) } htmlFor={ id( 'fiv' ) }>
+							<Select
+								id={ id( 'fiv' ) }
+								value={ form.fiv }
+								options={ config.options.tests }
+								placeholder={ __( 'Não testado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'fiv', value ) }
+							/>
+						</Field>
+						<Field label={ __( 'Teste de FeLV (gatos)', 'resgata-wp' ) } htmlFor={ id( 'felv' ) }>
+							<Select
+								id={ id( 'felv' ) }
+								value={ form.felv }
+								options={ config.options.tests }
+								placeholder={ __( 'Não testado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'felv', value ) }
+							/>
+						</Field>
+
+						<fieldset className="flex flex-col gap-3">
+							<legend className="mb-2 text-base font-medium">{ __( 'Vacinas', 'resgata-wp' ) }</legend>
+							{ form.vaccines.map( ( vaccine, index ) => (
+								<div key={ index } className="flex flex-wrap items-center gap-2">
+									<Input
+										className="min-w-40 flex-1"
+										value={ vaccine.name }
+										maxLength={ 100 }
+										placeholder={ __( 'Ex.: V4, antirrábica', 'resgata-wp' ) }
+										aria-label={ __( 'Nome da vacina', 'resgata-wp' ) }
+										onChange={ ( event ) =>
+											set(
+												'vaccines',
+												form.vaccines.map( ( item, position ) =>
+													position === index ? { ...item, name: event.target.value } : item
+												)
+											)
+										}
+									/>
+									<Input
+										type="date"
+										className="w-44"
+										value={ vaccine.date }
+										aria-label={ __( 'Data da aplicação', 'resgata-wp' ) }
+										onChange={ ( event ) =>
+											set(
+												'vaccines',
+												form.vaccines.map( ( item, position ) =>
+													position === index ? { ...item, date: event.target.value } : item
+												)
+											)
+										}
+									/>
+									<Button
+										type="button"
+										variant="ghost"
+										size="icon"
+										aria-label={ __( 'Remover vacina', 'resgata-wp' ) }
+										onClick={ () =>
+											set(
+												'vaccines',
+												form.vaccines.filter( ( _, position ) => position !== index )
+											)
+										}
+									>
+										<XIcon aria-hidden="true" />
+									</Button>
+								</div>
+							) ) }
+							<Button
+								type="button"
+								variant="outline"
+								className="self-start"
+								onClick={ () => set( 'vaccines', [ ...form.vaccines, { name: '', date: '' } ] ) }
+							>
+								<PlusIcon aria-hidden="true" />
+								{ __( 'Adicionar vacina', 'resgata-wp' ) }
+							</Button>
+						</fieldset>
+					</>
+				) }
+
+				{ step === 4 && (
+					<>
+						<div className="flex flex-col gap-2">
+							<span id={ id( 'story' ) } className="text-base font-medium">
+								{ __( 'História do resgate', 'resgata-wp' ) }
+							</span>
+							<RichText key={ loadedId } value={ form.story } labelledBy={ id( 'story' ) } onChange={ ( html ) => set( 'story', html ) } />
+							<p className="text-muted-foreground text-sm">
+								{ __( 'Conte onde o animal foi encontrado, como estava e como foi a recuperação.', 'resgata-wp' ) }
+							</p>
+						</div>
+
+						<fieldset className="flex flex-col gap-3">
+							<legend className="mb-1 text-base font-medium">{ __( 'Galeria de fotos (antes e depois)', 'resgata-wp' ) }</legend>
+							<p className="text-muted-foreground text-sm">
+								{ __( 'Marque cada foto como "Antes" (quando foi resgatado) ou "Depois" (recuperado).', 'resgata-wp' ) }
+							</p>
+							{ form.gallery.length > 0 && (
+								<ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+									{ form.gallery.map( ( photo ) => (
+										<li key={ photo.id } className="bg-muted flex flex-col gap-2 rounded-xl p-2">
+											<div className="relative">
+												<img src={ photo.url } alt="" className="aspect-square w-full rounded-lg object-cover" />
+												<Button
+													type="button"
+													variant="secondary"
+													size="icon-sm"
+													className="absolute top-1 right-1"
+													aria-label={ __( 'Remover foto', 'resgata-wp' ) }
+													onClick={ () =>
+														set(
+															'gallery',
+															form.gallery.filter( ( item ) => item.id !== photo.id )
+														)
+													}
+												>
+													<XIcon aria-hidden="true" />
+												</Button>
+											</div>
+											<NativeSelect
+												value={ photo.type }
+												aria-label={ __( 'Tipo da foto', 'resgata-wp' ) }
+												onChange={ ( event ) =>
+													set(
+														'gallery',
+														form.gallery.map( ( item ) =>
+															item.id === photo.id ? { ...item, type: event.target.value as PhotoType } : item
+														)
+													)
+												}
+											>
+												{ Object.entries( config.options.photoTypes ).map( ( [ key, label ] ) => (
+													<NativeSelectOption key={ key } value={ key }>
+														{ label }
+													</NativeSelectOption>
+												) ) }
+											</NativeSelect>
+										</li>
+									) ) }
+								</ul>
+							) }
+							<PhotoButtons
+								animalId={ animalId }
+								multiple
+								onUploaded={ ( image ) =>
+									setForm( ( current ) =>
+										current.gallery.some( ( item ) => item.id === image.id )
+											? current
+											: { ...current, gallery: [ ...current.gallery, { ...image, type: 'after' } ] }
+									)
+								}
+							/>
+						</fieldset>
+					</>
+				) }
+
+				<div className="flex flex-wrap items-center justify-between gap-3 border-t pt-5">
+					{ step > 1 ? (
+						<Button type="button" variant="ghost" disabled={ saving } onClick={ () => goToStep( step - 1 ) }>
+							{ __( 'Voltar', 'resgata-wp' ) }
+						</Button>
+					) : (
+						<span />
+					) }
+
+					<div className="flex flex-wrap items-center gap-2">
+						{ isLast && isDraft && (
+							<Button type="submit" variant="outline" disabled={ saving }>
+								{ __( 'Salvar rascunho', 'resgata-wp' ) }
+							</Button>
+						) }
+						{ isLast && isDraft ? (
+							<Button
+								type="button"
+								disabled={ saving }
+								onClick={ () => void saveStep( null, { post_status: 'publish' }, __( 'Animal publicado no site.', 'resgata-wp' ) ) }
+							>
+								{ saving ? <Loader2Icon className="animate-spin" aria-hidden="true" /> : <CheckIcon aria-hidden="true" /> }
+								{ __( 'Publicar', 'resgata-wp' ) }
+							</Button>
+						) : (
+							<Button type="submit" disabled={ saving }>
+								{ saving && <Loader2Icon className="animate-spin" aria-hidden="true" /> }
+								{ isLast ? __( 'Salvar', 'resgata-wp' ) : __( 'Salvar e continuar', 'resgata-wp' ) }
+							</Button>
+						) }
+					</div>
+				</div>
+			</form>
+
+			<AlertDialog open={ confirmDelete } onOpenChange={ setConfirmDelete }>
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>{ __( 'Excluir este animal?', 'resgata-wp' ) }</AlertDialogTitle>
+						<AlertDialogDescription>
+							{ __(
+								'O cadastro vai para a lixeira e sai do site. O administrador consegue restaurar em até 30 dias.',
+								'resgata-wp'
+							) }
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel>{ __( 'Cancelar', 'resgata-wp' ) }</AlertDialogCancel>
+						<AlertDialogAction variant="destructive" disabled={ trash.isPending } onClick={ () => trash.mutate() }>
+							{ __( 'Excluir', 'resgata-wp' ) }
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
+		</>
+	);
+}
