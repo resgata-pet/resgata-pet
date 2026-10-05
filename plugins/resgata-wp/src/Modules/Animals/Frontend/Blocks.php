@@ -7,6 +7,7 @@
 
 namespace ResgataWP\Modules\Animals\Frontend;
 
+use ResgataWP\Core\Assets;
 use ResgataWP\Modules\Animals\Options;
 use ResgataWP\Modules\Animals\Taxonomies;
 
@@ -40,11 +41,14 @@ final class Blocks {
 		$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
 		wp_register_style( self::STYLE_HANDLE, $src, array(), RWP_VERSION );
 
+		$editor = Assets::script( 'wp/blocks-editor' );
+
+		// Sem o build, o handle fica vazio: os blocos continuam funcionando no site.
 		wp_register_script(
 			self::EDITOR_HANDLE,
-			RWP_PLUGIN_URL . 'assets/js/blocks-editor.js',
-			array( 'wp-blocks', 'wp-element', 'wp-block-editor', 'wp-components', 'wp-server-side-render', 'wp-i18n' ),
-			RWP_VERSION,
+			$editor ? $editor['url'] : false,
+			$editor ? $editor['dependencies'] : array(),
+			$editor ? $editor['version'] : RWP_VERSION,
 			true
 		);
 

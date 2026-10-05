@@ -7,8 +7,9 @@
 
 namespace ResgataWP\Modules\Animals\Admin;
 
+use ResgataWP\Core\Assets;
 use ResgataWP\Modules\Animals\Animal;
-use ResgataWP\Modules\Animals\Meta;
+use ResgataWP\Modules\Animals\AnimalWriter;
 use ResgataWP\Modules\Animals\Options;
 use ResgataWP\Modules\Animals\PostType;
 use ResgataWP\Modules\Animals\Taxonomies;
@@ -76,7 +77,14 @@ final class MetaBoxes {
 
 		wp_enqueue_media();
 		wp_enqueue_style( 'rwp-admin-animal', RWP_PLUGIN_URL . 'assets/css/admin-animal.css', array(), RWP_VERSION );
-		wp_enqueue_script( 'rwp-admin-animal', RWP_PLUGIN_URL . 'assets/js/admin-animal.js', array( 'jquery' ), RWP_VERSION, true );
+
+		$script = Assets::script( 'wp/admin-animal' );
+		if ( ! $script ) {
+			add_action( 'admin_notices', static fn() => wp_admin_notice( Assets::missing_build_message(), array( 'type' => 'warning' ) ) );
+			return;
+		}
+
+		wp_enqueue_script( 'rwp-admin-animal', $script['url'], $script['dependencies'], $script['version'], true );
 		wp_localize_script(
 			'rwp-admin-animal',
 			'rwpAdminAnimal',
@@ -283,68 +291,19 @@ final class MetaBoxes {
 			return;
 		}
 
-		// Campos de texto/escolha: a validação de cada um está em Meta (sanitize_callback).
-		$fields = array(
-			'rwp_status'        => Meta::STATUS,
-			'rwp_sex'           => Meta::SEX,
-			'rwp_size'          => Meta::SIZE,
-			'rwp_color'         => Meta::COLOR,
-			'rwp_rescue_date'   => Meta::RESCUE_DATE,
-			'rwp_dewormed_date' => Meta::DEWORMED_DATE,
-			'rwp_neutered'      => Meta::NEUTERED,
-			'rwp_fiv'           => Meta::FIV,
-			'rwp_felv'          => Meta::FELV,
-		);
+		$fields = array( 'status', 'species', 'sex', 'size', 'color', 'rescue_date', 'dewormed_date', 'neutered', 'fiv', 'felv', 'age_years', 'age_months' );
+		$data   = array();
 
-		foreach ( $fields as $field => $meta_key ) {
-			$value = isset( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : '';
-			update_post_meta( $post_id, $meta_key, wp_slash( $value ) );
+		foreach ( $fields as $field ) {
+			$data[ $field ] = isset( $_POST[ 'rwp_' . $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'rwp_' . $field ] ) ) : '';
 		}
-
-		// Idade estimada → data de nascimento estimada.
-		$years  = isset( $_POST['rwp_age_years'] ) ? sanitize_text_field( wp_unslash( $_POST['rwp_age_years'] ) ) : '';
-		$months = isset( $_POST['rwp_age_months'] ) ? sanitize_text_field( wp_unslash( $_POST['rwp_age_months'] ) ) : '';
-		$this->save_age( $post_id, $years, $months );
-
-		// Espécie.
-		$species = isset( $_POST['rwp_species'] ) ? sanitize_key( wp_unslash( $_POST['rwp_species'] ) ) : '';
-		$term    = '' !== $species ? get_term_by( 'slug', $species, Taxonomies::SPECIES ) : false;
-		wp_set_object_terms( $post_id, $term ? array( (int) $term->term_id ) : array(), Taxonomies::SPECIES );
 
 		// Vacinas e galeria: cada item é validado em Meta::sanitize_vaccines / sanitize_gallery.
 		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$vaccines = isset( $_POST['rwp_vaccines'] ) && is_array( $_POST['rwp_vaccines'] ) ? Meta::sanitize_vaccines( wp_unslash( $_POST['rwp_vaccines'] ) ) : array();
-		$gallery  = isset( $_POST['rwp_gallery'] ) && is_array( $_POST['rwp_gallery'] ) ? Meta::sanitize_gallery( wp_unslash( $_POST['rwp_gallery'] ) ) : array();
+		$data['vaccines'] = isset( $_POST['rwp_vaccines'] ) && is_array( $_POST['rwp_vaccines'] ) ? wp_unslash( $_POST['rwp_vaccines'] ) : array();
+		$data['gallery']  = isset( $_POST['rwp_gallery'] ) && is_array( $_POST['rwp_gallery'] ) ? wp_unslash( $_POST['rwp_gallery'] ) : array();
 		// phpcs:enable
 
-		update_post_meta( $post_id, Meta::VACCINES, wp_slash( $vaccines ) );
-		update_post_meta( $post_id, Meta::GALLERY, $gallery );
-	}
-
-	/**
-	 * Converte a idade informada em data de nascimento estimada.
-	 *
-	 * A data só muda quando a idade informada é diferente da calculada hoje,
-	 * para não "rejuvenescer" o animal a cada vez que o cadastro é salvo.
-	 *
-	 * @param int    $post_id ID do animal.
-	 * @param string $years   Anos informados (pode estar vazio).
-	 * @param string $months  Meses informados (pode estar vazio).
-	 */
-	private function save_age( int $post_id, string $years, string $months ): void {
-		if ( '' === $years && '' === $months ) {
-			delete_post_meta( $post_id, Meta::BIRTH_DATE );
-			return;
-		}
-
-		$years  = min( 40, absint( $years ) );
-		$months = min( 11, absint( $months ) );
-
-		$current = ( new Animal( $post_id ) )->age();
-		if ( $current && $current['years'] === $years && $current['months'] === $months ) {
-			return;
-		}
-
-		update_post_meta( $post_id, Meta::BIRTH_DATE, Animal::birth_date_from_age( $years, $months ) );
+		AnimalWriter::save( $post_id, $data );
 	}
 }
