@@ -46,10 +46,20 @@ $WP language theme install twentytwentyfive pt_BR || true
 
 $WP plugin activate resgata-wp
 $WP theme activate resgata-tema
+
+# Usuário de teste do painel (perfil "Protetor admin").
+if ! $WP user get "${WP_PANEL_USER:-protetora}" --field=ID >/dev/null 2>&1; then
+	$WP user create "${WP_PANEL_USER:-protetora}" "${WP_PANEL_EMAIL:-protetora@example.org}" \
+		--role=rwp_protetor_admin \
+		--user_pass="${WP_PANEL_PASSWORD:-protetora}" \
+		--display_name="Protetora Teste"
+fi
+
 $WP rewrite flush
 
 echo
 echo "Pronto!"
 echo "  Site:    $URL"
-echo "  Painel:  $URL/wp-admin  (usuário: ${WP_ADMIN_USER:-admin} / senha: ${WP_ADMIN_PASSWORD:-admin})"
+echo "  Painel Resgata: $URL/painel  (usuário e senha em WP_PANEL_USER / WP_PANEL_PASSWORD do .env)"
+echo "  WordPress:      $URL/wp-admin  (usuário e senha em WP_ADMIN_USER / WP_ADMIN_PASSWORD do .env)"
 echo "  E-mails: http://localhost:${MAILPIT_PORT:-8025}"
