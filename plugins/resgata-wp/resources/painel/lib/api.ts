@@ -1,0 +1,117 @@
+/**
+ * Acesso à API do painel (`resgata-wp/v1`). O nonce é enviado pelo
+ * `wp-api-fetch`, configurado pelo próprio WordPress na página.
+ */
+import apiFetch from '@wordpress/api-fetch';
+import { __ } from '@wordpress/i18n';
+import { config } from '@/lib/config';
+import { resizeImage } from '@/lib/image';
+
+export type PostStatus = 'publish' | 'draft';
+export type PhotoType = 'before' | 'after';
+
+export interface AnimalImage {
+	id: number;
+	url: string;
+}
+
+export interface GalleryPhoto extends AnimalImage {
+	type: PhotoType;
+}
+
+export interface Vaccine {
+	name: string;
+	date: string;
+}
+
+export interface Animal {
+	id: number;
+	name: string;
+	post_status: PostStatus;
+	permalink: string;
+	story: string;
+	species: string;
+	status: string;
+	sex: string;
+	size: string;
+	color: string;
+	age_years: number | null;
+	age_months: number | null;
+	rescue_date: string;
+	temperaments: string[];
+	neutered: string;
+	dewormed_date: string;
+	fiv: string;
+	felv: string;
+	vaccines: Vaccine[];
+	featured_image: AnimalImage | null;
+	gallery: GalleryPhoto[];
+}
+
+/** Campos aceitos na criação e na edição. */
+export type AnimalInput = Partial<
+	Omit< Animal, 'id' | 'permalink' | 'featured_image' | 'gallery' > & {
+		featured_media: number;
+		gallery: { id: number; type: PhotoType }[];
+	}
+>;
+
+export interface AnimalListItem {
+	id: number;
+	name: string;
+	post_status: PostStatus;
+	status: string;
+	status_label: string;
+	thumbnail: string;
+}
+
+export interface AnimalList {
+	items: AnimalListItem[];
+	total: number;
+	total_pages: number;
+}
+
+const base = `/${ config.restNamespace }/animals`;
+
+export const api = {
+	listAnimals: ( page: number, perPage: number ) =>
+		apiFetch< AnimalList >( { path: `${ base }?page=${ page }&per_page=${ perPage }` } ),
+
+	getAnimal: ( id: number ) => apiFetch< Animal >( { path: `${ base }/${ id }` } ),
+
+	createAnimal: ( data: AnimalInput ) => apiFetch< Animal >( { path: base, method: 'POST', data } ),
+
+	updateAnimal: ( id: number, data: AnimalInput ) =>
+		apiFetch< Animal >( { path: `${ base }/${ id }`, method: 'PUT', data } ),
+
+	trashAnimal: ( id: number ) =>
+		apiFetch< { id: number; trashed: boolean } >( { path: `${ base }/${ id }`, method: 'DELETE' } ),
+
+	/** Reduz a foto no aparelho e envia para a biblioteca de mídia do WordPress. */
+	uploadPhoto: async ( file: File, animalId?: number ): Promise< AnimalImage > => {
+		const body = new FormData();
+		const resized = await resizeImage( file );
+
+		body.append( 'file', resized, resized.name );
+		if ( animalId ) {
+			body.append( 'post', String( animalId ) );
+		}
+
+		const media = await apiFetch< {
+			id: number;
+			source_url: string;
+			media_details?: { sizes?: { medium?: { source_url: string } } };
+		} >( { path: '/wp/v2/media', method: 'POST', body } );
+
+		return { id: media.id, url: media.media_details?.sizes?.medium?.source_url ?? media.source_url };
+	},
+};
+
+/** Mensagem legível de um erro da API. */
+export function errorMessage( error: unknown ): string {
+	if ( error && typeof error === 'object' && 'message' in error && typeof error.message === 'string' ) {
+		return error.message;
+	}
+
+	return __( 'Algo deu errado. Confira sua conexão e tente de novo.', 'resgata-wp' );
+}
