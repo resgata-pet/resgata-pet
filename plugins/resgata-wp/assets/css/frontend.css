@@ -1,0 +1,251 @@
+/*
+ * Resgata WP – estilos neutros.
+ * Herdam fontes e cores do tema. Não são carregados quando o tema declara
+ * add_theme_support( 'resgata-wp' ).
+ */
+.rwp-animals,
+.rwp-animal,
+.rwp-page {
+	--rwp-gap: 1.5rem;
+	--rwp-radius: 8px;
+	--rwp-border: color-mix(in srgb, currentColor 18%, transparent);
+	--rwp-muted: color-mix(in srgb, currentColor 70%, transparent);
+	--rwp-surface: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+/* Filtros */
+.rwp-filters {
+	align-items: flex-end;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin: 0 0 var(--rwp-gap);
+}
+
+.rwp-filters__field,
+.rwp-filters__actions {
+	margin: 0;
+}
+
+.rwp-filters__field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.rwp-filters__field label {
+	font-size: 0.875em;
+	font-weight: 600;
+}
+
+.rwp-filters__field select {
+	background: transparent;
+	border: 1px solid var(--rwp-border);
+	border-radius: var(--rwp-radius);
+	color: inherit;
+	font: inherit;
+	min-width: 9rem;
+	padding: 0.5rem 0.75rem;
+}
+
+.rwp-filters__actions {
+	align-items: center;
+	display: flex;
+	gap: 1rem;
+}
+
+.rwp-button {
+	cursor: pointer;
+}
+
+/* Grade de cartões: até N colunas, quebrando sozinha em telas menores. */
+.rwp-grid {
+	--rwp-card-min: 14rem;
+	display: grid;
+	gap: var(--rwp-gap);
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, max(var(--rwp-card-min), calc((100% - (var(--rwp-columns, 3) - 1) * var(--rwp-gap)) / var(--rwp-columns, 3)))), 1fr));
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-card {
+	border: 1px solid var(--rwp-border);
+	border-radius: var(--rwp-radius);
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	overflow: hidden;
+}
+
+.rwp-card__media {
+	aspect-ratio: 4 / 3;
+	background: var(--rwp-surface);
+	display: block;
+	position: relative;
+}
+
+.rwp-card__media img,
+.rwp-card__placeholder {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.rwp-card__body {
+	padding: 1rem;
+}
+
+.rwp-card__name {
+	font-size: 1.25em;
+	margin: 0;
+}
+
+.rwp-card__name a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.rwp-card__name a:hover,
+.rwp-card__name a:focus {
+	text-decoration: underline;
+}
+
+.rwp-card__meta {
+	color: var(--rwp-muted);
+	font-size: 0.9em;
+	margin: 0.25rem 0 0;
+}
+
+/* Selo de situação */
+.rwp-badge {
+	background: #fff;
+	border: 1px solid var(--rwp-border);
+	border-radius: 999px;
+	color: #1e1e1e;
+	display: inline-block;
+	font-size: 0.8em;
+	font-weight: 600;
+	line-height: 1.4;
+	padding: 0.15rem 0.75rem;
+}
+
+.rwp-card__media .rwp-badge {
+	left: 0.75rem;
+	position: absolute;
+	top: 0.75rem;
+}
+
+.rwp-empty {
+	border: 1px dashed var(--rwp-border);
+	border-radius: var(--rwp-radius);
+	padding: 2rem;
+	text-align: center;
+}
+
+/* Paginação */
+.rwp-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-top: var(--rwp-gap);
+}
+
+.rwp-pagination .page-numbers {
+	border: 1px solid var(--rwp-border);
+	border-radius: var(--rwp-radius);
+	padding: 0.25rem 0.75rem;
+	text-decoration: none;
+}
+
+.rwp-pagination .page-numbers.current {
+	background: var(--rwp-surface);
+	font-weight: 700;
+}
+
+/* Ficha do animal */
+.rwp-animal__section + .rwp-animal__section {
+	margin-top: 2rem;
+}
+
+.rwp-animal__status {
+	margin: 0 0 1rem;
+}
+
+.rwp-animal__heading {
+	margin: 0 0 1rem;
+}
+
+.rwp-animal__subheading {
+	font-size: 1.1em;
+	margin: 1.25rem 0 0.5rem;
+}
+
+.rwp-facts {
+	display: grid;
+	gap: 0.75rem 1.5rem;
+	grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+	margin: 0;
+}
+
+.rwp-facts__item {
+	border-top: 1px solid var(--rwp-border);
+	padding-top: 0.5rem;
+}
+
+.rwp-facts dt {
+	color: var(--rwp-muted);
+	font-size: 0.85em;
+}
+
+.rwp-facts dd {
+	font-weight: 600;
+	margin: 0;
+}
+
+.rwp-vaccine-list {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.rwp-vaccine-list__date {
+	color: var(--rwp-muted);
+}
+
+.rwp-gallery__list {
+	display: grid;
+	gap: 0.75rem;
+	grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-gallery__list img {
+	aspect-ratio: 1;
+	border-radius: var(--rwp-radius);
+	display: block;
+	height: auto;
+	object-fit: cover;
+	width: 100%;
+}
+
+/* Templates PHP (temas clássicos) */
+.rwp-page {
+	margin-inline: auto;
+	max-width: 1100px;
+	padding: 2rem 1rem;
+}
+
+.rwp-page__photo img {
+	border-radius: var(--rwp-radius);
+	height: auto;
+	max-width: 100%;
+}
+
+.rwp-page__photo,
+.rwp-page__story {
+	margin-block: 1.5rem;
+}
