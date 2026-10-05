@@ -20,7 +20,7 @@ O kit tem duas partes, neste repositório:
 | Animais (cadastro, listagem com filtros, página individual) | Pronto |
 | Painel próprio em `/painel` (cadastro de animais pelo celular) | Pronto |
 | Configurações da protetora (contato, redes, localização, Pix) e página de contato | Pronto |
-| Pedidos de adoção | Planejado |
+| Pedidos de adoção (questionário no site, envio pelo WhatsApp, fila no painel) | Pronto |
 | Apadrinhamento | Planejado |
 | Prestação de contas | Planejado |
 
@@ -49,6 +49,9 @@ O dia a dia acontece em `seusite.org/painel`, um painel próprio, feito para o c
 - **Fotos** tiradas na hora ou escolhidas do aparelho, reduzidas antes do envio.
 - **Animais**: lista com foto, nome e situação.
 - **Excluir** move o cadastro para a lixeira; o administrador pode restaurar pelo WordPress.
+- **Adoções**: quem quer adotar preenche um questionário na página do animal e envia o pedido
+  pelo WhatsApp da protetora. O pedido também fica guardado no painel, com situação (novo, em
+  análise, entrevista, aprovado, recusado) e anotações internas.
 - **Configurações**: WhatsApp, telefone, e-mail, redes sociais, cidade e chave Pix. Ao salvar
   pela primeira vez, o site ganha uma página **Contato** com esses dados. Para mostrá-los em
   outra página, use o bloco **Contato da protetora**.

@@ -95,7 +95,7 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
 - Aplicação React em página própria, sem tema e sem `wp_head()`: `Router` cria a regra de URL
   e confere o acesso; `Page` imprime o HTML e os dados iniciais em `window.rwpPainel`.
 - Acesso pela capability `rwp_access_panel` (administrador, editor e Protetor admin).
-  O menu mostra Início, Animais, Configurações (para quem pode) e Minha conta.
+  O menu mostra Início, Animais, Adoções e Configurações (para quem pode) e Minha conta.
 - Perfil **Protetor admin** (`rwp_protetor_admin`): cópia do Editor; `Access` o redireciona de
   qualquer tela do wp-admin para `/painel` (AJAX liberado) e esconde a barra do WordPress.
   O administrador usa os dois, com atalhos de ida e volta.
@@ -174,12 +174,41 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
 - A tela "Resgata WP → Configurações" do wp-admin (módulos ativos e retenção de dados) continua
   só para o Administrador.
 
+## Módulo Pedidos de adoção (implementado)
+
+- Depende do módulo Animais. Código em `src/Modules/Adoptions/`.
+- Fluxo: a pessoa preenche o questionário na página do animal → o pedido é gravado na fila
+  interna → a tela de confirmação mostra o botão "Enviar pedido pelo WhatsApp", que abre a
+  conversa com o WhatsApp das Configurações já com o pedido escrito (`Messages::whatsapp_text()`).
+  Se houver `adoption_email` nas Configurações, a protetora também recebe um e-mail só com nome,
+  animal e link do painel (as respostas não vão por e-mail).
+- Dados: CPT `rwp_adoption`, **não público** (sem tela no wp-admin, fora da REST do WordPress e
+  das buscas), status de post `private`, título = nome de quem pediu. Metas:
+  `rwp_adoption_status` (new, reviewing, interview, approved, declined),
+  `rwp_adoption_animal_id`, `rwp_adoption_answers`, `rwp_adoption_consent` (data + texto exato
+  aceito) e `rwp_adoption_notes` (anotações internas).
+- Capability `rwp_manage_adoptions`: Administrador e Protetor admin (o Editor comum não).
+- Perguntas em `Questionnaire::fields()` (filtro `rwp_adoption_questionnaire_fields`): a mesma
+  definição monta o formulário, valida, alimenta o painel e a mensagem do WhatsApp.
+- Formulário: bloco `resgata-wp/adoption-form` (templates `adoption-form.php` e
+  `adoption-success.php`), já incluído nos modelos da página do animal. Só aparece para animal
+  publicado e "disponível". Em outra página, mostra um seletor de animais disponíveis
+  (`?rwp_animal=ID` pré-seleciona).
+- Envio (`Submission`): POST na própria página, nonce, campo-armadilha contra robôs, limite de 5
+  pedidos aceitos por hora por endereço de rede (guardado só como resumo irreversível) e
+  redirecionamento com código de uso único (`?rwp_pedido=`) para a confirmação.
+- Consentimento (LGPD): caixa obrigatória; o texto vem de "Texto de privacidade" nas
+  Configurações (ou de um texto padrão) e é guardado junto com o pedido.
+- Painel: `/painel/adocoes` (lista com filtro por situação e troca rápida) e
+  `/painel/adocoes/:id` (respostas, contato, animal, consentimento, anotações internas). O menu
+  mostra o número de pedidos novos. Excluir um pedido apaga em definitivo (não há lixeira).
+- Apagar um animal em definitivo apaga os pedidos ligados a ele.
+
 ## Módulos previstos (ainda não implementados)
 
-Pedidos de adoção (questionário com consentimento LGPD, fila interna, e-mail), Apadrinhamento
+Apadrinhamento
 (planos com links de gateway externo, contador manual), Prestação de contas (lançamentos,
-fechamento mensal, página pública). Regras de adoção, taxa e texto de privacidade já são
-cadastrados nas Configurações, mas só serão exibidos pelo módulo de pedidos de adoção.
+fechamento mensal, página pública).
 
 ## Regras de segurança (obrigatórias)
 
