@@ -29,6 +29,7 @@ export function DatePicker( {
 	onChange,
 	allowFuture = false,
 	ariaLabel,
+	placeholder,
 	className,
 }: {
 	id?: string;
@@ -36,6 +37,7 @@ export function DatePicker( {
 	onChange: ( value: string ) => void;
 	allowFuture?: boolean;
 	ariaLabel?: string;
+	placeholder?: string;
 	className?: string;
 } ) {
 	const [ open, setOpen ] = useState( false );
@@ -51,12 +53,12 @@ export function DatePicker( {
 						type="button"
 						variant="outline"
 						aria-label={ ariaLabel }
-						className={ cn( 'border-input w-full justify-start font-normal', ! selected && 'text-muted-foreground', className ) }
+						className={ cn( 'border-input w-full min-w-0 justify-start font-normal', ! selected && 'text-muted-foreground', className ) }
 					/>
 				}
 			>
 				<CalendarIcon aria-hidden="true" />
-				{ selected ? selected.toLocaleDateString( 'pt-BR' ) : __( 'Escolha a data', 'resgata-wp' ) }
+				{ selected ? selected.toLocaleDateString( 'pt-BR' ) : ( placeholder ?? __( 'Escolha a data', 'resgata-wp' ) ) }
 			</PopoverTrigger>
 			<PopoverContent align="start" className="w-auto p-2">
 				<Calendar

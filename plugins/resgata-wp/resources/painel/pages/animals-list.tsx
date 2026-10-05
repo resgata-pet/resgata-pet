@@ -1,16 +1,18 @@
-import { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router';
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import { toast } from 'sonner';
-import { ChevronLeftIcon, ChevronRightIcon, PawPrintIcon, PlusIcon } from 'lucide-react';
-import { api, errorMessage, type AnimalList, type AnimalListItem, type PostStatus } from '@/lib/api';
+import { ChevronLeftIcon, ChevronRightIcon, PawPrintIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react';
+import { api, emptyFilters, errorMessage, type AnimalFilters, type AnimalList, type AnimalListItem, type PostStatus } from '@/lib/api';
 import { config } from '@/lib/config';
 import { Button, buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { AnimalFiltersButton, countFilters } from '@/components/animal-filters';
 import { OptionSelect } from '@/components/option-select';
 import { PageHeader } from '@/components/page-header';
 
@@ -20,18 +22,81 @@ const column = createColumnHelper< AnimalListItem >();
 
 type QuickChanges = { status?: string; post_status?: PostStatus };
 
+/** Nome de cada filtro na URL, para os filtros sobreviverem a "abrir um animal e voltar". */
+const URL_KEYS: Record< keyof AnimalFilters, string > = {
+	search: 'busca',
+	species: 'especie',
+	status: 'situacao',
+	post_status: 'publicacao',
+	sex: 'sexo',
+	size: 'porte',
+	neutered: 'castrado',
+	rescue_from: 'de',
+	rescue_to: 'ate',
+};
+
+function filtersFromUrl( params: URLSearchParams ): AnimalFilters {
+	const filters = { ...emptyFilters };
+
+	for ( const key of Object.keys( URL_KEYS ) as ( keyof AnimalFilters )[] ) {
+		const value = params.get( URL_KEYS[ key ] ) ?? '';
+
+		if ( Array.isArray( emptyFilters[ key ] ) ) {
+			( filters[ key ] as string[] ) = value ? value.split( ',' ).filter( Boolean ) : [];
+		} else {
+			( filters[ key ] as string ) = value;
+		}
+	}
+
+	return filters;
+}
+
+function filtersToUrl( filters: AnimalFilters ): Record< string, string > {
+	const params: Record< string, string > = {};
+
+	for ( const key of Object.keys( URL_KEYS ) as ( keyof AnimalFilters )[] ) {
+		const value = filters[ key ];
+		const text = Array.isArray( value ) ? value.join( ',' ) : value.trim();
+
+		if ( text !== '' ) {
+			params[ URL_KEYS[ key ] ] = text;
+		}
+	}
+
+	return params;
+}
+
 export function AnimalsListPage() {
 	const navigate = useNavigate();
 	const [ pagination, setPagination ] = useState( { pageIndex: 0, pageSize: PAGE_SIZES[ 0 ] } );
 
+	const [ searchParams, setSearchParams ] = useSearchParams();
+	const urlKey = searchParams.toString();
+	const filters = useMemo( () => filtersFromUrl( new URLSearchParams( urlKey ) ), [ urlKey ] );
+	const [ searchText, setSearchText ] = useState( filters.search );
+	const hasFilters = filters.search !== '' || countFilters( filters ) > 0;
+
+	// Mantém o campo de busca igual à URL (ex.: ao limpar tudo ou usar o "voltar" do navegador).
+	useEffect( () => setSearchText( filters.search ), [ filters.search ] );
+
+	const applyFilters = ( next: AnimalFilters ) => {
+		setSearchParams( filtersToUrl( next ), { replace: true } );
+		setPagination( ( current ) => ( { ...current, pageIndex: 0 } ) );
+	};
+
+	const submitSearch = ( event: FormEvent ) => {
+		event.preventDefault();
+		applyFilters( { ...filters, search: searchText.trim() } );
+	};
+
 	const { data, isPending, isError, error, isPlaceholderData } = useQuery( {
-		queryKey: [ 'animals', pagination.pageIndex, pagination.pageSize ],
-		queryFn: () => api.listAnimals( pagination.pageIndex + 1, pagination.pageSize ),
+		queryKey: [ 'animals', pagination.pageIndex, pagination.pageSize, urlKey ],
+		queryFn: () => api.listAnimals( pagination.pageIndex + 1, pagination.pageSize, filters ),
 		placeholderData: keepPreviousData,
 	} );
 
 	const queryClient = useQueryClient();
-	const queryKey = [ 'animals', pagination.pageIndex, pagination.pageSize ];
+	const queryKey = [ 'animals', pagination.pageIndex, pagination.pageSize, urlKey ];
 
 	// Troca rápida de situação/publicação: a linha muda na hora e volta atrás se o servidor recusar.
 	const quickUpdate = useMutation( {
@@ -164,6 +229,41 @@ export function AnimalsListPage() {
 				}
 			/>
 
+			<div className="mb-4 flex flex-wrap items-center gap-2">
+				<form className="flex min-w-0 flex-1 items-center gap-2 sm:max-w-sm" role="search" onSubmit={ submitSearch }>
+					<div className="relative min-w-0 flex-1">
+						<Input
+							type="search"
+							enterKeyHint="search"
+							className="pr-10 [&::-webkit-search-cancel-button]:hidden"
+							placeholder={ __( 'Procurar pelo nome', 'resgata-wp' ) }
+							aria-label={ __( 'Procurar animal pelo nome', 'resgata-wp' ) }
+							value={ searchText }
+							onChange={ ( event ) => setSearchText( event.target.value ) }
+						/>
+						{ searchText !== '' && (
+							<button
+								type="button"
+								className="text-muted-foreground hover:text-foreground absolute top-1/2 right-2 flex size-7 -translate-y-1/2 items-center justify-center rounded-md"
+								aria-label={ __( 'Limpar busca', 'resgata-wp' ) }
+								onClick={ () => {
+									setSearchText( '' );
+									if ( filters.search !== '' ) {
+										applyFilters( { ...filters, search: '' } );
+									}
+								} }
+							>
+								<XIcon className="size-4" aria-hidden="true" />
+							</button>
+						) }
+					</div>
+					<Button type="submit" variant="outline" size="icon" aria-label={ __( 'Procurar', 'resgata-wp' ) }>
+						<SearchIcon aria-hidden="true" />
+					</Button>
+				</form>
+				<AnimalFiltersButton filters={ filters } onApply={ applyFilters } />
+			</div>
+
 			{ isError && (
 				<p className="text-destructive" role="alert">
 					{ errorMessage( error ) }
@@ -178,7 +278,17 @@ export function AnimalsListPage() {
 				</div>
 			) }
 
-			{ data && data.total === 0 && (
+			{ data && data.total === 0 && hasFilters && (
+				<div className="bg-card flex flex-col items-center gap-3 rounded-xl border p-8 text-center">
+					<SearchIcon className="text-brand size-10" aria-hidden="true" />
+					<p className="font-medium">{ __( 'Nenhum animal encontrado com esses filtros.', 'resgata-wp' ) }</p>
+					<Button type="button" variant="outline" onClick={ () => applyFilters( emptyFilters ) }>
+						{ __( 'Limpar busca e filtros', 'resgata-wp' ) }
+					</Button>
+				</div>
+			) }
+
+			{ data && data.total === 0 && ! hasFilters && (
 				<div className="bg-card flex flex-col items-center gap-3 rounded-xl border p-8 text-center">
 					<PawPrintIcon className="text-brand size-10" aria-hidden="true" />
 					<p className="font-medium">{ __( 'Nenhum animal cadastrado ainda.', 'resgata-wp' ) }</p>
@@ -235,6 +345,12 @@ export function AnimalsListPage() {
 
 						<div className="flex items-center gap-2">
 							<span className="text-muted-foreground text-sm">
+								{ sprintf(
+									/* translators: %d: quantidade de animais. */
+									_n( '%d animal', '%d animais', data.total, 'resgata-wp' ),
+									data.total
+								) }
+								{ ' · ' }
 								{ sprintf(
 									/* translators: 1: página atual, 2: total de páginas. */
 									__( 'Página %1$d de %2$d', 'resgata-wp' ),

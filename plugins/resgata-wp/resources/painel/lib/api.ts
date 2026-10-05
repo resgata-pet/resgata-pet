@@ -71,11 +71,47 @@ export interface AnimalList {
 	total_pages: number;
 }
 
+/** Filtros da listagem de animais. Listas vazias e textos vazios significam "sem filtro". */
+export interface AnimalFilters {
+	search: string;
+	species: string[];
+	status: string[];
+	post_status: string[];
+	sex: string[];
+	size: string[];
+	neutered: string[];
+	rescue_from: string;
+	rescue_to: string;
+}
+
+export const emptyFilters: AnimalFilters = {
+	search: '',
+	species: [],
+	status: [],
+	post_status: [],
+	sex: [],
+	size: [],
+	neutered: [],
+	rescue_from: '',
+	rescue_to: '',
+};
+
 const base = `/${ config.restNamespace }/animals`;
 
 export const api = {
-	listAnimals: ( page: number, perPage: number ) =>
-		apiFetch< AnimalList >( { path: `${ base }?page=${ page }&per_page=${ perPage }` } ),
+	listAnimals: ( page: number, perPage: number, filters: AnimalFilters = emptyFilters ) => {
+		const params = new URLSearchParams( { page: String( page ), per_page: String( perPage ) } );
+
+		for ( const [ key, value ] of Object.entries( filters ) ) {
+			// A API aceita listas separadas por vírgula.
+			const text = Array.isArray( value ) ? value.join( ',' ) : value.trim();
+			if ( text !== '' ) {
+				params.set( key, text );
+			}
+		}
+
+		return apiFetch< AnimalList >( { path: `${ base }?${ params.toString() }` } );
+	},
 
 	getAnimal: ( id: number ) => apiFetch< Animal >( { path: `${ base }/${ id }` } ),
 

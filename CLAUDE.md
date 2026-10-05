@@ -109,12 +109,16 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
   "AAAA-MM-DD"), `ImageDropzone` (arrastar, escolher ou tirar foto; envia e devolve a imagem),
   `RichText` (Tiptap), `Stepper` (passos de formulário em etapas), `Field`, `PageHeader`. Não use `<select>` nem `<input type="date">`
   nativos no painel.
+- Painéis de filtro seguem `components/animal-filters.tsx`: Popover no computador e Sheet
+  deslizando da direita no celular (`useMediaQuery`), aplicados só ao tocar em "Aplicar". Na
+  API, filtros de lista chegam separados por vírgula e são validados por `enum` no schema.
 - Temperamento: caixas de seleção com a lista de `Options::temperaments()` (filtro
   `rwp_temperament_options`); os nomes são gravados como termos de `rwp_temperament`.
 - Largura: o conteúdo vai até 1400px; formulários usam duas colunas a partir de `md`.
 - Telas: Início (só o botão "Cadastrar animal"; o painel de números vem depois dos outros
-  módulos), Animais (tabela, 25/50/75/100 por página, sem filtros; situação e publicação
-  trocadas direto na linha, com atualização otimista), cadastro em 4 passos
+  módulos), Animais (tabela, 25/50/75/100 por página; busca por nome e filtros por período do
+  resgate, publicação, espécie, sexo, situação, porte e castração, guardados na URL; situação e
+  publicação trocadas direto na linha, com atualização otimista), cadastro em 4 passos
   (rascunho ao concluir o passo 1; publicar no último; no cabeçalho da edição dá para
   alternar entre Publicado e Rascunho), Minha conta.
 - `make test` roda `tests/rest-permissions.php`: descobre todas as rotas do namespace e
