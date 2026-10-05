@@ -21,11 +21,10 @@ global $wpdb;
 // Animais (inclui metadados e vínculos com termos). As fotos continuam na biblioteca de mídia.
 $rwp_post_ids = get_posts(
 	array(
-		'post_type'        => 'rwp_animal',
-		'post_status'      => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'trash' ),
-		'numberposts'      => -1,
-		'fields'           => 'ids',
-		'suppress_filters' => true,
+		'post_type'   => 'rwp_animal',
+		'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'trash' ),
+		'numberposts' => -1,
+		'fields'      => 'ids',
 	)
 );
 
