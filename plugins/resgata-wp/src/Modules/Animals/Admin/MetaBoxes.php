@@ -29,6 +29,7 @@ final class MetaBoxes {
 	public function register(): void {
 		add_action( 'add_meta_boxes_' . PostType::SLUG, array( $this, 'add_meta_boxes' ) );
 		add_action( 'save_post_' . PostType::SLUG, array( $this, 'save' ) );
+		add_action( 'edit_form_after_title', array( $this, 'render_story_label' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 	}
 
@@ -36,9 +37,29 @@ final class MetaBoxes {
 	 * Adiciona as caixas.
 	 */
 	public function add_meta_boxes(): void {
+		// A escolha de "modelo" do tema só confunde quem está cadastrando um animal.
+		remove_meta_box( 'pageparentdiv', PostType::SLUG, 'side' );
+
 		add_meta_box( 'rwp-animal-profile', __( 'Ficha do animal', 'resgata-wp' ), array( $this, 'render_profile' ), PostType::SLUG, 'normal', 'high' );
 		add_meta_box( 'rwp-animal-health', __( 'Saúde', 'resgata-wp' ), array( $this, 'render_health' ), PostType::SLUG, 'normal', 'high' );
 		add_meta_box( 'rwp-animal-gallery', __( 'Galeria de fotos (antes e depois)', 'resgata-wp' ), array( $this, 'render_gallery' ), PostType::SLUG, 'normal', 'high' );
+	}
+
+	/**
+	 * Título acima do editor de texto, explicando para que ele serve.
+	 *
+	 * @param \WP_Post $post Post em edição.
+	 */
+	public function render_story_label( \WP_Post $post ): void {
+		if ( PostType::SLUG !== $post->post_type ) {
+			return;
+		}
+
+		printf(
+			'<div class="rwp-story-label"><h2>%s</h2><p class="description">%s</p></div>',
+			esc_html__( 'História do resgate', 'resgata-wp' ),
+			esc_html__( 'Conte onde o animal foi encontrado, como estava e como foi a recuperação. Esse texto aparece na página do animal.', 'resgata-wp' )
+		);
 	}
 
 	/**
@@ -94,7 +115,6 @@ final class MetaBoxes {
 		$animal  = new Animal( $post->ID );
 		$species = $animal->species();
 		$age     = $animal->age();
-		$is_new  = 'auto-draft' === $post->post_status;
 
 		wp_nonce_field( self::NONCE_ACTION, self::NONCE_NAME );
 		?>
@@ -135,15 +155,7 @@ final class MetaBoxes {
 				<input type="date" id="rwp_rescue_date" name="rwp_rescue_date" value="<?php echo esc_attr( $animal->rescue_date() ); ?>" max="<?php echo esc_attr( current_datetime()->format( 'Y-m-d' ) ); ?>">
 			</p>
 		</div>
-		<p class="description">
-			<?php
-			echo esc_html(
-				$is_new
-					? __( 'Dica: escreva a história do resgate no espaço de texto acima, escolha a foto principal e o temperamento na barra lateral.', 'resgata-wp' )
-					: __( 'A história do resgate fica no espaço de texto acima; a foto principal e o temperamento ficam na barra lateral.', 'resgata-wp' )
-			);
-			?>
-		</p>
+		<p class="description"><?php esc_html_e( 'A foto principal e o temperamento ficam na coluna da direita.', 'resgata-wp' ); ?></p>
 		<?php
 	}
 

@@ -109,7 +109,7 @@ final class SeedCommand {
 		$is_cat   = 'gato' === $sample[1];
 
 		$story = sprintf(
-			"<!-- wp:paragraph -->\n<p>%s foi encontrado(a) na rua, com fome e muito medo. Depois de semanas de cuidado, comida boa e carinho, hoje é outro bicho: confiante e cheio de energia.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:paragraph -->\n<p>Este é um texto de exemplo. Conte aqui a história do resgate: onde o animal foi encontrado, como estava e como foi a recuperação.</p>\n<!-- /wp:paragraph -->",
+			"<p>%s foi encontrado(a) na rua, com fome e muito medo. Depois de semanas de cuidado, comida boa e carinho, hoje é outro bicho: confiante e cheio de energia.</p>\n\n<p>Este é um texto de exemplo. Conte aqui a história do resgate: onde o animal foi encontrado, como estava e como foi a recuperação.</p>",
 			esc_html( $name )
 		);
 

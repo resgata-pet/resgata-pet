@@ -29,6 +29,7 @@ final class AnimalsModule {
 		add_action( 'init', array( Taxonomies::class, 'register_taxonomies' ) );
 		add_action( 'init', array( Meta::class, 'register_meta' ) );
 		add_filter( 'enter_title_here', array( PostType::class, 'title_placeholder' ), 10, 2 );
+		add_filter( 'use_block_editor_for_post_type', array( PostType::class, 'disable_block_editor' ), 10, 2 );
 
 		( new Blocks() )->register();
 		( new Shortcode() )->register();

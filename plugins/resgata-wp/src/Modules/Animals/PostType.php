@@ -59,7 +59,7 @@ final class PostType {
 				),
 				'menu_icon'       => 'dashicons-pets',
 				'menu_position'   => 25,
-				'supports'        => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions' ),
+				'supports'        => array( 'title', 'editor', 'thumbnail', 'revisions' ),
 				'show_in_rest'    => true,
 				'rest_base'       => 'animais',
 				'capability_type' => array( 'rwp_animal', 'rwp_animals' ),
@@ -80,5 +80,19 @@ final class PostType {
 		}
 
 		return $text;
+	}
+
+	/**
+	 * Usa a tela de edição clássica para os animais.
+	 *
+	 * No editor de blocos as caixas de cadastro (ficha, saúde, galeria) ficam
+	 * recolhidas em um painel no rodapé, fácil de passar despercebido. Na tela
+	 * clássica o cadastro inteiro aparece como um formulário único.
+	 *
+	 * @param bool   $use_block_editor Valor atual.
+	 * @param string $post_type        Post type.
+	 */
+	public static function disable_block_editor( $use_block_editor, $post_type ): bool {
+		return self::SLUG === $post_type ? false : (bool) $use_block_editor;
 	}
 }

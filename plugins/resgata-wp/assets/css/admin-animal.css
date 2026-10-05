@@ -66,3 +66,12 @@
 	object-fit: cover;
 	width: 100%;
 }
+
+.rwp-story-label {
+	margin: 20px 0 8px;
+}
+
+.rwp-story-label h2 {
+	font-size: 1.3em;
+	margin: 0 0 4px;
+}
