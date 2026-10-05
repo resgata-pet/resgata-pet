@@ -1,21 +1,24 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { __, sprintf } from '@wordpress/i18n';
+import { toast } from 'sonner';
 import { ChevronLeftIcon, ChevronRightIcon, PawPrintIcon, PlusIcon } from 'lucide-react';
-import { api, errorMessage, type AnimalListItem } from '@/lib/api';
-import { Badge } from '@/components/ui/badge';
+import { api, errorMessage, type AnimalList, type AnimalListItem, type PostStatus } from '@/lib/api';
+import { config } from '@/lib/config';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Switch } from '@/components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { OptionSelect } from '@/components/option-select';
 import { PageHeader } from '@/components/page-header';
-import { StatusBadge } from '@/components/status-badge';
 
 const PAGE_SIZES = [ 25, 50, 75, 100 ];
 const PAGE_SIZE_OPTIONS = Object.fromEntries( PAGE_SIZES.map( ( size ) => [ String( size ), String( size ) ] ) );
 const column = createColumnHelper< AnimalListItem >();
+
+type QuickChanges = { status?: string; post_status?: PostStatus };
 
 export function AnimalsListPage() {
 	const navigate = useNavigate();
@@ -26,6 +29,40 @@ export function AnimalsListPage() {
 		queryFn: () => api.listAnimals( pagination.pageIndex + 1, pagination.pageSize ),
 		placeholderData: keepPreviousData,
 	} );
+
+	const queryClient = useQueryClient();
+	const queryKey = [ 'animals', pagination.pageIndex, pagination.pageSize ];
+
+	// Troca rápida de situação/publicação: a linha muda na hora e volta atrás se o servidor recusar.
+	const quickUpdate = useMutation( {
+		mutationFn: ( { id, changes }: { id: number; changes: QuickChanges } ) => api.updateAnimal( id, changes ),
+		onMutate: async ( { id, changes } ) => {
+			await queryClient.cancelQueries( { queryKey: [ 'animals' ] } );
+			const previous = queryClient.getQueryData< AnimalList >( queryKey );
+
+			queryClient.setQueryData< AnimalList >( queryKey, ( list ) =>
+				list ? { ...list, items: list.items.map( ( item ) => ( item.id === id ? { ...item, ...changes } : item ) ) } : list
+			);
+
+			return { previous };
+		},
+		onError: ( mutationError, _variables, context ) => {
+			queryClient.setQueryData( queryKey, context?.previous );
+			toast.error( errorMessage( mutationError ) );
+		},
+		onSuccess: ( animal, { changes } ) => {
+			queryClient.setQueryData( [ 'animal', animal.id ], animal );
+
+			if ( changes.post_status === 'publish' ) {
+				toast.success( __( 'Animal publicado no site.', 'resgata-wp' ) );
+			} else if ( changes.post_status === 'draft' ) {
+				toast.success( __( 'Animal voltou para rascunho e saiu do site.', 'resgata-wp' ) );
+			} else {
+				toast.success( __( 'Situação atualizada.', 'resgata-wp' ) );
+			}
+		},
+	} );
+	const { mutate: updateRow } = quickUpdate;
 
 	const columns = useMemo(
 		() => [
@@ -43,26 +80,64 @@ export function AnimalsListPage() {
 			column.accessor( 'name', {
 				header: () => __( 'Nome', 'resgata-wp' ),
 				cell: ( info ) => (
-					<div className="flex flex-wrap items-center gap-2">
-						<Link
-							to={ `/animais/${ info.row.original.id }` }
-							className="font-medium underline-offset-4 hover:underline"
-							onClick={ ( event ) => event.stopPropagation() }
-						>
-							{ info.getValue() || __( '(sem nome)', 'resgata-wp' ) }
-						</Link>
-						{ info.row.original.post_status === 'draft' && (
-							<Badge variant="muted">{ __( 'Rascunho', 'resgata-wp' ) }</Badge>
-						) }
-					</div>
+					<Link
+						to={ `/animais/${ info.row.original.id }` }
+						className="font-medium"
+						onClick={ ( event ) => event.stopPropagation() }
+					>
+						{ info.getValue() || __( '(sem nome)', 'resgata-wp' ) }
+					</Link>
 				),
 			} ),
 			column.accessor( 'status', {
 				header: () => __( 'Situação', 'resgata-wp' ),
-				cell: ( info ) => <StatusBadge status={ info.getValue() } />,
+				cell: ( info ) => (
+					// O clique aqui não pode abrir a edição (a linha inteira é clicável).
+					<div className="w-56 max-w-full" onClick={ ( event ) => event.stopPropagation() }>
+						<OptionSelect
+							ariaLabel={ sprintf(
+								/* translators: %s: nome do animal. */
+								__( 'Situação de %s', 'resgata-wp' ),
+								info.row.original.name
+							) }
+							value={ info.getValue() }
+							options={ config.options.statuses }
+							onChange={ ( status ) => {
+								if ( status && status !== info.getValue() ) {
+									updateRow( { id: info.row.original.id, changes: { status } } );
+								}
+							} }
+						/>
+					</div>
+				),
+			} ),
+			column.accessor( 'post_status', {
+				header: () => __( 'No site', 'resgata-wp' ),
+				cell: ( info ) => {
+					const published = info.getValue() === 'publish';
+
+					return (
+						<label className="flex w-fit cursor-pointer items-center gap-3" onClick={ ( event ) => event.stopPropagation() }>
+							<Switch
+								checked={ published }
+								aria-label={ sprintf(
+									/* translators: %s: nome do animal. */
+									__( 'Publicar %s no site', 'resgata-wp' ),
+									info.row.original.name
+								) }
+								onCheckedChange={ ( checked ) =>
+									updateRow( { id: info.row.original.id, changes: { post_status: checked ? 'publish' : 'draft' } } )
+								}
+							/>
+							<span className={ published ? 'hidden text-sm sm:inline' : 'text-muted-foreground hidden text-sm sm:inline' }>
+								{ published ? __( 'Publicado', 'resgata-wp' ) : __( 'Rascunho', 'resgata-wp' ) }
+							</span>
+						</label>
+					);
+				},
 			} ),
 		],
-		[]
+		[ updateRow ]
 	);
 
 	const table = useReactTable( {

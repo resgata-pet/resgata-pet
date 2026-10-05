@@ -113,7 +113,8 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
   `rwp_temperament_options`); os nomes são gravados como termos de `rwp_temperament`.
 - Largura: o conteúdo vai até 1400px; formulários usam duas colunas a partir de `md`.
 - Telas: Início (só o botão "Cadastrar animal"; o painel de números vem depois dos outros
-  módulos), Animais (tabela, 25/50/75/100 por página, sem filtros), cadastro em 4 passos
+  módulos), Animais (tabela, 25/50/75/100 por página, sem filtros; situação e publicação
+  trocadas direto na linha, com atualização otimista), cadastro em 4 passos
   (rascunho ao concluir o passo 1; publicar no último; no cabeçalho da edição dá para
   alternar entre Publicado e Rascunho), Minha conta.
 - `make test` roda `tests/rest-permissions.php`: descobre todas as rotas do namespace e
