@@ -7,6 +7,8 @@
  * @package ResgataWP
  */
 
+use ResgataWP\Core\Modules;
+use ResgataWP\Modules\Adoptions\Form as AdoptionForm;
 use ResgataWP\Modules\Animals\Frontend\DetailsRenderer;
 
 defined( 'ABSPATH' ) || exit;
@@ -37,6 +39,10 @@ get_header();
 			<?php
 			echo DetailsRenderer::render( get_the_ID(), 'health' );
 			echo DetailsRenderer::render( get_the_ID(), 'gallery' );
+
+			if ( Modules::is_enabled( 'adoptions' ) ) {
+				echo AdoptionForm::render( get_the_ID() );
+			}
 			// phpcs:enable
 			?>
 		</article>

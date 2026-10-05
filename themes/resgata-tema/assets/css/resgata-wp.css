@@ -372,3 +372,157 @@
 .rwp-contact__items {
 	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 }
+
+/* Formulário de adoção */
+.rwp-adoption {
+	--rwp-accent: var(--wp--preset--color--accent-3);
+	--rwp-line: var(--wp--preset--color--accent-6);
+	--rwp-muted: var(--wp--preset--color--accent-4);
+	--rwp-surface: var(--wp--preset--color--accent-5);
+	--rwp-radius: 16px;
+	background: var(--wp--preset--color--base);
+	border-radius: var(--rwp-radius);
+	box-shadow: 0 1px 2px rgba(46, 34, 25, 0.06), 0 8px 24px rgba(46, 34, 25, 0.08);
+	margin-top: var(--wp--preset--spacing--50);
+	padding: var(--wp--preset--spacing--50);
+	scroll-margin-top: var(--wp--preset--spacing--50);
+}
+
+.rwp-adoption__title {
+	margin: 0 0 var(--wp--preset--spacing--30);
+}
+
+.rwp-adoption__subtitle {
+	font-size: var(--wp--preset--font-size--medium);
+	margin: 0 0 var(--wp--preset--spacing--20);
+}
+
+.rwp-adoption__rules,
+.rwp-adoption__consent {
+	background: var(--rwp-surface);
+	border-radius: 12px;
+	margin-bottom: var(--wp--preset--spacing--40);
+	padding: var(--wp--preset--spacing--40);
+}
+
+.rwp-adoption__rules > :last-child,
+.rwp-adoption__consent > :last-child {
+	margin-bottom: 0;
+}
+
+.rwp-adoption__rules > :first-child,
+.rwp-adoption__consent-text > :first-child {
+	margin-top: 0;
+}
+
+.rwp-adoption__consent-text {
+	color: var(--rwp-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.rwp-adoption__form {
+	display: grid;
+	gap: var(--wp--preset--spacing--30) var(--wp--preset--spacing--40);
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.rwp-adoption__field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	margin: 0;
+}
+
+.rwp-adoption__field--textarea,
+.rwp-adoption__field--checkbox,
+.rwp-adoption__consent,
+.rwp-adoption__actions {
+	grid-column: 1 / -1;
+}
+
+.rwp-adoption__consent {
+	margin-bottom: 0;
+}
+
+.rwp-adoption__field > label {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 700;
+}
+
+.rwp-adoption__field--checkbox > label {
+	align-items: flex-start;
+	display: flex;
+	font-size: var(--wp--preset--font-size--medium);
+	font-weight: 400;
+	gap: 0.7rem;
+}
+
+.rwp-adoption__field--checkbox input {
+	accent-color: var(--rwp-accent);
+	flex: none;
+	height: 1.25rem;
+	margin: 0.2rem 0 0;
+	width: 1.25rem;
+}
+
+.rwp-adoption__field input:not([type="checkbox"]),
+.rwp-adoption__field select,
+.rwp-adoption__field textarea {
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--rwp-line);
+	border-radius: 12px;
+	box-sizing: border-box;
+	color: inherit;
+	font: inherit;
+	padding: 0.7rem 1rem;
+	width: 100%;
+}
+
+.rwp-adoption__field input:focus-visible,
+.rwp-adoption__field select:focus-visible,
+.rwp-adoption__field textarea:focus-visible {
+	outline: 2px solid var(--rwp-accent);
+	outline-offset: 2px;
+}
+
+.rwp-adoption__field [aria-invalid="true"] {
+	border-color: #b3261e;
+}
+
+.rwp-adoption__required,
+.rwp-adoption__error {
+	color: #b3261e;
+}
+
+.rwp-adoption__error {
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.rwp-adoption__error--form {
+	background: #fdecea;
+	border-radius: 12px;
+	padding: 0.75rem 1rem;
+}
+
+.rwp-adoption__actions {
+	margin: 0;
+}
+
+.rwp-adoption__actions .rwp-button,
+.rwp-adoption__success .rwp-button {
+	cursor: pointer;
+	display: inline-block;
+	text-decoration: none;
+}
+
+.rwp-adoption__success > :last-child {
+	margin-bottom: 0;
+}
+
+.rwp-adoption__hp {
+	height: 1px;
+	left: -9999px;
+	overflow: hidden;
+	position: absolute;
+	width: 1px;
+}

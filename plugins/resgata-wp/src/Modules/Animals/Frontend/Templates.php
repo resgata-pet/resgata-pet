@@ -96,6 +96,7 @@ final class Templates {
 			. '<!-- wp:post-content {"layout":{"type":"constrained"}} /-->' . "\n"
 			. '<!-- wp:resgata-wp/animal-details {"section":"health"} /-->' . "\n"
 			. '<!-- wp:resgata-wp/animal-details {"section":"gallery"} /-->' . "\n"
+			. '<!-- wp:resgata-wp/adoption-form /-->' . "\n"
 			. $this->close();
 	}
 

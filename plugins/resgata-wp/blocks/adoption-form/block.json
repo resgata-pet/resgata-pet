@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-wp/adoption-form",
+	"version": "0.4.0",
+	"title": "Formulário de adoção",
+	"category": "resgata-wp",
+	"icon": "heart",
+	"description": "Questionário para quem quer adotar. Na página de um animal, o pedido é para aquele animal; em outras páginas, a pessoa escolhe o animal.",
+	"keywords": [ "adoção", "formulário", "pedido", "questionário" ],
+	"textdomain": "resgata-wp",
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true, "padding": true }
+	},
+	"editorScript": "rwp-blocks-editor",
+	"style": "rwp-frontend",
+	"render": "file:./render.php"
+}
