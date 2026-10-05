@@ -15,3 +15,7 @@ Thumbs.db
 
 # Claude Code (configurações locais)
 .claude/settings.local.json
+
+# Arquivos gerados
+build/
+dist/

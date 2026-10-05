@@ -8,6 +8,7 @@
 
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/build/*</exclude-pattern>
 	<exclude-pattern>*/languages/*</exclude-pattern>
 	<exclude-pattern>*.asset.php</exclude-pattern>
 
@@ -31,6 +32,25 @@
 			<property name="text_domain" type="array">
 				<element value="resgata-wp"/>
 				<element value="resgata-tema"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.WP.Capabilities">
+		<properties>
+			<property name="custom_capabilities" type="array">
+				<element value="edit_rwp_animals"/>
+				<element value="edit_others_rwp_animals"/>
+				<element value="edit_private_rwp_animals"/>
+				<element value="edit_published_rwp_animals"/>
+				<element value="publish_rwp_animals"/>
+				<element value="read_private_rwp_animals"/>
+				<element value="delete_rwp_animals"/>
+				<element value="delete_others_rwp_animals"/>
+				<element value="delete_private_rwp_animals"/>
+				<element value="delete_published_rwp_animals"/>
+				<element value="manage_rwp_animal_terms"/>
+				<element value="rwp_access_panel"/>
 			</property>
 		</properties>
 	</rule>
