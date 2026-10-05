@@ -4,7 +4,7 @@ import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tansta
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { toast } from 'sonner';
-import { ChevronLeftIcon, ChevronRightIcon, PawPrintIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, PawPrintIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react';
 import { api, emptyFilters, errorMessage, type AnimalFilters, type AnimalList, type AnimalListItem, type PostStatus } from '@/lib/api';
 import { config } from '@/lib/config';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -178,26 +178,59 @@ export function AnimalsListPage() {
 			} ),
 			column.accessor( 'post_status', {
 				header: () => __( 'Status', 'resgata-wp' ),
+				cell: ( info ) => (
+					// O clique aqui não pode abrir a edição (a linha inteira é clicável).
+					<div className="flex w-fit items-center" onClick={ ( event ) => event.stopPropagation() }>
+						<Switch
+							checked={ info.getValue() === 'publish' }
+							aria-label={ sprintf(
+								/* translators: %s: nome do animal. */
+								__( 'Publicar %s no site', 'resgata-wp' ),
+								info.row.original.name
+							) }
+							onCheckedChange={ ( checked ) =>
+								updateRow( { id: info.row.original.id, changes: { post_status: checked ? 'publish' : 'draft' } } )
+							}
+						/>
+					</div>
+				),
+			} ),
+			column.display( {
+				id: 'actions',
+				header: () => <span className="sr-only">{ __( 'Ações', 'resgata-wp' ) }</span>,
 				cell: ( info ) => {
-					const published = info.getValue() === 'publish';
+					const animal = info.row.original;
+					const label = sprintf(
+						/* translators: %s: nome do animal. */
+						__( 'Ver %s no site', 'resgata-wp' ),
+						animal.name
+					);
+
+					// Rascunho não tem página pública: o botão fica apagado.
+					if ( animal.post_status !== 'publish' ) {
+						return (
+							<span
+								className={ buttonVariants( { variant: 'ghost', size: 'icon', className: 'pointer-events-none opacity-30' } ) }
+								title={ __( 'Publique o animal para ver no site', 'resgata-wp' ) }
+								aria-hidden="true"
+							>
+								<ExternalLinkIcon />
+							</span>
+						);
+					}
 
 					return (
-						<label className="flex w-fit cursor-pointer items-center gap-3" onClick={ ( event ) => event.stopPropagation() }>
-							<Switch
-								checked={ published }
-								aria-label={ sprintf(
-									/* translators: %s: nome do animal. */
-									__( 'Publicar %s no site', 'resgata-wp' ),
-									info.row.original.name
-								) }
-								onCheckedChange={ ( checked ) =>
-									updateRow( { id: info.row.original.id, changes: { post_status: checked ? 'publish' : 'draft' } } )
-								}
-							/>
-							<span className={ published ? 'hidden text-sm sm:inline' : 'text-muted-foreground hidden text-sm sm:inline' }>
-								{ published ? __( 'Publicado', 'resgata-wp' ) : __( 'Rascunho', 'resgata-wp' ) }
-							</span>
-						</label>
+						<a
+							href={ animal.permalink }
+							target="_blank"
+							rel="noreferrer"
+							className={ buttonVariants( { variant: 'ghost', size: 'icon' } ) }
+							aria-label={ label }
+							title={ label }
+							onClick={ ( event ) => event.stopPropagation() }
+						>
+							<ExternalLinkIcon aria-hidden="true" />
+						</a>
 					);
 				},
 			} ),
@@ -306,7 +339,7 @@ export function AnimalsListPage() {
 								{ table.getHeaderGroups().map( ( group ) => (
 									<TableRow key={ group.id }>
 										{ group.headers.map( ( header ) => (
-											<TableHead key={ header.id } className={ header.column.id === 'thumbnail' ? 'w-16' : undefined }>
+											<TableHead key={ header.id } className={ header.column.id === 'thumbnail' || header.column.id === 'actions' ? 'w-16' : undefined }>
 												{ flexRender( header.column.columnDef.header, header.getContext() ) }
 											</TableHead>
 										) ) }

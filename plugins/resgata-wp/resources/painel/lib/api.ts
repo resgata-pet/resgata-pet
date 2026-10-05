@@ -63,6 +63,7 @@ export interface AnimalListItem {
 	status: string;
 	status_label: string;
 	thumbnail: string;
+	permalink: string;
 }
 
 export interface AnimalList {

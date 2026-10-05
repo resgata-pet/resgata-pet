@@ -348,6 +348,7 @@ final class AnimalsController extends BaseController {
 				'status'       => $animal->status(),
 				'status_label' => $animal->status_label(),
 				'thumbnail'    => (string) get_the_post_thumbnail_url( $post->ID, 'thumbnail' ),
+				'permalink'    => (string) get_permalink( $post->ID ),
 			);
 		}
 
