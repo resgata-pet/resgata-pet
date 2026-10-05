@@ -1,12 +1,11 @@
 import { useEffect, useId, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { toast } from 'sonner';
 import { ArrowLeftIcon, CheckIcon, ExternalLinkIcon, Loader2Icon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react';
-import { api, errorMessage, type Animal, type AnimalImage, type AnimalInput, type GalleryPhoto, type PhotoType, type Vaccine } from '@/lib/api';
+import { api, errorMessage, type Animal, type PostStatus, type AnimalImage, type AnimalInput, type GalleryPhoto, type PhotoType, type Vaccine } from '@/lib/api';
 import { config } from '@/lib/config';
-import { cn } from '@/lib/utils';
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -17,7 +16,6 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -28,6 +26,13 @@ import { ImageDropzone } from '@/components/image-dropzone';
 import { OptionSelect } from '@/components/option-select';
 import { PageHeader } from '@/components/page-header';
 import { RichText } from '@/components/rich-text';
+import { Stepper } from '@/components/stepper';
+
+/** Status de publicação: "Rascunho" não aparece no site. */
+const POST_STATUSES: Record< PostStatus, string > = {
+	publish: __( 'Publicado', 'resgata-wp' ),
+	draft: __( 'Rascunho', 'resgata-wp' ),
+};
 
 const STEPS = [
 	__( 'Básico', 'resgata-wp' ),
@@ -200,6 +205,21 @@ export function AnimalFormPage() {
 		onError: ( error ) => toast.error( errorMessage( error ) ),
 	} );
 
+	// Publicar ou voltar para rascunho, direto do cabeçalho (não mexe nos campos do formulário).
+	const changeStatus = useMutation( {
+		mutationFn: ( postStatus: PostStatus ) => api.updateAnimal( animalId as number, { post_status: postStatus } ),
+		onSuccess: ( animal ) => {
+			queryClient.setQueryData( [ 'animal', animal.id ], animal );
+			void queryClient.invalidateQueries( { queryKey: [ 'animals' ] } );
+			toast.success(
+				animal.post_status === 'publish'
+					? __( 'Animal publicado no site.', 'resgata-wp' )
+					: __( 'Animal voltou para rascunho e saiu do site.', 'resgata-wp' )
+			);
+		},
+		onError: ( error ) => toast.error( errorMessage( error ) ),
+	} );
+
 	const trash = useMutation( {
 		mutationFn: () => api.trashAnimal( animalId as number ),
 		onSuccess: () => {
@@ -296,10 +316,8 @@ export function AnimalFormPage() {
 				title={ animal ? animal.name : __( 'Cadastrar animal', 'resgata-wp' ) }
 				action={
 					animal && (
-						<div className="flex items-center gap-2">
-							{ isDraft ? (
-								<Badge variant="muted">{ __( 'Rascunho', 'resgata-wp' ) }</Badge>
-							) : (
+						<div className="flex flex-wrap items-center gap-3">
+							{ ! isDraft && (
 								<a
 									href={ animal.permalink }
 									target="_blank"
@@ -310,6 +328,18 @@ export function AnimalFormPage() {
 									<ExternalLinkIcon className="size-4" aria-hidden="true" />
 								</a>
 							) }
+							<OptionSelect
+								className="w-40"
+								ariaLabel={ __( 'Publicação', 'resgata-wp' ) }
+								value={ animal.post_status }
+								options={ POST_STATUSES }
+								disabled={ changeStatus.isPending || saving }
+								onChange={ ( value ) => {
+									if ( value !== animal.post_status ) {
+										changeStatus.mutate( value as PostStatus );
+									}
+								} }
+							/>
 							<Button
 								type="button"
 								variant="ghost"
@@ -324,37 +354,14 @@ export function AnimalFormPage() {
 				}
 			/>
 
-			{ /* Passos: depois que o animal existe, dá para ir direto a qualquer um. */ }
-			<ol className="mb-6 grid grid-cols-4 gap-2" aria-label={ __( 'Passos do cadastro', 'resgata-wp' ) }>
-				{ STEPS.map( ( label, index ) => {
-					const number = index + 1;
-					const current = number === step;
-					const reachable = animalId !== undefined && ! saving;
-
-					return (
-						<li key={ label }>
-							<button
-								type="button"
-								disabled={ ! reachable || current }
-								aria-current={ current ? 'step' : undefined }
-								onClick={ () => void saveStep( number ) }
-								className={ cn(
-									'flex w-full flex-col items-start gap-1 rounded-lg border-t-4 pt-2 text-left text-xs font-medium sm:text-sm',
-									current ? 'border-primary text-foreground' : 'text-muted-foreground border-border',
-									number < step && 'border-brand',
-									reachable && ! current && 'hover:text-foreground cursor-pointer'
-								) }
-							>
-								<span className="text-muted-foreground text-xs">
-									{ /* translators: %d: número do passo. */ }
-									{ sprintf( __( 'Passo %d', 'resgata-wp' ), number ) }
-								</span>
-								{ label }
-							</button>
-						</li>
-					);
-				} ) }
-			</ol>
+			{ /* Depois que o animal existe, dá para ir direto a qualquer passo (o atual é salvo antes). */ }
+			<Stepper
+				label={ __( 'Passos do cadastro', 'resgata-wp' ) }
+				steps={ STEPS }
+				current={ step }
+				canNavigate={ animalId !== undefined && ! saving }
+				onSelect={ ( number ) => void saveStep( number ) }
+			/>
 
 			<form
 				className="bg-card grid gap-5 rounded-xl border p-4 sm:p-6 md:grid-cols-2 md:gap-x-8 md:p-8"

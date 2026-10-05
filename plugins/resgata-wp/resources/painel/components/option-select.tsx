@@ -15,6 +15,7 @@ export function OptionSelect( {
 	invalid,
 	className,
 	ariaLabel,
+	disabled,
 	onChange,
 }: {
 	id?: string;
@@ -25,6 +26,7 @@ export function OptionSelect( {
 	invalid?: boolean;
 	className?: string;
 	ariaLabel?: string;
+	disabled?: boolean;
 	onChange: ( value: string ) => void;
 } ) {
 	const items = useMemo( () => {
@@ -37,7 +39,7 @@ export function OptionSelect( {
 	}, [ options, emptyLabel ] );
 
 	return (
-		<Select items={ items } value={ value === '' ? null : value } onValueChange={ ( next ) => onChange( ( next as string | null ) ?? '' ) }>
+		<Select items={ items } disabled={ disabled } value={ value === '' ? null : value } onValueChange={ ( next ) => onChange( ( next as string | null ) ?? '' ) }>
 			<SelectTrigger id={ id } className={ className } aria-invalid={ invalid || undefined } aria-label={ ariaLabel }>
 				<SelectValue placeholder={ placeholder ?? emptyLabel } />
 			</SelectTrigger>

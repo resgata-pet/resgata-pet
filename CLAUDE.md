@@ -107,14 +107,15 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
 - Componentes reutilizáveis do painel (`resources/painel/components/`): `OptionSelect` (Select
   do shadcn a partir de um mapa valor => rótulo), `DatePicker` (Popover + Calendar, valor
   "AAAA-MM-DD"), `ImageDropzone` (arrastar, escolher ou tirar foto; envia e devolve a imagem),
-  `RichText` (Tiptap), `Field`, `PageHeader`. Não use `<select>` nem `<input type="date">`
+  `RichText` (Tiptap), `Stepper` (passos de formulário em etapas), `Field`, `PageHeader`. Não use `<select>` nem `<input type="date">`
   nativos no painel.
 - Temperamento: caixas de seleção com a lista de `Options::temperaments()` (filtro
   `rwp_temperament_options`); os nomes são gravados como termos de `rwp_temperament`.
 - Largura: o conteúdo vai até 1400px; formulários usam duas colunas a partir de `md`.
 - Telas: Início (só o botão "Cadastrar animal"; o painel de números vem depois dos outros
   módulos), Animais (tabela, 25/50/75/100 por página, sem filtros), cadastro em 4 passos
-  (rascunho ao concluir o passo 1; publicar no último), Minha conta.
+  (rascunho ao concluir o passo 1; publicar no último; no cabeçalho da edição dá para
+  alternar entre Publicado e Rascunho), Minha conta.
 - `make test` roda `tests/rest-permissions.php`: descobre todas as rotas do namespace e
   confere 401 para visitante, 403 para assinante e 2xx para Protetor admin e Administrador.
   Cria e apaga usuários e animais temporários no site de desenvolvimento.
