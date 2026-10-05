@@ -79,7 +79,8 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
 - Painel: Tailwind 4 (via `postcss.config.js`, em CommonJS), componentes shadcn/ui na base
   **Base UI** em `resources/painel/components/ui/` (adicionar com
   `npx shadcn@latest add <nome>` dentro de `plugins/resgata-wp`), TanStack Query para dados,
-  TanStack Table (v8) para listagens, React Router para navegação, Tiptap para texto rico.
+  TanStack Table (v8) para listagens, React Router para navegação, Tiptap para texto rico,
+  react-day-picker para o calendário.
 - **Sem `class-variance-authority`** (Apache-2.0, incompatível com GPLv2): se um componente
   novo do shadcn vier com `cva`, reescreva as variações à mão, como em `button.tsx` e
   `badge.tsx`. Sem `next-themes`: o painel só tem modo claro, e a linha `@custom-variant dark`
@@ -103,6 +104,14 @@ docker/mu-plugins/          somente desenvolvimento (envia e-mails para o Mailpi
   parâmetros pelo schema. Nunca chame `register_rest_route()` direto para o painel.
 - Fotos: enviadas pelo painel ao endpoint do WordPress `wp/v2/media`, já reduzidas no
   aparelho (`lib/image.ts`, máx. 2000 px).
+- Componentes reutilizáveis do painel (`resources/painel/components/`): `OptionSelect` (Select
+  do shadcn a partir de um mapa valor => rótulo), `DatePicker` (Popover + Calendar, valor
+  "AAAA-MM-DD"), `ImageDropzone` (arrastar, escolher ou tirar foto; envia e devolve a imagem),
+  `RichText` (Tiptap), `Field`, `PageHeader`. Não use `<select>` nem `<input type="date">`
+  nativos no painel.
+- Temperamento: caixas de seleção com a lista de `Options::temperaments()` (filtro
+  `rwp_temperament_options`); os nomes são gravados como termos de `rwp_temperament`.
+- Largura: o conteúdo vai até 1400px; formulários usam duas colunas a partir de `md`.
 - Telas: Início (só o botão "Cadastrar animal"; o painel de números vem depois dos outros
   módulos), Animais (tabela, 25/50/75/100 por página, sem filtros), cadastro em 4 passos
   (rascunho ao concluir o passo 1; publicar no último), Minha conta.

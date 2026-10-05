@@ -8,7 +8,7 @@ export function HomePage() {
 	const firstName = config.user.name.split( ' ' )[ 0 ];
 
 	return (
-		<div className="flex flex-col items-start gap-6 pt-6">
+		<div className="bg-card flex flex-col items-start gap-6 rounded-2xl border p-6 md:p-10">
 			<div>
 				<h1 className="text-2xl font-semibold tracking-tight">
 					{ /* translators: %s: primeiro nome da pessoa. */ }

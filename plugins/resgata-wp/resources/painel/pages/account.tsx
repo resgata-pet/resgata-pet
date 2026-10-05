@@ -10,7 +10,7 @@ export function AccountPage() {
 		<>
 			<PageHeader title={ __( 'Minha conta', 'resgata-wp' ) } />
 
-			<div className="flex flex-col gap-4">
+			<div className="grid gap-4 md:grid-cols-2">
 				<Card>
 					<CardHeader>
 						<CardTitle>{ config.user.name }</CardTitle>
@@ -36,7 +36,7 @@ export function AccountPage() {
 					</CardContent>
 				</Card>
 
-				<div className="flex flex-wrap gap-3">
+				<div className="flex flex-wrap gap-3 md:col-span-2">
 					{ config.user.isAdmin && (
 						<a href={ config.urls.admin } className={ buttonVariants( { variant: 'outline' } ) }>
 							<SettingsIcon aria-hidden="true" />

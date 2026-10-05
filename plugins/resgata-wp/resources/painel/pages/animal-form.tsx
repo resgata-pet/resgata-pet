@@ -5,7 +5,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { toast } from 'sonner';
 import { ArrowLeftIcon, CheckIcon, ExternalLinkIcon, Loader2Icon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react';
 import { api, errorMessage, type Animal, type AnimalImage, type AnimalInput, type GalleryPhoto, type PhotoType, type Vaccine } from '@/lib/api';
-import { config, type OptionMap } from '@/lib/config';
+import { config } from '@/lib/config';
 import { cn } from '@/lib/utils';
 import {
 	AlertDialog,
@@ -20,11 +20,13 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
+import { DatePicker } from '@/components/date-picker';
 import { Field } from '@/components/field';
+import { ImageDropzone } from '@/components/image-dropzone';
+import { OptionSelect } from '@/components/option-select';
 import { PageHeader } from '@/components/page-header';
-import { PhotoButtons } from '@/components/photo-buttons';
 import { RichText } from '@/components/rich-text';
 
 const STEPS = [
@@ -45,7 +47,7 @@ interface FormState {
 	ageMonths: string;
 	size: string;
 	color: string;
-	temperaments: string;
+	temperaments: string[];
 	rescueDate: string;
 	neutered: string;
 	dewormedDate: string;
@@ -66,7 +68,7 @@ const emptyForm: FormState = {
 	ageMonths: '',
 	size: '',
 	color: '',
-	temperaments: '',
+	temperaments: [],
 	rescueDate: '',
 	neutered: '',
 	dewormedDate: '',
@@ -88,7 +90,7 @@ function toForm( animal: Animal ): FormState {
 		ageMonths: animal.age_months === null ? '' : String( animal.age_months ),
 		size: animal.size,
 		color: animal.color,
-		temperaments: animal.temperaments.join( ', ' ),
+		temperaments: animal.temperaments,
 		rescueDate: animal.rescue_date,
 		neutered: animal.neutered,
 		dewormedDate: animal.dewormed_date,
@@ -131,10 +133,7 @@ function stepPayload( step: number, form: FormState ): AnimalInput {
 				age_months: hasAge ? months ?? 0 : null,
 				size: form.size,
 				color: form.color.trim(),
-				temperaments: form.temperaments
-					.split( ',' )
-					.map( ( item ) => item.trim() )
-					.filter( Boolean ),
+				temperaments: form.temperaments,
 				rescue_date: form.rescueDate,
 			};
 		}
@@ -152,33 +151,6 @@ function stepPayload( step: number, form: FormState ): AnimalInput {
 				gallery: form.gallery.map( ( photo ) => ( { id: photo.id, type: photo.type } ) ),
 			};
 	}
-}
-
-function Select( {
-	id,
-	value,
-	options,
-	placeholder,
-	invalid,
-	onChange,
-}: {
-	id: string;
-	value: string;
-	options: OptionMap;
-	placeholder?: string;
-	invalid?: boolean;
-	onChange: ( value: string ) => void;
-} ) {
-	return (
-		<NativeSelect id={ id } value={ value } aria-invalid={ invalid || undefined } onChange={ ( event ) => onChange( event.target.value ) }>
-			{ placeholder !== undefined && <NativeSelectOption value="">{ placeholder }</NativeSelectOption> }
-			{ Object.entries( options ).map( ( [ key, label ] ) => (
-				<NativeSelectOption key={ key } value={ key }>
-					{ label }
-				</NativeSelectOption>
-			) ) }
-		</NativeSelect>
-	);
 }
 
 export function AnimalFormPage() {
@@ -307,6 +279,12 @@ export function AnimalFormPage() {
 	const isLast = step === STEPS.length;
 	const id = ( name: string ) => `${ uid }-${ name }`;
 
+	// A lista padrão, mais o que este animal já tiver e não estiver nela (cadastrado pelo wp-admin).
+	const temperamentOptions = [
+		...config.options.temperaments,
+		...( animal?.temperaments ?? [] ).filter( ( name ) => ! config.options.temperaments.includes( name ) ),
+	];
+
 	return (
 		<>
 			<Link to="/animais" className="text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1 text-sm">
@@ -379,7 +357,7 @@ export function AnimalFormPage() {
 			</ol>
 
 			<form
-				className="bg-card flex flex-col gap-5 rounded-xl border p-4 sm:p-6"
+				className="bg-card grid gap-5 rounded-xl border p-4 sm:p-6 md:grid-cols-2 md:gap-x-8 md:p-8"
 				noValidate
 				onSubmit={ ( event ) => {
 					event.preventDefault();
@@ -399,7 +377,7 @@ export function AnimalFormPage() {
 							/>
 						</Field>
 						<Field label={ __( 'Espécie', 'resgata-wp' ) } htmlFor={ id( 'species' ) } error={ errors.species }>
-							<Select
+							<OptionSelect
 								id={ id( 'species' ) }
 								value={ form.species }
 								options={ config.options.species }
@@ -409,15 +387,16 @@ export function AnimalFormPage() {
 							/>
 						</Field>
 						<Field label={ __( 'Sexo', 'resgata-wp' ) } htmlFor={ id( 'sex' ) }>
-							<Select
+							<OptionSelect
 								id={ id( 'sex' ) }
 								value={ form.sex }
 								options={ config.options.sexes }
-								placeholder={ __( 'Não informado', 'resgata-wp' ) }
+								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
 								onChange={ ( value ) => set( 'sex', value ) }
 							/>
 						</Field>
 						<Field
+							className="md:col-span-2"
 							label={ __( 'Foto principal', 'resgata-wp' ) }
 							hint={ __( 'É a foto que aparece na lista de animais do site.', 'resgata-wp' ) }
 						>
@@ -436,7 +415,7 @@ export function AnimalFormPage() {
 									</Button>
 								</div>
 							) }
-							<PhotoButtons animalId={ animalId } onUploaded={ ( image ) => set( 'featured', image ) } />
+							<ImageDropzone animalId={ animalId } onUploaded={ ( image ) => set( 'featured', image ) } />
 						</Field>
 					</>
 				) }
@@ -444,16 +423,16 @@ export function AnimalFormPage() {
 				{ step === 2 && (
 					<>
 						<Field
+							className="md:col-span-2"
 							label={ __( 'Situação', 'resgata-wp' ) }
 							htmlFor={ id( 'status' ) }
 							hint={ __( 'Só "Disponível para adoção" e "Reservado" aparecem na lista pública.', 'resgata-wp' ) }
 						>
-							<Select id={ id( 'status' ) } value={ form.status } options={ config.options.statuses } onChange={ ( value ) => set( 'status', value ) } />
+							<OptionSelect id={ id( 'status' ) } value={ form.status } options={ config.options.statuses } onChange={ ( value ) => set( 'status', value ) } />
 						</Field>
 						<Field
 							label={ __( 'Idade estimada', 'resgata-wp' ) }
 							htmlFor={ id( 'age-years' ) }
-							hint={ __( 'Informe a idade de hoje. O site atualiza sozinho com o passar do tempo.', 'resgata-wp' ) }
 						>
 							<div className="flex items-center gap-2">
 								<Input
@@ -481,11 +460,11 @@ export function AnimalFormPage() {
 							</div>
 						</Field>
 						<Field label={ __( 'Porte', 'resgata-wp' ) } htmlFor={ id( 'size' ) }>
-							<Select
+							<OptionSelect
 								id={ id( 'size' ) }
 								value={ form.size }
 								options={ config.options.sizes }
-								placeholder={ __( 'Não informado', 'resgata-wp' ) }
+								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
 								onChange={ ( value ) => set( 'size', value ) }
 							/>
 						</Field>
@@ -498,53 +477,65 @@ export function AnimalFormPage() {
 								onChange={ ( event ) => set( 'color', event.target.value ) }
 							/>
 						</Field>
-						<Field
-							label={ __( 'Temperamento', 'resgata-wp' ) }
-							htmlFor={ id( 'temperaments' ) }
-							hint={ __( 'Separe com vírgulas. Ex.: dócil, brincalhão, tímido', 'resgata-wp' ) }
-						>
-							<Input id={ id( 'temperaments' ) } value={ form.temperaments } onChange={ ( event ) => set( 'temperaments', event.target.value ) } />
-						</Field>
 						<Field label={ __( 'Data do resgate', 'resgata-wp' ) } htmlFor={ id( 'rescue' ) }>
-							<Input id={ id( 'rescue' ) } type="date" value={ form.rescueDate } onChange={ ( event ) => set( 'rescueDate', event.target.value ) } />
+							<DatePicker id={ id( 'rescue' ) } value={ form.rescueDate } onChange={ ( value ) => set( 'rescueDate', value ) } />
 						</Field>
+						<fieldset className="md:col-span-2">
+							<legend className="mb-3 text-base font-medium">{ __( 'Temperamento', 'resgata-wp' ) }</legend>
+							<div className="grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
+								{ temperamentOptions.map( ( name ) => (
+									<label key={ name } className="flex min-h-11 cursor-pointer items-center gap-3">
+										<Checkbox
+											checked={ form.temperaments.includes( name ) }
+											onCheckedChange={ ( checked ) =>
+												set(
+													'temperaments',
+													checked ? [ ...form.temperaments, name ] : form.temperaments.filter( ( item ) => item !== name )
+												)
+											}
+										/>
+										{ name }
+									</label>
+								) ) }
+							</div>
+						</fieldset>
 					</>
 				) }
 
 				{ step === 3 && (
 					<>
 						<Field label={ __( 'Castrado(a)', 'resgata-wp' ) } htmlFor={ id( 'neutered' ) }>
-							<Select
+							<OptionSelect
 								id={ id( 'neutered' ) }
 								value={ form.neutered }
 								options={ config.options.yesNo }
-								placeholder={ __( 'Não informado', 'resgata-wp' ) }
+								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
 								onChange={ ( value ) => set( 'neutered', value ) }
 							/>
 						</Field>
 						<Field label={ __( 'Último vermífugo', 'resgata-wp' ) } htmlFor={ id( 'dewormed' ) }>
-							<Input id={ id( 'dewormed' ) } type="date" value={ form.dewormedDate } onChange={ ( event ) => set( 'dewormedDate', event.target.value ) } />
+							<DatePicker id={ id( 'dewormed' ) } value={ form.dewormedDate } onChange={ ( value ) => set( 'dewormedDate', value ) } />
 						</Field>
 						<Field label={ __( 'Teste de FIV (gatos)', 'resgata-wp' ) } htmlFor={ id( 'fiv' ) }>
-							<Select
+							<OptionSelect
 								id={ id( 'fiv' ) }
 								value={ form.fiv }
 								options={ config.options.tests }
-								placeholder={ __( 'Não testado', 'resgata-wp' ) }
+								emptyLabel={ __( 'Não testado', 'resgata-wp' ) }
 								onChange={ ( value ) => set( 'fiv', value ) }
 							/>
 						</Field>
 						<Field label={ __( 'Teste de FeLV (gatos)', 'resgata-wp' ) } htmlFor={ id( 'felv' ) }>
-							<Select
+							<OptionSelect
 								id={ id( 'felv' ) }
 								value={ form.felv }
 								options={ config.options.tests }
-								placeholder={ __( 'Não testado', 'resgata-wp' ) }
+								emptyLabel={ __( 'Não testado', 'resgata-wp' ) }
 								onChange={ ( value ) => set( 'felv', value ) }
 							/>
 						</Field>
 
-						<fieldset className="flex flex-col gap-3">
+						<fieldset className="flex flex-col gap-3 md:col-span-2">
 							<legend className="mb-2 text-base font-medium">{ __( 'Vacinas', 'resgata-wp' ) }</legend>
 							{ form.vaccines.map( ( vaccine, index ) => (
 								<div key={ index } className="flex flex-wrap items-center gap-2">
@@ -563,17 +554,14 @@ export function AnimalFormPage() {
 											)
 										}
 									/>
-									<Input
-										type="date"
+									<DatePicker
 										className="w-44"
 										value={ vaccine.date }
-										aria-label={ __( 'Data da aplicação', 'resgata-wp' ) }
-										onChange={ ( event ) =>
+										ariaLabel={ __( 'Data da aplicação', 'resgata-wp' ) }
+										onChange={ ( value ) =>
 											set(
 												'vaccines',
-												form.vaccines.map( ( item, position ) =>
-													position === index ? { ...item, date: event.target.value } : item
-												)
+												form.vaccines.map( ( item, position ) => ( position === index ? { ...item, date: value } : item ) )
 											)
 										}
 									/>
@@ -608,7 +596,7 @@ export function AnimalFormPage() {
 
 				{ step === 4 && (
 					<>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2 md:col-span-2">
 							<span id={ id( 'story' ) } className="text-base font-medium">
 								{ __( 'História do resgate', 'resgata-wp' ) }
 							</span>
@@ -618,13 +606,13 @@ export function AnimalFormPage() {
 							</p>
 						</div>
 
-						<fieldset className="flex flex-col gap-3">
+						<fieldset className="flex flex-col gap-3 md:col-span-2">
 							<legend className="mb-1 text-base font-medium">{ __( 'Galeria de fotos (antes e depois)', 'resgata-wp' ) }</legend>
 							<p className="text-muted-foreground text-sm">
 								{ __( 'Marque cada foto como "Antes" (quando foi resgatado) ou "Depois" (recuperado).', 'resgata-wp' ) }
 							</p>
 							{ form.gallery.length > 0 && (
-								<ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+								<ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
 									{ form.gallery.map( ( photo ) => (
 										<li key={ photo.id } className="bg-muted flex flex-col gap-2 rounded-xl p-2">
 											<div className="relative">
@@ -645,29 +633,22 @@ export function AnimalFormPage() {
 													<XIcon aria-hidden="true" />
 												</Button>
 											</div>
-											<NativeSelect
+											<OptionSelect
 												value={ photo.type }
-												aria-label={ __( 'Tipo da foto', 'resgata-wp' ) }
-												onChange={ ( event ) =>
+												options={ config.options.photoTypes }
+												ariaLabel={ __( 'Tipo da foto', 'resgata-wp' ) }
+												onChange={ ( value ) =>
 													set(
 														'gallery',
-														form.gallery.map( ( item ) =>
-															item.id === photo.id ? { ...item, type: event.target.value as PhotoType } : item
-														)
+														form.gallery.map( ( item ) => ( item.id === photo.id ? { ...item, type: value as PhotoType } : item ) )
 													)
 												}
-											>
-												{ Object.entries( config.options.photoTypes ).map( ( [ key, label ] ) => (
-													<NativeSelectOption key={ key } value={ key }>
-														{ label }
-													</NativeSelectOption>
-												) ) }
-											</NativeSelect>
+											/>
 										</li>
 									) ) }
 								</ul>
 							) }
-							<PhotoButtons
+							<ImageDropzone
 								animalId={ animalId }
 								multiple
 								onUploaded={ ( image ) =>
@@ -682,7 +663,7 @@ export function AnimalFormPage() {
 					</>
 				) }
 
-				<div className="flex flex-wrap items-center justify-between gap-3 border-t pt-5">
+				<div className="flex flex-wrap items-center justify-between gap-3 border-t pt-5 md:col-span-2">
 					{ step > 1 ? (
 						<Button type="button" variant="ghost" disabled={ saving } onClick={ () => goToStep( step - 1 ) }>
 							{ __( 'Voltar', 'resgata-wp' ) }

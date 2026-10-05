@@ -7,13 +7,14 @@ import { ChevronLeftIcon, ChevronRightIcon, PawPrintIcon, PlusIcon } from 'lucid
 import { api, errorMessage, type AnimalListItem } from '@/lib/api';
 import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { OptionSelect } from '@/components/option-select';
 import { PageHeader } from '@/components/page-header';
 import { StatusBadge } from '@/components/status-badge';
 
 const PAGE_SIZES = [ 25, 50, 75, 100 ];
+const PAGE_SIZE_OPTIONS = Object.fromEntries( PAGE_SIZES.map( ( size ) => [ String( size ), String( size ) ] ) );
 const column = createColumnHelper< AnimalListItem >();
 
 export function AnimalsListPage() {
@@ -146,20 +147,16 @@ export function AnimalsListPage() {
 					</div>
 
 					<div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-						<label className="text-muted-foreground flex items-center gap-2 text-sm">
-							{ __( 'Itens por página', 'resgata-wp' ) }
-							<NativeSelect
+						<div className="text-muted-foreground flex items-center gap-2 text-sm">
+							<span id="rwp-page-size">{ __( 'Itens por página', 'resgata-wp' ) }</span>
+							<OptionSelect
 								className="w-24"
-								value={ pagination.pageSize }
-								onChange={ ( event ) => setPagination( { pageIndex: 0, pageSize: Number( event.target.value ) } ) }
-							>
-								{ PAGE_SIZES.map( ( size ) => (
-									<NativeSelectOption key={ size } value={ size }>
-										{ size }
-									</NativeSelectOption>
-								) ) }
-							</NativeSelect>
-						</label>
+								ariaLabel={ __( 'Itens por página', 'resgata-wp' ) }
+								value={ String( pagination.pageSize ) }
+								options={ PAGE_SIZE_OPTIONS }
+								onChange={ ( value ) => setPagination( { pageIndex: 0, pageSize: Number( value ) } ) }
+							/>
+						</div>
 
 						<div className="flex items-center gap-2">
 							<span className="text-muted-foreground text-sm">
