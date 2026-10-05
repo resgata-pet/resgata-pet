@@ -1,13 +1,15 @@
 import type { ComponentType } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import { __ } from '@wordpress/i18n';
-import { ExternalLinkIcon, HomeIcon, PawPrintIcon, UserIcon } from 'lucide-react';
+import { ExternalLinkIcon, HomeIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { config } from '@/lib/config';
 
 interface NavItem {
 	to: string;
 	label: string;
+	/** Rótulo curto para a navegação inferior do celular. */
+	mobileLabel?: string;
 	icon: ComponentType< { className?: string } >;
 	end?: boolean;
 }
@@ -15,7 +17,10 @@ interface NavItem {
 const items: NavItem[] = [
 	{ to: '/', label: __( 'Início', 'resgata-wp' ), icon: HomeIcon, end: true },
 	{ to: '/animais', label: __( 'Animais', 'resgata-wp' ), icon: PawPrintIcon },
-	{ to: '/conta', label: __( 'Minha conta', 'resgata-wp' ), icon: UserIcon },
+	...( config.user.canManageSettings
+		? [ { to: '/configuracoes', label: __( 'Configurações', 'resgata-wp' ), mobileLabel: __( 'Ajustes', 'resgata-wp' ), icon: SettingsIcon } ]
+		: [] ),
+	{ to: '/conta', label: __( 'Minha conta', 'resgata-wp' ), mobileLabel: __( 'Conta', 'resgata-wp' ), icon: UserIcon },
 ];
 
 function Brand() {
@@ -83,7 +88,7 @@ export function Layout() {
 
 			{ /* Celular: navegação inferior, ao alcance do polegar. */ }
 			<nav
-				className="bg-card fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 border-t pb-[env(safe-area-inset-bottom)] md:hidden"
+				className="bg-card fixed inset-x-0 bottom-0 z-30 grid auto-cols-fr grid-flow-col border-t pb-[env(safe-area-inset-bottom)] md:hidden"
 				aria-label={ __( 'Menu do painel', 'resgata-wp' ) }
 			>
 				{ items.map( ( item ) => (
@@ -99,7 +104,7 @@ export function Layout() {
 						}
 					>
 						<item.icon className="size-6" aria-hidden="true" />
-						{ item.label }
+						{ item.mobileLabel ?? item.label }
 					</NavLink>
 				) ) }
 			</nav>

@@ -7,7 +7,7 @@ export interface PanelConfig {
 	basePath: string;
 	restNamespace: string;
 	siteName: string;
-	user: { name: string; email: string; isAdmin: boolean };
+	user: { name: string; email: string; isAdmin: boolean; canManageSettings: boolean };
 	urls: { site: string; admin: string; logout: string; lostPassword: string };
 	modules: string[];
 	options: {

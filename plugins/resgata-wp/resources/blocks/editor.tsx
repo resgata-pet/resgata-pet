@@ -38,6 +38,10 @@ type DetailsAttributes = {
 	section: 'all' | 'facts' | 'health' | 'gallery';
 };
 
+type ContactAttributes = {
+	showPix: boolean;
+};
+
 interface EditProps< T > {
 	attributes: T;
 	setAttributes: ( attributes: Partial< T > ) => void;
@@ -163,6 +167,29 @@ function DetailsEdit( { attributes, setAttributes, context }: EditProps< Details
 	);
 }
 
+function ContactEdit( { attributes, setAttributes }: EditProps< ContactAttributes > ) {
+	return (
+		<>
+			<InspectorControls>
+				<PanelBody title={ __( 'O que mostrar', 'resgata-wp' ) }>
+					<ToggleControl
+						label={ __( 'Mostrar a chave Pix', 'resgata-wp' ) }
+						help={ __( 'Os dados vêm das configurações do painel Resgata.', 'resgata-wp' ) }
+						checked={ attributes.showPix }
+						onChange={ ( showPix: boolean ) => setAttributes( { showPix } ) }
+						__nextHasNoMarginBottom
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div { ...useBlockProps() }>
+				<Disabled>
+					<ServerSideRender block="resgata-wp/contact" attributes={ attributes } skipBlockSupportAttributes />
+				</Disabled>
+			</div>
+		</>
+	);
+}
+
 /*
  * Os metadados (título, atributos, etc.) vêm do block.json registrado no PHP;
  * por isso os tipos do pacote, que esperam a configuração completa, não se aplicam aqui.
@@ -174,3 +201,4 @@ const register = registerBlockType as unknown as (
 
 register( 'resgata-wp/animals-list', { edit: ListEdit, save: () => null } );
 register( 'resgata-wp/animal-details', { edit: DetailsEdit, save: () => null } );
+register( 'resgata-wp/contact', { edit: ContactEdit, save: () => null } );

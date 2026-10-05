@@ -71,6 +71,40 @@ export interface AnimalList {
 	total_pages: number;
 }
 
+/** Dados da protetora (todos em texto). */
+export interface OrganizationSettings {
+	name: string;
+	tagline: string;
+	cnpj: string;
+	whatsapp: string;
+	whatsapp_message: string;
+	phone: string;
+	email: string;
+	hours: string;
+	instagram: string;
+	facebook: string;
+	tiktok: string;
+	youtube: string;
+	city: string;
+	state: string;
+	neighborhood: string;
+	adoption_email: string;
+	adoption_fee: string;
+	adoption_rules: string;
+	privacy_contact: string;
+	privacy_text: string;
+	pix_key_type: string;
+	pix_key: string;
+	pix_holder: string;
+}
+
+export interface SettingsResponse {
+	settings: OrganizationSettings;
+	choices: { states: Record< string, string >; pixKeyTypes: Record< string, string > };
+	contact_page: { id: number; url: string; published: boolean } | null;
+	whatsapp_url: string;
+}
+
 /** Filtros da listagem de animais. Listas vazias e textos vazios significam "sem filtro". */
 export interface AnimalFilters {
 	search: string;
@@ -122,6 +156,11 @@ export const api = {
 
 	trashAnimal: ( id: number ) =>
 		apiFetch< { id: number; trashed: boolean } >( { path: `${ base }/${ id }`, method: 'DELETE' } ),
+
+	getSettings: () => apiFetch< SettingsResponse >( { path: `/${ config.restNamespace }/settings` } ),
+
+	saveSettings: ( data: OrganizationSettings ) =>
+		apiFetch< SettingsResponse >( { path: `/${ config.restNamespace }/settings`, method: 'PUT', data } ),
 
 	/** Reduz a foto no aparelho e envia para a biblioteca de mídia do WordPress. */
 	uploadPhoto: async ( file: File, animalId?: number ): Promise< AnimalImage > => {
