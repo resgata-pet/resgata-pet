@@ -71,6 +71,41 @@ export interface AnimalList {
 	total_pages: number;
 }
 
+/** Animal ligado a um pedido de adoção. */
+export interface AdoptionAnimal {
+	id: number;
+	name: string;
+	thumbnail: string;
+	status: string;
+	status_label: string;
+	trashed: boolean;
+}
+
+export interface AdoptionListItem {
+	id: number;
+	name: string;
+	status: string;
+	date: string;
+	animal: AdoptionAnimal | null;
+}
+
+export interface AdoptionList {
+	items: AdoptionListItem[];
+	total: number;
+	total_pages: number;
+	new_count: number;
+}
+
+export interface Adoption extends AdoptionListItem {
+	answers: { key: string; label: string; value: string }[];
+	whatsapp: string;
+	whatsapp_url: string;
+	email: string;
+	notes: string;
+	consent_at: string;
+	consent_text: string;
+}
+
 /** Dados da protetora (todos em texto). */
 export interface OrganizationSettings {
 	name: string;
@@ -156,6 +191,24 @@ export const api = {
 
 	trashAnimal: ( id: number ) =>
 		apiFetch< { id: number; trashed: boolean } >( { path: `${ base }/${ id }`, method: 'DELETE' } ),
+
+	listAdoptions: ( page: number, perPage: number, status = '' ) => {
+		const params = new URLSearchParams( { page: String( page ), per_page: String( perPage ) } );
+
+		if ( status !== '' ) {
+			params.set( 'status', status );
+		}
+
+		return apiFetch< AdoptionList >( { path: `/${ config.restNamespace }/adoptions?${ params.toString() }` } );
+	},
+
+	getAdoption: ( id: number ) => apiFetch< Adoption >( { path: `/${ config.restNamespace }/adoptions/${ id }` } ),
+
+	updateAdoption: ( id: number, data: { status?: string; notes?: string } ) =>
+		apiFetch< Adoption >( { path: `/${ config.restNamespace }/adoptions/${ id }`, method: 'PUT', data } ),
+
+	deleteAdoption: ( id: number ) =>
+		apiFetch< { id: number; deleted: boolean } >( { path: `/${ config.restNamespace }/adoptions/${ id }`, method: 'DELETE' } ),
 
 	getSettings: () => apiFetch< SettingsResponse >( { path: `/${ config.restNamespace }/settings` } ),
 

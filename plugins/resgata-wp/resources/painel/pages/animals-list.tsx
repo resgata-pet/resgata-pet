@@ -177,7 +177,7 @@ export function AnimalsListPage() {
 				),
 			} ),
 			column.accessor( 'post_status', {
-				header: () => __( 'No site', 'resgata-wp' ),
+				header: () => __( 'Status', 'resgata-wp' ),
 				cell: ( info ) => {
 					const published = info.getValue() === 'publish';
 

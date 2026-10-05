@@ -9,6 +9,8 @@ import { HomePage } from '@/pages/home';
 import { AnimalsListPage } from '@/pages/animals-list';
 import { AnimalFormPage } from '@/pages/animal-form';
 import { AccountPage } from '@/pages/account';
+import { AdoptionDetailPage } from '@/pages/adoption-detail';
+import { AdoptionsListPage } from '@/pages/adoptions-list';
 import { SettingsPage } from '@/pages/settings';
 import { NotFoundPage } from '@/pages/not-found';
 import './index.css';
@@ -26,6 +28,8 @@ const router = createBrowserRouter(
 				{ path: 'animais', element: <AnimalsListPage /> },
 				{ path: 'animais/novo', element: <AnimalFormPage /> },
 				{ path: 'animais/:id', element: <AnimalFormPage /> },
+				{ path: 'adocoes', element: <AdoptionsListPage /> },
+				{ path: 'adocoes/:id', element: <AdoptionDetailPage /> },
 				{ path: 'configuracoes', element: <SettingsPage /> },
 				{ path: 'conta', element: <AccountPage /> },
 				{ path: '*', element: <NotFoundPage /> },

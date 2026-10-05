@@ -1,7 +1,9 @@
 import type { ComponentType } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import { __ } from '@wordpress/i18n';
-import { ExternalLinkIcon, HomeIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { ExternalLinkIcon, HeartHandshakeIcon, HomeIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
+import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { config } from '@/lib/config';
 
@@ -12,11 +14,16 @@ interface NavItem {
 	mobileLabel?: string;
 	icon: ComponentType< { className?: string } >;
 	end?: boolean;
+	/** Mostra o contador de pedidos novos ao lado do item. */
+	showNewAdoptions?: boolean;
 }
 
 const items: NavItem[] = [
 	{ to: '/', label: __( 'Início', 'resgata-wp' ), icon: HomeIcon, end: true },
 	{ to: '/animais', label: __( 'Animais', 'resgata-wp' ), icon: PawPrintIcon },
+	...( config.user.canManageAdoptions
+		? [ { to: '/adocoes', label: __( 'Adoções', 'resgata-wp' ), icon: HeartHandshakeIcon, showNewAdoptions: true } ]
+		: [] ),
 	...( config.user.canManageSettings
 		? [ { to: '/configuracoes', label: __( 'Configurações', 'resgata-wp' ), mobileLabel: __( 'Ajustes', 'resgata-wp' ), icon: SettingsIcon } ]
 		: [] ),
@@ -34,7 +41,35 @@ function Brand() {
 	);
 }
 
+function CountBadge( { count, className }: { count: number; className?: string } ) {
+	if ( count < 1 ) {
+		return null;
+	}
+
+	return (
+		<span
+			className={ cn(
+				'bg-primary text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-semibold',
+				className
+			) }
+		>
+			{ count > 99 ? '99+' : count }
+			<span className="sr-only"> { __( 'pedidos novos', 'resgata-wp' ) }</span>
+		</span>
+	);
+}
+
 export function Layout() {
+	// Pedidos de adoção ainda não vistos, para o aviso no menu.
+	const newAdoptions = useQuery( {
+		queryKey: [ 'adoptions', 'new-count' ],
+		queryFn: () => api.listAdoptions( 1, 25, 'new' ),
+		enabled: config.user.canManageAdoptions,
+		refetchOnWindowFocus: true,
+		staleTime: 60_000,
+	} );
+	const newCount = newAdoptions.data?.total ?? 0;
+
 	return (
 		<div className="min-h-dvh md:grid md:grid-cols-[16rem_1fr]">
 			{ /* Computador: menu lateral. */ }
@@ -55,6 +90,7 @@ export function Layout() {
 						>
 							<item.icon className="size-5" aria-hidden="true" />
 							{ item.label }
+							{ item.showNewAdoptions && <CountBadge count={ newCount } className="ml-auto" /> }
 						</NavLink>
 					) ) }
 				</nav>
@@ -98,13 +134,14 @@ export function Layout() {
 						end={ item.end }
 						className={ ( { isActive } ) =>
 							cn(
-								'flex h-16 flex-col items-center justify-center gap-1 text-xs font-medium',
+								'relative flex h-16 flex-col items-center justify-center gap-1 text-xs font-medium',
 								isActive ? 'text-primary' : 'text-muted-foreground'
 							)
 						}
 					>
 						<item.icon className="size-6" aria-hidden="true" />
 						{ item.mobileLabel ?? item.label }
+						{ item.showNewAdoptions && <CountBadge count={ newCount } className="absolute top-1.5 left-1/2 ml-2" /> }
 					</NavLink>
 				) ) }
 			</nav>

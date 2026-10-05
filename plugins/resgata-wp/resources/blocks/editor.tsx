@@ -167,6 +167,21 @@ function DetailsEdit( { attributes, setAttributes, context }: EditProps< Details
 	);
 }
 
+function AdoptionFormEdit( { attributes, context }: EditProps< Record< string, never > > ) {
+	return (
+		<div { ...useBlockProps() }>
+			<Disabled>
+				<ServerSideRender
+					block="resgata-wp/adoption-form"
+					attributes={ attributes }
+					skipBlockSupportAttributes
+					urlQueryArgs={ context?.postId ? { post_id: context.postId } : {} }
+				/>
+			</Disabled>
+		</div>
+	);
+}
+
 function ContactEdit( { attributes, setAttributes }: EditProps< ContactAttributes > ) {
 	return (
 		<>
@@ -202,3 +217,4 @@ const register = registerBlockType as unknown as (
 register( 'resgata-wp/animals-list', { edit: ListEdit, save: () => null } );
 register( 'resgata-wp/animal-details', { edit: DetailsEdit, save: () => null } );
 register( 'resgata-wp/contact', { edit: ContactEdit, save: () => null } );
+register( 'resgata-wp/adoption-form', { edit: AdoptionFormEdit, save: () => null } );
