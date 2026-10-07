@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Chamada do topo",
+	"slug": "resgata-hero",
+	"blockTypes": [
+		"core/group"
+	],
+	"styles": {
+		"color": {
+			"gradient": "radial-gradient(circle at 85% 20%, var(--wp--preset--color--accent-2) 0%, var(--wp--preset--color--accent-5) 45%)"
+		},
+		"spacing": {
+			"padding": {
+				"top": "clamp(2.5rem, 1.5rem + 4vw, 4.5rem)",
+				"bottom": "clamp(2.5rem, 1.5rem + 4vw, 4.5rem)"
+			}
+		}
+	}
+}

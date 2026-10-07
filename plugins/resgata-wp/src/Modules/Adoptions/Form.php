@@ -8,6 +8,7 @@
 namespace ResgataWP\Modules\Adoptions;
 
 use ResgataWP\Core\TemplateLoader;
+use ResgataWP\Modules\Animals\Frontend\Blocks as AnimalBlocks;
 use ResgataWP\Modules\Animals\Meta;
 use ResgataWP\Modules\Animals\PostType as AnimalPostType;
 use ResgataWP\Modules\Settings\Organization;
@@ -23,8 +24,20 @@ final class Form {
 	 * Registra os hooks.
 	 */
 	public function register(): void {
-		// Depois dos blocos de animais (prioridade 20), que registram os handles de estilo e script.
-		add_action( 'init', array( $this, 'register_block' ), 25 );
+		// Depois dos blocos de animais (20), que registram os handles de estilo e script, e antes de o
+		// WordPress acrescentar os atributos de suporte (alinhamento, espaçamento), na prioridade 22.
+		add_action( 'init', array( $this, 'register_block' ), 21 );
+		add_filter( 'rwp_animal_adopt_url', array( $this, 'adopt_url' ), 10, 2 );
+	}
+
+	/**
+	 * Destino do botão "Quero adotar" da página do animal: o formulário, logo abaixo.
+	 *
+	 * @param string $url       Destino atual.
+	 * @param int    $animal_id ID do animal.
+	 */
+	public function adopt_url( $url, $animal_id ): string {
+		return Submission::is_adoptable( (int) $animal_id ) ? '#rwp-adocao' : (string) $url;
 	}
 
 	/**
@@ -121,6 +134,8 @@ final class Form {
 		if ( isset( $old['animal_id'] ) && ! $on_animal_page ) {
 			$animal_id = isset( $animals[ absint( $old['animal_id'] ) ] ) ? absint( $old['animal_id'] ) : $animal_id;
 		}
+
+		AnimalBlocks::enqueue_select_assets();
 
 		return TemplateLoader::render(
 			'adoption-form.php',

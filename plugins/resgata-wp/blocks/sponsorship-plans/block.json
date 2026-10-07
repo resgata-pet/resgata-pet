@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-wp/sponsorship-plans",
+	"version": "0.5.0",
+	"title": "Planos de apadrinhamento",
+	"category": "resgata-wp",
+	"icon": "heart",
+	"description": "Mostra os valores mensais de apadrinhamento e o número de padrinhos ativos. O pagamento é feito com cartão, na página segura da Stripe.",
+	"keywords": [ "apadrinhamento", "padrinho", "doação", "mensal", "planos" ],
+	"textdomain": "resgata-wp",
+	"attributes": {
+		"showCounter": { "type": "boolean", "default": true }
+	},
+	"supports": {
+		"html": false,
+		"multiple": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true, "padding": true }
+	},
+	"editorScript": "rwp-blocks-editor",
+	"style": "rwp-frontend",
+	"render": "file:./render.php"
+}

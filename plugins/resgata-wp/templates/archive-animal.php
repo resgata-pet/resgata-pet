@@ -15,11 +15,12 @@ get_header();
 ?>
 <main id="primary" class="site-main rwp-page">
 	<header class="rwp-page__header">
-		<h1 class="rwp-page__title"><?php post_type_archive_title(); ?></h1>
+		<h1 class="rwp-page__title"><?php esc_html_e( 'Animais para adoção', 'resgata-wp' ); ?></h1>
+		<p class="rwp-page__lead"><?php esc_html_e( 'Conheça quem está esperando por um lar.', 'resgata-wp' ); ?></p>
 	</header>
 	<?php
 	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML montado por template que escapa cada valor.
-	echo ListRenderer::render();
+	echo ListRenderer::render( array( 'columns' => 4 ) );
 	?>
 </main>
 <?php

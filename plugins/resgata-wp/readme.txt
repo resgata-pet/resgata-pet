@@ -4,7 +4,7 @@ Tags: animais, adoção, protetora, resgate, ong
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ Módulos:
 
 * **Animais** (disponível): cadastro com ficha, saúde e galeria de fotos (antes e depois), listagem pública com filtros e página individual de cada animal.
 * **Pedidos de adoção** (disponível): questionário no site, enviado pelo WhatsApp da protetora, com fila de pedidos no painel.
-* **Apadrinhamento** (em breve)
+* **Apadrinhamento** (disponível): planos mensais pagos com cartão pela Stripe, área do padrinho sem senha e contador de padrinhos no site.
 * **Prestação de contas** (em breve)
 
 O plugin funciona com qualquer tema. Temas podem substituir os templates criando a pasta `resgata-wp/` e assumir o visual declarando `add_theme_support( 'resgata-wp' )`.
@@ -44,7 +44,14 @@ Por padrão, os que estão com a situação "Disponível para adoção" ou "Rese
 
 Nada: os dados são mantidos. Para apagá-los, desmarque "Manter os dados" em "Resgata WP → Configurações" antes de excluir o plugin.
 
+= Para onde vão os dados de quem apadrinha? =
+
+O pagamento é feito nas páginas da Stripe (stripe.com), que guarda os dados do cartão. O site guarda só o nome, o e-mail, os identificadores da assinatura na Stripe, o valor escolhido e a situação. Veja os termos e a política de privacidade da Stripe em https://stripe.com/br/legal e https://stripe.com/br/privacy.
+
 == Changelog ==
+
+= 0.5.0 =
+* Apadrinhamento: planos mensais com cartão pelo Stripe Checkout, área do padrinho por link enviado ao e-mail (portal da Stripe), contador de padrinhos no site e lista de padrinhos no painel.
 
 = 0.4.0 =
 * Pedidos de adoção: questionário no site com consentimento (LGPD), envio pelo WhatsApp da protetora e fila de pedidos no painel.

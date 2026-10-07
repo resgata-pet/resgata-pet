@@ -7,7 +7,14 @@ export interface PanelConfig {
 	basePath: string;
 	restNamespace: string;
 	siteName: string;
-	user: { name: string; email: string; isAdmin: boolean; canManageSettings: boolean; canManageAdoptions: boolean };
+	user: {
+		name: string;
+		email: string;
+		isAdmin: boolean;
+		canManageSettings: boolean;
+		canManageAdoptions: boolean;
+		canManageSponsorship: boolean;
+	};
 	urls: { site: string; admin: string; logout: string; lostPassword: string };
 	modules: string[];
 	options: {
@@ -20,6 +27,7 @@ export interface PanelConfig {
 		species: OptionMap;
 		temperaments: string[];
 		adoptionStatuses: OptionMap;
+		sponsorStatuses: OptionMap;
 	};
 }
 

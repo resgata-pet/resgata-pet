@@ -53,7 +53,7 @@ final class Templates {
 			'resgata-wp//single-' . PostType::SLUG,
 			array(
 				'title'       => __( 'Página do animal', 'resgata-wp' ),
-				'description' => __( 'Mostra a página individual de um animal: foto, ficha, história, saúde e galeria.', 'resgata-wp' ),
+				'description' => __( 'Mostra a página individual de um animal: fotos, resumo, história, saúde e formulário de adoção.', 'resgata-wp' ),
 				'post_types'  => array( PostType::SLUG ),
 				'content'     => $this->single_content(),
 			)
@@ -89,13 +89,9 @@ final class Templates {
 	 * Conteúdo do modelo da página individual.
 	 */
 	private function single_content(): string {
+		// O bloco da página do animal já traz o nome, as fotos e a história.
 		return $this->open()
-			. '<!-- wp:post-title {"level":1} /-->' . "\n"
-			. '<!-- wp:post-featured-image {"aspectRatio":"3/2"} /-->' . "\n"
-			. '<!-- wp:resgata-wp/animal-details {"section":"facts"} /-->' . "\n"
-			. '<!-- wp:post-content {"layout":{"type":"constrained"}} /-->' . "\n"
-			. '<!-- wp:resgata-wp/animal-details {"section":"health"} /-->' . "\n"
-			. '<!-- wp:resgata-wp/animal-details {"section":"gallery"} /-->' . "\n"
+			. '<!-- wp:resgata-wp/animal-details {"align":"wide"} /-->' . "\n"
 			. '<!-- wp:resgata-wp/adoption-form /-->' . "\n"
 			. $this->close();
 	}
@@ -106,7 +102,7 @@ final class Templates {
 	private function archive_content(): string {
 		return $this->open()
 			. '<!-- wp:query-title {"type":"archive","showPrefix":false} /-->' . "\n"
-			. '<!-- wp:resgata-wp/animals-list {"align":"wide"} /-->' . "\n"
+			. '<!-- wp:resgata-wp/animals-list {"columns":4,"align":"wide"} /-->' . "\n"
 			. $this->close();
 	}
 

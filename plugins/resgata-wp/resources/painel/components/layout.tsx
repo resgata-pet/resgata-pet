@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import { __ } from '@wordpress/i18n';
 import { useQuery } from '@tanstack/react-query';
-import { ExternalLinkIcon, HeartHandshakeIcon, HomeIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
+import { ExternalLinkIcon, HandCoinsIcon, HeartHandshakeIcon, HomeIcon, ImagesIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { config } from '@/lib/config';
@@ -14,6 +14,8 @@ interface NavItem {
 	mobileLabel?: string;
 	icon: ComponentType< { className?: string } >;
 	end?: boolean;
+	/** Fica só no menu lateral do computador; no celular, o acesso é por outra tela. */
+	desktopOnly?: boolean;
 	/** Mostra o contador de pedidos novos ao lado do item. */
 	showNewAdoptions?: boolean;
 }
@@ -24,6 +26,9 @@ const items: NavItem[] = [
 	...( config.user.canManageAdoptions
 		? [ { to: '/adocoes', label: __( 'Adoções', 'resgata-wp' ), icon: HeartHandshakeIcon, showNewAdoptions: true } ]
 		: [] ),
+	...( config.user.canManageSponsorship ? [ { to: '/apadrinhamento', label: __( 'Padrinhos', 'resgata-wp' ), icon: HandCoinsIcon } ] : [] ),
+	// No celular, os banners são abertos pela tela de Configurações (a barra inferior não comporta mais um item).
+	...( config.user.canManageSettings ? [ { to: '/banners', label: __( 'Banners', 'resgata-wp' ), icon: ImagesIcon, desktopOnly: true } ] : [] ),
 	...( config.user.canManageSettings
 		? [ { to: '/configuracoes', label: __( 'Configurações', 'resgata-wp' ), mobileLabel: __( 'Ajustes', 'resgata-wp' ), icon: SettingsIcon } ]
 		: [] ),
@@ -127,7 +132,7 @@ export function Layout() {
 				className="bg-card fixed inset-x-0 bottom-0 z-30 grid auto-cols-fr grid-flow-col border-t pb-[env(safe-area-inset-bottom)] md:hidden"
 				aria-label={ __( 'Menu do painel', 'resgata-wp' ) }
 			>
-				{ items.map( ( item ) => (
+				{ items.filter( ( item ) => ! item.desktopOnly ).map( ( item ) => (
 					<NavLink
 						key={ item.to }
 						to={ item.to }

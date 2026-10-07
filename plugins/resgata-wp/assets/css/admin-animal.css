@@ -75,3 +75,7 @@
 	font-size: 1.3em;
 	margin: 0 0 4px;
 }
+
+.rwp-field--wide {
+	grid-column: 1 / -1;
+}

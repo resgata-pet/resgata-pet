@@ -2,17 +2,17 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "resgata-wp/animal-details",
-	"version": "0.1.0",
-	"title": "Ficha do animal",
+	"version": "0.2.0",
+	"title": "Página do animal",
 	"category": "resgata-wp",
 	"icon": "id-alt",
-	"description": "Mostra os dados, a saúde e a galeria de fotos do animal da página atual.",
+	"description": "Mostra a página do animal: fotos, resumo, história, saúde e outros animais para adoção.",
 	"keywords": [ "animal", "ficha", "saúde", "galeria" ],
 	"textdomain": "resgata-wp",
 	"attributes": {
 		"section": {
 			"type": "string",
-			"enum": [ "all", "facts", "health", "gallery" ],
+			"enum": [ "all", "breadcrumb", "gallery", "summary", "story", "health", "help", "related", "facts" ],
 			"default": "all"
 		}
 	},

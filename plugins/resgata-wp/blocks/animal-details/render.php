@@ -25,7 +25,7 @@ if ( '' === $rwp_html && wp_is_serving_rest_request() ) {
 	$rwp_html = sprintf(
 		'<div %s><p>%s</p></div>',
 		get_block_wrapper_attributes( array( 'class' => 'rwp-animal rwp-animal--placeholder' ) ),
-		esc_html__( 'Aqui aparece a ficha do animal (dados, saúde e fotos) na página de cada animal.', 'resgata-wp' )
+		esc_html__( 'Aqui aparece a página do animal (fotos, resumo, história e saúde) quando alguém abre um animal no site.', 'resgata-wp' )
 	);
 }
 

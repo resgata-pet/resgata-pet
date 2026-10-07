@@ -17,6 +17,21 @@ set +a
 WP="docker compose run --rm -T wpcli wp"
 URL="http://localhost:${WP_PORT:-8080}"
 
+resumo() {
+	echo
+	echo "Pronto!"
+	echo "  Site:            $URL"
+	echo "  Painel Resgata:  $URL/painel    usuário: ${WP_PANEL_USER:-protetora}   senha: ${WP_PANEL_PASSWORD:-protetora}"
+	echo "  WordPress:       $URL/wp-admin  usuário: ${WP_ADMIN_USER:-admin}   senha: ${WP_ADMIN_PASSWORD:-admin}"
+	echo "  E-mails de teste: http://localhost:${MAILPIT_PORT:-8025}"
+}
+
+# `--resumo` só mostra os endereços e os acessos (usado no fim do `make setup`).
+if [ "${1:-}" = "--resumo" ]; then
+	resumo
+	exit 0
+fi
+
 echo "Aguardando os arquivos do WordPress..."
 for _ in $(seq 1 60); do
 	if $WP core version >/dev/null 2>&1; then
@@ -25,7 +40,9 @@ for _ in $(seq 1 60); do
 	sleep 2
 done
 
+NOVO=0
 if ! $WP core is-installed >/dev/null 2>&1; then
+	NOVO=1
 	$WP core install \
 		--url="$URL" \
 		--title="${WP_TITLE:-Protetora Exemplo}" \
@@ -47,6 +64,12 @@ $WP language theme install twentytwentyfive pt_BR || true
 $WP plugin activate resgata-wp
 $WP theme activate resgata-tema
 
+# Em uma instalação nova, liga todos os módulos prontos, para o ambiente já mostrar o kit
+# inteiro (o apadrinhamento vem desligado por padrão em um site de verdade).
+if [ "$NOVO" = "1" ]; then
+	$WP option update rwp_modules '["animals","adoptions","sponsorship"]' --format=json
+fi
+
 # Usuário de teste do painel (perfil "Protetor admin").
 if ! $WP user get "${WP_PANEL_USER:-protetora}" --field=ID >/dev/null 2>&1; then
 	$WP user create "${WP_PANEL_USER:-protetora}" "${WP_PANEL_EMAIL:-protetora@example.org}" \
@@ -57,9 +80,4 @@ fi
 
 $WP rewrite flush
 
-echo
-echo "Pronto!"
-echo "  Site:    $URL"
-echo "  Painel Resgata: $URL/painel  (usuário e senha em WP_PANEL_USER / WP_PANEL_PASSWORD do .env)"
-echo "  WordPress:      $URL/wp-admin  (usuário e senha em WP_ADMIN_USER / WP_ADMIN_PASSWORD do .env)"
-echo "  E-mails: http://localhost:${MAILPIT_PORT:-8025}"
+resumo

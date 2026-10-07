@@ -7,6 +7,8 @@
 
 namespace ResgataWP\Modules\Settings;
 
+use ResgataWP\Core\Bindings;
+use ResgataWP\Core\Links;
 use ResgataWP\Core\Modules;
 use ResgataWP\Core\Schema;
 
@@ -27,6 +29,17 @@ final class SettingsModule {
 	 */
 	public function register(): void {
 		( new ContactBlock() )->register();
+		( new Banners() )->register();
+
+		( new PixDonation() )->register();
+
+		// Ligações de blocos comuns (botões, parágrafos) aos links e dados do plugin, usadas pelos modelos do tema.
+		add_action( 'init', array( Bindings::class, 'register' ) );
+		add_action( 'init', array( $this, 'register_links_block' ), 21 );
+
+		// As páginas de apadrinhamento e "Como ajudar" podem ter sido criadas, alteradas ou apagadas.
+		add_action( 'save_post_page', array( Links::class, 'forget_pages' ) );
+		add_action( 'deleted_post', array( Links::class, 'forget_pages' ) );
 
 		add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
@@ -34,6 +47,18 @@ final class SettingsModule {
 		add_action( 'add_option_' . Modules::OPTION, array( $this, 'schedule_rewrite_flush' ) );
 		add_action( 'init', array( $this, 'maybe_flush_rewrite' ), 99 );
 		add_filter( 'plugin_action_links_' . plugin_basename( RWP_PLUGIN_FILE ), array( $this, 'action_links' ) );
+	}
+
+	/**
+	 * Registra o bloco "Links do site".
+	 */
+	public function register_links_block(): void {
+		if ( ! wp_style_is( 'rwp-frontend', 'registered' ) ) {
+			$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
+			wp_register_style( 'rwp-frontend', $src, array(), RWP_VERSION );
+		}
+
+		register_block_type( RWP_PLUGIN_DIR . 'blocks/links' );
 	}
 
 	/**

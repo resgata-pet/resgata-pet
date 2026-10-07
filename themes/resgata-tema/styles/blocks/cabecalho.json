@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Cabeçalho do site",
+	"slug": "resgata-header",
+	"blockTypes": [
+		"core/group"
+	],
+	"styles": {
+		"border": {
+			"bottom": {
+				"color": "var:preset|color|accent-6",
+				"style": "solid",
+				"width": "1px"
+			}
+		},
+		"color": {
+			"background": "var:preset|color|surface"
+		}
+	}
+}

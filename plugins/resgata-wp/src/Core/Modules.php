@@ -22,7 +22,22 @@ final class Modules {
 	 * Fica separado de `all()` porque é consultado antes do hook `init`,
 	 * quando as traduções ainda não podem ser carregadas.
 	 */
-	private const AVAILABLE = array( 'animals', 'adoptions' );
+	private const AVAILABLE = array( 'animals', 'adoptions', 'sponsorship' );
+
+	/**
+	 * Módulos que podem ser ligados neste site.
+	 *
+	 * O apadrinhamento usa a biblioteca da Stripe (pasta `vendor/`): sem ela, fica indisponível.
+	 *
+	 * @return string[]
+	 */
+	private static function available(): array {
+		if ( class_exists( \Stripe\StripeClient::class ) ) {
+			return self::AVAILABLE;
+		}
+
+		return array_values( array_diff( self::AVAILABLE, array( 'sponsorship' ) ) );
+	}
 
 	/**
 	 * Todos os módulos previstos no kit.
@@ -34,17 +49,17 @@ final class Modules {
 			'animals'     => array(
 				'label'       => __( 'Animais', 'resgata-wp' ),
 				'description' => __( 'Cadastro dos animais resgatados, listagem pública com filtros e página individual de cada animal.', 'resgata-wp' ),
-				'available'   => in_array( 'animals', self::AVAILABLE, true ),
+				'available'   => in_array( 'animals', self::available(), true ),
 			),
 			'adoptions'   => array(
 				'label'       => __( 'Pedidos de adoção', 'resgata-wp' ),
 				'description' => __( 'Questionário público de adoção, enviado pelo WhatsApp, e fila interna de pedidos. Precisa do módulo Animais.', 'resgata-wp' ),
-				'available'   => in_array( 'adoptions', self::AVAILABLE, true ),
+				'available'   => in_array( 'adoptions', self::available(), true ),
 			),
 			'sponsorship' => array(
 				'label'       => __( 'Apadrinhamento', 'resgata-wp' ),
-				'description' => __( 'Planos mensais de apadrinhamento e doações avulsas.', 'resgata-wp' ),
-				'available'   => false,
+				'description' => __( 'Planos mensais de apadrinhamento pagos com cartão pela Stripe, com contador de padrinhos no site.', 'resgata-wp' ),
+				'available'   => in_array( 'sponsorship', self::available(), true ),
 			),
 			'accounting'  => array(
 				'label'       => __( 'Prestação de contas', 'resgata-wp' ),
@@ -98,7 +113,7 @@ final class Modules {
 
 		foreach ( $value as $slug ) {
 			$slug = is_scalar( $slug ) ? sanitize_key( (string) $slug ) : '';
-			if ( in_array( $slug, self::AVAILABLE, true ) ) {
+			if ( in_array( $slug, self::available(), true ) ) {
 				$clean[] = $slug;
 			}
 		}

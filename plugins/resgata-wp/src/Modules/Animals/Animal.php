@@ -103,6 +103,42 @@ final class Animal {
 	}
 
 	/**
+	 * Frase de apresentação (uma linha).
+	 */
+	public function tagline(): string {
+		return $this->meta( Meta::TAGLINE );
+	}
+
+	/**
+	 * Resumo curto, mostrado no topo da página do animal.
+	 */
+	public function intro(): string {
+		return $this->meta( Meta::INTRO );
+	}
+
+	/**
+	 * Peso em quilos (ex.: "18.5") ou vazio.
+	 */
+	public function weight(): string {
+		return Meta::sanitize_weight( $this->meta( Meta::WEIGHT ) );
+	}
+
+	/**
+	 * Peso em texto. Ex.: "18,5 kg".
+	 */
+	public function weight_label(): string {
+		$weight = $this->weight();
+		if ( '' === $weight ) {
+			return '';
+		}
+
+		$decimals = floor( (float) $weight ) === (float) $weight ? 0 : 1;
+
+		/* translators: %s: peso do animal em quilos. */
+		return sprintf( __( '%s kg', 'resgata-wp' ), number_format_i18n( (float) $weight, $decimals ) );
+	}
+
+	/**
 	 * Primeira espécie do animal.
 	 */
 	public function species(): ?\WP_Term {
@@ -259,6 +295,27 @@ final class Animal {
 	}
 
 	/**
+	 * Passou por consulta veterinária: `yes`, `no` ou vazio (não informado).
+	 */
+	public function vet_checked(): string {
+		return Meta::sanitize_choice( $this->meta( Meta::VET_CHECKED ), Options::yes_no() );
+	}
+
+	/**
+	 * Vacinas em dia: `yes`, `no` ou vazio (não informado).
+	 */
+	public function vaccinated(): string {
+		return Meta::sanitize_choice( $this->meta( Meta::VACCINATED ), Options::yes_no() );
+	}
+
+	/**
+	 * Tem microchip: `yes`, `no` ou vazio (não informado).
+	 */
+	public function microchip(): string {
+		return Meta::sanitize_choice( $this->meta( Meta::MICROCHIP ), Options::yes_no() );
+	}
+
+	/**
 	 * Vacinas aplicadas.
 	 *
 	 * @return array<int, array{name: string, date: string}>
@@ -284,11 +341,18 @@ final class Animal {
 	}
 
 	/**
-	 * Resumo curto para os cartões. Ex.: "Gato · Fêmea · 2 anos".
+	 * Resumo curto para os cartões. Ex.: "Gato", "2 anos", "Porte médio".
 	 *
 	 * @return string[]
 	 */
-	public function summary(): array {
-		return array_values( array_filter( array( $this->species_label(), $this->sex_label(), $this->age_label() ) ) );
+	public function card_summary(): array {
+		$size = $this->size_label();
+
+		if ( '' !== $size ) {
+			/* translators: %s: porte do animal em minúsculas. Ex.: "Porte médio". */
+			$size = sprintf( __( 'Porte %s', 'resgata-wp' ), mb_strtolower( $size ) );
+		}
+
+		return array_values( array_filter( array( $this->species_label(), $this->age_label(), $size ) ) );
 	}
 }

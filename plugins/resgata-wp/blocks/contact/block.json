@@ -2,7 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "resgata-wp/contact",
-	"version": "0.3.0",
+	"version": "0.5.0",
 	"title": "Contato da protetora",
 	"category": "resgata-wp",
 	"icon": "phone",
@@ -10,7 +10,8 @@
 	"keywords": [ "contato", "whatsapp", "telefone", "pix", "redes sociais" ],
 	"textdomain": "resgata-wp",
 	"attributes": {
-		"showPix": { "type": "boolean", "default": true }
+		"showPix": { "type": "boolean", "default": true },
+		"compact": { "type": "boolean", "default": false }
 	},
 	"supports": {
 		"html": false,

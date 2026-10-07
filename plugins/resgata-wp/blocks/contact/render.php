@@ -13,7 +13,8 @@ defined( 'ABSPATH' ) || exit;
 
 $rwp_html = ContactBlock::render(
 	(bool) ( $attributes['showPix'] ?? true ),
-	get_block_wrapper_attributes( array( 'class' => 'rwp-contact' ) )
+	get_block_wrapper_attributes( array( 'class' => empty( $attributes['compact'] ) ? 'rwp-contact' : 'rwp-contact-compact' ) ),
+	! empty( $attributes['compact'] )
 );
 
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template escapa cada valor; os atributos do wrapper vêm escapados do core.

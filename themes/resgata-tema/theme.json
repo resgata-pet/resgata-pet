@@ -4,52 +4,275 @@
 	"settings": {
 		"color": {
 			"palette": [
-				{ "slug": "base", "color": "#FFFAF3", "name": "Creme (fundo)" },
-				{ "slug": "contrast", "color": "#2E2219", "name": "Café (texto)" },
-				{ "slug": "accent-1", "color": "#F7C873", "name": "Mel" },
-				{ "slug": "accent-2", "color": "#F2D6C4", "name": "Pêssego" },
-				{ "slug": "accent-3", "color": "#A8481F", "name": "Terracota (destaque)" },
-				{ "slug": "accent-4", "color": "#6E5F54", "name": "Castanho suave" },
-				{ "slug": "accent-5", "color": "#F5EBDD", "name": "Areia" },
-				{ "slug": "accent-6", "color": "color-mix(in srgb, currentColor 20%, transparent)", "name": "Linha" }
+				{
+					"slug": "base",
+					"color": "#FAFBFC",
+					"name": "Fundo da página"
+				},
+				{
+					"slug": "contrast",
+					"color": "#14213D",
+					"name": "Azul-marinho (títulos)"
+				},
+				{
+					"slug": "accent-1",
+					"color": "#F0932B",
+					"name": "Laranja"
+				},
+				{
+					"slug": "accent-2",
+					"color": "#E6F2EA",
+					"name": "Verde claro"
+				},
+				{
+					"slug": "accent-3",
+					"color": "#2F7D55",
+					"name": "Verde principal (destaque)"
+				},
+				{
+					"slug": "accent-4",
+					"color": "#5F6877",
+					"name": "Texto suave"
+				},
+				{
+					"slug": "accent-5",
+					"color": "#F3F8F4",
+					"name": "Verde muito claro (seções)"
+				},
+				{
+					"slug": "accent-6",
+					"color": "#E3E8EE",
+					"name": "Linha"
+				},
+				{
+					"slug": "surface",
+					"color": "#FFFFFF",
+					"name": "Superfície (cartões)"
+				},
+				{
+					"slug": "text",
+					"color": "#3D4759",
+					"name": "Texto"
+				},
+				{
+					"slug": "primary-dark",
+					"color": "#1F5C3D",
+					"name": "Verde escuro"
+				},
+				{
+					"slug": "tile",
+					"color": "#F1F4F8",
+					"name": "Cinza claro (blocos)"
+				},
+				{
+					"slug": "info",
+					"color": "#2F6FDB",
+					"name": "Azul"
+				},
+				{
+					"slug": "help",
+					"color": "#6D3FD9",
+					"name": "Roxo"
+				},
+				{
+					"slug": "help-soft",
+					"color": "#F0EAFD",
+					"name": "Roxo claro"
+				}
+			]
+		},
+		"border": {
+			"radiusSizes": [
+				{
+					"name": "Pequeno (botões e campos)",
+					"slug": "small",
+					"size": "8px"
+				},
+				{
+					"name": "Médio (cartões)",
+					"slug": "medium",
+					"size": "12px"
+				},
+				{
+					"name": "Grande (faixas)",
+					"slug": "large",
+					"size": "20px"
+				},
+				{
+					"name": "Pílula",
+					"slug": "pill",
+					"size": "999px"
+				}
+			]
+		},
+		"shadow": {
+			"presets": [
+				{
+					"name": "Cartão",
+					"slug": "card",
+					"shadow": "0 1px 2px rgba(20, 33, 61, 0.06)"
+				},
+				{
+					"name": "Flutuante",
+					"slug": "floating",
+					"shadow": "0 6px 20px rgba(20, 33, 61, 0.1)"
+				}
 			]
 		}
 	},
 	"styles": {
+		"color": {
+			"background": "var:preset|color|base",
+			"text": "var:preset|color|text"
+		},
+		"typography": {
+			"fontSize": "var:preset|font-size|medium",
+			"fontWeight": "400",
+			"lineHeight": "1.5"
+		},
 		"elements": {
 			"heading": {
+				"color": {
+					"text": "var:preset|color|contrast"
+				},
 				"typography": {
 					"fontWeight": "700",
-					"letterSpacing": "-0.01em"
+					"letterSpacing": "-0.01em",
+					"lineHeight": "1.15"
 				}
 			},
 			"link": {
-				"color": { "text": "var:preset|color|accent-3" },
-				":hover": {
-					"color": { "text": "var:preset|color|contrast" }
-				}
-			},
-			"button": {
-				"border": { "radius": "999px" },
 				"color": {
-					"background": "var:preset|color|accent-3",
-					"text": "var:preset|color|base"
+					"text": "var:preset|color|accent-3"
 				},
 				":hover": {
 					"color": {
-						"background": "var:preset|color|contrast",
-						"text": "var:preset|color|base"
+						"text": "var:preset|color|primary-dark"
+					}
+				}
+			},
+			"button": {
+				"border": {
+					"radius": "8px"
+				},
+				"color": {
+					"background": "var:preset|color|accent-3",
+					"text": "var:preset|color|surface"
+				},
+				"typography": {
+					"fontWeight": "600"
+				},
+				":hover": {
+					"color": {
+						"background": "var:preset|color|primary-dark",
+						"text": "var:preset|color|surface"
 					}
 				},
 				":focus": {
 					"outline": {
-						"color": "var:preset|color|contrast",
+						"color": "var:preset|color|accent-3",
 						"offset": "2px",
 						"style": "solid",
 						"width": "2px"
 					}
 				}
+			},
+			"textInput": {
+				"border": {
+					"color": "var:preset|color|accent-6",
+					"radius": "var:preset|border-radius|small",
+					"style": "solid",
+					"width": "1px"
+				},
+				"color": {
+					"background": "var:preset|color|surface",
+					"text": "var:preset|color|contrast"
+				}
+			},
+			"select": {
+				"border": {
+					"color": "var:preset|color|accent-6",
+					"radius": "var:preset|border-radius|small",
+					"style": "solid",
+					"width": "1px"
+				},
+				"color": {
+					"background": "var:preset|color|surface",
+					"text": "var:preset|color|contrast"
+				}
+			}
+		},
+		"blocks": {
+			"core/button": {
+				"variations": {
+					"outline": {
+						"border": {
+							"color": "var:preset|color|accent-3",
+							"style": "solid",
+							"width": "1px"
+						},
+						"color": {
+							"background": "var:preset|color|surface",
+							"text": "var:preset|color|accent-3"
+						},
+						":hover": {
+							"color": {
+								"background": "var:preset|color|accent-2",
+								"text": "var:preset|color|primary-dark"
+							}
+						}
+					}
+				}
+			},
+			"core/site-title": {
+				"typography": {
+					"fontWeight": "700"
+				},
+				"elements": {
+					"link": {
+						"color": {
+							"text": "var:preset|color|contrast"
+						},
+						"typography": {
+							"textDecoration": "none"
+						}
+					}
+				}
+			},
+			"core/navigation": {
+				"typography": {
+					"fontWeight": "500"
+				},
+				"elements": {
+					"link": {
+						"color": {
+							"text": "var:preset|color|contrast"
+						},
+						":hover": {
+							"color": {
+								"text": "var:preset|color|accent-3"
+							}
+						}
+					}
+				}
+			},
+			"core/site-tagline": {
+				"color": {
+					"text": "var:preset|color|accent-4"
+				}
 			}
 		}
-	}
+	},
+	"templateParts": [
+		{
+			"name": "header",
+			"title": "Cabeçalho",
+			"area": "header"
+		},
+		{
+			"name": "footer",
+			"title": "Rodapé",
+			"area": "footer"
+		}
+	]
 }

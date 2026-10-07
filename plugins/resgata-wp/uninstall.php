@@ -10,6 +10,9 @@
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
+// As chaves da Stripe salvas no painel saem sempre, mesmo com "Manter os dados" marcado.
+delete_option( 'rwp_stripe_keys' );
+
 $rwp_settings = get_option( 'rwp_settings', array() );
 
 if ( ! is_array( $rwp_settings ) || ! array_key_exists( 'keep_data', $rwp_settings ) || $rwp_settings['keep_data'] ) {
@@ -81,6 +84,7 @@ $rwp_caps = array(
 	'rwp_access_panel',
 	'rwp_manage_settings',
 	'rwp_manage_adoptions',
+	'rwp_manage_sponsorship',
 );
 
 foreach ( wp_roles()->role_objects as $rwp_role ) {
@@ -92,11 +96,14 @@ foreach ( wp_roles()->role_objects as $rwp_role ) {
 remove_role( 'rwp_protetor_admin' );
 
 // Opções.
-foreach ( array( 'rwp_settings', 'rwp_modules', 'rwp_db_version', 'rwp_flush_rewrite', 'rwp_organization', 'rwp_contact_page_id' ) as $rwp_option ) {
+foreach ( array( 'rwp_settings', 'rwp_modules', 'rwp_db_version', 'rwp_flush_rewrite', 'rwp_organization', 'rwp_contact_page_id', 'rwp_help_page_id', 'rwp_banners', 'rwp_sponsorship', 'rwp_sponsorship_counter' ) as $rwp_option ) {
 	delete_option( $rwp_option );
 }
 
-/*
- * Tabelas próprias: nenhuma até a versão atual do schema. Quando o módulo de
- * prestação de contas criar tabelas, elas devem ser removidas aqui.
- */
+// Tabelas próprias: padrinhos (dados pessoais) e eventos da Stripe já processados.
+foreach ( array( 'rwp_sponsors', 'rwp_stripe_events' ) as $rwp_table ) {
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.SchemaChange.SchemaChange -- Nome fixo de tabela do próprio plugin, na desinstalação.
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}{$rwp_table}" );
+}
+
+wp_clear_scheduled_hook( 'rwp_stripe_events_cleanup' );

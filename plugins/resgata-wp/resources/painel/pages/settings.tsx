@@ -2,27 +2,29 @@ import { useEffect, useId, useState, type ReactNode } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { __ } from '@wordpress/i18n';
 import { toast } from 'sonner';
-import { ExternalLinkIcon, Loader2Icon } from 'lucide-react';
+import { ChevronRightIcon, ExternalLinkIcon, ImagesIcon, Loader2Icon } from 'lucide-react';
+import { Link } from 'react-router';
 import { api, errorMessage, type OrganizationSettings, type SettingsResponse } from '@/lib/api';
 import { config } from '@/lib/config';
+import { maskCnpj, maskPhone, type Mask } from '@/lib/masks';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { Field } from '@/components/field';
+import { MaskedInput } from '@/components/masked-input';
 import { OptionSelect } from '@/components/option-select';
 import { PageHeader } from '@/components/page-header';
 
-/** Mostra telefones como (11) 91234-5678; o servidor guarda só os dígitos. */
-function formatPhone( digits: string ): string {
-	const match = /^(\d{2})(\d{4,5})(\d{4})$/.exec( digits );
-
-	return match ? `(${ match[ 1 ] }) ${ match[ 2 ] }-${ match[ 3 ] }` : digits;
-}
-
-function withFormattedPhones( settings: OrganizationSettings ): OrganizationSettings {
-	return { ...settings, whatsapp: formatPhone( settings.whatsapp ), phone: formatPhone( settings.phone ) };
+/** Mostra telefones como (11) 91234-5678 (o servidor guarda só os dígitos) e o CNPJ pontuado. */
+function withMasks( settings: OrganizationSettings ): OrganizationSettings {
+	return {
+		...settings,
+		cnpj: maskCnpj( settings.cnpj ),
+		whatsapp: maskPhone( settings.whatsapp ),
+		phone: maskPhone( settings.phone ),
+	};
 }
 
 function Section( { title, description, children }: { title: string; description?: string; children: ReactNode } ) {
@@ -46,7 +48,7 @@ export function SettingsPage() {
 
 	useEffect( () => {
 		if ( query.data && form === null ) {
-			setForm( withFormattedPhones( query.data.settings ) );
+			setForm( withMasks( query.data.settings ) );
 		}
 	}, [ query.data, form ] );
 
@@ -54,15 +56,20 @@ export function SettingsPage() {
 		mutationFn: ( data: OrganizationSettings ) => api.saveSettings( data ),
 		onSuccess: ( response: SettingsResponse ) => {
 			const hadPage = Boolean( query.data?.contact_page );
+			const hadHelpPage = Boolean( query.data?.help_page );
 
 			queryClient.setQueryData( [ 'settings' ], response );
 			// O servidor devolve os valores já ajustados (ex.: @usuario vira link).
-			setForm( withFormattedPhones( response.settings ) );
-			toast.success(
-				! hadPage && response.contact_page
-					? __( 'Configurações salvas. A página de contato do site foi criada.', 'resgata-wp' )
-					: __( 'Configurações salvas.', 'resgata-wp' )
-			);
+			setForm( withMasks( response.settings ) );
+			toast.success( __( 'Configurações salvas.', 'resgata-wp' ) );
+
+			if ( ! hadPage && response.contact_page ) {
+				toast.info( __( 'A página de contato do site foi criada.', 'resgata-wp' ) );
+			}
+
+			if ( ! hadHelpPage && response.help_page ) {
+				toast.info( __( 'A página "Como ajudar" foi criada, com o QR Code do Pix.', 'resgata-wp' ) );
+			}
 		},
 		onError: ( error ) => toast.error( errorMessage( error ) ),
 	} );
@@ -98,21 +105,29 @@ export function SettingsPage() {
 	const text = (
 		key: keyof OrganizationSettings,
 		label: string,
-		options: { hint?: string; placeholder?: string; type?: string; inputMode?: 'tel' | 'email' | 'url' | 'numeric'; wide?: boolean; maxLength?: number } = {}
-	) => (
-		<Field label={ label } htmlFor={ id( key ) } hint={ options.hint } className={ options.wide ? 'md:col-span-2' : undefined }>
-			<Input
-				id={ id( key ) }
-				type={ options.type ?? 'text' }
-				inputMode={ options.inputMode }
-				placeholder={ options.placeholder }
-				maxLength={ options.maxLength }
-				autoComplete="off"
-				value={ form[ key ] }
-				onChange={ ( event ) => set( key, event.target.value ) }
-			/>
-		</Field>
-	);
+		options: { hint?: string; placeholder?: string; type?: string; inputMode?: 'tel' | 'email' | 'url' | 'numeric'; wide?: boolean; maxLength?: number; mask?: Mask } = {}
+	) => {
+		const mask = options.mask;
+		const props = {
+			id: id( key ),
+			type: options.type ?? 'text',
+			inputMode: options.inputMode,
+			placeholder: options.placeholder,
+			maxLength: options.maxLength,
+			autoComplete: 'off',
+			value: form[ key ],
+		};
+
+		return (
+			<Field label={ label } htmlFor={ id( key ) } hint={ options.hint } className={ options.wide ? 'md:col-span-2' : undefined }>
+				{ mask ? (
+					<MaskedInput { ...props } mask={ mask } onValueChange={ ( value ) => set( key, value ) } />
+				) : (
+					<Input { ...props } onChange={ ( event ) => set( key, event.target.value ) } />
+				) }
+			</Field>
+		);
+	};
 
 	return (
 		<form
@@ -140,10 +155,26 @@ export function SettingsPage() {
 				}
 			/>
 
+			<Link
+				to="/banners"
+				className="bg-card hover:bg-muted mb-6 flex min-h-14 items-center justify-between gap-3 rounded-xl border px-4 py-3"
+			>
+				<span className="flex items-center gap-3">
+					<ImagesIcon className="text-brand size-6 shrink-0" aria-hidden="true" />
+					<span>
+						<span className="block font-medium">{ __( 'Banners da página inicial', 'resgata-wp' ) }</span>
+						<span className="text-muted-foreground block text-sm">
+							{ __( 'Escolha as fotos e os textos de destaque do site.', 'resgata-wp' ) }
+						</span>
+					</span>
+				</span>
+				<ChevronRightIcon className="text-muted-foreground size-5 shrink-0" aria-hidden="true" />
+			</Link>
+
 			<div className="flex flex-col gap-6">
 				<Section title={ __( 'Identidade', 'resgata-wp' ) }>
 					{ text( 'name', __( 'Nome da protetora ou do projeto', 'resgata-wp' ), { maxLength: 120 } ) }
-					{ text( 'cnpj', __( 'CNPJ (se houver)', 'resgata-wp' ), { inputMode: 'numeric', maxLength: 18 } ) }
+					{ text( 'cnpj', __( 'CNPJ (se houver)', 'resgata-wp' ), { mask: maskCnpj, placeholder: '12.345.678/0001-90' } ) }
 					{ text( 'tagline', __( 'Frase de apresentação', 'resgata-wp' ), {
 						wide: true,
 						maxLength: 200,
@@ -155,10 +186,11 @@ export function SettingsPage() {
 					{ text( 'whatsapp', __( 'WhatsApp', 'resgata-wp' ), {
 						type: 'tel',
 						inputMode: 'tel',
+						mask: maskPhone,
 						placeholder: '(11) 91234-5678',
 						hint: __( 'Com DDD. O link para a conversa é criado sozinho.', 'resgata-wp' ),
 					} ) }
-					{ text( 'phone', __( 'Telefone', 'resgata-wp' ), { type: 'tel', inputMode: 'tel', placeholder: '(11) 1234-5678' } ) }
+					{ text( 'phone', __( 'Telefone', 'resgata-wp' ), { type: 'tel', inputMode: 'tel', mask: maskPhone, placeholder: '(11) 1234-5678' } ) }
 					{ text( 'whatsapp_message', __( 'Mensagem inicial do WhatsApp', 'resgata-wp' ), {
 						wide: true,
 						maxLength: 300,
@@ -246,8 +278,24 @@ export function SettingsPage() {
 
 				<Section
 					title={ __( 'Doações por Pix', 'resgata-wp' ) }
-					description={ __( 'A chave aparece na página de contato para quem quiser ajudar.', 'resgata-wp' ) }
+					description={ __(
+						'Ao cadastrar a chave, o site ganha a página "Como ajudar", com o QR Code do Pix. A chave também aparece na página de contato.',
+						'resgata-wp'
+					) }
 				>
+					{ query.data.help_page && (
+						<p className="md:col-span-2">
+							<a
+								href={ query.data.help_page.url }
+								target="_blank"
+								rel="noreferrer"
+								className="text-primary inline-flex min-h-11 items-center gap-1 text-sm underline-offset-4 hover:underline"
+							>
+								{ __( 'Ver a página "Como ajudar"', 'resgata-wp' ) }
+								<ExternalLinkIcon className="size-4" aria-hidden="true" />
+							</a>
+						</p>
+					) }
 					<Field label={ __( 'Tipo da chave', 'resgata-wp' ) } htmlFor={ id( 'pix_key_type' ) }>
 						<OptionSelect
 							id={ id( 'pix_key_type' ) }

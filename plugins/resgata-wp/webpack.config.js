@@ -1,10 +1,12 @@
 /**
- * Build do Resgata WP (via @wordpress/scripts). Duas configurações:
+ * Build do Resgata WP (via @wordpress/scripts). Três configurações:
  *
  * - painel: aplicação React 19 de /painel. O React vai embutido no pacote e só
  *   os pacotes do WordPress que NÃO dependem de React ficam externos.
- * - wp: scripts que rodam dentro do WordPress (editor de blocos e wp-admin),
- *   usando o React e os pacotes que o próprio WordPress fornece.
+ * - site: campos de escolha das páginas públicas (Select do shadcn/ui), também
+ *   com o React embutido; só é carregado nas páginas que têm um `<select>`.
+ * - wp: scripts que rodam dentro do WordPress (editor de blocos, wp-admin e o
+ *   site público), usando o React e os pacotes que o próprio WordPress fornece.
  */
 const path = require( 'path' );
 const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
@@ -38,15 +40,30 @@ const painel = {
 	],
 };
 
+// Site público: o Select do shadcn/ui (mesmo componente do painel), com o React embutido.
+const site = {
+	...painel,
+	name: 'site',
+	entry: { selects: path.resolve( __dirname, 'resources/site/selects.tsx' ) },
+	output: { ...defaultConfig.output, path: path.resolve( __dirname, 'build/site' ) },
+};
+
 const wp = {
 	...defaultConfig,
 	name: 'wp',
 	entry: {
 		'blocks-editor': path.resolve( __dirname, 'resources/blocks/editor.tsx' ),
 		'admin-animal': path.resolve( __dirname, 'resources/admin/animal.ts' ),
+		'animal-gallery': path.resolve( __dirname, 'resources/frontend/animal-gallery.ts' ),
+		pix: path.resolve( __dirname, 'resources/frontend/pix.ts' ),
 	},
 	output: { ...defaultConfig.output, path: path.resolve( __dirname, 'build/wp' ) },
+	resolve: {
+		...defaultConfig.resolve,
+		// A biblioteca do QR Code do Pix (qrcode-pix → crc) espera o `Buffer` do Node.
+		fallback: { ...defaultConfig.resolve.fallback, buffer: require.resolve( 'buffer/' ) },
+	},
 	plugins: withoutPlugins( [ 'CopyPlugin', 'RtlCssPlugin' ] ),
 };
 
-module.exports = [ painel, wp ];
+module.exports = [ painel, site, wp ];

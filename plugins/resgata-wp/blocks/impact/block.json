@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-wp/impact",
+	"version": "0.1.0",
+	"title": "Números da protetora",
+	"category": "resgata-wp",
+	"icon": "chart-bar",
+	"description": "Mostra, contados sozinhos, os animais resgatados, as adoções, quem espera um lar e os padrinhos.",
+	"keywords": [ "números", "impacto", "resgatados", "adoções" ],
+	"textdomain": "resgata-wp",
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true }
+	},
+	"editorScript": "rwp-blocks-editor",
+	"style": "rwp-frontend",
+	"render": "file:./render.php"
+}

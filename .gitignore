@@ -19,3 +19,17 @@ Thumbs.db
 # Arquivos gerados
 build/
 dist/
+
+# Anotações e referências locais
+tasks/
+
+# Skills: só as do WordPress vão para o repositório (ver .claude/skills/README.md).
+# As pessoais ficam em .agents/ e entram em .claude/skills/ por atalho, sem ir para o git.
+.agents/
+skills-lock.json
+.claude/skills/*
+!.claude/skills/README.md
+!.claude/skills/blueprint/
+!.claude/skills/wordpress-router/
+!.claude/skills/wp-*/
+!.claude/skills/wpds/

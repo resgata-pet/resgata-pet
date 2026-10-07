@@ -31,6 +31,11 @@ final class AnimalWriter {
 		'neutered'      => Meta::NEUTERED,
 		'fiv'           => Meta::FIV,
 		'felv'          => Meta::FELV,
+		'tagline'       => Meta::TAGLINE,
+		'weight'        => Meta::WEIGHT,
+		'vet_checked'   => Meta::VET_CHECKED,
+		'vaccinated'    => Meta::VACCINATED,
+		'microchip'     => Meta::MICROCHIP,
 	);
 
 	/**
@@ -45,6 +50,11 @@ final class AnimalWriter {
 				$value = is_scalar( $data[ $field ] ) ? sanitize_text_field( (string) $data[ $field ] ) : '';
 				update_post_meta( $post_id, $meta_key, wp_slash( $value ) );
 			}
+		}
+
+		if ( array_key_exists( 'intro', $data ) ) {
+			// À parte dos campos simples porque o resumo pode ter quebras de linha.
+			update_post_meta( $post_id, Meta::INTRO, wp_slash( Meta::sanitize_intro( $data['intro'] ) ) );
 		}
 
 		if ( array_key_exists( 'age_years', $data ) || array_key_exists( 'age_months', $data ) ) {

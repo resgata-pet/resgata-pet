@@ -53,19 +53,46 @@ final class ContactPage {
 			return $page;
 		}
 
+		/**
+		 * Filtra o conteúdo (blocos) da página "Contato" criada pelo plugin.
+		 *
+		 * O tema pode devolver um layout completo; o conteúdo precisa ter o
+		 * bloco `resgata-wp/contact`, senão vale o padrão do plugin.
+		 *
+		 * @param string $content Conteúdo em blocos.
+		 */
+		$content = (string) apply_filters( 'rwp_contact_page_content', '<!-- wp:resgata-wp/contact /-->' );
+
+		if ( ! str_contains( $content, '<!-- wp:resgata-wp/contact ' ) ) {
+			$content = '<!-- wp:resgata-wp/contact /-->';
+		}
+
 		$page_id = wp_insert_post(
-			array(
-				'post_type'    => 'page',
-				'post_status'  => 'publish',
-				'post_title'   => __( 'Contato', 'resgata-wp' ),
-				'post_name'    => 'contato',
-				'post_content' => '<!-- wp:resgata-wp/contact /-->',
+			wp_slash(
+				array(
+					'post_type'    => 'page',
+					'post_status'  => 'publish',
+					'post_title'   => __( 'Contato', 'resgata-wp' ),
+					'post_name'    => 'contato',
+					'post_content' => $content,
+				)
 			),
 			true
 		);
 
 		if ( is_wp_error( $page_id ) ) {
 			return null;
+		}
+
+		/**
+		 * Filtra o modelo de página (template) usado pela página "Contato" criada pelo plugin.
+		 *
+		 * @param string $template Slug do modelo; vazio usa o modelo padrão de páginas.
+		 */
+		$template = sanitize_key( (string) apply_filters( 'rwp_contact_page_template', '' ) );
+
+		if ( '' !== $template ) {
+			update_post_meta( $page_id, '_wp_page_template', $template );
 		}
 
 		update_option( self::OPTION, $page_id, false );

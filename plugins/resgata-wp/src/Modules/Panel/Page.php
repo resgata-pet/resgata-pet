@@ -48,7 +48,7 @@ final class Page {
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<meta name="robots" content="noindex, nofollow">
-	<meta name="theme-color" content="#8fa98f">
+	<meta name="theme-color" content="#2f7d55">
 	<title><?php echo esc_html( sprintf( /* translators: %s: nome do site. */ __( 'Painel – %s', 'resgata-wp' ), get_bloginfo( 'name' ) ) ); ?></title>
 		<?php
 		wp_site_icon();
@@ -84,11 +84,12 @@ final class Page {
 			'restNamespace' => BaseController::REST_NAMESPACE,
 			'siteName'      => get_bloginfo( 'name' ),
 			'user'          => array(
-				'name'               => $user->display_name,
-				'email'              => $user->user_email,
-				'isAdmin'            => current_user_can( 'manage_options' ),
-				'canManageSettings'  => current_user_can( Capabilities::SETTINGS ),
-				'canManageAdoptions' => Modules::is_enabled( 'animals' ) && Modules::is_enabled( 'adoptions' ) && current_user_can( Capabilities::ADOPTIONS ),
+				'name'                 => $user->display_name,
+				'email'                => $user->user_email,
+				'isAdmin'              => current_user_can( 'manage_options' ),
+				'canManageSettings'    => current_user_can( Capabilities::SETTINGS ),
+				'canManageAdoptions'   => Modules::is_enabled( 'animals' ) && Modules::is_enabled( 'adoptions' ) && current_user_can( Capabilities::ADOPTIONS ),
+				'canManageSponsorship' => Modules::is_enabled( 'sponsorship' ) && current_user_can( Capabilities::SPONSORSHIP ),
 			),
 			'urls'          => array(
 				'site'         => home_url( '/' ),
@@ -108,6 +109,7 @@ final class Page {
 				'species'          => Modules::is_enabled( 'animals' ) ? Taxonomies::species_options() : array(),
 				'temperaments'     => Options::temperaments(),
 				'adoptionStatuses' => \ResgataWP\Modules\Adoptions\PostType::statuses(),
+				'sponsorStatuses'  => \ResgataWP\Modules\Sponsorship\Sponsors::statuses(),
 			),
 		);
 	}

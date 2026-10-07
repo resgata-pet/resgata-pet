@@ -80,7 +80,7 @@ endif;
 		<?php if ( $rwp_args['show_animal_select'] ) : ?>
 			<p class="rwp-adoption__field">
 				<label for="rwp-adoption-animal"><?php esc_html_e( 'Qual animal você quer adotar?', 'resgata-wp' ); ?> <span class="rwp-adoption__required" aria-hidden="true">*</span></label>
-				<select id="rwp-adoption-animal" name="<?php echo esc_attr( $rwp_name ); ?>[animal_id]" required <?php echo isset( $rwp_errors['animal_id'] ) ? 'aria-invalid="true" aria-describedby="rwp-adoption-animal-error"' : ''; ?>>
+				<select data-rwp-select id="rwp-adoption-animal" name="<?php echo esc_attr( $rwp_name ); ?>[animal_id]" required <?php echo isset( $rwp_errors['animal_id'] ) ? 'aria-invalid="true" aria-describedby="rwp-adoption-animal-error"' : ''; ?>>
 					<option value=""><?php esc_html_e( 'Escolha', 'resgata-wp' ); ?></option>
 					<?php foreach ( $rwp_args['animals'] as $rwp_id => $rwp_label ) : ?>
 						<option value="<?php echo esc_attr( (string) $rwp_id ); ?>" <?php selected( $rwp_args['animal_id'], $rwp_id ); ?>><?php echo esc_html( $rwp_label ); ?></option>
@@ -117,7 +117,7 @@ endif;
 					</label>
 
 					<?php if ( 'select' === $rwp_field['type'] ) : ?>
-						<select id="<?php echo esc_attr( $rwp_id ); ?>" name="<?php echo esc_attr( $rwp_input ); ?>" <?php echo $rwp_required ? 'required' : ''; ?> <?php echo $rwp_error ? 'aria-invalid="true" aria-describedby="' . esc_attr( $rwp_id ) . '-error"' : ''; ?>>
+						<select data-rwp-select id="<?php echo esc_attr( $rwp_id ); ?>" name="<?php echo esc_attr( $rwp_input ); ?>" <?php echo $rwp_required ? 'required' : ''; ?> <?php echo $rwp_error ? 'aria-invalid="true" aria-describedby="' . esc_attr( $rwp_id ) . '-error"' : ''; ?>>
 							<option value=""><?php esc_html_e( 'Escolha', 'resgata-wp' ); ?></option>
 							<?php foreach ( $rwp_field['options'] as $rwp_option => $rwp_label ) : ?>
 								<option value="<?php echo esc_attr( $rwp_option ); ?>" <?php selected( $rwp_value, (string) $rwp_option ); ?>><?php echo esc_html( $rwp_label ); ?></option>

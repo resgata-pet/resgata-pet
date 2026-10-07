@@ -288,6 +288,77 @@ final class Organization {
 	}
 
 	/**
+	 * Dados do Pix para doação, ou null se a chave não estiver cadastrada.
+	 *
+	 * `code_key`, `code_name` e `code_city` são os valores no formato exigido
+	 * pelo QR Code do Pix (chave sem pontuação, celular com +55, nome e cidade
+	 * sem acentos).
+	 *
+	 * @return array{key: string, type: string, type_label: string, holder: string, code_key: string, code_name: string, code_city: string}|null
+	 */
+	public static function pix(): ?array {
+		$data = self::get();
+		$key  = trim( $data['pix_key'] );
+		$type = $data['pix_key_type'];
+
+		if ( '' === $key ) {
+			return null;
+		}
+
+		switch ( $type ) {
+			case 'cpf':
+				$code_key = (string) preg_replace( '/\D+/', '', $key );
+				break;
+
+			case 'cnpj':
+				$code_key = strtoupper( (string) preg_replace( '/[^A-Za-z0-9]+/', '', $key ) );
+				break;
+
+			case 'phone':
+				$digits   = (string) preg_replace( '/\D+/', '', $key );
+				$code_key = '+' . ( strlen( $digits ) <= 11 ? '55' . $digits : $digits );
+				break;
+
+			case 'email':
+			case 'random':
+				$code_key = strtolower( $key );
+				break;
+
+			default:
+				// Tipo não informado: usa a chave como foi digitada, sem espaços.
+				$code_key = (string) preg_replace( '/\s+/', '', $key );
+		}
+
+		$holder = '' !== $data['pix_holder'] ? $data['pix_holder'] : $data['name'];
+		$holder = '' !== $holder ? $holder : get_bloginfo( 'name' );
+
+		return array(
+			'key'        => $key,
+			'type'       => $type,
+			'type_label' => self::pix_key_types()[ $type ] ?? '',
+			'holder'     => $holder,
+			'code_key'   => $code_key,
+			'code_name'  => self::pix_text( $holder, 25, 'DOACAO' ),
+			'code_city'  => self::pix_text( $data['city'], 15, 'BRASIL' ),
+		);
+	}
+
+	/**
+	 * Texto no formato do QR Code do Pix: maiúsculas, sem acentos nem símbolos, com tamanho máximo.
+	 *
+	 * @param string $text     Texto original.
+	 * @param int    $max      Tamanho máximo.
+	 * @param string $fallback Valor usado se o texto ficar vazio.
+	 */
+	private static function pix_text( string $text, int $max, string $fallback ): string {
+		$text = strtoupper( remove_accents( $text ) );
+		$text = trim( (string) preg_replace( '/\s+/', ' ', (string) preg_replace( '/[^A-Z0-9 ]+/', ' ', $text ) ) );
+		$text = trim( substr( $text, 0, $max ) );
+
+		return '' !== $text ? $text : $fallback;
+	}
+
+	/**
 	 * Cidade/UF (e bairro), ou string vazia.
 	 */
 	public static function location(): string {

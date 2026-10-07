@@ -13,6 +13,7 @@ use ResgataWP\Modules\Adoptions\AdoptionsModule;
 use ResgataWP\Modules\Animals\AnimalsModule;
 use ResgataWP\Modules\Panel\PanelModule;
 use ResgataWP\Modules\Settings\SettingsModule;
+use ResgataWP\Modules\Sponsorship\SponsorshipModule;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -52,6 +53,11 @@ final class Plugin {
 			if ( Modules::is_enabled( 'adoptions' ) ) {
 				( new AdoptionsModule() )->register();
 			}
+		}
+
+		// Modules::is_enabled() já descarta o apadrinhamento quando a biblioteca da Stripe não está instalada.
+		if ( Modules::is_enabled( 'sponsorship' ) ) {
+			( new SponsorshipModule() )->register();
 		}
 
 		/**

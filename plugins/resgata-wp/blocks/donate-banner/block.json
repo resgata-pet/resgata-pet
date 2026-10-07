@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-wp/donate-banner",
+	"version": "0.1.0",
+	"title": "Banner de doação",
+	"category": "resgata-wp",
+	"icon": "megaphone",
+	"description": "Chamada \"Doe por Pix\" com botão para a página \"Como ajudar\".",
+	"keywords": [ "pix", "doação", "banner", "chamada" ],
+	"textdomain": "resgata-wp",
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true }
+	},
+	"editorScript": "rwp-blocks-editor",
+	"style": "rwp-frontend",
+	"render": "file:./render.php"
+}

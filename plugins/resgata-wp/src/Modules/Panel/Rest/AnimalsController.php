@@ -199,6 +199,19 @@ final class AnimalsController extends BaseController {
 				'type'      => 'string',
 				'maxLength' => 100,
 			),
+			'weight'         => array(
+				'type'    => array( 'number', 'null' ),
+				'minimum' => 0,
+				'maximum' => Meta::WEIGHT_MAX,
+			),
+			'tagline'        => array(
+				'type'      => 'string',
+				'maxLength' => Meta::TAGLINE_MAX,
+			),
+			'intro'          => array(
+				'type'      => 'string',
+				'maxLength' => Meta::INTRO_MAX,
+			),
 			'age_years'      => array(
 				'type'    => array( 'integer', 'null' ),
 				'minimum' => 0,
@@ -222,6 +235,9 @@ final class AnimalsController extends BaseController {
 			'dewormed_date'  => $date,
 			'fiv'            => $choice( Options::test_results() ),
 			'felv'           => $choice( Options::test_results() ),
+			'vet_checked'    => $choice( Options::yes_no() ),
+			'vaccinated'     => $choice( Options::yes_no() ),
+			'microchip'      => $choice( Options::yes_no() ),
 			'vaccines'       => array(
 				'type'     => 'array',
 				'maxItems' => 50,
@@ -487,7 +503,7 @@ final class AnimalsController extends BaseController {
 	 * @return array<string, mixed>
 	 */
 	private function writer_data( \WP_REST_Request $request ): array {
-		$fields = array( 'species', 'status', 'sex', 'size', 'color', 'age_years', 'age_months', 'rescue_date', 'temperaments', 'neutered', 'dewormed_date', 'fiv', 'felv', 'vaccines', 'featured_media', 'gallery' );
+		$fields = array( 'species', 'status', 'sex', 'size', 'color', 'age_years', 'age_months', 'rescue_date', 'temperaments', 'neutered', 'dewormed_date', 'fiv', 'felv', 'vaccines', 'featured_media', 'gallery', 'tagline', 'intro', 'weight', 'vet_checked', 'vaccinated', 'microchip' );
 		$data   = array();
 
 		foreach ( $fields as $field ) {
@@ -578,6 +594,9 @@ final class AnimalsController extends BaseController {
 			'sex'            => $animal->sex(),
 			'size'           => $animal->size(),
 			'color'          => $animal->color(),
+			'weight'         => '' !== $animal->weight() ? (float) $animal->weight() : null,
+			'tagline'        => $animal->tagline(),
+			'intro'          => $animal->intro(),
 			'age_years'      => $age ? $age['years'] : null,
 			'age_months'     => $age ? $age['months'] : null,
 			'rescue_date'    => $animal->rescue_date(),
@@ -586,6 +605,9 @@ final class AnimalsController extends BaseController {
 			'dewormed_date'  => $animal->dewormed_date(),
 			'fiv'            => $animal->fiv(),
 			'felv'           => $animal->felv(),
+			'vet_checked'    => $animal->vet_checked(),
+			'vaccinated'     => $animal->vaccinated(),
+			'microchip'      => $animal->microchip(),
 			'vaccines'       => $animal->vaccines(),
 			'featured_image' => $this->image( (int) get_post_thumbnail_id( $post_id ) ),
 			'gallery'        => $gallery,

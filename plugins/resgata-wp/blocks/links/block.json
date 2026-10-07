@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-wp/links",
+	"version": "0.1.0",
+	"title": "Links do site",
+	"category": "resgata-wp",
+	"icon": "list-view",
+	"description": "Lista de links para as páginas do Resgata WP que existem no site (animais, como ajudar, apadrinhamento, contato). Boa para o rodapé.",
+	"keywords": [ "links", "menu", "rodapé", "páginas" ],
+	"textdomain": "resgata-wp",
+	"attributes": {
+		"group": {
+			"type": "string",
+			"enum": [ "site", "help" ],
+			"default": "site"
+		}
+	},
+	"supports": {
+		"html": false,
+		"spacing": { "margin": true },
+		"typography": { "fontSize": true },
+		"color": { "text": true, "link": true }
+	},
+	"editorScript": "rwp-blocks-editor",
+	"style": "rwp-frontend",
+	"render": "file:./render.php"
+}

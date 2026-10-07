@@ -9,6 +9,7 @@
  * @var array<string, mixed> $rwp_args {
  *     @type string   $wrapper_attributes Atributos HTML do elemento externo (já escapados).
  *     @type int[]    $animal_ids         IDs dos animais encontrados.
+ *     @type int      $total              Total de animais encontrados (todas as páginas).
  *     @type int      $columns            Número de colunas.
  *     @type bool     $show_filters       Se mostra o formulário de filtros.
  *     @type array    $filters            Opções dos filtros (species, sex, size).
@@ -47,7 +48,7 @@ $rwp_filter_fields = array(
 				?>
 				<p class="rwp-filters__field">
 					<label for="<?php echo esc_attr( $rwp_field_id ); ?>"><?php echo esc_html( $rwp_field[1] ); ?></label>
-					<select id="<?php echo esc_attr( $rwp_field_id ); ?>" name="<?php echo esc_attr( $rwp_field[0] ); ?>">
+					<select data-rwp-select id="<?php echo esc_attr( $rwp_field_id ); ?>" name="<?php echo esc_attr( $rwp_field[0] ); ?>">
 						<option value=""><?php echo esc_html( $rwp_field[2] ); ?></option>
 						<?php foreach ( $rwp_args['filters'][ $rwp_key ] as $rwp_value => $rwp_label ) : ?>
 							<option value="<?php echo esc_attr( $rwp_value ); ?>" <?php selected( $rwp_args['selected'][ $rwp_key ], (string) $rwp_value ); ?>><?php echo esc_html( $rwp_label ); ?></option>
@@ -57,7 +58,7 @@ $rwp_filter_fields = array(
 			<?php endforeach; ?>
 
 			<p class="rwp-filters__actions">
-				<button type="submit" class="rwp-button wp-element-button"><?php esc_html_e( 'Filtrar', 'resgata-wp' ); ?></button>
+				<button type="submit" class="rwp-button rwp-button--primary wp-element-button"><?php esc_html_e( 'Filtrar', 'resgata-wp' ); ?></button>
 				<?php if ( $rwp_args['has_active_filters'] ) : ?>
 					<a class="rwp-filters__clear" href="<?php echo esc_url( $rwp_args['form_action'] ); ?>"><?php esc_html_e( 'Limpar filtros', 'resgata-wp' ); ?></a>
 				<?php endif; ?>
@@ -66,6 +67,14 @@ $rwp_filter_fields = array(
 	<?php endif; ?>
 
 	<?php if ( $rwp_args['animal_ids'] ) : ?>
+		<?php if ( $rwp_args['show_filters'] ) : ?>
+			<p class="rwp-animals__count" role="status">
+				<?php
+				/* translators: %s: quantidade de animais encontrados. */
+				echo esc_html( sprintf( _n( '%s animal encontrado', '%s animais encontrados', $rwp_args['total'], 'resgata-wp' ), number_format_i18n( $rwp_args['total'] ) ) );
+				?>
+			</p>
+		<?php endif; ?>
 		<ul class="rwp-grid" style="--rwp-columns: <?php echo esc_attr( (string) $rwp_args['columns'] ); ?>;">
 			<?php
 			foreach ( $rwp_args['animal_ids'] as $rwp_animal_id ) {

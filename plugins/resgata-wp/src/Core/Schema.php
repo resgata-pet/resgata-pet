@@ -12,9 +12,9 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Cria e atualiza as tabelas próprias do plugin com `dbDelta`.
  *
- * Nenhum módulo implementado até agora precisa de tabela própria: as tabelas
- * financeiras entram com o módulo de prestação de contas. Cada mudança de
- * schema deve incrementar RWP_DB_VERSION e ser adicionada em `tables()`.
+ * Tabelas atuais: padrinhos e eventos da Stripe já processados (módulo de
+ * apadrinhamento, schema 5). Cada mudança de schema deve incrementar
+ * RWP_DB_VERSION e ser adicionada em `tables()`.
  */
 final class Schema {
 
@@ -69,7 +69,37 @@ final class Schema {
 	 * @return string[]
 	 */
 	private static function tables(): array {
-		return array();
+		global $wpdb;
+
+		$charset = $wpdb->get_charset_collate();
+
+		return array(
+			"CREATE TABLE {$wpdb->prefix}rwp_sponsors (
+				id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+				customer_id varchar(64) NOT NULL,
+				subscription_id varchar(64) NOT NULL DEFAULT '',
+				name varchar(190) NOT NULL DEFAULT '',
+				email varchar(190) NOT NULL DEFAULT '',
+				price_id varchar(64) NOT NULL DEFAULT '',
+				status varchar(20) NOT NULL DEFAULT 'incomplete',
+				payment_failed tinyint(1) NOT NULL DEFAULT 0,
+				last_paid_at datetime DEFAULT NULL,
+				last_event_at bigint(20) unsigned NOT NULL DEFAULT 0,
+				created_at datetime NOT NULL,
+				updated_at datetime NOT NULL,
+				PRIMARY KEY  (id),
+				UNIQUE KEY customer_id (customer_id),
+				KEY email (email),
+				KEY status (status)
+			) $charset;",
+			"CREATE TABLE {$wpdb->prefix}rwp_stripe_events (
+				event_id varchar(64) NOT NULL,
+				type varchar(64) NOT NULL DEFAULT '',
+				processed_at datetime NOT NULL,
+				PRIMARY KEY  (event_id),
+				KEY processed_at (processed_at)
+			) $charset;",
+		);
 	}
 
 	/**
@@ -78,6 +108,6 @@ final class Schema {
 	 * @return string[]
 	 */
 	public static function table_names(): array {
-		return array();
+		return array( 'rwp_sponsors', 'rwp_stripe_events' );
 	}
 }

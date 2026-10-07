@@ -9,6 +9,7 @@ namespace ResgataWP\Modules\Panel\Rest;
 
 use ResgataWP\Core\Capabilities;
 use ResgataWP\Modules\Settings\ContactPage;
+use ResgataWP\Modules\Settings\HelpPage;
 use ResgataWP\Modules\Settings\Organization;
 
 defined( 'ABSPATH' ) || exit;
@@ -79,6 +80,9 @@ final class SettingsController extends BaseController {
 		// A primeira vez que os dados são salvos cria a página "Contato" do site.
 		ContactPage::ensure();
 
+		// Com a chave Pix cadastrada, nasce também a página "Como ajudar".
+		HelpPage::ensure();
+
 		return new \WP_REST_Response( $this->prepare( $data ) );
 	}
 
@@ -96,6 +100,7 @@ final class SettingsController extends BaseController {
 				'pixKeyTypes' => Organization::pix_key_types(),
 			),
 			'contact_page' => ContactPage::summary(),
+			'help_page'    => HelpPage::summary(),
 			'whatsapp_url' => Organization::whatsapp_url(),
 		);
 	}

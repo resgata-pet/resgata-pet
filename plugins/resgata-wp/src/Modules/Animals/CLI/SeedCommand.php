@@ -155,6 +155,13 @@ final class SeedCommand {
 			)
 		);
 
+		update_post_meta( $post_id, Meta::TAGLINE, 0 === $index % 2 ? 'Um companheiro cheio de alegria e carinho!' : 'Pronto para ganhar um lar e muito colo.' );
+		update_post_meta( $post_id, Meta::INTRO, sprintf( '%s foi resgatado(a) das ruas e hoje está pronto(a) para encontrar uma família. É sociável, brincalhão(ona) e adora companhia.', $name ) );
+		update_post_meta( $post_id, Meta::WEIGHT, (string) ( $is_cat ? 3.5 + ( $index % 3 ) : 8 + ( $index % 5 ) * 4 ) );
+		update_post_meta( $post_id, Meta::VET_CHECKED, 'yes' );
+		update_post_meta( $post_id, Meta::VACCINATED, 0 === $index % 5 ? 'no' : 'yes' );
+		update_post_meta( $post_id, Meta::MICROCHIP, 0 === $index % 3 ? 'yes' : 'no' );
+
 		if ( $is_cat ) {
 			update_post_meta( $post_id, Meta::FIV, 'negative' );
 			update_post_meta( $post_id, Meta::FELV, 5 === $index % 6 ? 'positive' : 'negative' );

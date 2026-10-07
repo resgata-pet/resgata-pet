@@ -26,6 +26,23 @@ final class Meta {
 	public const NEUTERED      = 'rwp_neutered';
 	public const FIV           = 'rwp_fiv';
 	public const FELV          = 'rwp_felv';
+	public const TAGLINE       = 'rwp_tagline';
+	public const INTRO         = 'rwp_intro';
+	public const WEIGHT        = 'rwp_weight';
+	public const VET_CHECKED   = 'rwp_vet_checked';
+	public const VACCINATED    = 'rwp_vaccinated';
+	public const MICROCHIP     = 'rwp_microchip';
+
+	/**
+	 * Tamanho máximo (em caracteres) da frase de apresentação e do resumo.
+	 */
+	public const TAGLINE_MAX = 120;
+	public const INTRO_MAX   = 500;
+
+	/**
+	 * Peso máximo aceito, em quilos.
+	 */
+	public const WEIGHT_MAX = 150;
 
 	/**
 	 * Registra todos os metadados com `register_post_meta`.
@@ -42,6 +59,12 @@ final class Meta {
 			self::NEUTERED      => static fn( $value ) => self::sanitize_choice( $value, Options::yes_no() ),
 			self::FIV           => static fn( $value ) => self::sanitize_choice( $value, Options::test_results() ),
 			self::FELV          => static fn( $value ) => self::sanitize_choice( $value, Options::test_results() ),
+			self::TAGLINE       => array( self::class, 'sanitize_tagline' ),
+			self::INTRO         => array( self::class, 'sanitize_intro' ),
+			self::WEIGHT        => array( self::class, 'sanitize_weight' ),
+			self::VET_CHECKED   => static fn( $value ) => self::sanitize_choice( $value, Options::yes_no() ),
+			self::VACCINATED    => static fn( $value ) => self::sanitize_choice( $value, Options::yes_no() ),
+			self::MICROCHIP     => static fn( $value ) => self::sanitize_choice( $value, Options::yes_no() ),
 		);
 
 		foreach ( $strings as $key => $sanitize ) {
@@ -126,6 +149,47 @@ final class Meta {
 		}
 
 		return checkdate( (int) $parts[2], (int) $parts[3], (int) $parts[1] ) ? $value : '';
+	}
+
+	/**
+	 * Frase de apresentação: uma linha, sem HTML.
+	 *
+	 * @param mixed $value Valor recebido.
+	 */
+	public static function sanitize_tagline( $value ): string {
+		$value = is_scalar( $value ) ? sanitize_text_field( (string) $value ) : '';
+
+		return mb_substr( $value, 0, self::TAGLINE_MAX );
+	}
+
+	/**
+	 * Resumo: texto curto, sem HTML, que pode ter quebras de linha.
+	 *
+	 * @param mixed $value Valor recebido.
+	 */
+	public static function sanitize_intro( $value ): string {
+		$value = is_scalar( $value ) ? sanitize_textarea_field( (string) $value ) : '';
+
+		return mb_substr( $value, 0, self::INTRO_MAX );
+	}
+
+	/**
+	 * Peso em quilos, com no máximo uma casa decimal (ex.: "18.5"), ou vazio.
+	 *
+	 * Aceita vírgula ou ponto como separador decimal.
+	 *
+	 * @param mixed $value Valor recebido.
+	 */
+	public static function sanitize_weight( $value ): string {
+		$value = is_scalar( $value ) ? str_replace( ',', '.', trim( (string) $value ) ) : '';
+
+		if ( ! is_numeric( $value ) ) {
+			return '';
+		}
+
+		$weight = round( (float) $value, 1 );
+
+		return $weight > 0 && $weight <= self::WEIGHT_MAX ? (string) $weight : '';
 	}
 
 	/**

@@ -7,12 +7,13 @@
  * Description: Três gatos disponíveis para adoção, com botão para ver todos os animais.
  * Viewport Width: 1400
  *
+ * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
+ * plugin Resgata WP (`resgata-wp/link`), resolvidas a cada exibição.
+ *
  * @package ResgataTema
  */
 
 defined( 'ABSPATH' ) || exit;
-
-$resgata_tema_animals_url = post_type_exists( 'rwp_animal' ) ? get_post_type_archive_link( 'rwp_animal' ) : home_url( '/' );
 ?>
 <!-- wp:group {"align":"full","backgroundColor":"accent-5","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull has-accent-5-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
@@ -28,8 +29,8 @@ $resgata_tema_animals_url = post_type_exists( 'rwp_animal' ) ? get_post_type_arc
 
 	<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 	<div class="wp-block-buttons">
-		<!-- wp:button -->
-		<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( $resgata_tema_animals_url ); ?>"><?php esc_html_e( 'Ver todos os animais', 'resgata-tema' ); ?></a></div>
+		<!-- wp:button {"metadata":{"bindings":{"url":{"source":"resgata-wp/link","args":{"key":"animals"}}}}} -->
+		<div class="wp-block-button"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Ver todos os animais', 'resgata-tema' ); ?></a></div>
 		<!-- /wp:button -->
 	</div>
 	<!-- /wp:buttons -->

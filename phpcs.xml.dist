@@ -53,6 +53,7 @@
 				<element value="rwp_access_panel"/>
 				<element value="rwp_manage_settings"/>
 				<element value="rwp_manage_adoptions"/>
+				<element value="rwp_manage_sponsorship"/>
 			</property>
 		</properties>
 	</rule>

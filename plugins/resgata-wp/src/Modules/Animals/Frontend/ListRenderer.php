@@ -159,11 +159,16 @@ final class ListRenderer {
 
 		wp_enqueue_style( 'rwp-frontend' );
 
+		if ( $args['show_filters'] ) {
+			Blocks::enqueue_select_assets();
+		}
+
 		return TemplateLoader::render(
 			'animals-list.php',
 			array(
 				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="rwp-animals"',
 				'animal_ids'         => array_map( 'intval', wp_list_pluck( $query->posts, 'ID' ) ),
+				'total'              => $args['show_pagination'] ? (int) $query->found_posts : count( $query->posts ),
 				'columns'            => $args['columns'],
 				'show_filters'       => $args['show_filters'],
 				'filters'            => array(

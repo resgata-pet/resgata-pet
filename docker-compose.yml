@@ -7,11 +7,16 @@ x-wp-env: &wp-env
   WORDPRESS_DB_USER: ${DB_USER:-resgata}
   WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-resgata}
   WORDPRESS_DEBUG: 1
+  # Chaves do SANDBOX da Stripe (módulo de apadrinhamento), vindas do .env.
+  RWP_STRIPE_SECRET_KEY: ${STRIPE_SANDBOX_SECRET_KEY:-}
+  RWP_STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
   WORDPRESS_CONFIG_EXTRA: |
     define( 'WP_DEBUG_LOG', true );
     define( 'WP_DEBUG_DISPLAY', true );
     define( 'SCRIPT_DEBUG', true );
     define( 'WP_ENVIRONMENT_TYPE', 'local' );
+    define( 'RWP_STRIPE_SECRET_KEY', (string) getenv( 'RWP_STRIPE_SECRET_KEY' ) );
+    define( 'RWP_STRIPE_WEBHOOK_SECRET', (string) getenv( 'RWP_STRIPE_WEBHOOK_SECRET' ) );
 
 x-wp-volumes: &wp-volumes
   - wp_data:/var/www/html
@@ -21,7 +26,7 @@ x-wp-volumes: &wp-volumes
 
 services:
   db:
-    image: mariadb:11
+    image: mariadb:11.8
     restart: unless-stopped
     environment:
       MARIADB_DATABASE: ${DB_NAME:-resgata}
@@ -37,7 +42,7 @@ services:
       retries: 20
 
   wordpress:
-    image: wordpress:php8.2-apache
+    image: wordpress:7.1-php8.2-apache
     restart: unless-stopped
     depends_on:
       db:
@@ -48,7 +53,7 @@ services:
     volumes: *wp-volumes
 
   wpcli:
-    image: wordpress:cli-php8.2
+    image: wordpress:cli-2.12-php8.2
     profiles: ["tools"]
     user: "33:33"
     depends_on:
@@ -60,10 +65,27 @@ services:
     volumes: *wp-volumes
 
   mailpit:
-    image: axllent/mailpit:latest
+    image: axllent/mailpit:v1.31.2
     restart: unless-stopped
     ports:
       - "${MAILPIT_PORT:-8025}:8025"
+
+  # Stripe CLI: recebe os eventos do sandbox e repassa ao webhook do site local (`make stripe`).
+  stripe:
+    image: stripe/stripe-cli:v1.53.0
+    profiles: ["stripe"]
+    depends_on:
+      wordpress:
+        condition: service_started
+    environment:
+      STRIPE_API_KEY: ${STRIPE_SANDBOX_SECRET_KEY:-}
+      STRIPE_DEVICE_NAME: resgata-wp-local
+    command:
+      - listen
+      - --forward-to
+      - http://wordpress/wp-json/resgata-wp/v1/stripe/webhook
+      - --events
+      - checkout.session.completed,customer.subscription.created,customer.subscription.updated,customer.subscription.deleted,invoice.paid,invoice.payment_failed,customer.updated
 
 volumes:
   db_data:

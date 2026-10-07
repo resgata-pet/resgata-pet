@@ -8,6 +8,7 @@
 namespace ResgataWP\Modules\Animals\Frontend;
 
 use ResgataWP\Core\Assets;
+use ResgataWP\Core\Bindings;
 use ResgataWP\Modules\Animals\Options;
 use ResgataWP\Modules\Animals\Taxonomies;
 
@@ -18,8 +19,10 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Blocks {
 
-	public const STYLE_HANDLE  = 'rwp-frontend';
-	public const EDITOR_HANDLE = 'rwp-blocks-editor';
+	public const STYLE_HANDLE   = 'rwp-frontend';
+	public const EDITOR_HANDLE  = 'rwp-blocks-editor';
+	public const GALLERY_HANDLE = 'rwp-animal-gallery';
+	public const SELECT_HANDLE  = 'rwp-site-selects';
 
 	/**
 	 * Registra os hooks.
@@ -58,13 +61,55 @@ final class Blocks {
 				array(
 					'species'  => Taxonomies::species_options(),
 					'statuses' => Options::statuses(),
+					'bindings' => Bindings::editor_data(),
 				)
 			) . ';',
 			'before'
 		);
 
+		// Setas e miniaturas da galeria da página do animal. Sem o build, a galeria continua rolando com o dedo.
+		$gallery = Assets::script( 'wp/animal-gallery' );
+		if ( $gallery ) {
+			wp_register_script( self::GALLERY_HANDLE, $gallery['url'], $gallery['dependencies'], $gallery['version'], array( 'strategy' => 'defer' ) );
+		}
+
+		self::register_select_assets();
+
 		register_block_type( RWP_PLUGIN_DIR . 'blocks/animals-list' );
 		register_block_type( RWP_PLUGIN_DIR . 'blocks/animal-details' );
+		register_block_type( RWP_PLUGIN_DIR . 'blocks/impact' );
+	}
+
+	/**
+	 * Registra o script e o estilo que trocam os `<select>` do site pelo Select do shadcn/ui.
+	 *
+	 * Sem o build, nada é registrado e os campos nativos continuam funcionando.
+	 */
+	public static function register_select_assets(): void {
+		$script = Assets::script( 'site/selects' );
+
+		if ( ! $script || wp_script_is( self::SELECT_HANDLE, 'registered' ) ) {
+			return;
+		}
+
+		wp_register_script( self::SELECT_HANDLE, $script['url'], $script['dependencies'], $script['version'], array( 'strategy' => 'defer' ) );
+
+		$style = Assets::style_url( 'site/selects' );
+		if ( '' !== $style ) {
+			wp_register_style( self::SELECT_HANDLE, $style, array(), $script['version'] );
+		}
+	}
+
+	/**
+	 * Carrega o Select do shadcn/ui na página atual (chamado por quem imprime um `<select data-rwp-select>`).
+	 */
+	public static function enqueue_select_assets(): void {
+		self::register_select_assets();
+
+		if ( wp_script_is( self::SELECT_HANDLE, 'registered' ) ) {
+			wp_enqueue_script( self::SELECT_HANDLE );
+			wp_enqueue_style( self::SELECT_HANDLE );
+		}
 	}
 
 	/**

@@ -7,30 +7,30 @@
 
 /*
  * Identidade visual do painel Resgata WP (somente modo claro).
- * Cor da marca: verde sálvia #8FA98F. Para botões e links usamos um sálvia
- * escuro, que dá contraste suficiente com texto branco.
+ * Mesma paleta do site (theme.json do resgata-tema): verde #2F7D55 em botões, links e no item
+ * ativo do menu; títulos em azul-marinho; fundo cinza muito claro.
  */
 :root {
 	--radius: 0.75rem;
-	--brand: #8fa98f;
-	--background: #faf9f6;
-	--foreground: #26302a;
+	--brand: #2f7d55;
+	--background: #fafbfc;
+	--foreground: #14213d;
 	--card: #ffffff;
-	--card-foreground: #26302a;
+	--card-foreground: #14213d;
 	--popover: #ffffff;
-	--popover-foreground: #26302a;
-	--primary: #4f6b53;
+	--popover-foreground: #14213d;
+	--primary: #2f7d55;
 	--primary-foreground: #ffffff;
-	--secondary: #e8eee8;
-	--secondary-foreground: #33463a;
-	--muted: #f1f2ee;
-	--muted-foreground: #66706a;
-	--accent: #e3ebe3;
-	--accent-foreground: #2f4035;
-	--destructive: #b3402e;
-	--border: #dde2da;
-	--input: #cfd6cd;
-	--ring: #8fa98f;
+	--secondary: #e6f2ea;
+	--secondary-foreground: #1f5c3d;
+	--muted: #f1f4f8;
+	--muted-foreground: #5f6877;
+	--accent: #e6f2ea;
+	--accent-foreground: #1f5c3d;
+	--destructive: #b3261e;
+	--border: #e3e8ee;
+	--input: #cdd5df;
+	--ring: #2f7d55;
 }
 
 @theme inline {

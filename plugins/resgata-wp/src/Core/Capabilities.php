@@ -30,7 +30,12 @@ final class Capabilities {
 	public const ADOPTIONS = 'rwp_manage_adoptions';
 
 	/**
-	 * Papéis com acesso às configurações e aos pedidos de adoção (o Editor comum não).
+	 * Permissão para ver os padrinhos (dados pessoais) e ajustar o contador.
+	 */
+	public const SPONSORSHIP = 'rwp_manage_sponsorship';
+
+	/**
+	 * Papéis com acesso às configurações, aos pedidos de adoção e aos padrinhos (o Editor comum não).
 	 */
 	private const SETTINGS_ROLES = array( 'administrator', self::PANEL_ROLE );
 
@@ -84,6 +89,7 @@ final class Capabilities {
 			if ( in_array( $role_name, self::SETTINGS_ROLES, true ) ) {
 				$role->add_cap( self::SETTINGS );
 				$role->add_cap( self::ADOPTIONS );
+				$role->add_cap( self::SPONSORSHIP );
 			}
 		}
 	}
@@ -126,6 +132,7 @@ final class Capabilities {
 			$role->remove_cap( self::PANEL );
 			$role->remove_cap( self::SETTINGS );
 			$role->remove_cap( self::ADOPTIONS );
+			$role->remove_cap( self::SPONSORSHIP );
 		}
 
 		remove_role( self::PANEL_ROLE );

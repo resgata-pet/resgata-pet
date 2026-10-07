@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { DatePicker } from '@/components/date-picker';
@@ -33,6 +34,11 @@ const POST_STATUSES: Record< PostStatus, string > = {
 	publish: __( 'Publicado', 'resgata-wp' ),
 	draft: __( 'Rascunho', 'resgata-wp' ),
 };
+
+/** Limites iguais aos da API (`Meta::TAGLINE_MAX`, `INTRO_MAX` e `WEIGHT_MAX`). */
+const MAX_TAGLINE = 120;
+const MAX_INTRO = 500;
+const MAX_WEIGHT = 150;
 
 const STEPS = [
 	__( 'Básico', 'resgata-wp' ),
@@ -52,13 +58,19 @@ interface FormState {
 	ageMonths: string;
 	size: string;
 	color: string;
+	weight: string;
 	temperaments: string[];
 	rescueDate: string;
 	neutered: string;
 	dewormedDate: string;
 	fiv: string;
 	felv: string;
+	vetChecked: string;
+	vaccinated: string;
+	microchip: string;
 	vaccines: Vaccine[];
+	tagline: string;
+	intro: string;
 	story: string;
 	gallery: GalleryPhoto[];
 }
@@ -73,13 +85,19 @@ const emptyForm: FormState = {
 	ageMonths: '',
 	size: '',
 	color: '',
+	weight: '',
 	temperaments: [],
 	rescueDate: '',
 	neutered: '',
 	dewormedDate: '',
 	fiv: '',
 	felv: '',
+	vetChecked: '',
+	vaccinated: '',
+	microchip: '',
 	vaccines: [],
+	tagline: '',
+	intro: '',
 	story: '',
 	gallery: [],
 };
@@ -95,13 +113,19 @@ function toForm( animal: Animal ): FormState {
 		ageMonths: animal.age_months === null ? '' : String( animal.age_months ),
 		size: animal.size,
 		color: animal.color,
+		weight: animal.weight === null ? '' : String( animal.weight ).replace( '.', ',' ),
 		temperaments: animal.temperaments,
 		rescueDate: animal.rescue_date,
 		neutered: animal.neutered,
 		dewormedDate: animal.dewormed_date,
 		fiv: animal.fiv,
 		felv: animal.felv,
+		vetChecked: animal.vet_checked,
+		vaccinated: animal.vaccinated,
+		microchip: animal.microchip,
 		vaccines: animal.vaccines,
+		tagline: animal.tagline,
+		intro: animal.intro,
 		story: animal.story,
 		gallery: animal.gallery,
 	};
@@ -115,6 +139,17 @@ function toNumber( value: string, max: number ): number | null {
 	const number = Math.trunc( Number( value ) );
 
 	return Number.isFinite( number ) ? Math.min( max, Math.max( 0, number ) ) : null;
+}
+
+/** Peso digitado ("18,5") em quilos, com uma casa decimal; vazio ou inválido vira null. */
+function toWeight( value: string ): number | null {
+	const number = Number( value.trim().replace( ',', '.' ) );
+
+	if ( value.trim() === '' || ! Number.isFinite( number ) || number <= 0 ) {
+		return null;
+	}
+
+	return Math.min( MAX_WEIGHT, Math.round( number * 10 ) / 10 );
 }
 
 /** Só os campos do passo informado, no formato que a API espera. */
@@ -137,6 +172,7 @@ function stepPayload( step: number, form: FormState ): AnimalInput {
 				age_years: hasAge ? years ?? 0 : null,
 				age_months: hasAge ? months ?? 0 : null,
 				size: form.size,
+				weight: toWeight( form.weight ),
 				color: form.color.trim(),
 				temperaments: form.temperaments,
 				rescue_date: form.rescueDate,
@@ -148,10 +184,15 @@ function stepPayload( step: number, form: FormState ): AnimalInput {
 				dewormed_date: form.dewormedDate,
 				fiv: form.fiv,
 				felv: form.felv,
+				vet_checked: form.vetChecked,
+				vaccinated: form.vaccinated,
+				microchip: form.microchip,
 				vaccines: form.vaccines.filter( ( vaccine ) => vaccine.name.trim() !== '' ),
 			};
 		default:
 			return {
+				tagline: form.tagline.trim(),
+				intro: form.intro.trim(),
 				story: form.story,
 				gallery: form.gallery.map( ( photo ) => ( { id: photo.id, type: photo.type } ) ),
 			};
@@ -475,6 +516,20 @@ export function AnimalFormPage() {
 								onChange={ ( value ) => set( 'size', value ) }
 							/>
 						</Field>
+						<Field
+							label={ __( 'Peso (kg)', 'resgata-wp' ) }
+							htmlFor={ id( 'weight' ) }
+							hint={ __( 'Opcional. Aparece ao lado do porte. Ex.: 18,5', 'resgata-wp' ) }
+						>
+							<Input
+								id={ id( 'weight' ) }
+								inputMode="decimal"
+								className="w-28"
+								maxLength={ 5 }
+								value={ form.weight }
+								onChange={ ( event ) => set( 'weight', event.target.value.replace( /[^0-9.,]/g, '' ) ) }
+							/>
+						</Field>
 						<Field label={ __( 'Cor / pelagem', 'resgata-wp' ) } htmlFor={ id( 'color' ) }>
 							<Input
 								id={ id( 'color' ) }
@@ -522,6 +577,37 @@ export function AnimalFormPage() {
 						</Field>
 						<Field label={ __( 'Último vermífugo', 'resgata-wp' ) } htmlFor={ id( 'dewormed' ) }>
 							<DatePicker id={ id( 'dewormed' ) } value={ form.dewormedDate } onChange={ ( value ) => set( 'dewormedDate', value ) } />
+						</Field>
+						<Field label={ __( 'Passou por consulta veterinária', 'resgata-wp' ) } htmlFor={ id( 'vet' ) }>
+							<OptionSelect
+								id={ id( 'vet' ) }
+								value={ form.vetChecked }
+								options={ config.options.yesNo }
+								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'vetChecked', value ) }
+							/>
+						</Field>
+						<Field
+							label={ __( 'Vacinas em dia', 'resgata-wp' ) }
+							htmlFor={ id( 'vaccinated' ) }
+							hint={ __( 'Aparece em destaque na página do animal.', 'resgata-wp' ) }
+						>
+							<OptionSelect
+								id={ id( 'vaccinated' ) }
+								value={ form.vaccinated }
+								options={ config.options.yesNo }
+								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'vaccinated', value ) }
+							/>
+						</Field>
+						<Field label={ __( 'Tem microchip', 'resgata-wp' ) } htmlFor={ id( 'microchip' ) }>
+							<OptionSelect
+								id={ id( 'microchip' ) }
+								value={ form.microchip }
+								options={ config.options.yesNo }
+								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
+								onChange={ ( value ) => set( 'microchip', value ) }
+							/>
 						</Field>
 						<Field label={ __( 'Teste de FIV (gatos)', 'resgata-wp' ) } htmlFor={ id( 'fiv' ) }>
 							<OptionSelect
@@ -603,6 +689,33 @@ export function AnimalFormPage() {
 
 				{ step === 4 && (
 					<>
+						<Field
+							className="md:col-span-2"
+							label={ __( 'Frase de apresentação', 'resgata-wp' ) }
+							htmlFor={ id( 'tagline' ) }
+							hint={ __( 'Uma linha que aparece logo abaixo do nome. Ex.: Um companheiro cheio de alegria e carinho!', 'resgata-wp' ) }
+						>
+							<Input
+								id={ id( 'tagline' ) }
+								value={ form.tagline }
+								maxLength={ MAX_TAGLINE }
+								onChange={ ( event ) => set( 'tagline', event.target.value ) }
+							/>
+						</Field>
+						<Field
+							className="md:col-span-2"
+							label={ __( 'Resumo', 'resgata-wp' ) }
+							htmlFor={ id( 'intro' ) }
+							hint={ __( 'Duas ou três frases sobre como o animal é hoje. Aparece no topo da página, ao lado da foto.', 'resgata-wp' ) }
+						>
+							<Textarea
+								id={ id( 'intro' ) }
+								rows={ 3 }
+								value={ form.intro }
+								maxLength={ MAX_INTRO }
+								onChange={ ( event ) => set( 'intro', event.target.value ) }
+							/>
+						</Field>
 						<div className="flex flex-col gap-2 md:col-span-2">
 							<span id={ id( 'story' ) } className="text-base font-medium">
 								{ __( 'História do resgate', 'resgata-wp' ) }

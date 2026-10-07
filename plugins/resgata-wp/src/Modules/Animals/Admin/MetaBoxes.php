@@ -10,6 +10,7 @@ namespace ResgataWP\Modules\Animals\Admin;
 use ResgataWP\Core\Assets;
 use ResgataWP\Modules\Animals\Animal;
 use ResgataWP\Modules\Animals\AnimalWriter;
+use ResgataWP\Modules\Animals\Meta;
 use ResgataWP\Modules\Animals\Options;
 use ResgataWP\Modules\Animals\PostType;
 use ResgataWP\Modules\Animals\Taxonomies;
@@ -145,6 +146,11 @@ final class MetaBoxes {
 				<?php $this->select( 'rwp_size', Options::sizes(), $animal->size(), __( 'Não informado', 'resgata-wp' ) ); ?>
 			</p>
 			<p class="rwp-field">
+				<label for="rwp_weight"><?php esc_html_e( 'Peso (kg)', 'resgata-wp' ); ?></label>
+				<input type="text" inputmode="decimal" id="rwp_weight" name="rwp_weight" class="small-text" maxlength="5" value="<?php echo esc_attr( str_replace( '.', ',', $animal->weight() ) ); ?>">
+				<span class="description"><?php esc_html_e( 'Opcional. Aparece ao lado do porte. Ex.: 18,5', 'resgata-wp' ); ?></span>
+			</p>
+			<p class="rwp-field">
 				<label for="rwp_age_years"><?php esc_html_e( 'Idade estimada', 'resgata-wp' ); ?></label>
 				<span class="rwp-inline">
 					<input type="number" id="rwp_age_years" name="rwp_age_years" min="0" max="40" step="1" class="small-text" value="<?php echo esc_attr( $age ? (string) $age['years'] : '' ); ?>">
@@ -161,6 +167,16 @@ final class MetaBoxes {
 			<p class="rwp-field">
 				<label for="rwp_rescue_date"><?php esc_html_e( 'Data do resgate', 'resgata-wp' ); ?></label>
 				<input type="date" id="rwp_rescue_date" name="rwp_rescue_date" value="<?php echo esc_attr( $animal->rescue_date() ); ?>" max="<?php echo esc_attr( current_datetime()->format( 'Y-m-d' ) ); ?>">
+			</p>
+			<p class="rwp-field rwp-field--wide">
+				<label for="rwp_tagline"><?php esc_html_e( 'Frase de apresentação', 'resgata-wp' ); ?></label>
+				<input type="text" id="rwp_tagline" name="rwp_tagline" class="large-text" maxlength="<?php echo esc_attr( (string) Meta::TAGLINE_MAX ); ?>" value="<?php echo esc_attr( $animal->tagline() ); ?>">
+				<span class="description"><?php esc_html_e( 'Uma linha que aparece logo abaixo do nome. Ex.: Um companheiro cheio de alegria e carinho!', 'resgata-wp' ); ?></span>
+			</p>
+			<p class="rwp-field rwp-field--wide">
+				<label for="rwp_intro"><?php esc_html_e( 'Resumo', 'resgata-wp' ); ?></label>
+				<textarea id="rwp_intro" name="rwp_intro" class="large-text" rows="3" maxlength="<?php echo esc_attr( (string) Meta::INTRO_MAX ); ?>"><?php echo esc_textarea( $animal->intro() ); ?></textarea>
+				<span class="description"><?php esc_html_e( 'Duas ou três frases sobre como o animal é hoje. Aparece no topo da página, ao lado da foto.', 'resgata-wp' ); ?></span>
 			</p>
 		</div>
 		<p class="description"><?php esc_html_e( 'A foto principal e o temperamento ficam na coluna da direita.', 'resgata-wp' ); ?></p>
@@ -184,6 +200,18 @@ final class MetaBoxes {
 			<p class="rwp-field">
 				<label for="rwp_dewormed_date"><?php esc_html_e( 'Último vermífugo', 'resgata-wp' ); ?></label>
 				<input type="date" id="rwp_dewormed_date" name="rwp_dewormed_date" value="<?php echo esc_attr( $animal->dewormed_date() ); ?>">
+			</p>
+			<p class="rwp-field">
+				<label for="rwp_vet_checked"><?php esc_html_e( 'Passou por consulta veterinária', 'resgata-wp' ); ?></label>
+				<?php $this->select( 'rwp_vet_checked', Options::yes_no(), $animal->vet_checked(), __( 'Não informado', 'resgata-wp' ) ); ?>
+			</p>
+			<p class="rwp-field">
+				<label for="rwp_vaccinated"><?php esc_html_e( 'Vacinas em dia', 'resgata-wp' ); ?></label>
+				<?php $this->select( 'rwp_vaccinated', Options::yes_no(), $animal->vaccinated(), __( 'Não informado', 'resgata-wp' ) ); ?>
+			</p>
+			<p class="rwp-field">
+				<label for="rwp_microchip"><?php esc_html_e( 'Tem microchip', 'resgata-wp' ); ?></label>
+				<?php $this->select( 'rwp_microchip', Options::yes_no(), $animal->microchip(), __( 'Não informado', 'resgata-wp' ) ); ?>
 			</p>
 			<p class="rwp-field">
 				<label for="rwp_fiv"><?php esc_html_e( 'Teste de FIV (gatos)', 'resgata-wp' ); ?></label>
@@ -291,12 +319,14 @@ final class MetaBoxes {
 			return;
 		}
 
-		$fields = array( 'status', 'species', 'sex', 'size', 'color', 'rescue_date', 'dewormed_date', 'neutered', 'fiv', 'felv', 'age_years', 'age_months' );
+		$fields = array( 'status', 'species', 'sex', 'size', 'color', 'rescue_date', 'dewormed_date', 'neutered', 'fiv', 'felv', 'age_years', 'age_months', 'weight', 'tagline', 'vet_checked', 'vaccinated', 'microchip' );
 		$data   = array();
 
 		foreach ( $fields as $field ) {
 			$data[ $field ] = isset( $_POST[ 'rwp_' . $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'rwp_' . $field ] ) ) : '';
 		}
+
+		$data['intro'] = isset( $_POST['rwp_intro'] ) ? sanitize_textarea_field( wp_unslash( $_POST['rwp_intro'] ) ) : '';
 
 		// Vacinas e galeria: cada item é validado em Meta::sanitize_vaccines / sanitize_gallery.
 		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

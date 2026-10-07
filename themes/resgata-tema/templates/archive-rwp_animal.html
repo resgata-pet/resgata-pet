@@ -1,14 +1,22 @@
 <!-- wp:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--60)">
-	<!-- wp:query-title {"type":"archive","showPrefix":false,"align":"wide"} /-->
+<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--50)">
+	<!-- wp:group {"align":"wide","style":{"spacing":{"blockGap":"0.5rem"}},"layout":{"type":"default"}} -->
+	<div class="wp-block-group alignwide">
+		<!-- wp:heading {"level":1} -->
+		<h1 class="wp-block-heading">Animais para adoção</h1>
+		<!-- /wp:heading -->
 
-	<!-- wp:paragraph {"align":"wide"} -->
-	<p class="alignwide">Conheça quem está esperando por um lar. Todos foram resgatados, cuidados e estão prontos para receber amor.</p>
-	<!-- /wp:paragraph -->
+		<!-- wp:paragraph {"textColor":"accent-4"} -->
+		<p class="has-accent-4-color has-text-color">Conheça quem está esperando por um lar. Todos foram resgatados, cuidados e estão prontos para receber amor.</p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
 
-	<!-- wp:resgata-wp/animals-list {"align":"wide"} /-->
+	<!-- wp:resgata-wp/animals-list {"columns":4,"align":"wide"} /-->
+
+	<!-- wp:resgata-wp/donate-banner {"align":"wide"} /-->
 
 	<!-- wp:spacer {"height":"var:preset|spacing|60"} -->
 	<div style="height:var(--wp--preset--spacing--60)" aria-hidden="true" class="wp-block-spacer"></div>

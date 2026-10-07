@@ -12,6 +12,8 @@ import { AccountPage } from '@/pages/account';
 import { AdoptionDetailPage } from '@/pages/adoption-detail';
 import { AdoptionsListPage } from '@/pages/adoptions-list';
 import { SettingsPage } from '@/pages/settings';
+import { BannersPage } from '@/pages/banners';
+import { SponsorshipPage } from '@/pages/sponsorship';
 import { NotFoundPage } from '@/pages/not-found';
 import './index.css';
 
@@ -30,7 +32,9 @@ const router = createBrowserRouter(
 				{ path: 'animais/:id', element: <AnimalFormPage /> },
 				{ path: 'adocoes', element: <AdoptionsListPage /> },
 				{ path: 'adocoes/:id', element: <AdoptionDetailPage /> },
+				{ path: 'apadrinhamento', element: <SponsorshipPage /> },
 				{ path: 'configuracoes', element: <SettingsPage /> },
+				{ path: 'banners', element: <BannersPage /> },
 				{ path: 'conta', element: <AccountPage /> },
 				{ path: '*', element: <NotFoundPage /> },
 			],

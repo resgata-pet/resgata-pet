@@ -1,0 +1,76 @@
+/*
+ * Estilos do Select do shadcn/ui no site público.
+ *
+ * Só as partes do Tailwind que o componente usa: sem o reset global
+ * (preflight), para não mexer no visual do tema, e com as classes lidas apenas
+ * do próprio componente.
+ */
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css" source(none);
+@import "tw-animate-css";
+
+@source "../painel/components/ui/select.tsx";
+@source "./selects.tsx";
+
+/* O site só tem modo claro: as classes `dark:` do componente só valeriam dentro de `.dark`. */
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Cores do componente: vêm da paleta do tema (theme.json); em temas sem essas
+ * cores, valem os tons do guia de design. Ficam nesta classe, aplicada ao botão
+ * e à lista suspensa, para não espalhar variáveis pelo site.
+ */
+.rwp-ui {
+	--radius: 0.5rem;
+	--foreground: var(--wp--preset--color--contrast, #14213d);
+	--card: var(--wp--preset--color--surface, #fff);
+	--popover: var(--wp--preset--color--surface, #fff);
+	--popover-foreground: var(--wp--preset--color--contrast, #14213d);
+	--muted-foreground: var(--wp--preset--color--accent-4, #5f6877);
+	--accent: var(--wp--preset--color--accent-2, #e6f2ea);
+	--accent-foreground: var(--wp--preset--color--primary-dark, #1f5c3d);
+	--destructive: #b3261e;
+	--border: var(--wp--preset--color--accent-6, #e3e8ee);
+	--input: var(--wp--preset--color--accent-6, #e3e8ee);
+	--ring: var(--wp--preset--color--accent-3, #2f7d55);
+	box-sizing: border-box;
+	color: var(--foreground);
+	font-family: inherit;
+	letter-spacing: inherit;
+}
+
+.rwp-ui *,
+.rwp-ui ::before,
+.rwp-ui ::after {
+	box-sizing: border-box;
+}
+
+/* Sem o reset do Tailwind, o botão precisa perder a aparência padrão do navegador e do tema. */
+button.rwp-ui {
+	appearance: none;
+	cursor: pointer;
+	font-weight: 400;
+	line-height: 1.5;
+	margin: 0;
+	text-transform: none;
+}
+
+.rwp-select {
+	display: block;
+}
+
+@theme inline {
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+}

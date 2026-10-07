@@ -35,6 +35,9 @@ export interface Animal {
 	sex: string;
 	size: string;
 	color: string;
+	weight: number | null;
+	tagline: string;
+	intro: string;
 	age_years: number | null;
 	age_months: number | null;
 	rescue_date: string;
@@ -43,6 +46,9 @@ export interface Animal {
 	dewormed_date: string;
 	fiv: string;
 	felv: string;
+	vet_checked: string;
+	vaccinated: string;
+	microchip: string;
 	vaccines: Vaccine[];
 	featured_image: AnimalImage | null;
 	gallery: GalleryPhoto[];
@@ -138,7 +144,113 @@ export interface SettingsResponse {
 	settings: OrganizationSettings;
 	choices: { states: Record< string, string >; pixKeyTypes: Record< string, string > };
 	contact_page: { id: number; url: string; published: boolean } | null;
+	/** Página "Como ajudar" (nasce quando a chave Pix é cadastrada). */
+	help_page: { id: number; url: string; published: boolean } | null;
 	whatsapp_url: string;
+}
+
+/** Números da tela Início. Cada parte é `null` para quem não tem acesso àquela área. */
+export interface DashboardSummary {
+	animals: { total: number; drafts: number; by_status: Record< string, number > } | null;
+	adoptions: { new: number } | null;
+	sponsorship: { active: number; total: number } | null;
+}
+
+/** Banner da página inicial do site. */
+export interface Banner {
+	image_id: number;
+	image: AnimalImage | null;
+	active: boolean;
+	title: string;
+	highlight: string;
+	text: string;
+	button_label: string;
+	button_url: string;
+	button2_label: string;
+	button2_url: string;
+}
+
+export interface BannersResponse {
+	banners: Banner[];
+	max: number;
+}
+
+/** Plano de apadrinhamento: um produto da Stripe com o seu preço mensal em vigor. */
+export interface SponsorshipPlan {
+	id: string;
+	price_id: string;
+	/** Valor mensal em centavos. */
+	amount: number;
+	/** Valor formatado, ex.: "R$ 15". */
+	label: string;
+	name: string;
+	description: string;
+	benefits: string[];
+	featured: boolean;
+	/** Se aparece no site. */
+	active: boolean;
+	can_reprice: boolean;
+	subscribers: number;
+}
+
+export type PlanInput = Partial< Pick< SponsorshipPlan, 'name' | 'amount' | 'description' | 'benefits' | 'featured' | 'active' > >;
+
+/** O que a chave em uso consegue fazer na Stripe; `checked` é falso enquanto não há chave. */
+export interface StripePermissions {
+	checked: boolean;
+	permissions: Record< string, boolean >;
+}
+
+export type StripeKeySource = '' | 'constant' | 'panel';
+
+/** Chaves a gravar; texto vazio apaga a que estava salva. */
+export interface StripeKeysInput {
+	secret_key?: string;
+	webhook_secret?: string;
+}
+
+/** Resumo do apadrinhamento: estado da Stripe, planos e contador público. */
+export interface SponsorshipOverview {
+	/** As chaves nunca chegam ao navegador: só se estão definidas. */
+	stripe: {
+		secret_key: boolean;
+		webhook_secret: boolean;
+		mode: '' | 'test' | 'live';
+		/** De onde vem cada chave: do wp-config.php, do painel ou de lugar nenhum. */
+		sources: { secret_key: StripeKeySource; webhook_secret: StripeKeySource };
+		/** Começo e fim da chave em uso, ex.: "rk_live_…Ab12". */
+		hint: string;
+		/** Chaves salvas que não puderam ser lidas e precisam ser informadas de novo. */
+		unreadable: string[];
+		/** Se o site consegue guardar as chaves cifradas. */
+		can_store: boolean;
+	};
+	webhook_url: string;
+	plans: SponsorshipPlan[];
+	limits: { plans: number; amount_min: number; amount_max: number; name: number; description: number; benefit: number; benefits: number };
+	/** Aviso da última gravação (ex.: plano salvo, mas a área do padrinho não foi atualizada). */
+	warning: string;
+	counter: { active: number; adjustment: number; total: number; updated_at: string };
+}
+
+export interface Sponsor {
+	id: number;
+	name: string;
+	email: string;
+	status: string;
+	/** Nome do plano (vazio em planos sem nome). */
+	plan: string;
+	/** Valor que a pessoa paga por mês, ex.: "R$ 15". */
+	plan_amount: string;
+	payment_failed: boolean;
+	last_paid_at: string;
+	created_at: string;
+}
+
+export interface SponsorList {
+	items: Sponsor[];
+	total: number;
+	total_pages: number;
 }
 
 /** Filtros da listagem de animais. Listas vazias e textos vazios significam "sem filtro". */
@@ -215,6 +327,42 @@ export const api = {
 
 	saveSettings: ( data: OrganizationSettings ) =>
 		apiFetch< SettingsResponse >( { path: `/${ config.restNamespace }/settings`, method: 'PUT', data } ),
+
+	getDashboard: () => apiFetch< DashboardSummary >( { path: `/${ config.restNamespace }/dashboard` } ),
+
+	getBanners: () => apiFetch< BannersResponse >( { path: `/${ config.restNamespace }/banners` } ),
+
+	saveBanners: ( banners: Omit< Banner, 'image' >[] ) =>
+		apiFetch< BannersResponse >( { path: `/${ config.restNamespace }/banners`, method: 'PUT', data: { banners } } ),
+
+	createPlan: ( data: PlanInput ) =>
+		apiFetch< SponsorshipOverview >( { path: `/${ config.restNamespace }/sponsorship/plans`, method: 'POST', data } ),
+
+	updatePlan: ( id: string, data: PlanInput ) =>
+		apiFetch< SponsorshipOverview >( { path: `/${ config.restNamespace }/sponsorship/plans/${ encodeURIComponent( id ) }`, method: 'PUT', data } ),
+
+	deletePlan: ( id: string ) =>
+		apiFetch< SponsorshipOverview >( { path: `/${ config.restNamespace }/sponsorship/plans/${ encodeURIComponent( id ) }`, method: 'DELETE' } ),
+
+	getSponsorship: () => apiFetch< SponsorshipOverview >( { path: `/${ config.restNamespace }/sponsorship` } ),
+
+	saveSponsorship: ( data: { adjustment: number } ) =>
+		apiFetch< SponsorshipOverview >( { path: `/${ config.restNamespace }/sponsorship`, method: 'PUT', data } ),
+
+	getStripePermissions: () => apiFetch< StripePermissions >( { path: `/${ config.restNamespace }/sponsorship/permissions` } ),
+
+	saveStripeKeys: ( data: StripeKeysInput ) =>
+		apiFetch< SponsorshipOverview >( { path: `/${ config.restNamespace }/sponsorship/keys`, method: 'PUT', data } ),
+
+	listSponsors: ( page: number, perPage: number, status = '' ) => {
+		const params = new URLSearchParams( { page: String( page ), per_page: String( perPage ) } );
+
+		if ( status !== '' ) {
+			params.set( 'status', status );
+		}
+
+		return apiFetch< SponsorList >( { path: `/${ config.restNamespace }/sponsors?${ params.toString() }` } );
+	},
 
 	/** Reduz a foto no aparelho e envia para a biblioteca de mídia do WordPress. */
 	uploadPhoto: async ( file: File, animalId?: number ): Promise< AnimalImage > => {

@@ -10,7 +10,10 @@ namespace ResgataWP\Modules\Panel;
 use ResgataWP\Core\Modules;
 use ResgataWP\Modules\Panel\Rest\AdoptionsController;
 use ResgataWP\Modules\Panel\Rest\AnimalsController;
+use ResgataWP\Modules\Panel\Rest\BannersController;
+use ResgataWP\Modules\Panel\Rest\DashboardController;
 use ResgataWP\Modules\Panel\Rest\SettingsController;
+use ResgataWP\Modules\Panel\Rest\SponsorshipController;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,7 +36,9 @@ final class PanelModule {
 	 * Registra as rotas da API do painel (`resgata-wp/v1`), só dos módulos ligados.
 	 */
 	public function register_rest_routes(): void {
+		( new DashboardController() )->register_routes();
 		( new SettingsController() )->register_routes();
+		( new BannersController() )->register_routes();
 
 		if ( Modules::is_enabled( 'animals' ) ) {
 			( new AnimalsController() )->register_routes();
@@ -41,6 +46,10 @@ final class PanelModule {
 			if ( Modules::is_enabled( 'adoptions' ) ) {
 				( new AdoptionsController() )->register_routes();
 			}
+		}
+
+		if ( Modules::is_enabled( 'sponsorship' ) ) {
+			( new SponsorshipController() )->register_routes();
 		}
 	}
 }
