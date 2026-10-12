@@ -303,7 +303,8 @@ if ( $rwp_has( 'related' ) && $rwp_args['related'] ) :
 				</a>
 			<?php endif; ?>
 		</div>
-		<ul class="rwp-related__list" tabindex="0" aria-labelledby="rwp-outros-animais">
+		<div class="rwp-related__row" data-rwp-row>
+		<ul class="rwp-related__list" data-rwp-row-track tabindex="0" aria-labelledby="rwp-outros-animais">
 			<?php
 			foreach ( $rwp_args['related'] as $rwp_related_id ) :
 				$rwp_related = new Animal( $rwp_related_id );
@@ -326,6 +327,16 @@ if ( $rwp_has( 'related' ) && $rwp_args['related'] ) :
 				</li>
 			<?php endforeach; ?>
 		</ul>
+			<?php // As setas só funcionam com o script: nascem escondidas e ele as mostra quando a fileira não cabe na tela. ?>
+			<button type="button" class="rwp-viewer__arrow rwp-viewer__arrow--prev" data-rwp-row-prev hidden>
+				<?php echo Icons::svg( 'chevron-left' ); ?>
+				<span class="screen-reader-text"><?php esc_html_e( 'Animais anteriores', 'resgata-wp' ); ?></span>
+			</button>
+			<button type="button" class="rwp-viewer__arrow rwp-viewer__arrow--next" data-rwp-row-next hidden>
+				<?php echo Icons::svg( 'chevron-right' ); ?>
+				<span class="screen-reader-text"><?php esc_html_e( 'Próximos animais', 'resgata-wp' ); ?></span>
+			</button>
+		</div>
 	</section>
 	<?php
 	$rwp_parts['related'] = (string) ob_get_clean();

@@ -1,9 +1,11 @@
 /**
- * Galeria da página do animal: setas e miniaturas.
+ * Galeria da página do animal: setas e miniaturas. Também as setas da fileira
+ * "Outros animais para adoção".
  *
  * Sem este script a galeria continua funcionando: as fotos rolam com o dedo e
  * as miniaturas são links para cada foto. Aqui só deixamos a troca mais suave
- * e marcamos a miniatura da foto que está à vista.
+ * e marcamos a miniatura da foto que está à vista. A fileira de outros animais
+ * rola pela barra de rolagem; com o script, ganha setas e a barra some.
  */
 
 function setup( viewer: HTMLElement ): void {
@@ -86,7 +88,57 @@ function setup( viewer: HTMLElement ): void {
 	update();
 }
 
-const start = (): void => document.querySelectorAll< HTMLElement >( '[data-rwp-viewer]' ).forEach( setup );
+/** Fileira que rola para o lado: setas que avançam quase uma tela de cartões por vez. */
+function setupRow( row: HTMLElement ): void {
+	const track = row.querySelector< HTMLElement >( '[data-rwp-row-track]' );
+	const prev = row.querySelector< HTMLButtonElement >( '[data-rwp-row-prev]' );
+	const next = row.querySelector< HTMLButtonElement >( '[data-rwp-row-next]' );
+
+	if ( ! track || ! prev || ! next ) {
+		return;
+	}
+
+	const reducedMotion = window.matchMedia( '(prefers-reduced-motion: reduce)' );
+
+	const move = ( direction: number ): void => {
+		track.scrollBy( {
+			left: direction * track.clientWidth * 0.8,
+			behavior: reducedMotion.matches ? 'auto' : 'smooth',
+		} );
+	};
+
+	const update = (): void => {
+		const max = track.scrollWidth - track.clientWidth;
+
+		// Tudo cabe na tela: sem setas.
+		prev.hidden = max <= 1;
+		next.hidden = max <= 1;
+		// Folga de alguns pixels: o encaixe da rolagem para um pouco antes das pontas.
+		prev.disabled = track.scrollLeft <= 4;
+		next.disabled = track.scrollLeft >= max - 4;
+	};
+
+	let frame = 0;
+	const schedule = (): void => {
+		cancelAnimationFrame( frame );
+		frame = requestAnimationFrame( update );
+	};
+
+	track.addEventListener( 'scroll', schedule, { passive: true } );
+	new ResizeObserver( schedule ).observe( track );
+
+	prev.addEventListener( 'click', () => move( -1 ) );
+	next.addEventListener( 'click', () => move( 1 ) );
+
+	// Avisa o CSS de que as setas existem: ele esconde a barra de rolagem.
+	row.dataset.rwpRow = 'ready';
+	update();
+}
+
+const start = (): void => {
+	document.querySelectorAll< HTMLElement >( '[data-rwp-viewer]' ).forEach( setup );
+	document.querySelectorAll< HTMLElement >( '[data-rwp-row]' ).forEach( setupRow );
+};
 
 if ( document.readyState === 'loading' ) {
 	document.addEventListener( 'DOMContentLoaded', start );

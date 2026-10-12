@@ -84,7 +84,7 @@ $rwp_filter_fields = array(
 			?>
 		</ul>
 	<?php else : ?>
-		<p class="rwp-empty">
+		<p class="rwp-empty <?php echo esc_attr( $rwp_args['has_active_filters'] ? 'rwp-empty--filtered' : 'rwp-empty--none' ); ?>">
 			<?php
 			echo esc_html(
 				$rwp_args['has_active_filters']
