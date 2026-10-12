@@ -1,0 +1,86 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Petróleo",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"color": "#F7FBFB",
+					"name": "Fundo da página"
+				},
+				{
+					"slug": "contrast",
+					"color": "#0E2F38",
+					"name": "Azul-petróleo (títulos)"
+				},
+				{
+					"slug": "accent-1",
+					"color": "#F0932B",
+					"name": "Laranja"
+				},
+				{
+					"slug": "accent-2",
+					"color": "#DDF1F0",
+					"name": "Turquesa claro"
+				},
+				{
+					"slug": "accent-3",
+					"color": "#0F7A7A",
+					"name": "Turquesa principal (destaque)"
+				},
+				{
+					"slug": "accent-4",
+					"color": "#58696D",
+					"name": "Texto suave"
+				},
+				{
+					"slug": "accent-5",
+					"color": "#EEF8F7",
+					"name": "Turquesa muito claro (seções)"
+				},
+				{
+					"slug": "accent-6",
+					"color": "#DCE8E8",
+					"name": "Linha"
+				},
+				{
+					"slug": "surface",
+					"color": "#FFFFFF",
+					"name": "Superfície (cartões)"
+				},
+				{
+					"slug": "text",
+					"color": "#35494E",
+					"name": "Texto"
+				},
+				{
+					"slug": "primary-dark",
+					"color": "#0A5A5C",
+					"name": "Turquesa escuro"
+				},
+				{
+					"slug": "tile",
+					"color": "#EDF3F4",
+					"name": "Cinza claro (blocos)"
+				},
+				{
+					"slug": "info",
+					"color": "#2F6FDB",
+					"name": "Azul"
+				},
+				{
+					"slug": "help",
+					"color": "#7A3FD0",
+					"name": "Roxo"
+				},
+				{
+					"slug": "help-soft",
+					"color": "#F1EAFD",
+					"name": "Roxo claro"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,86 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Terracota",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"color": "#FDFAF7",
+					"name": "Fundo da página"
+				},
+				{
+					"slug": "contrast",
+					"color": "#3B2218",
+					"name": "Marrom (títulos)"
+				},
+				{
+					"slug": "accent-1",
+					"color": "#E9A23B",
+					"name": "Mostarda"
+				},
+				{
+					"slug": "accent-2",
+					"color": "#FBE9E1",
+					"name": "Terracota claro"
+				},
+				{
+					"slug": "accent-3",
+					"color": "#B14A2A",
+					"name": "Terracota principal (destaque)"
+				},
+				{
+					"slug": "accent-4",
+					"color": "#71635C",
+					"name": "Texto suave"
+				},
+				{
+					"slug": "accent-5",
+					"color": "#FCF4EF",
+					"name": "Terracota muito claro (seções)"
+				},
+				{
+					"slug": "accent-6",
+					"color": "#EDE3DC",
+					"name": "Linha"
+				},
+				{
+					"slug": "surface",
+					"color": "#FFFFFF",
+					"name": "Superfície (cartões)"
+				},
+				{
+					"slug": "text",
+					"color": "#4D3F38",
+					"name": "Texto"
+				},
+				{
+					"slug": "primary-dark",
+					"color": "#8C3A20",
+					"name": "Terracota escuro"
+				},
+				{
+					"slug": "tile",
+					"color": "#F6F0EB",
+					"name": "Bege claro (blocos)"
+				},
+				{
+					"slug": "info",
+					"color": "#2B6CB0",
+					"name": "Azul"
+				},
+				{
+					"slug": "help",
+					"color": "#7B4BC4",
+					"name": "Roxo"
+				},
+				{
+					"slug": "help-soft",
+					"color": "#F2ECFB",
+					"name": "Roxo claro"
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,86 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Framboesa",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"color": "#FEFAFB",
+					"name": "Fundo da página"
+				},
+				{
+					"slug": "contrast",
+					"color": "#3D1528",
+					"name": "Vinho (títulos)"
+				},
+				{
+					"slug": "accent-1",
+					"color": "#F2A03D",
+					"name": "Âmbar"
+				},
+				{
+					"slug": "accent-2",
+					"color": "#FCE4EC",
+					"name": "Rosa claro"
+				},
+				{
+					"slug": "accent-3",
+					"color": "#C2315F",
+					"name": "Rosa principal (destaque)"
+				},
+				{
+					"slug": "accent-4",
+					"color": "#72606A",
+					"name": "Texto suave"
+				},
+				{
+					"slug": "accent-5",
+					"color": "#FEF1F5",
+					"name": "Rosa muito claro (seções)"
+				},
+				{
+					"slug": "accent-6",
+					"color": "#EEE1E6",
+					"name": "Linha"
+				},
+				{
+					"slug": "surface",
+					"color": "#FFFFFF",
+					"name": "Superfície (cartões)"
+				},
+				{
+					"slug": "text",
+					"color": "#4F3C45",
+					"name": "Texto"
+				},
+				{
+					"slug": "primary-dark",
+					"color": "#972148",
+					"name": "Rosa escuro"
+				},
+				{
+					"slug": "tile",
+					"color": "#F7EFF2",
+					"name": "Rosado claro (blocos)"
+				},
+				{
+					"slug": "info",
+					"color": "#2B6CB0",
+					"name": "Azul"
+				},
+				{
+					"slug": "help",
+					"color": "#6D3FD9",
+					"name": "Roxo"
+				},
+				{
+					"slug": "help-soft",
+					"color": "#F0EAFD",
+					"name": "Roxo claro"
+				}
+			]
+		}
+	}
+}

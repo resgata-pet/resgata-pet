@@ -1,0 +1,86 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Grafite",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"color": "#FAFAFA",
+					"name": "Fundo da página"
+				},
+				{
+					"slug": "contrast",
+					"color": "#1A1D21",
+					"name": "Preto suave (títulos)"
+				},
+				{
+					"slug": "accent-1",
+					"color": "#F0932B",
+					"name": "Laranja"
+				},
+				{
+					"slug": "accent-2",
+					"color": "#ECEEF1",
+					"name": "Cinza claro"
+				},
+				{
+					"slug": "accent-3",
+					"color": "#3A4350",
+					"name": "Grafite principal (destaque)"
+				},
+				{
+					"slug": "accent-4",
+					"color": "#626973",
+					"name": "Texto suave"
+				},
+				{
+					"slug": "accent-5",
+					"color": "#F4F5F6",
+					"name": "Cinza muito claro (seções)"
+				},
+				{
+					"slug": "accent-6",
+					"color": "#E2E5E9",
+					"name": "Linha"
+				},
+				{
+					"slug": "surface",
+					"color": "#FFFFFF",
+					"name": "Superfície (cartões)"
+				},
+				{
+					"slug": "text",
+					"color": "#3B4149",
+					"name": "Texto"
+				},
+				{
+					"slug": "primary-dark",
+					"color": "#23282F",
+					"name": "Grafite escuro"
+				},
+				{
+					"slug": "tile",
+					"color": "#F0F1F3",
+					"name": "Cinza (blocos)"
+				},
+				{
+					"slug": "info",
+					"color": "#2F6FDB",
+					"name": "Azul"
+				},
+				{
+					"slug": "help",
+					"color": "#6D3FD9",
+					"name": "Roxo"
+				},
+				{
+					"slug": "help-soft",
+					"color": "#F0EAFD",
+					"name": "Roxo claro"
+				}
+			]
+		}
+	}
+}

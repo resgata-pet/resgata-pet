@@ -1,0 +1,86 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Oliva",
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"slug": "base",
+					"color": "#FBFBF6",
+					"name": "Fundo da página"
+				},
+				{
+					"slug": "contrast",
+					"color": "#2B2A14",
+					"name": "Verde-musgo (títulos)"
+				},
+				{
+					"slug": "accent-1",
+					"color": "#E8A33A",
+					"name": "Mostarda"
+				},
+				{
+					"slug": "accent-2",
+					"color": "#EDF1DC",
+					"name": "Oliva claro"
+				},
+				{
+					"slug": "accent-3",
+					"color": "#5E7022",
+					"name": "Oliva principal (destaque)"
+				},
+				{
+					"slug": "accent-4",
+					"color": "#666752",
+					"name": "Texto suave"
+				},
+				{
+					"slug": "accent-5",
+					"color": "#F5F7EA",
+					"name": "Oliva muito claro (seções)"
+				},
+				{
+					"slug": "accent-6",
+					"color": "#E4E6D6",
+					"name": "Linha"
+				},
+				{
+					"slug": "surface",
+					"color": "#FFFFFF",
+					"name": "Superfície (cartões)"
+				},
+				{
+					"slug": "text",
+					"color": "#434433",
+					"name": "Texto"
+				},
+				{
+					"slug": "primary-dark",
+					"color": "#445216",
+					"name": "Oliva escuro"
+				},
+				{
+					"slug": "tile",
+					"color": "#F2F3E8",
+					"name": "Bege claro (blocos)"
+				},
+				{
+					"slug": "info",
+					"color": "#2B6CB0",
+					"name": "Azul"
+				},
+				{
+					"slug": "help",
+					"color": "#8A4BC0",
+					"name": "Roxo"
+				},
+				{
+					"slug": "help-soft",
+					"color": "#F3EBFB",
+					"name": "Roxo claro"
+				}
+			]
+		}
+	}
+}
