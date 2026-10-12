@@ -1,0 +1,50 @@
+/*
+ * Paginação do blog (bloco Paginação da consulta): igual à da lista de animais.
+ */
+.wp-block-query-pagination .page-numbers,
+.wp-block-query-pagination-previous,
+.wp-block-query-pagination-next {
+	align-items: center;
+	background: var(--wp--preset--color--surface);
+	border: 1px solid var(--wp--preset--color--accent-6);
+	border-radius: var(--wp--preset--border-radius--small);
+	box-sizing: border-box;
+	color: inherit;
+	display: inline-flex;
+	font-size: 0.9375rem;
+	justify-content: center;
+	min-height: 2.75rem;
+	min-width: 2.75rem;
+	padding: 0 0.85rem;
+	text-decoration: none;
+}
+
+.wp-block-query-pagination-numbers {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.wp-block-query-pagination a.page-numbers:hover,
+.wp-block-query-pagination-previous:hover,
+.wp-block-query-pagination-next:hover {
+	border-color: var(--wp--preset--color--accent-3);
+	color: var(--wp--preset--color--accent-3);
+}
+
+.wp-block-query-pagination a:focus-visible {
+	outline: 2px solid var(--wp--preset--color--accent-3);
+	outline-offset: 2px;
+}
+
+.wp-block-query-pagination .page-numbers.current {
+	background: var(--wp--preset--color--accent-3);
+	border-color: var(--wp--preset--color--accent-3);
+	color: var(--wp--preset--color--surface);
+	font-weight: 600;
+}
+
+.wp-block-query-pagination .page-numbers.dots {
+	background: none;
+	border-color: transparent;
+}

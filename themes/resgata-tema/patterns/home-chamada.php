@@ -15,8 +15,8 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<!-- wp:group {"align":"wide","className":"is-style-resgata-band","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group alignwide is-style-resgata-band">
+<!-- wp:group {"align":"wide","className":"is-style-resgata-band-hug","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+<div class="wp-block-group alignwide is-style-resgata-band-hug">
 	<!-- wp:group {"style":{"spacing":{"blockGap":"0.5rem"},"layout":{"selfStretch":"fill"}},"layout":{"type":"default"}} -->
 	<div class="wp-block-group">
 		<!-- wp:heading {"className":"is-style-text-subtitle"} -->

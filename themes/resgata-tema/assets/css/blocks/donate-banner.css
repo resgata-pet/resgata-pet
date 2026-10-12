@@ -1,0 +1,191 @@
+/*
+ * Bloco "Doe por Pix" (resgata-wp/donate-banner): chamada, botões e, à direita, o QR Code.
+ */
+.rwp-donate {
+	align-items: center;
+	background: var(--rwp-help-soft);
+	border-radius: var(--rwp-radius-lg);
+	box-sizing: border-box;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem 1.5rem;
+	padding: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+}
+
+.rwp-donate__icon {
+	align-items: center;
+	background: var(--rwp-card);
+	border-radius: 50%;
+	color: var(--rwp-help);
+	display: flex;
+	flex: none;
+	height: 3.25rem;
+	justify-content: center;
+	width: 3.25rem;
+}
+
+.rwp-donate__icon svg {
+	fill: currentColor;
+	height: 1.6rem;
+	width: 1.6rem;
+}
+
+.rwp-donate__text {
+	flex: 1 1 18rem;
+	min-width: 0;
+}
+
+.rwp-donate__title {
+	color: var(--rwp-heading);
+	font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+	line-height: 1.2;
+	margin: 0;
+}
+
+.rwp-donate__text p {
+	color: var(--rwp-text);
+	margin: 0.35rem 0 0;
+}
+
+.rwp-donate .rwp-button {
+	align-items: center;
+	border-radius: var(--rwp-radius-sm);
+	box-sizing: border-box;
+	display: inline-flex;
+	font-size: 1rem;
+	font-weight: 600;
+	justify-content: center;
+	min-height: 3rem;
+	padding: 0.5rem 1.5rem;
+	text-decoration: none;
+}
+
+.rwp-donate .rwp-button--primary,
+.rwp-donate .rwp-button--primary:visited {
+	background: var(--rwp-help);
+	border: 1px solid var(--rwp-help);
+	color: #fff;
+}
+
+.rwp-donate .rwp-button--primary:hover,
+.rwp-donate .rwp-button--primary:focus-visible {
+	background: var(--rwp-help-dark);
+	border-color: var(--rwp-help-dark);
+	color: #fff;
+}
+
+.rwp-donate .rwp-button--primary:focus-visible {
+	outline: 2px solid var(--rwp-help);
+	outline-offset: 2px;
+}
+
+.rwp-donate__actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+	margin-top: 0.9rem;
+}
+
+/* Copiar o código Pix: ação secundária, contornada. */
+.rwp-donate__copy {
+	align-items: center;
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-help);
+	border-radius: var(--rwp-radius-sm);
+	box-sizing: border-box;
+	color: var(--rwp-help);
+	cursor: pointer;
+	display: inline-flex;
+	font: inherit;
+	font-size: 1rem;
+	font-weight: 600;
+	gap: 0.5rem;
+	justify-content: center;
+	min-height: 3rem;
+	padding: 0.5rem 1.1rem;
+}
+
+.rwp-donate__copy:hover,
+.rwp-donate__copy:focus-visible {
+	background: color-mix(in srgb, var(--rwp-help) 18%, #fff);
+}
+
+.rwp-donate__copy:focus-visible {
+	outline: 2px solid var(--rwp-help);
+	outline-offset: 2px;
+}
+
+.rwp-donate__copy svg {
+	flex: none;
+	height: 1.15em;
+	width: 1.15em;
+}
+
+.rwp-donate [hidden] {
+	display: none;
+}
+
+.rwp-donate__status {
+	border: 0;
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* QR Code: cartão branco à direita, pronto para a câmera do app do banco. */
+.rwp-donate__qr {
+	background: var(--rwp-card);
+	border-radius: var(--rwp-radius);
+	box-shadow: var(--rwp-shadow);
+	color: var(--rwp-muted);
+	flex: none;
+	font-size: 0.8125rem;
+	line-height: 1.3;
+	margin: 0;
+	padding: 0.6rem 0.6rem 0.7rem;
+	text-align: center;
+	width: 9rem;
+}
+
+.rwp-donate__image {
+	display: block;
+	height: auto;
+	margin-bottom: 0.35rem;
+	width: 100%;
+}
+
+/* No celular o QR Code não tem como ser lido: fica o botão de copiar o código. */
+@media (max-width: 600px) {
+	.rwp-donate__qr {
+		display: none;
+	}
+}
+
+/* Enfeites de fundo, na cor de "ajuda" (formas e base em enfeites.css). */
+.rwp-donate {
+	--resgata-tema-decor-tone: var(--rwp-help);
+	--resgata-tema-decor-fill:
+		var(--resgata-tema-shape-heart-fill) right -1rem bottom -1.5rem / 6.5rem 6.5rem no-repeat,
+		var(--resgata-tema-shape-circle) left -2.5rem top -2.5rem / 7rem 7rem no-repeat;
+	--resgata-tema-decor-line:
+		var(--resgata-tema-shape-heart) right 0.5rem top 0.4rem / 1.5rem 1.5rem no-repeat;
+}
+
+@media (min-width: 782px) {
+	.rwp-donate {
+		--resgata-tema-decor-fill:
+			var(--resgata-tema-shape-heart-fill) right 11.5rem bottom -1.75rem / 7rem 7rem no-repeat,
+			var(--resgata-tema-shape-circle) left -2.5rem top -2.5rem / 7rem 7rem no-repeat,
+			var(--resgata-tema-shape-circle) right -2rem top -2rem / 6rem 6rem no-repeat,
+			var(--resgata-tema-shape-circle) right 19rem bottom 1rem / 0.9rem 0.9rem no-repeat;
+		--resgata-tema-decor-line:
+			var(--resgata-tema-shape-heart) right 13.5rem top 0.9rem / 2.25rem 2.25rem no-repeat,
+			var(--resgata-tema-shape-ring) right 38% top 0.9rem / 0.9rem 0.9rem no-repeat;
+	}
+}

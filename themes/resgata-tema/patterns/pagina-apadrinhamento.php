@@ -202,7 +202,7 @@ defined( 'ABSPATH' ) || exit;
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"textColor":"accent-4"} -->
-		<p class="has-accent-4-color has-text-color"><?php esc_html_e( 'Informe o seu e-mail para trocar o cartão, mudar o valor ou cancelar o apadrinhamento.', 'resgata-tema' ); ?></p>
+		<p class="has-accent-4-color has-text-color"><?php esc_html_e( 'Informe o seu e-mail para ver quanto você já doou, trocar o cartão, mudar o valor ou cancelar o apadrinhamento.', 'resgata-tema' ); ?></p>
 		<!-- /wp:paragraph -->
 	</div>
 	<!-- /wp:column -->

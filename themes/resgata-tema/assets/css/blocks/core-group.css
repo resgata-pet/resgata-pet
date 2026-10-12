@@ -1,0 +1,250 @@
+/*
+ * Estilos do bloco Grupo que o theme.json não expressa: cabeçalho fixo, "Com ícone",
+ * "Passo numerado", "Linha de direitos" e "Chamada do topo". Cores, bordas e espaçamentos
+ * dos estilos "Cartão", "Faixa suave", "Chamada do topo", "Cabeçalho do site" e "Rodapé do
+ * site" ficam em styles/blocks/*.json. Os ícones são os do Lucide, aplicados como máscara
+ * para herdar a cor.
+ */
+/* O cabeçalho acompanha a rolagem (o elemento fixado é a parte de modelo que o contém). */
+header.wp-block-template-part:has(> .is-style-resgata-header) {
+	position: sticky;
+	top: var(--wp-admin--admin-bar--height, 0px);
+	z-index: 20;
+}
+
+/* Grupo "Com ícone": círculo colorido à esquerda do texto. */
+.wp-block-group[class*="is-style-resgata-icon-"] {
+	--resgata-tema-tone: var(--wp--preset--color--accent-3);
+	--resgata-tema-tone-soft: var(--wp--preset--color--accent-2);
+	min-height: 3.5rem;
+	padding-left: 4.5rem;
+	position: relative;
+}
+
+.wp-block-group[class*="is-style-resgata-icon-"] > * {
+	margin-block: 0;
+}
+
+.wp-block-group[class*="is-style-resgata-icon-"] > * + * {
+	margin-block-start: 0.15rem;
+}
+
+.wp-block-group[class*="is-style-resgata-icon-"]::before,
+.wp-block-group[class*="is-style-resgata-icon-"]::after {
+	content: "";
+	left: 0;
+	position: absolute;
+	top: 0;
+}
+
+.wp-block-group[class*="is-style-resgata-icon-"]::before {
+	background: var(--resgata-tema-tone-soft);
+	border-radius: 50%;
+	height: 3.5rem;
+	width: 3.5rem;
+}
+
+.wp-block-group[class*="is-style-resgata-icon-"]::after {
+	background: var(--resgata-tema-tone);
+	height: 1.6rem;
+	margin: 0.95rem;
+	mask: var(--resgata-tema-icon) center / contain no-repeat;
+	width: 1.6rem;
+}
+
+.is-style-resgata-icon-paw {
+	--resgata-tema-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='4' r='2'/%3E%3Ccircle cx='18' cy='8' r='2'/%3E%3Ccircle cx='20' cy='16' r='2'/%3E%3Cpath d='M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z'/%3E%3C/svg%3E");
+}
+
+.wp-block-group.is-style-resgata-icon-heart {
+	--resgata-tema-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5'/%3E%3C/svg%3E");
+	--resgata-tema-tone: #e5484d;
+	--resgata-tema-tone-soft: #fde9e9;
+}
+
+.wp-block-group.is-style-resgata-icon-hand-heart {
+	--resgata-tema-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 14h2a2 2 0 0 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16'/%3E%3Cpath d='m14.45 13.39 5.05-4.694C20.196 8 21 6.85 21 5.75a2.75 2.75 0 0 0-4.797-1.837.276.276 0 0 1-.406 0A2.75 2.75 0 0 0 11 5.75c0 1.2.802 2.248 1.5 2.946L16 11.95'/%3E%3Cpath d='m2 15 6 6'/%3E%3Cpath d='m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a1 1 0 0 0-2.75-2.91'/%3E%3C/svg%3E");
+	--resgata-tema-tone: var(--wp--preset--color--help);
+	--resgata-tema-tone-soft: var(--wp--preset--color--help-soft);
+}
+
+.wp-block-group.is-style-resgata-icon-message {
+	--resgata-tema-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719'/%3E%3C/svg%3E");
+	--resgata-tema-tone: #b86a0c;
+	--resgata-tema-tone-soft: #fdf1e0;
+}
+
+.wp-block-group.is-style-resgata-icon-shield {
+	--resgata-tema-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+	--resgata-tema-tone: var(--wp--preset--color--info);
+	--resgata-tema-tone-soft: #e8f0fd;
+}
+
+.wp-block-group.is-style-resgata-icon-lock {
+	--resgata-tema-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='11' x='3' y='11' rx='2' ry='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 9.9-1'/%3E%3C/svg%3E");
+	--resgata-tema-tone: #b86a0c;
+	--resgata-tema-tone-soft: #fdf1e0;
+}
+
+/* Grupo "Passo numerado": cartão com o número do passo (a contagem recomeça em cada grade). */
+:where(.wp-block-group):has(> .is-style-resgata-step) {
+	counter-reset: resgata-tema-step;
+}
+
+.wp-block-group.is-style-resgata-step {
+	background: var(--wp--preset--color--surface);
+	border: 1px solid var(--wp--preset--color--accent-6);
+	border-radius: var(--wp--preset--border-radius--medium, 12px);
+	counter-increment: resgata-tema-step;
+	padding: 1.25rem 1.25rem 1.25rem 4rem;
+	position: relative;
+}
+
+.wp-block-group.is-style-resgata-step > * {
+	margin-block: 0;
+}
+
+.wp-block-group.is-style-resgata-step > * + * {
+	margin-block-start: 0.35rem;
+}
+
+.wp-block-group.is-style-resgata-step::before {
+	align-items: center;
+	background: var(--wp--preset--color--accent-3);
+	border-radius: 50%;
+	color: var(--wp--preset--color--surface);
+	content: counter(resgata-tema-step);
+	display: flex;
+	font-weight: 700;
+	height: 2rem;
+	justify-content: center;
+	left: 1.1rem;
+	position: absolute;
+	top: 1.1rem;
+	width: 2rem;
+}
+
+/* Grupo "Linha de direitos" (fim do rodapé). */
+.wp-block-group.is-style-resgata-footer-bottom {
+	border-top: 1px solid var(--wp--preset--color--accent-6);
+	margin-block-start: 2rem;
+	padding-top: 1.25rem;
+}
+
+/* Na chamada do topo, o texto não se estica pela largura toda. */
+.is-style-resgata-hero p {
+	max-width: 40rem;
+}
+
+/* A chamada do topo encosta no cabeçalho; depois dela, as seções da página respiram. */
+.wp-block-group.is-style-resgata-hero {
+	margin-block-start: 0;
+}
+
+/*
+ * Enfeites de fundo da "Chamada do topo" e da "Faixa suave" (formas e base em enfeites.css).
+ * No celular ficam só os dos cantos, longe do texto.
+ */
+.wp-block-group.is-style-resgata-hero {
+	--resgata-tema-decor-fill:
+		var(--resgata-tema-shape-circle) right -2.5rem top -2.5rem / 8rem 8rem no-repeat,
+		var(--resgata-tema-shape-cloud) right -2rem bottom -1.25rem / 9rem auto no-repeat;
+	--resgata-tema-decor-line:
+		var(--resgata-tema-shape-heart) right 0.75rem top 0.75rem / 1.75rem 1.75rem no-repeat;
+}
+
+.wp-block-group.is-style-resgata-band {
+	--resgata-tema-decor-fill:
+		var(--resgata-tema-shape-cloud) left -2rem bottom -2rem / 8rem auto no-repeat,
+		var(--resgata-tema-shape-cloud) right -1.5rem bottom -2.5rem / 10rem auto no-repeat;
+	--resgata-tema-decor-line:
+		var(--resgata-tema-shape-heart) right 0.5rem top 0.4rem / 1.5rem 1.5rem no-repeat;
+}
+
+@media (min-width: 782px) {
+	.wp-block-group.is-style-resgata-hero {
+		--resgata-tema-decor-fill:
+			var(--resgata-tema-shape-circle) right 7% top -4rem / 13rem 13rem no-repeat,
+			var(--resgata-tema-shape-cloud) right -2.5rem bottom -2rem / 17rem auto no-repeat,
+			var(--resgata-tema-shape-cloud) right 30% top 1.75rem / 6rem auto no-repeat,
+			var(--resgata-tema-shape-paw-fill) right 19% bottom 1.25rem / 5.5rem 5.5rem no-repeat,
+			var(--resgata-tema-shape-circle) right 36% bottom 2.5rem / 1rem 1rem no-repeat;
+		--resgata-tema-decor-line:
+			var(--resgata-tema-shape-heart) right 27% top 42% / 3rem 3rem no-repeat,
+			var(--resgata-tema-shape-heart) right 4% top 38% / 2rem 2rem no-repeat,
+			var(--resgata-tema-shape-ring) right 14% top 1.5rem / 1.25rem 1.25rem no-repeat;
+	}
+
+	.wp-block-group.is-style-resgata-band {
+		--resgata-tema-decor-fill:
+			var(--resgata-tema-shape-cloud) left -2.5rem bottom -2.75rem / 11rem auto no-repeat,
+			var(--resgata-tema-shape-cloud) right -2rem bottom -3.5rem / 15rem auto no-repeat,
+			var(--resgata-tema-shape-circle) right 18rem top -2rem / 5rem 5rem no-repeat;
+		--resgata-tema-decor-line:
+			var(--resgata-tema-shape-heart) right 1.5rem top 0.9rem / 2.75rem 2.75rem no-repeat,
+			var(--resgata-tema-shape-heart) right 24rem bottom 0.9rem / 1.75rem 1.75rem no-repeat,
+			var(--resgata-tema-shape-ring) right 17rem bottom 0.9rem / 0.9rem 0.9rem no-repeat;
+	}
+}
+
+/* Grupo "Com ilustração": desenho centralizado acima do texto (lista vazia, página não encontrada). */
+.wp-block-group[class*="is-style-resgata-art-"] {
+	padding-block: var(--wp--preset--spacing--50);
+	text-align: center;
+}
+
+.wp-block-group[class*="is-style-resgata-art-"]::before {
+	background: center / contain no-repeat;
+	content: "";
+	display: block;
+	height: clamp(9rem, 6rem + 12vw, 14rem);
+	margin-block-end: var(--wp--preset--spacing--40);
+}
+
+.wp-block-group.is-style-resgata-art-sleeping-cat::before {
+	background-image: url("../../img/ilustracoes/sem-publicacoes.webp");
+}
+
+.wp-block-group.is-style-resgata-art-lost-puppy::before {
+	background-image: url("../../img/ilustracoes/pagina-nao-encontrada.webp");
+}
+
+/*
+ * "Faixa suave com abraço": a foto da mulher abraçando o cachorro fica apoiada na base da
+ * faixa (embaixo no celular, à esquerda e passando um pouco do topo nas telas maiores). Ela
+ * ocupa a camada dos enfeites em traço; ficam os enfeites cheios.
+ */
+.wp-block-group.is-style-resgata-band-hug {
+	--resgata-tema-decor-fill:
+		var(--resgata-tema-shape-circle) right -2rem top -2rem / 6rem 6rem no-repeat,
+		var(--resgata-tema-shape-heart-fill) left 0.75rem top 0.5rem / 2rem 2rem no-repeat;
+	padding-bottom: 12.5rem;
+}
+
+.wp-block-group.is-style-resgata-band-hug::after {
+	background: url("../../img/ilustracoes/seja-um-padrinho.webp") center bottom / contain no-repeat;
+	border-radius: 0;
+	height: 11.5rem;
+	inset: auto 0 0;
+	mask: none;
+}
+
+@media (min-width: 782px) {
+	.wp-block-group.is-style-resgata-band-hug {
+		--resgata-tema-decor-fill:
+			var(--resgata-tema-shape-cloud) right -2rem bottom -3.5rem / 15rem auto no-repeat,
+			var(--resgata-tema-shape-circle) right 18rem top -2rem / 5rem 5rem no-repeat,
+			var(--resgata-tema-shape-circle) left -3rem bottom -3rem / 9rem 9rem no-repeat;
+		margin-block-start: calc(var(--wp--preset--spacing--60) + 1.75rem);
+		min-height: 12rem;
+		padding-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+		padding-left: 24rem;
+	}
+
+	.wp-block-group.is-style-resgata-band-hug::after {
+		background-position: left bottom;
+		height: auto;
+		inset: -1.75rem auto 0 1.5rem;
+		width: 21rem;
+	}
+}

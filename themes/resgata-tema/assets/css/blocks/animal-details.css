@@ -1,0 +1,628 @@
+/*
+ * Bloco "Página do animal" (resgata-wp/animal-details).
+ */
+.rwp-animal__subheading {
+	font-size: var(--wp--preset--font-size--medium);
+	margin: var(--wp--preset--spacing--40) 0 var(--wp--preset--spacing--20);
+}
+
+.rwp-facts {
+	display: grid;
+	gap: var(--wp--preset--spacing--20);
+	grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+	margin: 0;
+}
+
+.rwp-facts__item {
+	background: var(--rwp-tile);
+	border-radius: var(--rwp-radius);
+	padding: 0.75rem 1rem;
+}
+
+.rwp-facts dt {
+	color: var(--rwp-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.rwp-facts dd {
+	color: var(--rwp-heading);
+	font-weight: 600;
+	margin: 0;
+	overflow-wrap: anywhere;
+}
+
+.rwp-vaccine-list {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.rwp-vaccine-list__date {
+	color: var(--rwp-muted);
+}
+
+/* Página inteira: caminho, fotos + resumo, cartões e outros animais. */
+.rwp-animal--page {
+	color: var(--rwp-text);
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.rwp-animal__top {
+	align-items: start;
+	display: grid;
+	gap: 1.5rem 2.25rem;
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.rwp-animal__cards {
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+@media (min-width: 960px) {
+	.rwp-animal__top {
+		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+	}
+
+	.rwp-animal__top:has(> :only-child) {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.rwp-animal__cards > .rwp-animal__story:not(:only-child) {
+		grid-column: span 2;
+	}
+}
+
+/* Caminho (Início › Animais › Nome) */
+.rwp-breadcrumb__list {
+	align-items: center;
+	color: var(--rwp-muted);
+	display: flex;
+	flex-wrap: wrap;
+	font-size: var(--wp--preset--font-size--small);
+	gap: 0.4rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-breadcrumb__list li {
+	align-items: center;
+	display: flex;
+	gap: 0.4rem;
+}
+
+.rwp-breadcrumb__list a {
+	align-items: center;
+	color: inherit;
+	display: inline-flex;
+	min-height: 1.75rem;
+	text-decoration: none;
+}
+
+.rwp-breadcrumb__list a:hover {
+	text-decoration: underline;
+}
+
+.rwp-breadcrumb__list [aria-current] {
+	color: var(--rwp-heading);
+	font-weight: 500;
+}
+
+.rwp-animal .rwp-breadcrumb__separator {
+	height: 1em;
+	width: 1em;
+}
+
+/* Fotos: uma por vez, rolando para o lado; miniaturas embaixo. */
+.rwp-viewer {
+	min-width: 0;
+}
+
+.rwp-viewer__stage {
+	background: var(--rwp-tile);
+	border-radius: var(--rwp-radius-lg);
+	overflow: hidden;
+	position: relative;
+}
+
+.rwp-viewer__track {
+	aspect-ratio: 4 / 3;
+	display: flex;
+	list-style: none;
+	margin: 0;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	padding: 0;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+}
+
+.rwp-viewer__track::-webkit-scrollbar {
+	display: none;
+}
+
+.rwp-viewer__track:focus-visible {
+	outline-offset: -2px;
+}
+
+.rwp-viewer__slide {
+	flex: 0 0 100%;
+	margin: 0;
+	position: relative;
+	scroll-snap-align: start;
+}
+
+.rwp-viewer__slide img {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.rwp-viewer__caption {
+	background: rgba(20, 33, 61, 0.75);
+	border-radius: var(--rwp-radius-pill);
+	bottom: 0.75rem;
+	color: #fff;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	left: 0.75rem;
+	padding: 0.2rem 0.75rem;
+	position: absolute;
+}
+
+.rwp-viewer__status {
+	align-items: center;
+	display: inline-flex;
+	gap: 0.4rem;
+	left: 0.75rem;
+	position: absolute;
+	top: 0.75rem;
+}
+
+.rwp-viewer__thumbs {
+	display: flex;
+	gap: 0.6rem;
+	list-style: none;
+	margin: 0.6rem 0 0;
+	overflow-x: auto;
+	padding: 2px;
+	scrollbar-width: thin;
+}
+
+.rwp-viewer__thumbs li {
+	flex: 0 0 calc((100% - 2.4rem) / 5);
+	margin: 0;
+	min-width: 4.5rem;
+}
+
+.rwp-viewer__thumb {
+	aspect-ratio: 4 / 3;
+	border: 2px solid transparent;
+	border-radius: 10px;
+	display: block;
+	overflow: hidden;
+}
+
+.rwp-viewer__thumb[aria-current] {
+	border-color: var(--rwp-primary);
+}
+
+.rwp-viewer__thumb img {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+@media (min-width: 600px) {
+	.rwp-viewer__track {
+		aspect-ratio: 16 / 10;
+	}
+}
+
+/* Resumo: nome, frase, dados, temperamento e botões. */
+.rwp-animal__name {
+	color: var(--rwp-heading);
+	font-size: clamp(2rem, 1.4rem + 2.4vw, 2.75rem);
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	line-height: 1.1;
+	margin: 0;
+}
+
+.rwp-animal__status {
+	margin: 0.6rem 0 0;
+}
+
+.rwp-animal__tagline {
+	color: var(--rwp-text);
+	font-size: 1.125rem;
+	margin: 0.4rem 0 0;
+}
+
+.rwp-animal__intro {
+	color: var(--rwp-muted);
+	font-size: 0.9375rem;
+	line-height: 1.55;
+	margin: 0.75rem 0 0;
+}
+
+.rwp-animal__intro > * {
+	margin: 0;
+}
+
+.rwp-animal__intro > * + * {
+	margin-top: 0.5rem;
+}
+
+.rwp-animal .rwp-facts {
+	gap: 0.6rem 0.9rem;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	margin: 1.1rem 0 0;
+}
+
+.rwp-animal .rwp-facts__item {
+	background: var(--rwp-tile);
+	border: 0;
+	border-radius: 10px;
+	min-height: 3.25rem;
+	padding: 0.55rem 0.75rem 0.55rem 3.1rem;
+	position: relative;
+}
+
+.rwp-animal .rwp-facts__icon {
+	color: var(--rwp-info);
+	height: 1.5rem;
+	left: 0.9rem;
+	position: absolute;
+	top: calc(50% - 0.75rem);
+	width: 1.5rem;
+}
+
+.rwp-animal .rwp-facts dt {
+	color: var(--rwp-muted);
+	font-size: 0.8125rem;
+	line-height: 1.3;
+}
+
+.rwp-animal .rwp-facts dd {
+	color: var(--rwp-heading);
+	font-size: 0.9375rem;
+	font-weight: 500;
+	line-height: 1.35;
+}
+
+.rwp-animal__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin: 1.25rem 0 0;
+}
+
+.rwp-animal__actions .rwp-button {
+	flex: 1 1 13rem;
+}
+
+/* Cartões: história, saúde e "Não pode adotar?". */
+.rwp-panel {
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius);
+	box-shadow: var(--rwp-shadow);
+	min-width: 0;
+	padding: 1.25rem 1.4rem;
+}
+
+.rwp-panel__title {
+	align-items: center;
+	color: var(--rwp-heading);
+	display: flex;
+	font-size: 1.0625rem;
+	font-weight: 600;
+	gap: 0.6rem;
+	line-height: 1.3;
+	margin: 0 0 0.75rem;
+}
+
+.rwp-animal .rwp-panel__title .rwp-icon {
+	height: 1.35rem;
+	width: 1.35rem;
+}
+
+.rwp-animal__story-text {
+	font-size: 0.9375rem;
+	line-height: 1.6;
+}
+
+.rwp-animal__story-text > :first-child {
+	margin-top: 0;
+}
+
+.rwp-animal__story-text > :last-child {
+	margin-bottom: 0;
+}
+
+.rwp-checklist {
+	display: grid;
+	gap: 0.5rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-checklist__item {
+	align-items: flex-start;
+	display: flex;
+	font-size: 0.9375rem;
+	gap: 0.6rem;
+	line-height: 1.35;
+	margin: 0;
+}
+
+.rwp-checklist__item .rwp-icon {
+	color: var(--rwp-primary);
+}
+
+.rwp-checklist__item--pending,
+.rwp-checklist__item--pending .rwp-icon {
+	color: var(--rwp-muted);
+}
+
+.rwp-pairs {
+	border-top: 1px solid var(--rwp-line);
+	font-size: 0.9375rem;
+	margin: 0.9rem 0 0;
+	padding-top: 0.75rem;
+}
+
+.rwp-pairs__item {
+	display: flex;
+	gap: 1rem;
+	justify-content: space-between;
+}
+
+.rwp-pairs dt {
+	color: var(--rwp-muted);
+}
+
+.rwp-pairs dd {
+	color: var(--rwp-heading);
+	font-weight: 500;
+	margin: 0;
+}
+
+.rwp-animal .rwp-animal__subheading {
+	color: var(--rwp-heading);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	margin: 0.9rem 0 0.35rem;
+}
+
+.rwp-animal .rwp-vaccine-list {
+	font-size: 0.9375rem;
+}
+
+.rwp-animal__help {
+	background: var(--rwp-help-soft);
+	border-color: transparent;
+	box-shadow: none;
+}
+
+/* Enfeites de fundo do cartão "Não pode adotar?" (formas e base em enfeites.css). */
+.rwp-animal__help {
+	--resgata-tema-decor-tone: var(--rwp-help);
+	--resgata-tema-decor-fill:
+		var(--resgata-tema-shape-heart-fill) right 0.25rem top 1.5rem / 3.5rem 3.5rem no-repeat,
+		var(--resgata-tema-shape-circle) right 3.5rem top 4.25rem / 0.75rem 0.75rem no-repeat,
+		var(--resgata-tema-shape-circle) left -2rem bottom -2rem / 5.5rem 5.5rem no-repeat;
+}
+
+.rwp-animal__help .rwp-panel__title .rwp-icon {
+	color: var(--rwp-help);
+	fill: currentColor;
+}
+
+.rwp-animal__help-text {
+	font-size: 0.9375rem;
+	margin: 0 0 0.9rem;
+}
+
+.rwp-animal__help-actions {
+	display: grid;
+	gap: 0.6rem;
+	margin: 0;
+}
+
+.rwp-animal .rwp-animal__help-actions .rwp-button {
+	min-height: 2.75rem;
+}
+
+.rwp-animal .rwp-button--help-outline {
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-help);
+	color: var(--rwp-help);
+}
+
+/* Outros animais: fileira que rola para o lado. */
+.rwp-related__header {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+	justify-content: space-between;
+	margin-bottom: 0.9rem;
+}
+
+.rwp-related__header .rwp-panel__title {
+	margin: 0;
+}
+
+.rwp-related__all {
+	align-items: center;
+	color: var(--rwp-primary);
+	display: inline-flex;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	gap: 0.35rem;
+	min-height: 2.75rem;
+	text-decoration: none;
+}
+
+.rwp-related__all:hover {
+	text-decoration: underline;
+}
+
+.rwp-related__list {
+	display: flex;
+	gap: 1rem;
+	list-style: none;
+	margin: 0;
+	overflow-x: auto;
+	padding: 2px 2px 0.6rem;
+	scroll-snap-type: x proximity;
+	scrollbar-width: thin;
+}
+
+/*
+ * Com o script, a fileira ganha setas: a barra de rolagem some e as pontas esmaecem do
+ * lado em que ainda há cartões. Sem ele, fica a barra de rolagem.
+ */
+.rwp-related__row {
+	position: relative;
+}
+
+.rwp-related__row[data-rwp-row="ready"] .rwp-related__list {
+	--rwp-fade-prev: 0px;
+	--rwp-fade-next: 0px;
+	mask-image: linear-gradient(to right, transparent, #000 var(--rwp-fade-prev), #000 calc(100% - var(--rwp-fade-next)), transparent);
+	padding-bottom: 2px;
+	scroll-behavior: smooth;
+	scrollbar-width: none;
+}
+
+.rwp-related__row[data-rwp-row="ready"] .rwp-related__list::-webkit-scrollbar {
+	display: none;
+}
+
+.rwp-related__row:has([data-rwp-row-prev]:enabled:not([hidden])) .rwp-related__list {
+	--rwp-fade-prev: 3rem;
+}
+
+.rwp-related__row:has([data-rwp-row-next]:enabled:not([hidden])) .rwp-related__list {
+	--rwp-fade-next: 3rem;
+}
+
+.rwp-related__row .rwp-viewer__arrow--prev {
+	left: -0.6rem;
+}
+
+.rwp-related__row .rwp-viewer__arrow--next {
+	right: -0.6rem;
+}
+
+/* No fim da fileira a seta daquele lado some, em vez de ficar apagada sobre um cartão. */
+.rwp-related__row .rwp-viewer__arrow:disabled {
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* No celular a fileira rola com o dedo: sem setas. */
+@media (max-width: 600px) {
+	.rwp-related__row .rwp-viewer__arrow {
+		display: none;
+	}
+}
+
+.rwp-related__item {
+	flex: 0 0 clamp(9.5rem, 22%, 13rem);
+	margin: 0;
+	scroll-snap-align: start;
+}
+
+.rwp-related__link {
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius);
+	color: inherit;
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	text-decoration: none;
+}
+
+.rwp-related__media {
+	aspect-ratio: 4 / 3;
+	background: var(--rwp-tile);
+	display: block;
+}
+
+.rwp-related__media img {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.rwp-related__name {
+	color: var(--rwp-heading);
+	display: block;
+	font-weight: 600;
+	padding: 0.6rem 0.8rem 0;
+}
+
+.rwp-related__link:hover .rwp-related__name {
+	text-decoration: underline;
+}
+
+.rwp-related__meta {
+	color: var(--rwp-muted);
+	display: block;
+	font-size: var(--wp--preset--font-size--small);
+	padding: 0.1rem 0.8rem 0.7rem;
+}
+
+.rwp-related__name:last-child {
+	padding-bottom: 0.7rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.rwp-viewer__track,
+	.rwp-related__list {
+		scroll-behavior: auto;
+	}
+}
+
+.rwp-animal .rwp-button--help,
+.rwp-animal .rwp-button--help:visited {
+	background: var(--rwp-help);
+	border: 1px solid var(--rwp-help);
+	color: #fff;
+}
+
+.rwp-animal .rwp-button--help:hover,
+.rwp-animal .rwp-button--help:focus-visible {
+	background: var(--rwp-help-dark);
+	border-color: var(--rwp-help-dark);
+	color: #fff;
+}
+
+.rwp-animal .rwp-button--help-outline:hover,
+.rwp-animal .rwp-button--help-outline:focus-visible {
+	background: color-mix(in srgb, var(--rwp-help) 18%, #fff);
+}
+
+.rwp-animal .rwp-button--primary .rwp-icon--paw-print {
+	fill: currentColor;
+}
+
+.rwp-animal .rwp-panel__title .rwp-icon {
+	color: var(--rwp-heading);
+}
+
+.rwp-animal .rwp-animal__help .rwp-panel__title .rwp-icon {
+	color: var(--rwp-help);
+}

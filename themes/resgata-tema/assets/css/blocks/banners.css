@@ -1,0 +1,160 @@
+/*
+ * Bloco "Banners" (resgata-wp/banners).
+ */
+/* Banners da página inicial: um por vez, rolando para o lado. */
+.rwp-banners {
+	background: var(--rwp-section);
+	position: relative;
+}
+
+.rwp-banners__track {
+	display: flex;
+	list-style: none;
+	margin: 0;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	padding: 0;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+}
+
+.rwp-banners__track::-webkit-scrollbar {
+	display: none;
+}
+
+.rwp-banners__track:focus-visible {
+	outline-offset: -2px;
+}
+
+.rwp-banner {
+	align-items: center;
+	display: flex;
+	flex: 0 0 100%;
+	margin: 0;
+	min-height: clamp(21rem, 38vw, 30rem);
+	overflow: hidden;
+	position: relative;
+	scroll-snap-align: start;
+}
+
+.rwp-banner__image {
+	height: 100%;
+	inset: 0;
+	object-fit: cover;
+	position: absolute;
+	width: 100%;
+}
+
+/* Película clara sobre a foto, para o texto ficar legível. */
+.rwp-banner--has-image::after {
+	background: linear-gradient(180deg, color-mix(in srgb, var(--rwp-banner-fade) 88%, transparent), color-mix(in srgb, var(--rwp-banner-fade) 78%, transparent));
+	content: "";
+	inset: 0;
+	position: absolute;
+}
+
+.rwp-banner__content {
+	box-sizing: border-box;
+	margin-inline: auto;
+	padding: 2.5rem 0 3.25rem;
+	position: relative;
+	width: min(100% - 2rem, var(--wp--style--global--wide-size, 1200px));
+	z-index: 1;
+}
+
+.rwp-banner__content > * {
+	max-width: 34rem;
+}
+
+.rwp-banner__title {
+	color: var(--rwp-heading);
+	font-size: clamp(2rem, 1.2rem + 3.6vw, 3.5rem);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	line-height: 1.08;
+	margin: 0;
+}
+
+.rwp-banner__highlight {
+	color: var(--rwp-primary);
+	display: block;
+}
+
+.rwp-banner__text {
+	color: var(--rwp-text);
+	font-size: 1.125rem;
+	line-height: 1.5;
+	margin: 1rem 0 0;
+}
+
+.rwp-banner__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin: 1.5rem 0 0;
+}
+
+.rwp-banners__dots {
+	bottom: 0.75rem;
+	display: flex;
+	gap: 0.25rem;
+	justify-content: center;
+	left: 0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 0;
+	z-index: 2;
+}
+
+.rwp-banners__dots li {
+	margin: 0;
+}
+
+.rwp-banners__dot {
+	align-items: center;
+	display: flex;
+	height: 1.5rem;
+	justify-content: center;
+	width: 1.5rem;
+}
+
+.rwp-banners__dot::before {
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-muted);
+	border-radius: 50%;
+	box-sizing: border-box;
+	content: "";
+	height: 0.65rem;
+	width: 0.65rem;
+}
+
+.rwp-banners__dot[aria-current]::before {
+	background: var(--rwp-primary);
+	border-color: var(--rwp-primary);
+}
+
+.rwp-banners .rwp-viewer__arrow {
+	z-index: 2;
+}
+
+@media (min-width: 782px) {
+	.rwp-banner--has-image::after {
+		background: linear-gradient(90deg, color-mix(in srgb, var(--rwp-banner-fade) 96%, transparent) 0%, color-mix(in srgb, var(--rwp-banner-fade) 86%, transparent) 36%, transparent 68%);
+	}
+
+	.rwp-banners:has(.rwp-viewer__arrow) .rwp-banner__content {
+		padding-inline: 4rem;
+	}
+}
+
+@media (max-width: 781px) {
+	.rwp-banners .rwp-viewer__arrow {
+		display: none;
+	}
+}
+
+.rwp-banners .rwp-button--primary .rwp-icon {
+	fill: currentColor;
+}

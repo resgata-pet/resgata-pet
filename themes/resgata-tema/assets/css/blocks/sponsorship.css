@@ -1,0 +1,445 @@
+/*
+ * Blocos de apadrinhamento (resgata-wp/sponsorship-plans e resgata-wp/sponsor-area).
+ */
+/* Apadrinhamento: planos, contador e área do padrinho */
+.rwp-sponsorship {
+	scroll-margin-top: 6rem;
+}
+
+.rwp-sponsor-area {
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius);
+	box-shadow: var(--rwp-shadow);
+	box-sizing: border-box;
+	padding: 1.5rem;
+	scroll-margin-top: 6rem;
+}
+
+:is(.rwp-sponsorship, .rwp-sponsor-area) .screen-reader-text {
+	border: 0;
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.rwp-sponsorship__counter {
+	align-items: center;
+	background: var(--rwp-primary-soft);
+	border-radius: var(--rwp-radius-pill);
+	color: var(--rwp-heading);
+	display: inline-flex;
+	flex-wrap: wrap;
+	font-size: 0.9375rem;
+	gap: 0.15rem 0.45rem;
+	margin: 0 0 1.25rem;
+	padding: 0.4rem 1rem;
+}
+
+.rwp-sponsorship__count {
+	color: var(--rwp-primary);
+	font-size: 1.125rem;
+	font-weight: 700;
+}
+
+.rwp-sponsorship__updated {
+	color: var(--rwp-muted);
+	font-size: 0.8125rem;
+}
+
+.rwp-sponsorship__title {
+	color: var(--rwp-heading);
+	font-size: clamp(1.5rem, 1.2rem + 1vw, 1.75rem);
+	line-height: 1.2;
+	margin: 0 0 0.4rem;
+}
+
+.rwp-sponsorship__plans {
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+	list-style: none;
+	margin: 1.5rem 0 0;
+	padding: 0;
+}
+
+/* Cartão de plano: ícone, valor e botão, na cor de apoio do plano. */
+.rwp-sponsorship__plan {
+	--rwp-tone: var(--rwp-primary);
+	--rwp-tone-soft: var(--rwp-tile);
+	align-items: center;
+	background: var(--rwp-tone-soft);
+	border: 1px solid color-mix(in srgb, var(--rwp-tone) 14%, transparent);
+	border-radius: var(--rwp-radius-lg);
+	display: flex;
+	flex-direction: column;
+	gap: 0.9rem;
+	margin: 0;
+	padding: 1.5rem 1.25rem 1.25rem;
+	text-align: center;
+}
+
+.rwp-sponsorship__plan-icon {
+	align-items: center;
+	background: var(--rwp-card);
+	border-radius: 50%;
+	color: var(--rwp-tone);
+	display: flex;
+	height: 3rem;
+	justify-content: center;
+	width: 3rem;
+}
+
+.rwp-sponsorship__plan-icon svg {
+	fill: currentColor;
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+.rwp-sponsorship__price {
+	align-items: baseline;
+	color: var(--rwp-heading);
+	display: flex;
+	gap: 0.3rem;
+	justify-content: center;
+	margin: 0;
+}
+
+.rwp-sponsorship__price strong {
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.rwp-sponsorship__price span {
+	color: var(--rwp-muted);
+	font-size: 1rem;
+}
+
+.rwp-sponsorship__choose {
+	align-items: center;
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-tone);
+	border-radius: var(--rwp-radius-sm);
+	box-sizing: border-box;
+	color: var(--rwp-tone);
+	display: flex;
+	font: inherit;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	justify-content: center;
+	margin-top: auto;
+	min-height: 2.75rem;
+	padding: 0.4rem 0.75rem;
+	width: 100%;
+}
+
+.rwp-sponsorship__choose:hover,
+.rwp-sponsorship__choose:focus-visible {
+	background: var(--rwp-tone);
+	color: var(--rwp-card);
+}
+
+.rwp-sponsorship__choose:focus-visible {
+	outline: 2px solid var(--rwp-tone);
+	outline-offset: 2px;
+}
+
+.rwp-sponsorship__plan {
+	position: relative;
+}
+
+.rwp-sponsorship__plan-head {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 0.6rem;
+}
+
+.rwp-sponsorship__plan-name {
+	color: var(--rwp-tone);
+	font-size: 1.125rem;
+	font-weight: 600;
+	line-height: 1.25;
+	margin: 0;
+}
+
+.rwp-sponsorship__plan-text {
+	color: var(--rwp-text);
+	font-size: 0.9375rem;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.rwp-sponsorship__benefits {
+	align-self: stretch;
+	display: grid;
+	font-size: var(--wp--preset--font-size--small);
+	gap: 0.45rem;
+	line-height: 1.35;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+}
+
+.rwp-sponsorship__benefits li {
+	align-items: flex-start;
+	display: flex;
+	gap: 0.5rem;
+	margin: 0;
+}
+
+.rwp-sponsorship__benefits svg {
+	color: var(--rwp-tone);
+	flex: none;
+	height: 1.1rem;
+	margin-top: 0.05rem;
+	stroke-width: 3;
+	width: 1.1rem;
+}
+
+/* Plano em destaque: selo "Mais escolhido" e o único botão preenchido. */
+.rwp-sponsorship__plan--featured {
+	border: 2px solid var(--rwp-tone);
+}
+
+.rwp-sponsorship__flag {
+	background: var(--rwp-tone);
+	border-radius: var(--rwp-radius-pill);
+	color: var(--rwp-card);
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1.4;
+	padding: 0.15rem 0.7rem;
+	position: absolute;
+	right: 0.9rem;
+	top: -0.7rem;
+}
+
+.rwp-sponsorship__plan--featured .rwp-sponsorship__choose {
+	background: var(--rwp-tone);
+	color: var(--rwp-card);
+}
+
+.rwp-sponsorship__plan--featured .rwp-sponsorship__choose:hover,
+.rwp-sponsorship__plan--featured .rwp-sponsorship__choose:focus-visible {
+	filter: brightness(0.9);
+}
+
+.rwp-sponsorship__actions .rwp-button,
+.rwp-sponsor-area__actions .rwp-button {
+	align-items: center;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-flex;
+	font-size: 1rem;
+	justify-content: center;
+	min-height: 3rem;
+	padding: 0.5rem 1.5rem;
+	text-decoration: none;
+}
+
+.rwp-sponsor-area__actions {
+	margin: 0 0 0.75rem;
+}
+
+.rwp-sponsorship__note,
+.rwp-sponsor-area__note {
+	color: var(--rwp-muted);
+	font-size: 0.9375rem;
+	margin: 0;
+}
+
+.rwp-sponsorship__error,
+.rwp-sponsor-area__error {
+	background: var(--rwp-danger-soft);
+	border-radius: var(--rwp-radius-sm);
+	color: var(--rwp-danger);
+	margin: 1rem 0 0;
+	padding: 0.75rem 1rem;
+}
+
+.rwp-sponsorship__success {
+	background: var(--rwp-primary-soft);
+	border-radius: var(--rwp-radius-lg);
+	padding: 1.5rem;
+}
+
+.rwp-sponsorship__plan--green {
+	--rwp-tone-soft: var(--wp--preset--color--accent-5);
+}
+
+.rwp-sponsorship__plan--blue {
+	--rwp-tone: var(--rwp-info);
+	--rwp-tone-soft: #eef4fe;
+}
+
+.rwp-sponsorship__plan--orange {
+	--rwp-tone: #b3610a;
+	--rwp-tone-soft: #fef5e8;
+}
+
+.rwp-sponsorship__plan--purple {
+	--rwp-tone: var(--rwp-help);
+	--rwp-tone-soft: #f5f0fe;
+}
+
+.rwp-sponsorship__success > :last-child,
+.rwp-sponsor-area__success > :last-child {
+	margin-bottom: 0;
+}
+
+.rwp-sponsor-area__field {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+	margin: 0 0 var(--wp--preset--spacing--30);
+	max-width: 28rem;
+}
+
+.rwp-sponsor-area__field > label {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	color: var(--rwp-heading);
+}
+
+.rwp-sponsor-area__field input {
+	background: var(--rwp-field);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius-sm);
+	box-sizing: border-box;
+	color: inherit;
+	font: inherit;
+	min-height: 2.75rem;
+	padding: 0.6rem 0.9rem;
+	width: 100%;
+}
+
+.rwp-sponsor-area__field input:focus-visible {
+	border-color: var(--rwp-primary);
+	outline: 2px solid var(--rwp-primary);
+	outline-offset: 1px;
+}
+
+.rwp-sponsor-area__hp {
+	height: 1px;
+	left: -9999px;
+	overflow: hidden;
+	position: absolute;
+	width: 1px;
+}
+
+/* Resumo do apadrinhamento, depois do link de acesso */
+.rwp-sponsor-area__hello {
+	color: var(--rwp-heading);
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 700;
+	margin: 0 0 var(--wp--preset--spacing--30);
+}
+
+.rwp-sponsor-area__total {
+	background: var(--rwp-primary-soft);
+	border-radius: var(--rwp-radius-sm);
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	margin: 0 0 var(--wp--preset--spacing--30);
+	padding: 1rem 1.25rem;
+}
+
+.rwp-sponsor-area__total-label,
+.rwp-sponsor-area__total-note {
+	color: var(--rwp-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.rwp-sponsor-area__total-value {
+	color: var(--rwp-heading);
+	font-size: var(--wp--preset--font-size--x-large);
+	line-height: 1.2;
+}
+
+.rwp-sponsor-area__details {
+	display: grid;
+	gap: 0.75rem 1.5rem;
+	grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+	margin: 0 0 var(--wp--preset--spacing--30);
+}
+
+.rwp-sponsor-area__details dt {
+	color: var(--rwp-muted);
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.rwp-sponsor-area__details dd {
+	color: var(--rwp-heading);
+	font-weight: 600;
+	margin: 0;
+}
+
+.rwp-sponsor-area__summary .rwp-sponsor-area__error {
+	margin: 0 0 var(--wp--preset--spacing--30);
+}
+
+/* Agradecimento depois do pagamento */
+.rwp-sponsorship-thanks {
+	background: var(--rwp-primary-soft);
+	border-radius: var(--rwp-radius-lg);
+	box-sizing: border-box;
+	margin-inline: auto;
+	max-width: 40rem;
+	padding: var(--wp--preset--spacing--50) var(--wp--preset--spacing--40);
+	text-align: center;
+}
+
+.rwp-sponsorship-thanks__image {
+	border-radius: var(--rwp-radius);
+	display: block;
+	height: auto;
+	margin: 0 auto var(--wp--preset--spacing--40);
+	max-width: min(100%, 22rem);
+}
+
+.rwp-sponsorship-thanks__text > :last-child {
+	margin-bottom: 0;
+}
+
+.rwp-sponsorship-thanks__actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1.5rem;
+	justify-content: center;
+	margin: var(--wp--preset--spacing--40) 0 0;
+}
+
+.rwp-sponsorship-thanks__actions .rwp-button {
+	align-items: center;
+	box-sizing: border-box;
+	display: inline-flex;
+	justify-content: center;
+	min-height: 3rem;
+	padding: 0.5rem 1.5rem;
+	text-decoration: none;
+}
+
+.rwp-sponsorship-thanks__link {
+	color: var(--rwp-heading);
+	font-weight: 600;
+}
+
+/* Enfeites de fundo do cartão de plano, na cor do plano (formas e base em enfeites.css). */
+.rwp-sponsorship__plan {
+	--resgata-tema-decor-tone: var(--rwp-tone);
+	--resgata-tema-decor-fill:
+		var(--resgata-tema-shape-circle) right -2.25rem top -2.25rem / 7rem 7rem no-repeat,
+		var(--resgata-tema-shape-paw-fill) left -0.9rem bottom 3.75rem / 4rem 4rem no-repeat;
+	--resgata-tema-decor-line:
+		var(--resgata-tema-shape-heart) left 0.6rem top 0.6rem / 1.4rem 1.4rem no-repeat;
+}

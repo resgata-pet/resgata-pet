@@ -1,0 +1,305 @@
+/*
+ * Bloco "Lista de animais" (resgata-wp/animals-list): filtros, grade, cartão e paginação.
+ */
+/* Filtros */
+.rwp-filters {
+	align-items: flex-end;
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1rem;
+	margin: 0 0 1.25rem;
+	padding: 1rem;
+}
+
+.rwp-filters__field,
+.rwp-filters__actions {
+	margin: 0;
+}
+
+.rwp-filters__field {
+	display: flex;
+	flex: 1 1 10rem;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.rwp-filters__field label {
+	color: var(--rwp-text);
+	font-size: 0.8125rem;
+	font-weight: 500;
+}
+
+.rwp-filters__field select {
+	background-color: var(--rwp-field);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius-sm);
+	box-sizing: border-box;
+	color: inherit;
+	font: inherit;
+	font-size: 0.9375rem;
+	min-height: 2.75rem;
+	padding: 0 0.9rem;
+	width: 100%;
+}
+
+.rwp-filters__field select:focus-visible {
+	border-color: var(--rwp-primary);
+	outline: 2px solid var(--rwp-primary);
+	outline-offset: 1px;
+}
+
+.rwp-filters__actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+}
+
+.rwp-filters__actions .rwp-button {
+	border-radius: var(--rwp-radius-sm);
+	font-size: 0.9375rem;
+	font-weight: 600;
+	min-height: 2.75rem;
+	padding: 0 1.5rem;
+}
+
+.rwp-filters__clear {
+	align-items: center;
+	color: var(--rwp-primary);
+	display: inline-flex;
+	font-size: var(--wp--preset--font-size--small);
+	min-height: 2.75rem;
+}
+
+.rwp-animals__count {
+	color: var(--rwp-muted);
+	font-size: var(--wp--preset--font-size--small);
+	margin: 0 0 0.9rem;
+}
+
+/* Grade de cartões: até N colunas, quebrando sozinha em telas menores. */
+.rwp-grid {
+	--rwp-gap: 1.5rem;
+	--rwp-card-min: 13.5rem;
+	display: grid;
+	gap: var(--rwp-gap);
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, max(var(--rwp-card-min), calc((100% - (var(--rwp-columns, 3) - 1) * var(--rwp-gap)) / var(--rwp-columns, 3)))), 1fr));
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/* Cartão do animal: foto, nome, resumo, temperamento e "Ver perfil". */
+.rwp-card {
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius);
+	box-shadow: var(--rwp-shadow);
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	overflow: hidden;
+	position: relative;
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.rwp-card:hover,
+.rwp-card:focus-within {
+	box-shadow: var(--rwp-shadow-float);
+	transform: translateY(-2px);
+}
+
+.rwp-card:focus-within {
+	outline: 2px solid var(--rwp-primary);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.rwp-card {
+		transition: none;
+	}
+
+	.rwp-card:hover,
+	.rwp-card:focus-within {
+		transform: none;
+	}
+}
+
+.rwp-card__media {
+	aspect-ratio: 4 / 3;
+	background: var(--rwp-tile);
+	display: block;
+	position: relative;
+}
+
+.rwp-card__media img,
+.rwp-card__placeholder {
+	display: block;
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.rwp-card__placeholder {
+	align-items: center;
+	color: var(--rwp-muted);
+	display: flex;
+	justify-content: center;
+}
+
+.rwp-card__placeholder svg {
+	height: 3rem;
+	opacity: 0.5;
+	width: 3rem;
+}
+
+.rwp-card__media .rwp-badge {
+	left: 0.75rem;
+	position: absolute;
+	top: 0.75rem;
+}
+
+.rwp-card__body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 0.9rem 1rem 1rem;
+}
+
+.rwp-card__name {
+	color: var(--rwp-heading);
+	font-size: 1.0625rem;
+	font-weight: 600;
+	line-height: 1.3;
+	margin: 0;
+}
+
+.rwp-card__name a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* O cartão inteiro é clicável. */
+.rwp-card__name a::after {
+	content: "";
+	inset: 0;
+	position: absolute;
+}
+
+.rwp-card__name a:focus-visible {
+	outline: none;
+}
+
+.rwp-card__meta {
+	align-items: center;
+	color: var(--rwp-muted);
+	display: flex;
+	font-size: 0.8125rem;
+	gap: 0.4rem;
+	line-height: 1.4;
+	margin: 0;
+}
+
+.rwp-card__meta svg {
+	fill: currentColor;
+	flex: none;
+	height: 0.9rem;
+	width: 0.9rem;
+}
+
+.rwp-card .rwp-tags {
+	gap: 0.35rem;
+	margin: 0;
+}
+
+.rwp-card .rwp-tag {
+	font-size: 0.75rem;
+	padding: 0.15rem 0.6rem;
+}
+
+.rwp-card__cta {
+	align-items: center;
+	border: 1px solid var(--rwp-primary);
+	border-radius: var(--rwp-radius-sm);
+	color: var(--rwp-primary);
+	display: flex;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	justify-content: center;
+	margin-top: auto;
+	min-height: 2.5rem;
+}
+
+.rwp-card:hover .rwp-card__cta,
+.rwp-card:focus-within .rwp-card__cta {
+	background: var(--rwp-primary-soft);
+}
+
+.rwp-animals .rwp-empty {
+	background: var(--rwp-card);
+	border: 1px dashed var(--rwp-line);
+	color: var(--rwp-muted);
+}
+
+/* Paginação */
+.rwp-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-top: 2rem;
+}
+
+.rwp-pagination .page-numbers {
+	align-items: center;
+	background: var(--rwp-card);
+	border: 1px solid var(--rwp-line);
+	border-radius: var(--rwp-radius-sm);
+	box-sizing: border-box;
+	color: inherit;
+	display: inline-flex;
+	font-size: 0.9375rem;
+	justify-content: center;
+	min-height: 2.75rem;
+	min-width: 2.75rem;
+	padding: 0 0.85rem;
+	text-decoration: none;
+}
+
+.rwp-pagination a.page-numbers:hover {
+	border-color: var(--rwp-primary);
+	color: var(--rwp-primary);
+}
+
+.rwp-pagination a.page-numbers:focus-visible {
+	outline: 2px solid var(--rwp-primary);
+	outline-offset: 2px;
+}
+
+.rwp-pagination .page-numbers.current {
+	background: var(--rwp-primary);
+	border-color: var(--rwp-primary);
+	color: #fff;
+	font-weight: 600;
+}
+
+/* Lista vazia: ilustração acima da mensagem (uma sem animais, outra sem resultado no filtro). */
+.rwp-animals :is(.rwp-empty--none, .rwp-empty--filtered)::before {
+	background: center / contain no-repeat;
+	content: "";
+	display: block;
+	height: clamp(8rem, 6rem + 8vw, 11rem);
+	margin-bottom: 1rem;
+}
+
+.rwp-animals .rwp-empty--none::before {
+	background-image: url("../../img/ilustracoes/sem-animais.webp");
+}
+
+.rwp-animals .rwp-empty--filtered::before {
+	background-image: url("../../img/ilustracoes/sem-resultados.webp");
+}

@@ -1,0 +1,10 @@
+/*
+ * Espaço entre as seções do conteúdo de uma página.
+ */
+.wp-block-post-content > .is-style-resgata-hero + * {
+	margin-block-start: var(--wp--preset--spacing--60);
+}
+
+.wp-block-post-content > .alignwide + .alignwide {
+	margin-block-start: var(--wp--preset--spacing--60);
+}

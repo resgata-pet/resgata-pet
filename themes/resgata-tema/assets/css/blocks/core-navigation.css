@@ -1,0 +1,48 @@
+/*
+ * Menu do cabeçalho (bloco Navegação dentro do Grupo "Cabeçalho do site").
+ */
+/*
+ * Itens do menu: mesma resposta do botão contornado (fundo verde claro ao passar o mouse),
+ * um leve afundar ao clicar e a página atual sempre marcada. O contorno de foco fica no
+ * theme.json (core/navigation); a cor do texto precisa vir daqui porque o bloco força
+ * `color: inherit` nos itens.
+ */
+.is-style-resgata-header .wp-block-navigation .wp-block-navigation-item__content {
+	align-items: center;
+	border-radius: var(--wp--preset--border-radius--small);
+	display: flex;
+	min-height: 2.75rem;
+	padding: 0 0.875rem;
+	transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+.is-style-resgata-header .wp-block-navigation .wp-block-navigation-item__content:hover,
+.is-style-resgata-header .wp-block-navigation .wp-block-navigation-item__content:focus-visible,
+.is-style-resgata-header .wp-block-navigation .current-menu-item > .wp-block-navigation-item__content {
+	background-color: var(--wp--preset--color--accent-2);
+	color: var(--wp--preset--color--primary-dark);
+	text-decoration: none;
+}
+
+.is-style-resgata-header .wp-block-navigation .current-menu-item > .wp-block-navigation-item__content {
+	font-weight: 600;
+}
+
+/* No menu aberto do celular o bloco zera o espaço interno dos itens. */
+.is-style-resgata-header .wp-block-navigation .is-menu-open .wp-block-navigation__responsive-container-content .wp-block-navigation-item__content {
+	padding: 0 0.875rem;
+}
+
+.is-style-resgata-header .wp-block-navigation .wp-block-navigation-item__content:active {
+	transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.is-style-resgata-header .wp-block-navigation .wp-block-navigation-item__content {
+		transition: none;
+	}
+
+	.is-style-resgata-header .wp-block-navigation .wp-block-navigation-item__content:active {
+		transform: none;
+	}
+}

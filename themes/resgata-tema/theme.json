@@ -153,7 +153,7 @@
 			},
 			"button": {
 				"border": {
-					"radius": "8px"
+					"radius": "var:preset|border-radius|small"
 				},
 				"color": {
 					"background": "var:preset|color|accent-3",
@@ -250,7 +250,29 @@
 						},
 						":hover": {
 							"color": {
-								"text": "var:preset|color|accent-3"
+								"text": "var:preset|color|primary-dark"
+							}
+						},
+						":focus-visible": {
+							"outline": {
+								"color": "var:preset|color|accent-3",
+								"offset": "2px",
+								"style": "solid",
+								"width": "2px"
+							}
+						}
+					}
+				}
+			},
+			"core/post-terms": {
+				"elements": {
+					"link": {
+						"typography": {
+							"textDecoration": "none"
+						},
+						":hover": {
+							"typography": {
+								"textDecoration": "underline"
 							}
 						}
 					}

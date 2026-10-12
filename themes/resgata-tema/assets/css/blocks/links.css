@@ -1,0 +1,35 @@
+/*
+ * Bloco "Links do site" (resgata-wp/links).
+ */
+/* Links do site (rodapé) */
+.rwp-links {
+	display: grid;
+	gap: 0.15rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.rwp-links li {
+	margin: 0;
+}
+
+.rwp-links a {
+	align-items: center;
+	color: inherit;
+	display: inline-flex;
+	min-height: 2rem;
+	text-decoration: none;
+}
+
+.rwp-links a:hover {
+	text-decoration: underline;
+}
+
+.is-style-resgata-footer .rwp-links a {
+	color: var(--wp--preset--color--text);
+}
+
+.is-style-resgata-footer .rwp-links a:hover {
+	color: var(--wp--preset--color--accent-3);
+}

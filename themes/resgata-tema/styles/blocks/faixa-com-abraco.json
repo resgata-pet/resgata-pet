@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Faixa suave com abraço",
+	"slug": "resgata-band-hug",
+	"blockTypes": [
+		"core/group"
+	],
+	"styles": {
+		"border": {
+			"radius": "var:preset|border-radius|large"
+		},
+		"color": {
+			"background": "var:preset|color|accent-5"
+		},
+		"spacing": {
+			"padding": {
+				"top": "clamp(1.5rem, 1rem + 2vw, 2.5rem)",
+				"right": "clamp(1.5rem, 1rem + 2vw, 2.5rem)",
+				"bottom": "clamp(1.5rem, 1rem + 2vw, 2.5rem)",
+				"left": "clamp(1.5rem, 1rem + 2vw, 2.5rem)"
+			}
+		}
+	}
+}

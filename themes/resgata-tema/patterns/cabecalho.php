@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 		<div class="wp-block-group">
-			<!-- wp:navigation {"overlayMenu":"mobile","fontSize":"small","layout":{"type":"flex","justifyContent":"right"}} /-->
+			<!-- wp:navigation {"overlayMenu":"mobile","style":{"spacing":{"blockGap":"0.25rem"}},"fontSize":"small","layout":{"type":"flex","justifyContent":"right"}} /-->
 
 			<!-- wp:buttons -->
 			<div class="wp-block-buttons">
