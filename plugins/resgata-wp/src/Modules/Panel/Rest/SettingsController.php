@@ -8,9 +8,11 @@
 namespace ResgataWP\Modules\Panel\Rest;
 
 use ResgataWP\Core\Capabilities;
+use ResgataWP\Core\Modules;
 use ResgataWP\Modules\Settings\ContactPage;
 use ResgataWP\Modules\Settings\HelpPage;
 use ResgataWP\Modules\Settings\Organization;
+use ResgataWP\Modules\Sponsorship\ThanksPage;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -62,7 +64,7 @@ final class SettingsController extends BaseController {
 			}
 		}
 
-		foreach ( array( 'email', 'adoption_email' ) as $field ) {
+		foreach ( array( 'email', 'adoption_email', 'sponsorship_email' ) as $field ) {
 			if ( isset( $changes[ $field ] ) && '' !== trim( $changes[ $field ] ) && ! is_email( trim( $changes[ $field ] ) ) ) {
 				return new \WP_Error(
 					'rwp_rest_invalid_email',
@@ -75,6 +77,19 @@ final class SettingsController extends BaseController {
 			}
 		}
 
+		// A página de agradecimento escolhida precisa ser uma página publicada do site.
+		$thanks = isset( $changes[ ThanksPage::FIELD ] ) ? absint( $changes[ ThanksPage::FIELD ] ) : 0;
+		if ( $thanks && ( 'page' !== get_post_type( $thanks ) || 'publish' !== get_post_status( $thanks ) ) ) {
+			return new \WP_Error(
+				'rwp_rest_invalid_page',
+				__( 'Escolha uma página publicada do site para o agradecimento.', 'resgata-wp' ),
+				array(
+					'status' => 400,
+					'field'  => ThanksPage::FIELD,
+				)
+			);
+		}
+
 		$data = Organization::update( $changes );
 
 		// A primeira vez que os dados são salvos cria a página "Contato" do site.
@@ -82,6 +97,11 @@ final class SettingsController extends BaseController {
 
 		// Com a chave Pix cadastrada, nasce também a página "Como ajudar".
 		HelpPage::ensure();
+
+		// Com planos à venda, nasce a página de agradecimento do apadrinhamento (ou volta, se foi apagada).
+		if ( Modules::is_enabled( 'sponsorship' ) && ThanksPage::ensure() ) {
+			$data = Organization::get();
+		}
 
 		return new \WP_REST_Response( $this->prepare( $data ) );
 	}
@@ -98,9 +118,12 @@ final class SettingsController extends BaseController {
 			'choices'      => array(
 				'states'      => Organization::states(),
 				'pixKeyTypes' => Organization::pix_key_types(),
+				// Páginas publicadas, para escolher a de agradecimento do apadrinhamento.
+				'pages'       => Modules::is_enabled( 'sponsorship' ) ? ThanksPage::choices() : array(),
 			),
 			'contact_page' => ContactPage::summary(),
 			'help_page'    => HelpPage::summary(),
+			'thanks_page'  => Modules::is_enabled( 'sponsorship' ) ? ThanksPage::summary() : null,
 			'whatsapp_url' => Organization::whatsapp_url(),
 		);
 	}

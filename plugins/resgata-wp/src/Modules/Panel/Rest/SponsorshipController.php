@@ -9,19 +9,23 @@ namespace ResgataWP\Modules\Panel\Rest;
 
 use ResgataWP\Core\Capabilities;
 use ResgataWP\Core\Encryption;
+use ResgataWP\Core\Schema;
 use ResgataWP\Modules\Sponsorship\Gateway;
 use ResgataWP\Modules\Sponsorship\Keys;
+use ResgataWP\Modules\Sponsorship\Payments;
 use ResgataWP\Modules\Sponsorship\PlanService;
 use ResgataWP\Modules\Sponsorship\Plans;
 use ResgataWP\Modules\Sponsorship\Sponsors;
+use ResgataWP\Modules\Sponsorship\ThanksPage;
 use ResgataWP\Modules\Sponsorship\WebhookController;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Rotas `resgata-wp/v1/sponsorship` (resumo e contador) e `/sponsors` (lista de padrinhos).
+ * Rotas `resgata-wp/v1/sponsorship` (resumo, contador e arrecadação), `/sponsors` (lista de
+ * padrinhos) e `/payments` (pagamentos recebidos).
  *
- * Os padrinhos têm dados pessoais: todas as rotas exigem `rwp_manage_sponsorship`
+ * Os padrinhos têm dados pessoais e os pagamentos são dados financeiros: todas as rotas exigem `rwp_manage_sponsorship`
  * (Administrador e Protetor admin). As chaves da Stripe nunca saem daqui: a
  * resposta só diz se cada uma está definida. Só o Administrador grava as chaves
  * (`/sponsorship/keys`), porque trocar a chave é trocar a conta que recebe.
@@ -113,6 +117,25 @@ final class SponsorshipController extends BaseController {
 					'type'      => 'string',
 					'maxLength' => 100,
 					'default'   => '',
+				),
+			)
+		);
+
+		$this->route(
+			'/payments',
+			\WP_REST_Server::READABLE,
+			array( $this, 'list_payments' ),
+			$permission,
+			array(
+				'page'     => array(
+					'type'    => 'integer',
+					'minimum' => 1,
+					'default' => 1,
+				),
+				'per_page' => array(
+					'type'    => 'integer',
+					'enum'    => self::PER_PAGE,
+					'default' => 25,
 				),
 			)
 		);
@@ -290,7 +313,14 @@ final class SponsorshipController extends BaseController {
 	public function create_plan( \WP_REST_Request $request ) {
 		$plan = PlanService::create( $this->plan_data( $request ) );
 
-		return is_wp_error( $plan ) ? $plan : new \WP_REST_Response( $this->overview(), 201 );
+		if ( is_wp_error( $plan ) ) {
+			return $plan;
+		}
+
+		// Com o primeiro plano à venda, nasce a página de agradecimento.
+		ThanksPage::ensure();
+
+		return new \WP_REST_Response( $this->overview(), 201 );
 	}
 
 	/**
@@ -331,9 +361,42 @@ final class SponsorshipController extends BaseController {
 			sanitize_text_field( (string) $request['search'] )
 		);
 
+		$totals = Payments::totals_by_sponsor( array_column( $result['items'], 'id' ) );
+
 		return new \WP_REST_Response(
 			array(
-				'items'       => array_map( array( $this, 'prepare' ), $result['items'] ),
+				'items'       => array_map( fn( array $row ): array => $this->prepare( $row, $totals[ (int) $row['id'] ] ?? 0 ), $result['items'] ),
+				'total'       => $result['total'],
+				'total_pages' => (int) ceil( $result['total'] / $per_page ),
+			)
+		);
+	}
+
+	/**
+	 * GET /payments: pagamentos dos padrinhos, mais recentes primeiro.
+	 *
+	 * @param \WP_REST_Request $request Requisição.
+	 */
+	public function list_payments( \WP_REST_Request $request ): \WP_REST_Response {
+		$per_page = (int) $request['per_page'];
+		$result   = Payments::query( (int) $request['page'], $per_page );
+		$items    = array();
+
+		foreach ( $result['items'] as $row ) {
+			$items[] = array(
+				'id'       => (int) $row['id'],
+				'sponsor'  => (string) ( $row['sponsor_name'] ?? '' ),
+				'amount'   => Plans::format_amount( (int) $row['amount'] ),
+				// Quanto foi devolvido ao padrinho (vazio se nada).
+				'refunded' => (int) $row['refunded'] ? Plans::format_amount( (int) $row['refunded'] ) : '',
+				'status'   => Payments::status( $row ),
+				'paid_at'  => $this->iso_date( (string) ( $row['paid_at'] ?? '' ) ),
+			);
+		}
+
+		return new \WP_REST_Response(
+			array(
+				'items'       => $items,
 				'total'       => $result['total'],
 				'total_pages' => (int) ceil( $result['total'] / $per_page ),
 			)
@@ -373,8 +436,19 @@ final class SponsorshipController extends BaseController {
 		}
 
 		$counter = Plans::counter();
+		$revenue = Payments::revenue();
+		$since   = (int) get_option( Schema::PAYMENTS_SINCE, 0 );
 
 		return array(
+			// Arrecadação já sem estornos e contestações, pronta para mostrar.
+			'revenue'     => array(
+				'month'         => Plans::format_amount( $revenue['month'] ),
+				'last_month'    => Plans::format_amount( $revenue['last_month'] ),
+				'total'         => Plans::format_amount( $revenue['total'] ),
+				'open_disputes' => $revenue['open_disputes'],
+				// Preenchido quando o site já tinha padrinhos antes de registrar os pagamentos.
+				'since'         => $since ? gmdate( DATE_ATOM, $since ) : '',
+			),
 			'stripe'      => array(
 				// Só "definida" ou "não definida": o valor das chaves nunca é enviado ao navegador.
 				'secret_key'     => '' !== Keys::secret_key(),
@@ -416,10 +490,11 @@ final class SponsorshipController extends BaseController {
 	/**
 	 * Padrinho no formato do painel.
 	 *
-	 * @param array<string, mixed> $row Linha da tabela.
+	 * @param array<string, mixed> $row        Linha da tabela.
+	 * @param int                  $total_paid Total doado, em centavos.
 	 * @return array<string, mixed>
 	 */
-	private function prepare( array $row ): array {
+	private function prepare( array $row, int $total_paid ): array {
 		$plan = Plans::find( (string) $row['price_id'] );
 
 		return array(
@@ -432,6 +507,10 @@ final class SponsorshipController extends BaseController {
 			'plan_amount'    => $plan ? Plans::format_amount( $plan['amount'] ) : '',
 			'payment_failed' => (bool) $row['payment_failed'],
 			'last_paid_at'   => $this->iso_date( (string) ( $row['last_paid_at'] ?? '' ) ),
+			// Total doado, já sem estornos e contestações (vazio se ainda não há pagamento registrado).
+			'total_paid'     => $total_paid ? Plans::format_amount( $total_paid ) : '',
+			// Preenchido quando o padrinho pediu o cancelamento e segue ativo até esta data.
+			'cancel_at'      => 'canceled' === $row['status'] ? '' : $this->iso_date( (string) ( $row['cancel_at'] ?? '' ) ),
 			'created_at'     => $this->iso_date( (string) $row['created_at'] ),
 		);
 	}

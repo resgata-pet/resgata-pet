@@ -90,6 +90,10 @@ $rwp_cleanup = static function () use ( &$rwp_created, &$rwp_users, $rwp_saved_o
 	if ( $rwp_new_help_page && (int) $rwp_saved_options['rwp_help_page_id'] !== $rwp_new_help_page && $rwp_help_before !== $rwp_new_help_page ) {
 		$rwp_created[] = $rwp_new_help_page; // Página "Como ajudar" criada durante o teste.
 	}
+	$rwp_new_thanks_page = (int) ( get_option( 'rwp_organization', array() )['sponsorship_thanks_page'] ?? 0 );
+	if ( $rwp_new_thanks_page && (int) ( $rwp_saved_options['rwp_organization']['sponsorship_thanks_page'] ?? 0 ) !== $rwp_new_thanks_page ) {
+		$rwp_created[] = $rwp_new_thanks_page; // Página de agradecimento criada durante o teste.
+	}
 	foreach ( $rwp_saved_options as $rwp_option => $rwp_value ) {
 		if ( null === $rwp_value ) {
 			delete_option( $rwp_option );
@@ -312,19 +316,19 @@ $rwp_request->set_header( 'content-type', 'application/json' );
 $rwp_request->set_body(
 	wp_json_encode(
 		array(
-			'story'     => '<p>Oi</p><script>alert(1)</script><img src=x onerror=alert(1)>',
-			'status'    => 'reserved',
-			'color'     => '<b>Preto</b>',
-			'tagline'   => '<i>Um amigão</i>',
-			'intro'     => "Linha 1\n<script>alert(1)</script>Linha 2",
-			'weight'    => 18.46,
-			'microchip' => 'yes',
+			'story'      => '<p>Oi</p><script>alert(1)</script><img src=x onerror=alert(1)>',
+			'status'     => 'reserved',
+			'color'      => '<b>Preto</b>',
+			'tagline'    => '<i>Um amigão</i>',
+			'intro'      => "Linha 1\n<script>alert(1)</script>Linha 2",
+			'weight'     => 18.46,
+			'vaccinated' => 'yes',
 		)
 	)
 );
 $rwp_data = $rwp_server->dispatch( $rwp_request )->get_data();
 $rwp_assert( is_array( $rwp_data ) && 'Um amigão' === $rwp_data['tagline'] && ! str_contains( $rwp_data['intro'], '<' ) && str_contains( $rwp_data['intro'], "\n" ), 'Frase e resumo deveriam ficar sem HTML, e o resumo manter as quebras de linha' );
-$rwp_assert( is_array( $rwp_data ) && 18.5 === $rwp_data['weight'] && 'yes' === $rwp_data['microchip'], 'O peso deveria ser arredondado para uma casa e o microchip gravado' );
+$rwp_assert( is_array( $rwp_data ) && 18.5 === $rwp_data['weight'] && 'yes' === $rwp_data['vaccinated'], 'O peso deveria ser arredondado para uma casa e as vacinas em dia gravadas' );
 $rwp_assert( is_array( $rwp_data ) && ! str_contains( $rwp_data['story'], '<script' ) && ! str_contains( $rwp_data['story'], 'onerror' ), 'A história deveria ter o HTML perigoso removido' );
 $rwp_assert( is_array( $rwp_data ) && 'Preto' === $rwp_data['color'] && 'reserved' === $rwp_data['status'], 'Campos de texto deveriam ser limpos e a situação gravada' );
 
@@ -523,6 +527,41 @@ $rwp_request = new WP_REST_Request( 'PUT', "$rwp_prefix/settings" );
 $rwp_request->set_header( 'content-type', 'application/json' );
 $rwp_request->set_body( wp_json_encode( array( 'email' => 'nao-e-email' ) ) );
 $rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'E-mail inválido deveria ser recusado com 400' );
+
+// Página de agradecimento do apadrinhamento: só uma página publicada do site serve.
+$rwp_request = new WP_REST_Request( 'PUT', "$rwp_prefix/settings" );
+$rwp_request->set_header( 'content-type', 'application/json' );
+$rwp_request->set_body( wp_json_encode( array( 'sponsorship_thanks_page' => (string) $rwp_animal_id ) ) );
+$rwp_assert( 400 === $rwp_server->dispatch( $rwp_request )->get_status(), 'Um animal não pode ser escolhido como página de agradecimento' );
+
+if ( ResgataWP\Core\Modules::is_enabled( 'sponsorship' ) ) {
+	// Um salvamento anterior deste teste pode ter criado a página "Obrigado": ela sai na limpeza.
+	$rwp_auto_thanks = ResgataWP\Modules\Sponsorship\ThanksPage::get();
+	if ( $rwp_auto_thanks && (int) ( $rwp_saved_options['rwp_organization']['sponsorship_thanks_page'] ?? 0 ) !== $rwp_auto_thanks->ID ) {
+		$rwp_created[] = $rwp_auto_thanks->ID;
+	}
+
+	$rwp_thanks_id = wp_insert_post( array( 'post_type' => 'page', 'post_status' => 'publish', 'post_title' => 'Agradecimento de teste', 'post_content' => '<!-- wp:resgata-wp/sponsorship-thanks /-->' ) ); // phpcs:ignore WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
+	$rwp_created[] = $rwp_thanks_id;
+
+	$rwp_request = new WP_REST_Request( 'PUT', "$rwp_prefix/settings" );
+	$rwp_request->set_header( 'content-type', 'application/json' );
+	$rwp_request->set_body(
+		wp_json_encode(
+			array(
+				'sponsorship_thanks_page'  => (string) $rwp_thanks_id,
+				'sponsorship_thanks_title' => 'Valeu, <b>padrinho</b>!',
+				'sponsorship_thanks_text'  => 'Texto de teste do agradecimento.',
+			)
+		)
+	);
+	$rwp_response = $rwp_server->dispatch( $rwp_request )->get_data();
+	$rwp_assert( ( $rwp_response['thanks_page']['id'] ?? 0 ) === $rwp_thanks_id, 'A página escolhida deveria virar a página de agradecimento' );
+	$rwp_assert( get_permalink( $rwp_thanks_id ) === ResgataWP\Modules\Sponsorship\ThanksPage::url(), 'O retorno do pagamento deveria apontar para a página escolhida' );
+
+	$rwp_html = ResgataWP\Modules\Sponsorship\Blocks::render_thanks();
+	$rwp_assert( str_contains( $rwp_html, 'Valeu, padrinho!' ) && str_contains( $rwp_html, 'Texto de teste do agradecimento.' ) && ! str_contains( $rwp_html, '<b>' ), 'O bloco de agradecimento deveria mostrar o título (sem HTML) e o texto das Configurações' );
+}
 
 // Pedidos de adoção: Editor comum não acessa; o formulário valida; o pedido não vaza na REST do WordPress.
 $rwp_editor_id = $rwp_make_user( 'editor' );

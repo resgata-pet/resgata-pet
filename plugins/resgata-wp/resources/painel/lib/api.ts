@@ -48,7 +48,6 @@ export interface Animal {
 	felv: string;
 	vet_checked: string;
 	vaccinated: string;
-	microchip: string;
 	vaccines: Vaccine[];
 	featured_image: AnimalImage | null;
 	gallery: GalleryPhoto[];
@@ -133,6 +132,11 @@ export interface OrganizationSettings {
 	adoption_email: string;
 	adoption_fee: string;
 	adoption_rules: string;
+	sponsorship_email: string;
+	/** ID da página de agradecimento do apadrinhamento (texto; vazio se não há). */
+	sponsorship_thanks_page: string;
+	sponsorship_thanks_title: string;
+	sponsorship_thanks_text: string;
 	privacy_contact: string;
 	privacy_text: string;
 	pix_key_type: string;
@@ -142,10 +146,12 @@ export interface OrganizationSettings {
 
 export interface SettingsResponse {
 	settings: OrganizationSettings;
-	choices: { states: Record< string, string >; pixKeyTypes: Record< string, string > };
+	choices: { states: Record< string, string >; pixKeyTypes: Record< string, string >; pages: Record< string, string > };
 	contact_page: { id: number; url: string; published: boolean } | null;
 	/** Página "Como ajudar" (nasce quando a chave Pix é cadastrada). */
 	help_page: { id: number; url: string; published: boolean } | null;
+	/** Página para onde o padrinho volta depois de pagar (nasce com o primeiro plano à venda). */
+	thanks_page: { id: number; url: string; published: boolean } | null;
 	whatsapp_url: string;
 }
 
@@ -226,6 +232,16 @@ export interface SponsorshipOverview {
 		can_store: boolean;
 	};
 	webhook_url: string;
+	/** Arrecadação dos padrinhos, já sem estornos e contestações. Valores prontos para mostrar ("R$ 150"). */
+	revenue: {
+		month: string;
+		last_month: string;
+		total: string;
+		/** Pagamentos contestados no banco que ainda esperam resposta. */
+		open_disputes: number;
+		/** Início do registro dos pagamentos, quando o site já tinha padrinhos antes (senão vazio). */
+		since: string;
+	};
 	plans: SponsorshipPlan[];
 	limits: { plans: number; amount_min: number; amount_max: number; name: number; description: number; benefit: number; benefits: number };
 	/** Aviso da última gravação (ex.: plano salvo, mas a área do padrinho não foi atualizada). */
@@ -244,7 +260,31 @@ export interface Sponsor {
 	plan_amount: string;
 	payment_failed: boolean;
 	last_paid_at: string;
+	/** Total doado, ex.: "R$ 150" (vazio se ainda não há pagamento registrado). */
+	total_paid: string;
+	/** Data até quando segue ativo, se pediu o cancelamento (senão vazio). */
+	cancel_at: string;
 	created_at: string;
+}
+
+export type PaymentStatus = 'paid' | 'partially_refunded' | 'refunded' | 'disputed' | 'dispute_lost' | 'dispute_won';
+
+export interface Payment {
+	id: number;
+	/** Nome do padrinho. */
+	sponsor: string;
+	/** Valor pago, ex.: "R$ 30". */
+	amount: string;
+	/** Valor devolvido ao padrinho (vazio se nada). */
+	refunded: string;
+	status: PaymentStatus;
+	paid_at: string;
+}
+
+export interface PaymentList {
+	items: Payment[];
+	total: number;
+	total_pages: number;
 }
 
 export interface SponsorList {
@@ -362,6 +402,12 @@ export const api = {
 		}
 
 		return apiFetch< SponsorList >( { path: `/${ config.restNamespace }/sponsors?${ params.toString() }` } );
+	},
+
+	listPayments: ( page: number, perPage: number ) => {
+		const params = new URLSearchParams( { page: String( page ), per_page: String( perPage ) } );
+
+		return apiFetch< PaymentList >( { path: `/${ config.restNamespace }/payments?${ params.toString() }` } );
 	},
 
 	/** Reduz a foto no aparelho e envia para a biblioteca de mídia do WordPress. */
