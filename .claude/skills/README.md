@@ -7,7 +7,8 @@ pessoa que desenvolva o Resgata WP com um assistente.
 ## O que vai para o repositório
 
 Só as skills oficiais do WordPress, copiadas de
-[WordPress/agent-skills](https://github.com/WordPress/agent-skills):
+[WordPress/agent-skills](https://github.com/WordPress/agent-skills). A licença delas está em
+[Licença das skills](#licença-das-skills), no fim deste arquivo.
 
 | Skill | Use quando for mexer em |
 | --- | --- |
@@ -45,5 +46,33 @@ os atalhos para esta pasta.
   uma skill dentro de subpasta (`.claude/skills/wordpress/<nome>/`) deixa de ser carregada.
 - **Skill nova do WordPress:** acrescente a pasta e libere o nome no `.gitignore` (as que
   começam com `wp-` já estão liberadas).
-- **As regras do Resgata WP não ficam em skill:** estão no `CLAUDE.md` (código) e no
-  `designer.md` (visual), na raiz do repositório.
+- **As regras do Resgata WP não ficam em skill:** estão nos arquivos `CLAUDE.md` (raiz, `plugins/` e
+  `themes/`), em `docs/` (módulos) e no `designer.md` (visual).
+
+## Licença das skills
+
+As skills desta pasta são do projeto
+[WordPress/agent-skills](https://github.com/WordPress/agent-skills), distribuídas sob a
+GPL-2.0-or-later, a mesma licença do Resgata WP. O repositório de origem tem uma licença só
+para todas elas, sem licença própria por skill. O aviso dele, reproduzido como veio:
+
+```text
+Agent Skills for WordPress
+Copyright (C) 2026 WordPress Contributors
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+```
+
+O texto completo da GPL está no arquivo [`LICENSE`](../../LICENSE), na raiz do repositório.

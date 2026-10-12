@@ -16,8 +16,8 @@ Abra uma issue contando:
 - as versões do WordPress e do plugin;
 - uma captura de tela, se ajudar.
 
-**Falha de segurança não vai em issue pública.** Use o botão "Report a vulnerability", na aba
-"Security" do repositório, para avisar em privado. Nunca cole chaves, senhas ou dados de
+**Falha de segurança não vai em issue pública.** Siga a [política de segurança](SECURITY.md)
+para avisar em privado. Nunca cole chaves, senhas ou dados de
 adotantes e padrinhos em issues, pull requests ou capturas de tela.
 
 ## Preparar o ambiente
@@ -47,11 +47,13 @@ TypeScript a cada alteração.
 **Regra de ouro: funcionalidade no plugin, aparência no tema.** O plugin precisa funcionar
 com qualquer tema; o tema não guarda dados nem regras de negócio.
 
-Dois documentos explicam o resto:
+Estes documentos explicam o resto. Os três primeiros foram escritos para assistentes de
+código, mas são a referência mais completa também para pessoas:
 
-- [`CLAUDE.md`](CLAUDE.md): arquitetura, padrões técnicos e o funcionamento de cada módulo.
-  Foi escrito para assistentes de código, mas é a referência mais completa também para
-  pessoas.
+- [`CLAUDE.md`](CLAUDE.md): o essencial, que vale no repositório inteiro.
+- [`plugins/CLAUDE.md`](plugins/CLAUDE.md) e [`themes/CLAUDE.md`](themes/CLAUDE.md): padrões
+  técnicos do plugin e do tema.
+- [`docs/`](docs/): o funcionamento do painel e de cada módulo.
 - [`designer.md`](designer.md): onde o estilo mora e os princípios visuais do site e do painel.
   Leia antes de qualquer mudança visual.
 
@@ -66,7 +68,10 @@ Dois documentos explicam o resto:
   inclua os arquivos `.pot` atualizados no pull request.
 - **Celular primeiro**: alvos de toque de 44px e telas conferidas em largura de celular.
 - **Licença das dependências**: o projeto é GPL-2.0-or-later. Não inclua biblioteca com licença
-  incompatível com a GPLv2 (Apache-2.0, por exemplo).
+  incompatível com a GPLv2 (Apache-2.0, por exemplo). Ao acrescentar uma, inclua-a na lista de
+  "Componentes de terceiros" do [README](README.md).
+- **Imagens, ícones, fontes e textos** seguem a mesma regra: só entra no repositório o que é
+  seu ou tem licença compatível com a GPLv2, com a origem citada no pull request.
 
 ### Segurança
 
@@ -105,12 +110,13 @@ pull request e aponte os trechos que merecem revisão cuidadosa.
    capturas de tela do celular e do computador.
 
 Mudança que cria rota, tabela, permissão ou módulo novo precisa vir com o teste
-correspondente e com o `CLAUDE.md` atualizado.
+correspondente e com a documentação atualizada (`plugins/CLAUDE.md` e o arquivo do módulo em
+`docs/`).
 
 ## Usando assistentes de código
 
-A pasta `.claude/skills/` traz as skills oficiais do WordPress, que ajudam o assistente a
-seguir as práticas atuais (veja o [guia das skills](.claude/skills/README.md)). Você continua
+A pasta `.claude/skills/` traz as skills oficiais do WordPress (GPL-2.0-or-later), que ajudam
+o assistente a seguir as práticas atuais (veja o [guia das skills](.claude/skills/README.md)). Você continua
 responsável pelo que envia: leia, entenda e teste o código antes de abrir o pull request.
 
 ## Licença

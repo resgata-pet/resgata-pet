@@ -1,0 +1,15 @@
+# O que fica fora do pacote do plugin (`make zip` e o envio ao WordPress.org).
+# Um caminho por linha, a partir da pasta do plugin. O pacote leva só o que roda no site:
+# o código-fonte do painel (resources/) fica no repositório, citado no readme.txt.
+/.distignore
+/.wordpress-org
+/node_modules
+/resources
+/tests
+/package.json
+/package-lock.json
+/tsconfig.json
+/webpack.config.js
+/postcss.config.js
+/components.json
+/composer.lock

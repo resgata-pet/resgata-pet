@@ -19,6 +19,9 @@ Thumbs.db
 # Arquivos gerados
 build/
 dist/
+# Cópias da licença que o `make zip` põe nos pacotes (a original é a da raiz).
+plugins/resgata-wp/LICENSE
+themes/resgata-tema/LICENSE
 
 # Anotações e referências locais
 tasks/

@@ -60,7 +60,7 @@ composer: ## Instala as dependências de desenvolvimento (PHPCS) e as do plugin 
 npm: ## Instala as dependências de JavaScript/TypeScript do plugin
 	$(NPM) --prefix $(PLUGIN) ci
 
-build: $(PLUGIN)/node_modules ## Gera os arquivos do painel, dos blocos e do wp-admin (pasta build/)
+build: $(PLUGIN)/node_modules ## Gera os arquivos do painel, dos blocos e do site (pasta build/)
 	$(NPM) --prefix $(PLUGIN) run build
 
 watch: $(PLUGIN)/node_modules ## Recompila a cada alteração, para desenvolver
@@ -85,9 +85,15 @@ stripe: ## Repassa os eventos do sandbox da Stripe para o site local (deixe roda
 zip: build ## Gera dist/resgata-wp.zip (plugin) e dist/resgata-tema.zip (tema), prontos para instalar
 	$(COMPOSER) --working-dir=$(PLUGIN) install --no-dev --optimize-autoloader
 	@mkdir -p dist && rm -f dist/resgata-wp.zip dist/resgata-tema.zip
-	cd plugins && zip -rq ../dist/resgata-wp.zip resgata-wp \
-		-x 'resgata-wp/node_modules/*' 'resgata-wp/tests/*' '*/.DS_Store'
+	@# Cada pacote leva a sua cópia da licença (a GPL pede que ela acompanhe o programa).
+	@cp LICENSE $(PLUGIN)/LICENSE && cp LICENSE themes/resgata-tema/LICENSE
+	@# O plugin leva só o que roda no site: o que fica de fora está em .distignore.
+	@sed -e '/^#/d' -e '/^$$/d' -e 's|^/||' $(PLUGIN)/.distignore \
+		| awk '{ print "resgata-wp/" $$0; print "resgata-wp/" $$0 "/*" }' > dist/.plugin-exclude
+	cd plugins && zip -rq ../dist/resgata-wp.zip resgata-wp -x '*/.DS_Store' -x@../dist/.plugin-exclude
+	@rm -f dist/.plugin-exclude
 	cd themes && zip -rq ../dist/resgata-tema.zip resgata-tema -x '*/.DS_Store'
+	@rm -f $(PLUGIN)/LICENSE themes/resgata-tema/LICENSE
 	@echo "Pacotes gerados em dist/resgata-wp.zip e dist/resgata-tema.zip"
 
 phpcs: vendor ## Verifica o padrão de código (WordPress Coding Standards)
@@ -99,7 +105,7 @@ phpcbf: vendor ## Corrige automaticamente o que for possível
 check: ## Roda o Plugin Check no plugin
 	$(WP) plugin is-installed plugin-check || $(WP) plugin install plugin-check
 	$(WP) plugin activate plugin-check
-	$(WP) plugin check resgata-wp --exclude-directories=vendor,node_modules,resources,tests
+	$(WP) plugin check resgata-wp --exclude-directories=vendor,node_modules,resources,tests,.wordpress-org
 
 # O .pot do plugin inclui as frases do painel, lidas do build (o WP-CLI não lê TypeScript).
 # Roda com mais memória, por causa do tamanho do build, e como o usuário da máquina, para

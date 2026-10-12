@@ -21,7 +21,7 @@ O kit tem duas partes, neste repositório:
 | Painel próprio em `/painel` (cadastro de animais pelo celular) | Pronto |
 | Configurações da protetora (contato, redes, localização, Pix) e página de contato | Pronto |
 | Pedidos de adoção (questionário no site, envio pelo WhatsApp, fila no painel) | Pronto |
-| Apadrinhamento mensal com cartão (Stripe), área do padrinho e contador no site | Pronto |
+| Apadrinhamento mensal com cartão (Stripe): planos, área do padrinho, registro dos pagamentos, página de agradecimento e contador no site | Pronto |
 | Doações avulsas por Pix (Stripe) | Planejado |
 | Prestação de contas | Planejado |
 
@@ -55,15 +55,20 @@ O dia a dia acontece em `seusite.org/painel`, um painel próprio, feito para o c
   o primeiro passo o animal já fica salvo como rascunho; o último passo publica no site.
 - **Fotos** tiradas na hora ou escolhidas do aparelho, reduzidas antes do envio.
 - **Animais**: lista com foto, nome e situação.
-- **Excluir** move o cadastro para a lixeira; o administrador pode restaurar pelo WordPress.
+- **Excluir** move o cadastro para a lixeira, onde ele fica por 30 dias. O painel não tem tela
+  de lixeira: quem administra o servidor restaura com `wp post untrash <ID>` (WP-CLI).
 - **Adoções**: quem quer adotar preenche um questionário na página do animal e envia o pedido
   pelo WhatsApp da protetora. O pedido também fica guardado no painel, com situação (novo, em
   análise, entrevista, aprovado, recusado) e anotações internas.
-- **Padrinhos**: quem apadrinha pelo site (nome, e-mail, valor mensal e situação), o número
+- **Padrinhos**: os planos, quem apadrinha pelo site (nome, e-mail, plano, situação e total
+  doado), a arrecadação do mês, a lista de pagamentos (com estornos e contestações), o número
   mostrado no site e um ajuste manual para somar quem ajuda por fora.
-- **Configurações**: WhatsApp, telefone, e-mail, redes sociais, cidade e chave Pix. Ao salvar
-  pela primeira vez, o site ganha uma página **Contato** com esses dados. Para mostrá-los em
-  outra página, use o bloco **Contato da protetora**.
+- **Configurações**, em duas abas:
+  - **Protetora e site**: WhatsApp, telefone, e-mail, redes sociais, cidade, adoção e
+    privacidade. Ao salvar pela primeira vez, o site ganha uma página **Contato** com esses
+    dados. Para mostrá-los em outra página, use o bloco **Contato da protetora**.
+  - **Pagamentos e apadrinhamento**: chave Pix, chaves da Stripe, e-mail que recebe os avisos
+    de apadrinhamento e a página de agradecimento (qual página, título e texto).
 
 Para dar acesso a alguém, crie o usuário em **Usuários → Adicionar usuário** com a função
 **Protetor admin**. Essa pessoa entra pelo login normal do site e usa somente o painel; se
@@ -88,7 +93,7 @@ dois (há um atalho "Painel Resgata" na barra do WordPress).
 ## Desenvolvimento local
 
 ```bash
-git clone <endereço do repositório> resgata-wp
+git clone https://github.com/resgatawp/resgata-wp.git
 cd resgata-wp
 make setup
 ```
@@ -106,6 +111,8 @@ Ao terminar, ele mostra os endereços e os acessos:
 | WordPress | <http://localhost:8080/wp-admin> | `admin` | `admin` |
 | E-mails de teste (Mailpit) | <http://localhost:8025> | | |
 
+As portas vêm do `.env` (`WP_PORT` e `MAILPIT_PORT`); os endereços acima são os do padrão.
+
 Nos outros dias, `make up` sobe o ambiente e `make down` derruba, sem perder os dados.
 Tudo funciona sem conta na Stripe; ela só é necessária para testar pagamentos do
 apadrinhamento (veja abaixo).
@@ -121,7 +128,7 @@ Comandos mais usados (`make help` mostra todos):
 | `make install` | Instala o WordPress em pt_BR, garante o Twenty Twenty-Five e ativa plugin e tema |
 | `make seed` / `make unseed` | Cria / remove os animais de exemplo |
 | `make wp cmd="plugin list"` | Roda qualquer comando WP-CLI |
-| `make build` / `make watch` | Compila o TypeScript (painel, blocos, wp-admin) uma vez / a cada alteração |
+| `make build` / `make watch` | Compila o TypeScript (painel, blocos, scripts do site) uma vez / a cada alteração |
 | `make typecheck` | Confere os tipos do TypeScript |
 | `make test` | Testa as permissões da API do painel e o processamento dos webhooks da Stripe |
 | `make stripe-setup` / `make stripe-secret` / `make stripe` | Apadrinhamento: cria os planos no sandbox / mostra o segredo dos webhooks / repassa os eventos ao site local |
@@ -137,9 +144,13 @@ credenciais reais.
 ## Apadrinhamento (Stripe)
 
 O padrinho escolhe um valor mensal no site e paga com **cartão de crédito** na página da
-Stripe (Checkout). O site nunca mostra campo de cartão. Para trocar o cartão, mudar o valor
-ou cancelar, o padrinho informa o e-mail na **Área do padrinho**, recebe um link de uso único
-e é levado ao portal da Stripe. Não há senha.
+Stripe (Checkout). O site nunca mostra campo de cartão. Depois de pagar, a pessoa cai na
+página **Obrigado** e recebe um e-mail de agradecimento. Na **Área do padrinho**, o padrinho
+informa o e-mail, recebe um link de uso único e vê quanto já doou; dali segue para o portal da
+Stripe para trocar o cartão, mudar o valor ou cancelar. Não há senha.
+
+O site guarda o nome, o e-mail, o plano, a situação e o valor e a data de cada pagamento.
+Dados de cartão, CPF e endereço ficam só na Stripe.
 
 > O Pix recorrente (Pix Automático) não está disponível para contas Stripe do Brasil, por
 > isso a assinatura é só no cartão. Doações avulsas por Pix ficam para a próxima fase.
@@ -154,12 +165,15 @@ e é levado ao portal da Stripe. Não há senha.
    use a chave secreta completa.
 3. Cadastre o webhook `https://seusite.org/wp-json/resgata-wp/v1/stripe/webhook` com os eventos
    `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`,
-   `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed` e `customer.updated`.
+   `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`,
+   `invoice_payment.paid`, `charge.refunded`, `charge.dispute.created`, `charge.dispute.updated`,
+   `charge.dispute.closed` e `customer.updated`.
 4. Informe as duas chaves. Há dois caminhos:
    - **Pelo painel** (não exige acesso ao servidor): o Administrador abre **Painel →
-     Padrinhos → Pagamentos (Stripe)**, cola a chave restrita e o segredo do webhook e toca
-     em "Guardar chaves". A chave completa (`sk_`) é recusada. O mesmo cartão lista as
-     permissões que a chave precisa ter e marca em verde as que já estão liberadas. Elas são gravadas cifradas (AES-256, com chave derivada de
+     Configurações → Pagamentos e apadrinhamento**, cola a chave restrita e o segredo do
+     webhook e toca em "Guardar chaves". A chave completa (`sk_`) é recusada. O mesmo cartão
+     lista as permissões que a chave precisa ter e marca em verde as que já estão liberadas.
+     As chaves são gravadas cifradas (AES-256, com chave derivada de
      `LOGGED_IN_KEY`/`LOGGED_IN_SALT` do `wp-config.php`) e nunca voltam inteiras para o
      navegador. Se as chaves de segurança do `wp-config.php` forem trocadas, é preciso colar
      as chaves da Stripe de novo.
@@ -179,8 +193,15 @@ e é levado ao portal da Stripe. Não há senha.
    (padrão: R$ 15, 30, 50, 75 e 100; `--amounts=20,40,80`; ou `--price-ids=price_...` para
    preços criados no Dashboard), que não apaga os nomes já cadastrados.
 6. Coloque os blocos **Planos de apadrinhamento** e **Área do padrinho** em uma página.
-7. No Dashboard da Stripe, deixe ligadas só as formas de pagamento que quer aceitar na
-   assinatura (o plugin já esconde o boleto) e confira os e-mails de cobrança recusada.
+7. Em **Painel → Configurações → Pagamentos e apadrinhamento**, informe o e-mail que recebe os
+   avisos (novo padrinho, pedido de cancelamento, pagamento recusado e pagamento contestado;
+   sem ele, os avisos não são enviados) e, se quiser, troque a página, o título e o texto do
+   agradecimento. A página **Obrigado** é criada sozinha quando há um plano à venda.
+8. Confira se o site envia e-mails: o link da área do padrinho, o agradecimento e os avisos
+   dependem disso. Em muitas hospedagens é preciso configurar um serviço de envio (SMTP).
+9. No Dashboard da Stripe, deixe ligadas só as formas de pagamento que quer aceitar na
+   assinatura (o plugin já esconde o boleto) e ligue os e-mails de recibo e de cobrança
+   recusada: esses dois o site deixa por conta da Stripe.
 
 ### No ambiente local (somente sandbox)
 
@@ -193,6 +214,10 @@ e é levado ao portal da Stripe. Não há senha.
 4. `make stripe-setup` cria os planos e o portal no sandbox.
 5. Deixe `make stripe` rodando em outro terminal: ele repassa os eventos da Stripe para
    `http://wordpress/wp-json/resgata-wp/v1/stripe/webhook`.
+
+Para testar o cadastro das chaves pelo painel, ponha `STRIPE_KEYS_IN_PANEL=1` no `.env` e rode
+`make up`: o site deixa de ler as chaves do `.env` (o `make stripe` continua usando) e passa a
+esperar as do painel, que só aceita chave restrita (`rk_test_...`).
 
 Cartões de teste (qualquer data futura e qualquer CVC):
 
@@ -226,8 +251,39 @@ O plugin traz templates e estilos neutros. Um tema pode:
 
 Toda ajuda é bem-vinda, com ou sem código. O [guia de contribuição](CONTRIBUTING.md) explica
 como relatar um problema, preparar o ambiente e enviar uma mudança. A arquitetura está em
-[`CLAUDE.md`](CLAUDE.md) e o guia visual em [`designer.md`](designer.md).
+[`CLAUDE.md`](CLAUDE.md), [`plugins/CLAUDE.md`](plugins/CLAUDE.md), [`themes/CLAUDE.md`](themes/CLAUDE.md)
+e [`docs/`](docs/); o guia visual, em [`designer.md`](designer.md).
+
+## Segurança
+
+Encontrou uma falha? Não abra issue pública: siga a [política de segurança](SECURITY.md).
 
 ## Licença
 
-[GPL-2.0-or-later](LICENSE).
+Copyright (C) 2026 contribuidores do Resgata WP.
+
+O Resgata WP é software livre: você pode redistribuí-lo e modificá-lo sob os termos da
+Licença Pública Geral GNU, versão 2 ou (à sua escolha) qualquer versão posterior, publicada
+pela Free Software Foundation. Ele é distribuído sem nenhuma garantia. O texto completo está
+em [`LICENSE`](LICENSE) e acompanha os pacotes gerados pelo `make zip`.
+
+O plugin e o tema usam a mesma licença: [GPL-2.0-or-later](LICENSE).
+
+### Componentes de terceiros
+
+Os pacotes incluem bibliotecas com licenças compatíveis com a GPLv2:
+
+- [stripe-php](https://github.com/stripe/stripe-php) (MIT), na pasta `vendor/` do plugin.
+- No painel e nos scripts do site, compilados em `build/`: React, React Router, Base UI,
+  TanStack Query e Table, Tiptap, react-day-picker, date-fns, sonner, qrcode-pix e Tailwind CSS
+  (MIT); lucide (ISC); `@wordpress/api-fetch` e `@wordpress/i18n` (GPL-2.0-or-later).
+- As skills de `.claude/skills/` vêm de
+  [WordPress/agent-skills](https://github.com/WordPress/agent-skills) (GPL-2.0-or-later).
+- O tema é filho do [Twenty Twenty-Five](https://wordpress.org/themes/twentytwentyfive/)
+  (GPL-2.0-or-later), que não é distribuído junto.
+
+O ícone do plugin (`plugins/resgata-wp/.wordpress-org/`) e a imagem de apresentação do tema
+(`themes/resgata-tema/screenshot.png`) foram criados para o projeto e seguem a mesma licença.
+
+A lista completa e as versões estão em `plugins/resgata-wp/package.json` e
+`plugins/resgata-wp/composer.json`.
