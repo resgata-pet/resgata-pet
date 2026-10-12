@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Resgata Tema 1.0.2\n"
+"Project-Id-Version: Resgata Tema 1.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/resgata-tema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-07T18:12:22+00:00\n"
+"POT-Creation-Date: 2026-10-12T19:45:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: resgata-tema\n"
@@ -17,6 +17,11 @@ msgstr ""
 #. Theme Name of the theme
 #: style.css
 msgid "Resgata Tema"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://github.com/resgatawp/resgata-wp"
 msgstr ""
 
 #. Description of the theme
@@ -29,56 +34,137 @@ msgstr ""
 msgid "Resgata WP"
 msgstr ""
 
-#: functions.php:38
+#: functions.php:162
 msgid "Resgata"
 msgstr ""
 
-#: functions.php:39
+#: functions.php:163
 msgid "Seções prontas para o site da protetora."
 msgstr ""
 
-#: functions.php:89
+#: functions.php:221
 msgid "Com ícone: pata"
 msgstr ""
 
-#: functions.php:90
+#: functions.php:222
 msgid "Com ícone: coração"
 msgstr ""
 
-#: functions.php:91
+#: functions.php:223
 msgid "Com ícone: mão e coração"
 msgstr ""
 
-#: functions.php:92
+#: functions.php:224
 msgid "Com ícone: conversa"
 msgstr ""
 
-#: functions.php:93
+#: functions.php:225
 msgid "Com ícone: segurança"
 msgstr ""
 
-#: functions.php:94
+#: functions.php:226
 msgid "Com ícone: cadeado aberto"
 msgstr ""
 
-#: functions.php:95
+#: functions.php:227
 msgid "Passo numerado"
 msgstr ""
 
-#: functions.php:96
+#: functions.php:228
+msgid "Com ilustração: gato dormindo"
+msgstr ""
+
+#: functions.php:229
+msgid "Com ilustração: cachorrinho perdido"
+msgstr ""
+
+#: functions.php:230
 msgid "Linha de direitos"
 msgstr ""
 
-#: functions.php:99
+#: functions.php:233
 msgid "Com coração"
 msgstr ""
 
-#: functions.php:100
+#: functions.php:234
 msgid "Com pata"
 msgstr ""
 
-#: functions.php:101
+#: functions.php:235
 msgid "Link com seta"
+msgstr ""
+
+#: patterns/animais-chamada.php
+msgctxt "Pattern title"
+msgid "Animais: título da lista"
+msgstr ""
+
+#: patterns/animais-chamada.php
+msgctxt "Pattern description"
+msgid "Título e apresentação da página que lista os animais para adoção."
+msgstr ""
+
+#: patterns/animais-chamada.php:18
+#: patterns/home-animais.php:25
+msgid "Animais para adoção"
+msgstr ""
+
+#: patterns/animais-chamada.php:22
+msgid "Conheça quem está esperando por um lar. Todos foram resgatados, cuidados e estão prontos para receber amor."
+msgstr ""
+
+#: patterns/blog-chamada.php
+msgctxt "Pattern title"
+msgid "Blog: chamada do topo"
+msgstr ""
+
+#: patterns/blog-chamada.php
+msgctxt "Pattern description"
+msgid "Título e apresentação do blog, para o topo da página que lista as publicações."
+msgstr ""
+
+#: patterns/blog-chamada.php:20
+msgid "Nosso blog"
+msgstr ""
+
+#: patterns/blog-chamada.php:20
+msgid "histórias e novidades"
+msgstr ""
+
+#: patterns/blog-chamada.php:24
+msgid "Acompanhe os resgates, as adoções e o dia a dia de quem cuida dos nossos animais."
+msgstr ""
+
+#: patterns/blog-lista.php
+msgctxt "Pattern title"
+msgid "Blog: lista de publicações"
+msgstr ""
+
+#: patterns/blog-lista.php
+msgctxt "Pattern description"
+msgid "Publicações em cartões (foto, categoria, título, resumo e data), em até três colunas, com paginação. Mostra as publicações da página em que está (blog, categoria, etiqueta, autor ou data)."
+msgstr ""
+
+#: patterns/blog-lista.php:42
+msgid "Ainda não há publicações por aqui. Volte em breve!"
+msgstr ""
+
+#: patterns/blog-mais-publicacoes.php
+msgctxt "Pattern title"
+msgid "Blog: mais publicações"
+msgstr ""
+
+#: patterns/blog-mais-publicacoes.php
+msgctxt "Pattern description"
+msgid "As três publicações mais recentes em cartões, com link para o blog. Para o fim de uma publicação ou de uma página."
+msgstr ""
+
+#: patterns/blog-mais-publicacoes.php:21
+msgid "Continue lendo"
+msgstr ""
+
+#: patterns/blog-mais-publicacoes.php:25
+msgid "Outras histórias e novidades da protetora."
 msgstr ""
 
 #: patterns/cabecalho.php
@@ -129,10 +215,6 @@ msgctxt "Pattern description"
 msgid "Quatro animais disponíveis para adoção, com link para ver todos."
 msgstr ""
 
-#: patterns/home-animais.php:25
-msgid "Animais para adoção"
-msgstr ""
-
 #: patterns/home-animais.php:29
 msgid "Conheça alguns dos nossos resgatados que estão à procura de um lar cheio de amor."
 msgstr ""
@@ -156,6 +238,7 @@ msgid "Dê um lar para quem precisa."
 msgstr ""
 
 #: patterns/home-atalhos.php:33
+#: patterns/pagina-nao-encontrada.php:31
 msgid "Ver os animais"
 msgstr ""
 
@@ -319,7 +402,7 @@ msgid "Já é padrinho?"
 msgstr ""
 
 #: patterns/pagina-apadrinhamento.php:205
-msgid "Informe o seu e-mail para trocar o cartão, mudar o valor ou cancelar o apadrinhamento."
+msgid "Informe o seu e-mail para ver quanto você já doou, trocar o cartão, mudar o valor ou cancelar o apadrinhamento."
 msgstr ""
 
 #: patterns/pagina-como-ajudar.php
@@ -362,6 +445,28 @@ msgstr ""
 msgid "Quer adotar, ajudar ou tirar uma dúvida? Escolha o jeito mais fácil para você. Respondemos assim que possível."
 msgstr ""
 
+#: patterns/pagina-nao-encontrada.php
+msgctxt "Pattern title"
+msgid "Página não encontrada"
+msgstr ""
+
+#: patterns/pagina-nao-encontrada.php
+msgctxt "Pattern description"
+msgid "Aviso de página não encontrada, com ilustração e atalhos para os animais e para o início."
+msgstr ""
+
+#: patterns/pagina-nao-encontrada.php:21
+msgid "Ops! Esta página se perdeu"
+msgstr ""
+
+#: patterns/pagina-nao-encontrada.php:25
+msgid "O endereço pode ter mudado ou a página não existe mais. Que tal conhecer os animais que esperam por um lar?"
+msgstr ""
+
+#: patterns/pagina-nao-encontrada.php:35
+msgid "Voltar ao início"
+msgstr ""
+
 #: patterns/rodape.php
 msgctxt "Pattern title"
 msgid "Rodapé com contato e links"
@@ -381,6 +486,14 @@ msgid "Ajude"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/02-noon.json
+#: styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Fundo da página"
 msgstr ""
@@ -391,6 +504,9 @@ msgid "Azul-marinho (títulos)"
 msgstr ""
 
 #: theme.json
+#: styles/colors/03-dusk.json
+#: styles/colors/05-twilight.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Laranja"
 msgstr ""
@@ -406,6 +522,14 @@ msgid "Verde principal (destaque)"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/02-noon.json
+#: styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Texto suave"
 msgstr ""
@@ -416,16 +540,40 @@ msgid "Verde muito claro (seções)"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/02-noon.json
+#: styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Linha"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/02-noon.json
+#: styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Superfície (cartões)"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/02-noon.json
+#: styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Texto"
 msgstr ""
@@ -436,21 +584,46 @@ msgid "Verde escuro"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/03-dusk.json
+#: styles/colors/05-twilight.json
 msgctxt "Color name"
 msgid "Cinza claro (blocos)"
 msgstr ""
 
 #: theme.json
+#: styles/colors/02-noon.json
+#: styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Azul"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/02-noon.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Roxo"
 msgstr ""
 
 #: theme.json
+#: styles/colors/01-evening.json
+#: styles/colors/02-noon.json
+#: styles/colors/03-dusk.json
+#: styles/colors/04-afternoon.json
+#: styles/colors/05-twilight.json
+#: styles/colors/06-morning.json
+#: styles/colors/07-sunrise.json
+#: styles/colors/08-midnight.json
 msgctxt "Color name"
 msgid "Roxo claro"
 msgstr ""
@@ -510,6 +683,11 @@ msgctxt "Style variation name"
 msgid "Chamada do topo"
 msgstr ""
 
+#: styles/blocks/faixa-com-abraco.json
+msgctxt "Style variation name"
+msgid "Faixa suave com abraço"
+msgstr ""
+
 #: styles/blocks/faixa.json
 msgctxt "Style variation name"
 msgid "Faixa suave"
@@ -518,4 +696,292 @@ msgstr ""
 #: styles/blocks/rodape.json
 msgctxt "Style variation name"
 msgid "Rodapé do site"
+msgstr ""
+
+#: styles/colors/01-evening.json
+msgctxt "Style variation name"
+msgid "Oceano"
+msgstr ""
+
+#: styles/colors/01-evening.json
+msgctxt "Color name"
+msgid "Azul-noite (títulos)"
+msgstr ""
+
+#: styles/colors/01-evening.json
+#: styles/colors/06-morning.json
+msgctxt "Color name"
+msgid "Âmbar"
+msgstr ""
+
+#: styles/colors/01-evening.json
+msgctxt "Color name"
+msgid "Azul claro"
+msgstr ""
+
+#: styles/colors/01-evening.json
+msgctxt "Color name"
+msgid "Azul principal (destaque)"
+msgstr ""
+
+#: styles/colors/01-evening.json
+msgctxt "Color name"
+msgid "Azul muito claro (seções)"
+msgstr ""
+
+#: styles/colors/01-evening.json
+msgctxt "Color name"
+msgid "Azul escuro"
+msgstr ""
+
+#: styles/colors/01-evening.json
+msgctxt "Color name"
+msgid "Verde-água"
+msgstr ""
+
+#: styles/colors/02-noon.json
+msgctxt "Style variation name"
+msgid "Terracota"
+msgstr ""
+
+#: styles/colors/02-noon.json
+msgctxt "Color name"
+msgid "Marrom (títulos)"
+msgstr ""
+
+#: styles/colors/02-noon.json
+#: styles/colors/07-sunrise.json
+msgctxt "Color name"
+msgid "Mostarda"
+msgstr ""
+
+#: styles/colors/02-noon.json
+msgctxt "Color name"
+msgid "Terracota claro"
+msgstr ""
+
+#: styles/colors/02-noon.json
+msgctxt "Color name"
+msgid "Terracota principal (destaque)"
+msgstr ""
+
+#: styles/colors/02-noon.json
+msgctxt "Color name"
+msgid "Terracota muito claro (seções)"
+msgstr ""
+
+#: styles/colors/02-noon.json
+msgctxt "Color name"
+msgid "Terracota escuro"
+msgstr ""
+
+#: styles/colors/02-noon.json
+#: styles/colors/07-sunrise.json
+msgctxt "Color name"
+msgid "Bege claro (blocos)"
+msgstr ""
+
+#: styles/colors/03-dusk.json
+msgctxt "Style variation name"
+msgid "Ameixa"
+msgstr ""
+
+#: styles/colors/03-dusk.json
+msgctxt "Color name"
+msgid "Roxo-noite (títulos)"
+msgstr ""
+
+#: styles/colors/03-dusk.json
+msgctxt "Color name"
+msgid "Roxo principal (destaque)"
+msgstr ""
+
+#: styles/colors/03-dusk.json
+msgctxt "Color name"
+msgid "Roxo muito claro (seções)"
+msgstr ""
+
+#: styles/colors/03-dusk.json
+msgctxt "Color name"
+msgid "Roxo escuro"
+msgstr ""
+
+#: styles/colors/03-dusk.json
+msgctxt "Color name"
+msgid "Magenta"
+msgstr ""
+
+#: styles/colors/03-dusk.json
+msgctxt "Color name"
+msgid "Magenta claro"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Style variation name"
+msgid "Mel"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Color name"
+msgid "Marrom-café (títulos)"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Color name"
+msgid "Coral"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Color name"
+msgid "Dourado claro"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Color name"
+msgid "Dourado principal (destaque)"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Color name"
+msgid "Dourado muito claro (seções)"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Color name"
+msgid "Dourado escuro"
+msgstr ""
+
+#: styles/colors/04-afternoon.json
+msgctxt "Color name"
+msgid "Creme (blocos)"
+msgstr ""
+
+#: styles/colors/05-twilight.json
+msgctxt "Style variation name"
+msgid "Petróleo"
+msgstr ""
+
+#: styles/colors/05-twilight.json
+msgctxt "Color name"
+msgid "Azul-petróleo (títulos)"
+msgstr ""
+
+#: styles/colors/05-twilight.json
+msgctxt "Color name"
+msgid "Turquesa claro"
+msgstr ""
+
+#: styles/colors/05-twilight.json
+msgctxt "Color name"
+msgid "Turquesa principal (destaque)"
+msgstr ""
+
+#: styles/colors/05-twilight.json
+msgctxt "Color name"
+msgid "Turquesa muito claro (seções)"
+msgstr ""
+
+#: styles/colors/05-twilight.json
+msgctxt "Color name"
+msgid "Turquesa escuro"
+msgstr ""
+
+#: styles/colors/06-morning.json
+msgctxt "Style variation name"
+msgid "Framboesa"
+msgstr ""
+
+#: styles/colors/06-morning.json
+msgctxt "Color name"
+msgid "Vinho (títulos)"
+msgstr ""
+
+#: styles/colors/06-morning.json
+msgctxt "Color name"
+msgid "Rosa claro"
+msgstr ""
+
+#: styles/colors/06-morning.json
+msgctxt "Color name"
+msgid "Rosa principal (destaque)"
+msgstr ""
+
+#: styles/colors/06-morning.json
+msgctxt "Color name"
+msgid "Rosa muito claro (seções)"
+msgstr ""
+
+#: styles/colors/06-morning.json
+msgctxt "Color name"
+msgid "Rosa escuro"
+msgstr ""
+
+#: styles/colors/06-morning.json
+msgctxt "Color name"
+msgid "Rosado claro (blocos)"
+msgstr ""
+
+#: styles/colors/07-sunrise.json
+msgctxt "Style variation name"
+msgid "Oliva"
+msgstr ""
+
+#: styles/colors/07-sunrise.json
+msgctxt "Color name"
+msgid "Verde-musgo (títulos)"
+msgstr ""
+
+#: styles/colors/07-sunrise.json
+msgctxt "Color name"
+msgid "Oliva claro"
+msgstr ""
+
+#: styles/colors/07-sunrise.json
+msgctxt "Color name"
+msgid "Oliva principal (destaque)"
+msgstr ""
+
+#: styles/colors/07-sunrise.json
+msgctxt "Color name"
+msgid "Oliva muito claro (seções)"
+msgstr ""
+
+#: styles/colors/07-sunrise.json
+msgctxt "Color name"
+msgid "Oliva escuro"
+msgstr ""
+
+#: styles/colors/08-midnight.json
+msgctxt "Style variation name"
+msgid "Grafite"
+msgstr ""
+
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Preto suave (títulos)"
+msgstr ""
+
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Cinza claro"
+msgstr ""
+
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Grafite principal (destaque)"
+msgstr ""
+
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Cinza muito claro (seções)"
+msgstr ""
+
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Grafite escuro"
+msgstr ""
+
+#: styles/colors/08-midnight.json
+msgctxt "Color name"
+msgid "Cinza (blocos)"
 msgstr ""

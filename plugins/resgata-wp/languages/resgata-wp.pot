@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-07T18:12:11+00:00\n"
+"POT-Creation-Date: 2026-10-12T19:45:28+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: resgata-wp\n"
@@ -21,6 +21,11 @@ msgstr ""
 #: src/Modules/Settings/SettingsModule.php:91
 #: src/Modules/Settings/SettingsModule.php:92
 msgid "Resgata WP"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: resgata-wp.php
+msgid "https://github.com/resgatawp/resgata-wp"
 msgstr ""
 
 #. Description of the plugin
@@ -57,7 +62,7 @@ msgstr ""
 #: blocks/links/render.php:18
 #: src/Modules/Settings/ContactPage.php:75
 #: build/painel/index.js:12
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Contato"
 msgstr ""
 
@@ -71,7 +76,7 @@ msgid "Seja um padrinho"
 msgstr ""
 
 #: blocks/links/render.php:23
-#: templates/donate-banner.php:25
+#: templates/donate-banner.php:40
 msgid "Doar por Pix"
 msgstr ""
 
@@ -140,6 +145,7 @@ msgid "Questionário público de adoção, enviado pelo WhatsApp, e fila interna
 msgstr ""
 
 #: src/Core/Modules.php:60
+#: build/painel/index.js:19
 msgid "Apadrinhamento"
 msgstr ""
 
@@ -218,7 +224,6 @@ msgid "Seu nome completo"
 msgstr ""
 
 #: src/Modules/Adoptions/Questionnaire.php:30
-#: src/Modules/Animals/Admin/ListTable.php:47
 #: build/painel/index.js:4
 #: build/painel/index.js:11
 msgid "Nome"
@@ -230,7 +235,7 @@ msgstr ""
 
 #: src/Modules/Adoptions/Questionnaire.php:38
 #: templates/contact-compact.php:21
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "WhatsApp"
 msgstr ""
 
@@ -242,7 +247,7 @@ msgstr ""
 #: src/Modules/Settings/Organization.php:73
 #: templates/contact-compact.php:27
 #: templates/contact.php:36
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "E-mail"
 msgstr ""
 
@@ -426,280 +431,6 @@ msgstr ""
 msgid "Não foi possível registrar o pedido. Tente de novo."
 msgstr ""
 
-#: src/Modules/Animals/Admin/ListTable.php:46
-#: build/painel/index.js:4
-#: build/painel/index.js:20
-msgid "Foto"
-msgstr ""
-
-#: src/Modules/Animals/Admin/ListTable.php:48
-#: src/Modules/Animals/Admin/MetaBoxes.php:132
-#: build/painel/index.js:4
-#: build/painel/index.js:11
-#: build/painel/index.js:14
-#: build/painel/index.js:32
-#: build/wp/blocks-editor.js:1
-msgid "Situação"
-msgstr ""
-
-#: src/Modules/Animals/Admin/ListTable.php:52
-msgid "Sexo e idade"
-msgstr ""
-
-#: src/Modules/Animals/Admin/ListTable.php:111
-#: build/painel/index.js:15
-#: build/painel/index.js:32
-msgid "Filtrar por situação"
-msgstr ""
-
-#: src/Modules/Animals/Admin/ListTable.php:113
-#: build/painel/index.js:15
-#: build/painel/index.js:32
-msgid "Todas as situações"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:45
-msgid "Ficha do animal"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:46
-#: templates/animal-details.php:229
-#: build/painel/index.js:11
-msgid "Saúde"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:47
-#: build/painel/index.js:11
-msgid "Galeria de fotos (antes e depois)"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:62
-#: build/painel/index.js:11
-msgid "História do resgate"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:63
-msgid "Conte onde o animal foi encontrado, como estava e como foi a recuperação. Esse texto aparece na página do animal."
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:93
-msgid "Escolher fotos do animal"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:94
-msgid "Adicionar à galeria"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:134
-msgid "Só os animais \"Disponível para adoção\" e \"Reservado\" aparecem na lista pública de adoção."
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:137
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:211
-#: src/Modules/Animals/Taxonomies.php:38
-#: templates/animals-list.php:30
-#: build/painel/index.js:4
-#: build/painel/index.js:11
-#: build/wp/blocks-editor.js:1
-msgid "Espécie"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:138
-msgid "— Escolha —"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:141
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:212
-#: templates/animals-list.php:31
-#: build/painel/index.js:4
-#: build/painel/index.js:11
-msgid "Sexo"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:142
-#: src/Modules/Animals/Admin/MetaBoxes.php:146
-#: src/Modules/Animals/Admin/MetaBoxes.php:198
-#: src/Modules/Animals/Admin/MetaBoxes.php:206
-#: src/Modules/Animals/Admin/MetaBoxes.php:210
-#: src/Modules/Animals/Admin/MetaBoxes.php:214
-#: build/painel/index.js:11
-#: build/painel/index.js:17
-msgid "Não informado"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:145
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:215
-#: templates/animals-list.php:32
-#: build/painel/index.js:4
-#: build/painel/index.js:11
-msgid "Porte"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:149
-#: build/painel/index.js:11
-msgid "Peso (kg)"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:151
-#: build/painel/index.js:11
-msgid "Opcional. Aparece ao lado do porte. Ex.: 18,5"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:154
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:213
-#: build/painel/index.js:11
-msgid "Idade estimada"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:157
-#: build/painel/index.js:11
-msgid "anos e"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:158
-#: build/painel/index.js:11
-msgid "Meses"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:159
-#: build/painel/index.js:11
-msgid "meses"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:161
-msgid "Informe a idade de hoje. O site atualiza a idade sozinho com o passar do tempo."
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:164
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:217
-#: build/painel/index.js:11
-msgid "Cor / pelagem"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:165
-#: build/painel/index.js:11
-msgid "Ex.: tigrado, preto e branco"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:168
-#: build/painel/index.js:11
-msgid "Data do resgate"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:172
-#: build/painel/index.js:11
-#: build/painel/index.js:17
-msgid "Frase de apresentação"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:174
-#: build/painel/index.js:11
-msgid "Uma linha que aparece logo abaixo do nome. Ex.: Um companheiro cheio de alegria e carinho!"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:177
-#: build/painel/index.js:11
-msgid "Resumo"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:179
-#: build/painel/index.js:11
-msgid "Duas ou três frases sobre como o animal é hoje. Aparece no topo da página, ao lado da foto."
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:182
-msgid "A foto principal e o temperamento ficam na coluna da direita."
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:197
-#: build/painel/index.js:4
-#: build/painel/index.js:11
-msgid "Castrado(a)"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:201
-#: build/painel/index.js:11
-msgid "Último vermífugo"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:205
-#: build/painel/index.js:11
-msgid "Passou por consulta veterinária"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:209
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:244
-#: build/painel/index.js:11
-msgid "Vacinas em dia"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:213
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:246
-#: build/painel/index.js:11
-msgid "Tem microchip"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:217
-#: build/painel/index.js:11
-msgid "Teste de FIV (gatos)"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:218
-#: src/Modules/Animals/Admin/MetaBoxes.php:222
-#: build/painel/index.js:11
-msgid "Não testado"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:221
-#: build/painel/index.js:11
-msgid "Teste de FeLV (gatos)"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:226
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:216
-#: build/painel/index.js:11
-msgid "Vacinas"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:236
-#: build/painel/index.js:11
-msgid "Adicionar vacina"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:251
-#: build/painel/index.js:11
-msgid "Ex.: V4, antirrábica"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:251
-#: build/painel/index.js:11
-msgid "Nome da vacina"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:252
-#: build/painel/index.js:11
-msgid "Data da aplicação"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:253
-#: src/Modules/Animals/Admin/MetaBoxes.php:299
-#: build/painel/index.js:28
-msgid "Remover"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:266
-msgid "Mostre a transformação: marque cada foto como \"Antes\" (quando foi resgatado) ou \"Depois\" (recuperado)."
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:276
-msgid "Adicionar fotos"
-msgstr ""
-
-#: src/Modules/Animals/Admin/MetaBoxes.php:294
-#: build/painel/index.js:11
-msgid "Tipo da foto"
-msgstr ""
-
 #. translators: %s: peso do animal em quilos.
 #: src/Modules/Animals/Animal.php:138
 #, php-format
@@ -727,100 +458,139 @@ msgid "Menos de 1 mês"
 msgstr ""
 
 #. translators: %s: porte do animal em minúsculas. Ex.: "Porte médio".
-#: src/Modules/Animals/Animal.php:353
+#: src/Modules/Animals/Animal.php:346
 #, php-format
 msgid "Porte %s"
 msgstr ""
 
 #. translators: %s: nome do animal (macho).
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:109
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:110
 #, php-format
 msgid "Quero adotar o %s"
 msgstr ""
 
 #. translators: %s: nome do animal (fêmea).
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:111
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:112
 #, php-format
 msgid "Quero adotar a %s"
 msgstr ""
 
 #. translators: %s: nome do animal.
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:113
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:114
 #: templates/adoption-form.php:47
 #, php-format
 msgid "Quero adotar %s"
 msgstr ""
 
 #. translators: %s: nome do animal (macho).
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:121
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:122
 #, php-format
 msgid "A história do %s"
 msgstr ""
 
 #. translators: %s: nome do animal (fêmea).
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:123
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:124
 #, php-format
 msgid "A história da %s"
 msgstr ""
 
 #. translators: %s: nome do animal.
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:125
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:126
 #, php-format
 msgid "A história de %s"
 msgstr ""
 
 #. translators: 1: porte do animal, 2: peso. Ex.: "Médio (18 kg)".
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:194
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:195
 #, php-format
 msgid "%1$s (%2$s)"
 msgstr ""
 
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:201
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:202
 msgid "Em dia"
 msgstr ""
 
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:203
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:204
 msgid "Ainda não estão em dia"
 msgstr ""
 
 #. translators: %d: quantidade de vacinas aplicadas.
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:207
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:208
 #, php-format
 msgid "%d aplicada"
 msgid_plural "%d aplicadas"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:212
+#: src/Modules/Animals/Taxonomies.php:38
+#: templates/animals-list.php:30
+#: build/painel/index.js:4
+#: build/painel/index.js:11
+#: build/wp/blocks-editor.js:1
+msgid "Espécie"
+msgstr ""
+
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:213
+#: templates/animals-list.php:31
+#: build/painel/index.js:4
+#: build/painel/index.js:11
+msgid "Sexo"
+msgstr ""
+
 #: src/Modules/Animals/Frontend/DetailsRenderer.php:214
+#: build/painel/index.js:11
+msgid "Idade estimada"
+msgstr ""
+
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:215
 msgid "Castração"
 msgstr ""
 
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:216
+#: templates/animals-list.php:32
+#: build/painel/index.js:4
+#: build/painel/index.js:11
+msgid "Porte"
+msgstr ""
+
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:217
+#: build/painel/index.js:11
+msgid "Vacinas"
+msgstr ""
+
 #: src/Modules/Animals/Frontend/DetailsRenderer.php:218
+#: build/painel/index.js:11
+msgid "Cor / pelagem"
+msgstr ""
+
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:219
 msgid "Resgatado em"
 msgstr ""
 
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:243
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:244
 msgid "Consulta veterinária realizada"
 msgstr ""
 
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:243
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:244
 msgid "Consulta veterinária ainda não realizada"
 msgstr ""
 
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:244
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:245
+#: build/painel/index.js:11
+msgid "Vacinas em dia"
+msgstr ""
+
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:245
 msgid "Vacinas ainda não estão em dia"
 msgstr ""
 
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:245
+#: src/Modules/Animals/Frontend/DetailsRenderer.php:246
 msgid "Castração realizada"
 msgstr ""
 
-#: src/Modules/Animals/Frontend/DetailsRenderer.php:245
-msgid "Castração ainda não realizada"
-msgstr ""
-
 #: src/Modules/Animals/Frontend/DetailsRenderer.php:246
-msgid "Ainda sem microchip"
+msgid "Castração ainda não realizada"
 msgstr ""
 
 #. translators: %s: data do último vermífugo.
@@ -1160,13 +930,9 @@ msgid "Animais resgatados pela protetora."
 msgstr ""
 
 #. translators: slug da URL da listagem de animais.
-#: src/Modules/Animals/PostType.php:57
+#: src/Modules/Animals/PostType.php:59
 msgctxt "slug da URL"
 msgid "animais"
-msgstr ""
-
-#: src/Modules/Animals/PostType.php:79
-msgid "Nome do animal"
 msgstr ""
 
 #: src/Modules/Animals/Taxonomies.php:37
@@ -1194,64 +960,65 @@ msgstr ""
 msgid "Nenhuma espécie encontrada."
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:64
-#: src/Modules/Animals/Taxonomies.php:65
+#: src/Modules/Animals/Taxonomies.php:62
+#: src/Modules/Animals/Taxonomies.php:63
 #: templates/animal-card.php:46
 #: templates/animal-details.php:176
 #: build/painel/index.js:11
 msgid "Temperamento"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:66
+#: src/Modules/Animals/Taxonomies.php:64
 msgid "Temperamentos"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:67
+#: src/Modules/Animals/Taxonomies.php:65
 msgid "Todos os temperamentos"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:68
+#: src/Modules/Animals/Taxonomies.php:66
 msgid "Editar temperamento"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:69
+#: src/Modules/Animals/Taxonomies.php:67
 msgid "Adicionar temperamento"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:70
+#: src/Modules/Animals/Taxonomies.php:68
 msgid "Buscar temperamentos"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:71
+#: src/Modules/Animals/Taxonomies.php:69
 msgid "Separe com vírgulas. Ex.: dócil, brincalhão, tímido"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:72
+#: src/Modules/Animals/Taxonomies.php:70
 msgid "Adicionar ou remover"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:73
+#: src/Modules/Animals/Taxonomies.php:71
 msgid "Escolher entre os mais usados"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:74
+#: src/Modules/Animals/Taxonomies.php:72
 msgid "Nenhum temperamento encontrado."
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:107
+#: src/Modules/Animals/Taxonomies.php:104
 msgid "Gato"
 msgstr ""
 
-#: src/Modules/Animals/Taxonomies.php:108
+#: src/Modules/Animals/Taxonomies.php:105
 msgid "Cão"
 msgstr ""
 
-#: src/Modules/Panel/Access.php:84
+#: src/Modules/Panel/Access.php:86
+#: src/Modules/Panel/Access.php:105
 msgid "Painel Resgata"
 msgstr ""
 
-#: src/Modules/Panel/Access.php:98
-msgid "Abrir o painel"
+#: src/Modules/Panel/Access.php:88
+msgid "Abrir o painel da protetora"
 msgstr ""
 
 #. translators: %s: nome do site.
@@ -1268,15 +1035,15 @@ msgstr ""
 msgid "Não foi possível excluir o pedido. Tente de novo."
 msgstr ""
 
-#: src/Modules/Panel/Rest/AnimalsController.php:474
+#: src/Modules/Panel/Rest/AnimalsController.php:473
 msgid "Não foi possível excluir o animal. Tente de novo."
 msgstr ""
 
-#: src/Modules/Panel/Rest/AnimalsController.php:496
+#: src/Modules/Panel/Rest/AnimalsController.php:495
 msgid "Escolha uma espécie da lista."
 msgstr ""
 
-#: src/Modules/Panel/Rest/AnimalsController.php:531
+#: src/Modules/Panel/Rest/AnimalsController.php:530
 msgid "Você não tem permissão para publicar animais."
 msgstr ""
 
@@ -1292,31 +1059,35 @@ msgstr ""
 msgid "Você não tem permissão para fazer isso."
 msgstr ""
 
-#: src/Modules/Panel/Rest/SettingsController.php:69
+#: src/Modules/Panel/Rest/SettingsController.php:71
 msgid "Confira o e-mail informado: o formato não parece válido."
 msgstr ""
 
-#: src/Modules/Panel/Rest/SponsorshipController.php:178
+#: src/Modules/Panel/Rest/SettingsController.php:85
+msgid "Escolha uma página publicada do site para o agradecimento."
+msgstr ""
+
+#: src/Modules/Panel/Rest/SponsorshipController.php:201
 msgid "A chave restrita da Stripe começa com \"rk_live_\" (ou \"rk_test_\", nos testes). Copie a chave inteira, sem espaços."
 msgstr ""
 
-#: src/Modules/Panel/Rest/SponsorshipController.php:179
+#: src/Modules/Panel/Rest/SponsorshipController.php:202
 msgid "O segredo do aviso de pagamentos começa com \"whsec_\". Copie o segredo inteiro, sem espaços."
 msgstr ""
 
-#: src/Modules/Panel/Rest/SponsorshipController.php:191
+#: src/Modules/Panel/Rest/SponsorshipController.php:214
 msgid "Esta chave está definida no arquivo wp-config.php do site e só pode ser trocada lá."
 msgstr ""
 
-#: src/Modules/Panel/Rest/SponsorshipController.php:195
+#: src/Modules/Panel/Rest/SponsorshipController.php:218
 msgid "Esta é a chave secreta completa (\"sk_\"), que dá acesso total à conta da Stripe, e por isso não é aceita. Crie uma chave restrita (\"rk_\") com as permissões da lista e cole aqui."
 msgstr ""
 
-#: src/Modules/Panel/Rest/SponsorshipController.php:206
+#: src/Modules/Panel/Rest/SponsorshipController.php:229
 msgid "Este site não consegue guardar a chave com segurança. Peça a quem cuida da hospedagem para definir as chaves no arquivo wp-config.php."
 msgstr ""
 
-#: src/Modules/Panel/Rest/SponsorshipController.php:219
+#: src/Modules/Panel/Rest/SponsorshipController.php:242
 msgid "Não foi possível guardar a chave. Tente de novo."
 msgstr ""
 
@@ -1385,7 +1156,7 @@ msgstr ""
 #: src/Modules/Settings/SettingsModule.php:103
 #: src/Modules/Settings/SettingsModule.php:257
 #: build/painel/index.js:1
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Configurações"
 msgstr ""
 
@@ -1427,11 +1198,11 @@ msgid "Você não tem permissão para acessar esta página."
 msgstr ""
 
 #: src/Modules/Settings/SettingsModule.php:238
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Salvar configurações"
 msgstr ""
 
-#: src/Modules/Sponsorship/Blocks.php:43
+#: src/Modules/Sponsorship/Blocks.php:46
 msgid "Padrinho ativo"
 msgid_plural "Padrinhos ativos"
 msgstr[0] ""
@@ -1449,47 +1220,51 @@ msgstr ""
 msgid "Recebemos muitas tentativas deste endereço em pouco tempo. Tente de novo mais tarde."
 msgstr ""
 
-#: src/Modules/Sponsorship/Gateway.php:464
-msgid "A chave da Stripe ainda não foi definida. Peça ao administrador do site para informar a chave em \"Pagamentos (Stripe)\"."
+#: src/Modules/Sponsorship/Gateway.php:467
+msgid "A chave da Stripe ainda não foi definida. Peça ao administrador do site para informar a chave em Configurações, na aba de pagamentos."
 msgstr ""
 
-#: src/Modules/Sponsorship/Gateway.php:478
-msgid "A chave da Stripe usada no site não tem permissão para mexer nos planos. Na Stripe, edite a chave restrita e libere a escrita nos itens marcados como pendentes em \"Pagamentos (Stripe)\"."
-msgstr ""
-
-#: src/Modules/Sponsorship/Gateway.php:484
-msgid "A Stripe não reconheceu a chave. Confira se ela foi copiada inteira e se ainda está ativa."
+#: src/Modules/Sponsorship/Gateway.php:481
+msgid "A chave da Stripe usada no site não tem permissão para mexer nos planos. Na Stripe, edite a chave restrita e libere a escrita nos itens marcados como pendentes em Configurações, na aba de pagamentos."
 msgstr ""
 
 #: src/Modules/Sponsorship/Gateway.php:487
+msgid "A Stripe não reconheceu a chave. Confira se ela foi copiada inteira e se ainda está ativa."
+msgstr ""
+
+#: src/Modules/Sponsorship/Gateway.php:490
 msgid "A Stripe não aceitou a operação. Tente de novo em alguns minutos."
 msgstr ""
 
-#: src/Modules/Sponsorship/Gateway.php:494
+#: src/Modules/Sponsorship/Gateway.php:497
 msgid "Não foi possível abrir o pagamento agora. Tente de novo em alguns minutos."
 msgstr ""
 
-#: src/Modules/Sponsorship/MagicLink.php:95
+#: src/Modules/Sponsorship/MagicLink.php:118
 msgid "A página ficou aberta por muito tempo. Tente de novo."
 msgstr ""
 
-#: src/Modules/Sponsorship/MagicLink.php:113
+#: src/Modules/Sponsorship/MagicLink.php:128
+msgid "Este link venceu ou já foi usado. Peça um novo abaixo."
+msgstr ""
+
+#: src/Modules/Sponsorship/MagicLink.php:151
 msgid "Confira o e-mail informado."
 msgstr ""
 
 #. translators: %s: nome da protetora.
-#: src/Modules/Sponsorship/MagicLink.php:152
+#: src/Modules/Sponsorship/MagicLink.php:190
 #, php-format
 msgid "Seu acesso à área do padrinho – %s"
 msgstr ""
 
 #. translators: 1: link de acesso, 2: nome da protetora.
-#: src/Modules/Sponsorship/MagicLink.php:158
+#: src/Modules/Sponsorship/MagicLink.php:196
 #, php-format
 msgid ""
 "Olá!\n"
 "\n"
-"Para ver ou alterar o seu apadrinhamento, abra o link abaixo. Ele vale por 30 minutos e só pode ser usado uma vez.\n"
+"Para ver quanto você já doou ou alterar o seu apadrinhamento, abra o link abaixo. Ele vale por 30 minutos e só pode ser usado uma vez.\n"
 "\n"
 "%1$s\n"
 "\n"
@@ -1498,14 +1273,126 @@ msgid ""
 "%2$s"
 msgstr ""
 
-#: src/Modules/Sponsorship/MagicLink.php:208
-msgid "Este link venceu ou já foi usado. Peça um novo abaixo."
+#. translators: %s: nome do padrinho.
+#: src/Modules/Sponsorship/Notifications.php:56
+#, php-format
+msgid "Novo padrinho: %s"
+msgstr ""
+
+#. translators: 1: nome do padrinho, 2: plano.
+#: src/Modules/Sponsorship/Notifications.php:59
+#, php-format
+msgid "%1$s começou a apadrinhar no plano %2$s."
+msgstr ""
+
+#. translators: %s: nome do padrinho.
+#: src/Modules/Sponsorship/Notifications.php:75
+#, php-format
+msgid "Pedido de cancelamento: %s"
+msgstr ""
+
+#. translators: 1: nome do padrinho, 2: plano, 3: data.
+#: src/Modules/Sponsorship/Notifications.php:78
+#, php-format
+msgid "%1$s pediu para cancelar o apadrinhamento (plano %2$s). O apadrinhamento continua ativo até %3$s e não será mais cobrado depois disso."
+msgstr ""
+
+#. translators: %s: nome do padrinho.
+#: src/Modules/Sponsorship/Notifications.php:94
+#, php-format
+msgid "Apadrinhamento encerrado: %s"
+msgstr ""
+
+#. translators: 1: nome do padrinho, 2: plano.
+#: src/Modules/Sponsorship/Notifications.php:97
+#, php-format
+msgid "O apadrinhamento de %1$s (plano %2$s) foi encerrado e não será mais cobrado."
+msgstr ""
+
+#. translators: %s: nome do padrinho.
+#: src/Modules/Sponsorship/Notifications.php:112
+#, php-format
+msgid "Pagamento recusado: %s"
+msgstr ""
+
+#. translators: 1: nome do padrinho, 2: plano.
+#: src/Modules/Sponsorship/Notifications.php:115
+#, php-format
+msgid "A cobrança do apadrinhamento de %1$s (plano %2$s) foi recusada pelo cartão. A Stripe tenta de novo nos próximos dias. Se quiser, avise o padrinho: ele troca o cartão pela área do padrinho, no site."
+msgstr ""
+
+#. translators: %s: nome do padrinho.
+#: src/Modules/Sponsorship/Notifications.php:131
+#, php-format
+msgid "Pagamento contestado: %s"
+msgstr ""
+
+#. translators: 1: nome do padrinho, 2: valor, 3: endereço das contestações na Stripe.
+#: src/Modules/Sponsorship/Notifications.php:134
+#, php-format
+msgid ""
+"%1$s contestou no banco um pagamento de %2$s do apadrinhamento.\n"
+"\n"
+"A resposta tem prazo. Entre na Stripe para ver o motivo e responder:\n"
+"%3$s"
+msgstr ""
+
+#. translators: %s: primeiro nome do padrinho.
+#. translators: %s: primeiro nome da pessoa.
+#: src/Modules/Sponsorship/Notifications.php:154
+#: templates/sponsor-area.php:25
+#: build/painel/index.js:2
+#, php-format,js-format
+msgid "Olá, %s!"
+msgstr ""
+
+#. translators: %s: primeiro nome do padrinho.
+#: src/Modules/Sponsorship/Notifications.php:154
+#: templates/sponsor-area.php:27
+msgid "Olá!"
+msgstr ""
+
+#. translators: %s: plano.
+#: src/Modules/Sponsorship/Notifications.php:157
+#, php-format
+msgid "O seu apadrinhamento está ativo no plano %s. Muito obrigado por ajudar os nossos animais!"
+msgstr ""
+
+#: src/Modules/Sponsorship/Notifications.php:159
+msgid "A cobrança é feita todo mês no cartão que você informou."
+msgstr ""
+
+#: src/Modules/Sponsorship/Notifications.php:164
+msgid "Para ver quanto você já doou, trocar o cartão, mudar o valor ou cancelar, abra a área do padrinho e informe este e-mail:"
+msgstr ""
+
+#. translators: %s: nome da protetora.
+#: src/Modules/Sponsorship/Notifications.php:173
+#, php-format
+msgid "Obrigado por apadrinhar – %s"
+msgstr ""
+
+#. translators: %s: endereço da tela de padrinhos no painel.
+#: src/Modules/Sponsorship/Notifications.php:211
+#, php-format
+msgid ""
+"Veja os padrinhos no painel:\n"
+"%s"
+msgstr ""
+
+#: src/Modules/Sponsorship/Notifications.php:233
+msgid "Um padrinho"
+msgstr ""
+
+#: src/Modules/Sponsorship/Notifications.php:245
+msgid "mensal"
 msgstr ""
 
 #. translators: %s: valor, ex.: R$ 15.
+#: src/Modules/Sponsorship/Notifications.php:249
 #: src/Modules/Sponsorship/Plans.php:327
-#: build/painel/index.js:24
-#: build/painel/index.js:32
+#: build/painel/index.js:26
+#: build/painel/index.js:37
 #, php-format,js-format
 msgid "%s por mês"
 msgstr ""
@@ -1580,6 +1467,22 @@ msgstr ""
 msgid "Cancelado"
 msgstr ""
 
+#: src/Modules/Sponsorship/ThanksPage.php:75
+#: templates/sponsorship-plans.php:48
+#: build/painel/index.js:19
+msgid "Obrigado por apadrinhar!"
+msgstr ""
+
+#: src/Modules/Sponsorship/ThanksPage.php:84
+#: templates/sponsorship-plans.php:49
+#: build/painel/index.js:19
+msgid "Você vai receber a confirmação do pagamento por e-mail. Sua ajuda chega todo mês para cuidar dos animais."
+msgstr ""
+
+#: src/Modules/Sponsorship/ThanksPage.php:134
+msgid "Obrigado"
+msgstr ""
+
 #: templates/adoption-form.php:35
 msgid "No momento não há animais disponíveis para adoção."
 msgstr ""
@@ -1597,7 +1500,7 @@ msgid "Confira os campos destacados e envie de novo."
 msgstr ""
 
 #: templates/adoption-form.php:76
-#: templates/sponsor-area.php:43
+#: templates/sponsor-area.php:147
 msgid "Não preencha este campo"
 msgstr ""
 
@@ -1673,6 +1576,11 @@ msgstr ""
 msgid "Falar pelo WhatsApp"
 msgstr ""
 
+#: templates/animal-details.php:229
+#: build/painel/index.js:11
+msgid "Saúde"
+msgstr ""
+
 #: templates/animal-details.php:252
 msgid "Vacinas aplicadas"
 msgstr ""
@@ -1691,6 +1599,14 @@ msgstr ""
 
 #: templates/animal-details.php:301
 msgid "Ver todos"
+msgstr ""
+
+#: templates/animal-details.php:333
+msgid "Animais anteriores"
+msgstr ""
+
+#: templates/animal-details.php:337
+msgid "Próximos animais"
 msgstr ""
 
 #: templates/animals-list.php:30
@@ -1759,7 +1675,7 @@ msgstr ""
 
 #: templates/contact-compact.php:24
 #: templates/contact.php:33
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Telefone"
 msgstr ""
 
@@ -1769,12 +1685,12 @@ msgid "Onde estamos"
 msgstr ""
 
 #: templates/contact-compact.php:57
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Redes sociais"
 msgstr ""
 
 #: templates/contact.php:39
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Horário de atendimento"
 msgstr ""
 
@@ -1814,7 +1730,7 @@ msgstr ""
 
 #: templates/contact.php:136
 #: templates/pix-donation.php:83
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Chave Pix"
 msgstr ""
 
@@ -1827,20 +1743,35 @@ msgstr ""
 msgid "Doar com QR Code"
 msgstr ""
 
-#: templates/donate-banner.php:21
+#: templates/donate-banner.php:36
 msgid "Ajude com qualquer valor"
 msgstr ""
 
-#: templates/donate-banner.php:22
+#: templates/donate-banner.php:37
 msgid "Doe por Pix em poucos segundos. Cada real vira ração, vacina e cuidado para quem foi resgatado."
+msgstr ""
+
+#: templates/donate-banner.php:44
+#: templates/pix-donation.php:91
+#: templates/pix-donation.php:107
+msgid "Copiado!"
+msgstr ""
+
+#: templates/donate-banner.php:44
+msgid "Copiar código Pix"
+msgstr ""
+
+#: templates/donate-banner.php:51
+#: templates/pix-donation.php:47
+msgid "QR Code para doar por Pix"
+msgstr ""
+
+#: templates/donate-banner.php:52
+msgid "Aponte a câmera do app do banco"
 msgstr ""
 
 #: templates/impact.php:21
 msgid "Nossos números"
-msgstr ""
-
-#: templates/pix-donation.php:47
-msgid "QR Code para doar por Pix"
 msgstr ""
 
 #: templates/pix-donation.php:48
@@ -1862,11 +1793,6 @@ msgid "R$ %s"
 msgstr ""
 
 #: templates/pix-donation.php:91
-#: templates/pix-donation.php:107
-msgid "Copiado!"
-msgstr ""
-
-#: templates/pix-donation.php:91
 msgid "Copiar chave"
 msgstr ""
 
@@ -1884,27 +1810,99 @@ msgstr ""
 msgid "Antes de confirmar no app, confira se o nome que aparece é %s."
 msgstr ""
 
-#: templates/sponsor-area.php:21
-msgid "Tudo certo! Toque no botão para trocar o cartão, mudar o valor ou cancelar o seu apadrinhamento."
+#. translators: %s: data.
+#: templates/sponsor-area.php:38
+#, php-format
+msgid "Você doou desde %s"
 msgstr ""
 
-#: templates/sponsor-area.php:23
+#: templates/sponsor-area.php:40
+msgid "Você já doou"
+msgstr ""
+
+#. translators: %s: número de pagamentos.
+#: templates/sponsor-area.php:48
+#, php-format
+msgid "em %s pagamento. Muito obrigado!"
+msgid_plural "em %s pagamentos. Muito obrigado!"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/sponsor-area.php:55
+msgid "A última cobrança foi recusada pelo cartão. Toque em \"Alterar ou cancelar\" para trocar o cartão."
+msgstr ""
+
+#: templates/sponsor-area.php:60
+#: build/painel/index.js:36
+msgid "Plano"
+msgstr ""
+
+#: templates/sponsor-area.php:65
+#: build/painel/index.js:4
+#: build/painel/index.js:11
+#: build/painel/index.js:14
+#: build/painel/index.js:34
+#: build/painel/index.js:37
+#: build/wp/blocks-editor.js:1
+msgid "Situação"
+msgstr ""
+
+#: templates/sponsor-area.php:70
+msgid "Padrinho desde"
+msgstr ""
+
+#: templates/sponsor-area.php:75
+#: build/painel/index.js:38
+msgid "Último pagamento"
+msgstr ""
+
+#: templates/sponsor-area.php:81
+msgid "Cancelamento pedido"
+msgstr ""
+
+#. translators: %s: data.
+#: templates/sponsor-area.php:85
+#, php-format
+msgid "Ativo até %s, sem novas cobranças"
+msgstr ""
+
+#: templates/sponsor-area.php:91
+msgid "Próxima cobrança"
+msgstr ""
+
+#: templates/sponsor-area.php:109
+msgid "Alterar ou cancelar"
+msgstr ""
+
+#: templates/sponsor-area.php:111
+msgid "Ver meus pagamentos"
+msgstr ""
+
+#: templates/sponsor-area.php:117
+msgid "Você vai para a página segura da Stripe. Lá dá para trocar o cartão, mudar o valor, ver os recibos e cancelar."
+msgstr ""
+
+#: templates/sponsor-area.php:125
+msgid "Tudo certo! Toque no botão para ver quanto você já doou, trocar o cartão, mudar o valor ou cancelar."
+msgstr ""
+
+#: templates/sponsor-area.php:127
 msgid "Abrir meu apadrinhamento"
 msgstr ""
 
-#: templates/sponsor-area.php:28
+#: templates/sponsor-area.php:132
 msgid "Se este e-mail for de um padrinho, o link de acesso chega em alguns minutos. Confira também a caixa de spam. O link vale por 30 minutos."
 msgstr ""
 
-#: templates/sponsor-area.php:39
+#: templates/sponsor-area.php:143
 msgid "E-mail usado no apadrinhamento"
 msgstr ""
 
-#: templates/sponsor-area.php:47
+#: templates/sponsor-area.php:151
 msgid "Receber link de acesso"
 msgstr ""
 
-#: templates/sponsor-area.php:50
+#: templates/sponsor-area.php:154
 msgid "Enviamos um link para o seu e-mail. Não precisa de senha."
 msgstr ""
 
@@ -1920,14 +1918,6 @@ msgstr[1] ""
 msgid "Atualizado em %s"
 msgstr ""
 
-#: templates/sponsorship-plans.php:48
-msgid "Obrigado por apadrinhar!"
-msgstr ""
-
-#: templates/sponsorship-plans.php:49
-msgid "Você vai receber a confirmação do pagamento por e-mail. Sua ajuda chega todo mês para cuidar dos animais."
-msgstr ""
-
 #: templates/sponsorship-plans.php:55
 msgid "Escolha o valor que mais combina com você"
 msgstr ""
@@ -1937,7 +1927,7 @@ msgid "Todos os valores são mensais, pagos com cartão de crédito na página s
 msgstr ""
 
 #: templates/sponsorship-plans.php:72
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Mais escolhido"
 msgstr ""
 
@@ -1957,6 +1947,14 @@ msgstr ""
 msgid "com %s por mês"
 msgstr ""
 
+#: templates/sponsorship-thanks.php:28
+msgid "Ver os animais"
+msgstr ""
+
+#: templates/sponsorship-thanks.php:31
+msgid "Abrir a área do padrinho"
+msgstr ""
+
 #: build/painel/index.js:1
 msgid "Algo deu errado. Confira sua conexão e tente de novo."
 msgstr ""
@@ -1966,14 +1964,14 @@ msgid "Adoções"
 msgstr ""
 
 #: build/painel/index.js:1
-#: build/painel/index.js:32
-#: build/painel/index.js:34
+#: build/painel/index.js:38
+#: build/painel/index.js:40
 msgid "Padrinhos"
 msgstr ""
 
 #: build/painel/index.js:1
-#: build/painel/index.js:17
 #: build/painel/index.js:19
+#: build/painel/index.js:21
 msgid "Banners"
 msgstr ""
 
@@ -2000,14 +1998,12 @@ msgstr ""
 
 #: build/painel/index.js:1
 #: build/painel/index.js:4
-#: build/painel/index.js:19
+#: build/painel/index.js:21
 msgid "Ver o site"
 msgstr ""
 
-#. translators: %s: primeiro nome da pessoa.
-#: build/painel/index.js:2
-#, js-format
-msgid "Olá, %s!"
+#: build/painel/index.js:1
+msgid "Voltar ao WordPress"
 msgstr ""
 
 #: build/painel/index.js:2
@@ -2081,7 +2077,7 @@ msgid "Atalhos"
 msgstr ""
 
 #: build/painel/index.js:4
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Banners da página inicial"
 msgstr ""
 
@@ -2137,6 +2133,11 @@ msgid "Publicação"
 msgstr ""
 
 #: build/painel/index.js:4
+#: build/painel/index.js:11
+msgid "Castrado(a)"
+msgstr ""
+
+#: build/painel/index.js:4
 msgid "Filtros"
 msgstr ""
 
@@ -2164,9 +2165,15 @@ msgid "Situação atualizada."
 msgstr ""
 
 #: build/painel/index.js:4
+#: build/painel/index.js:22
+msgid "Foto"
+msgstr ""
+
+#: build/painel/index.js:4
 #: build/painel/index.js:14
-#: build/painel/index.js:23
-#: build/painel/index.js:31
+#: build/painel/index.js:25
+#: build/painel/index.js:33
+#: build/painel/index.js:36
 msgid "(sem nome)"
 msgstr ""
 
@@ -2230,7 +2237,8 @@ msgstr ""
 
 #: build/painel/index.js:7
 #: build/painel/index.js:15
-#: build/painel/index.js:32
+#: build/painel/index.js:34
+#: build/painel/index.js:38
 msgid "Itens por página"
 msgstr ""
 
@@ -2245,20 +2253,23 @@ msgstr[1] ""
 #. translators: 1: página atual, 2: total de páginas.
 #: build/painel/index.js:9
 #: build/painel/index.js:17
-#: build/painel/index.js:34
+#: build/painel/index.js:36
+#: build/painel/index.js:40
 #, js-format
 msgid "Página %1$d de %2$d"
 msgstr ""
 
 #: build/painel/index.js:9
 #: build/painel/index.js:17
-#: build/painel/index.js:34
+#: build/painel/index.js:36
+#: build/painel/index.js:40
 msgid "Página anterior"
 msgstr ""
 
 #: build/painel/index.js:9
 #: build/painel/index.js:17
-#: build/painel/index.js:34
+#: build/painel/index.js:36
+#: build/painel/index.js:40
 msgid "Próxima página"
 msgstr ""
 
@@ -2322,9 +2333,9 @@ msgstr ""
 #: build/painel/index.js:9
 #: build/painel/index.js:11
 #: build/painel/index.js:14
-#: build/painel/index.js:23
-#: build/painel/index.js:27
-#: build/painel/index.js:28
+#: build/painel/index.js:18
+#: build/painel/index.js:25
+#: build/painel/index.js:29
 msgid "Cancelar"
 msgstr ""
 
@@ -2394,6 +2405,11 @@ msgid "Cadastro salvo."
 msgstr ""
 
 #: build/painel/index.js:11
+#: build/painel/index.js:19
+msgid "Não informado"
+msgstr ""
+
+#: build/painel/index.js:11
 msgid "É a foto que aparece na lista de animais do site."
 msgstr ""
 
@@ -2402,7 +2418,67 @@ msgid "Só \"Disponível para adoção\" e \"Reservado\" aparecem na lista públ
 msgstr ""
 
 #: build/painel/index.js:11
+msgid "anos e"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Meses"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "meses"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Peso (kg)"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Opcional. Aparece ao lado do porte. Ex.: 18,5"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Ex.: tigrado, preto e branco"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Data do resgate"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Último vermífugo"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Passou por consulta veterinária"
+msgstr ""
+
+#: build/painel/index.js:11
 msgid "Aparece em destaque na página do animal."
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Teste de FIV (gatos)"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Não testado"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Teste de FeLV (gatos)"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Ex.: V4, antirrábica"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Nome da vacina"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Data da aplicação"
 msgstr ""
 
 #: build/painel/index.js:11
@@ -2410,7 +2486,36 @@ msgid "Remover vacina"
 msgstr ""
 
 #: build/painel/index.js:11
+msgid "Adicionar vacina"
+msgstr ""
+
+#: build/painel/index.js:11
+#: build/painel/index.js:19
+msgid "Frase de apresentação"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Uma linha que aparece logo abaixo do nome. Ex.: Um companheiro cheio de alegria e carinho!"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Resumo"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Duas ou três frases sobre como o animal é hoje. Aparece no topo da página, ao lado da foto."
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "História do resgate"
+msgstr ""
+
+#: build/painel/index.js:11
 msgid "Conte onde o animal foi encontrado, como estava e como foi a recuperação."
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Galeria de fotos (antes e depois)"
 msgstr ""
 
 #: build/painel/index.js:11
@@ -2418,8 +2523,12 @@ msgid "Marque cada foto como \"Antes\" (quando foi resgatado) ou \"Depois\" (rec
 msgstr ""
 
 #: build/painel/index.js:11
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Remover foto"
+msgstr ""
+
+#: build/painel/index.js:11
+msgid "Tipo da foto"
 msgstr ""
 
 #: build/painel/index.js:11
@@ -2452,7 +2561,7 @@ msgstr ""
 
 #: build/painel/index.js:11
 #: build/painel/index.js:14
-#: build/painel/index.js:27
+#: build/painel/index.js:29
 msgid "Excluir"
 msgstr ""
 
@@ -2590,6 +2699,16 @@ msgid "Pedidos enviados pelo formulário do site."
 msgstr ""
 
 #: build/painel/index.js:15
+#: build/painel/index.js:38
+msgid "Filtrar por situação"
+msgstr ""
+
+#: build/painel/index.js:15
+#: build/painel/index.js:38
+msgid "Todas as situações"
+msgstr ""
+
+#: build/painel/index.js:15
 msgid "Nenhum pedido nessa situação."
 msgstr ""
 
@@ -2610,581 +2729,685 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: build/painel/index.js:17
+msgid "Definida no arquivo wp-config.php do site. Para trocar, é preciso editar esse arquivo."
+msgstr ""
+
+#: build/painel/index.js:17
+msgid "Chaves guardadas."
+msgstr ""
+
+#: build/painel/index.js:17
+msgid "Chaves removidas."
+msgstr ""
+
+#: build/painel/index.js:17
+msgid "Este site não consegue guardar as chaves com segurança. Peça a quem cuida da hospedagem para defini-las no arquivo wp-config.php."
+msgstr ""
+
+#: build/painel/index.js:17
+msgid "A chave que estava guardada não pôde ser lida, porque a segurança do site foi trocada. Cole a chave de novo."
+msgstr ""
+
+#: build/painel/index.js:17
+msgid "Chave da Stripe"
+msgstr ""
+
+#: build/painel/index.js:17
+msgid "Na Stripe, abra \"Desenvolvedores\" → \"Chaves de API\" e crie uma chave restrita com as permissões da lista acima. A chave secreta completa (\"sk_\") não é aceita."
+msgstr ""
+
+#. translators: %s: começo e fim da chave em uso, ex.: rk_live_…Ab12.
+#: build/painel/index.js:18
+#, js-format
+msgid "Em uso: %s. Cole outra para trocar."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Segredo do aviso de pagamentos (webhook)"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Na Stripe, abra \"Desenvolvedores\" → \"Webhooks\", cadastre o endereço abaixo e copie o \"Segredo da assinatura\"."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Já definido. Cole outro para trocar."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Guardar chaves"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Remover chaves"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Remover as chaves da Stripe?"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "O site para de aceitar novos padrinhos e de receber os avisos de pagamento até você informar as chaves de novo. Quem já é padrinho continua sendo cobrado pela Stripe."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Remover"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Funcionando:"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Pendente:"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Products (escrita): criar e renomear os planos"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Prices (escrita): definir o valor mensal de cada plano"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Checkout Sessions (escrita): abrir a página de pagamento"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Customer portal configurations (escrita): preparar a área do padrinho"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Customer portal sessions (escrita): abrir a área do padrinho"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "O que a chave precisa permitir na Stripe"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Conferir de novo"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Ao criar a chave restrita na Stripe, libere estes itens. Depois de guardar a chave, cada um é conferido aqui."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Na Stripe, edite a chave restrita, libere a escrita nos itens pendentes e toque em \"Conferir de novo\"."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Tudo liberado."
+msgstr ""
+
+#: build/painel/index.js:18
+#: build/painel/index.js:29
+msgid "Pagamentos (Stripe)"
+msgstr ""
+
+#: build/painel/index.js:18
+#: build/painel/index.js:29
+msgid "Ambiente de teste"
+msgstr ""
+
+#: build/painel/index.js:18
+#: build/painel/index.js:29
+msgid "Recebendo de verdade"
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Configurada uma vez pelo administrador do site. As chaves ficam guardadas com criptografia e nunca aparecem inteiras aqui."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Chave da Stripe definida."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Falta informar a chave da Stripe."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Aviso automático de pagamentos definido."
+msgstr ""
+
+#: build/painel/index.js:18
+msgid "Falta informar o segredo do aviso de pagamentos (webhook)."
+msgstr ""
+
+#. translators: %s: lista de valores, ex.: R$ 15, R$ 30.
+#: build/painel/index.js:19
+#, js-format
+msgid "Planos mensais: %s."
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Falta criar os planos mensais (na tela \"Padrinhos\", em \"Planos\")."
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Só o administrador do site pode informar ou trocar as chaves."
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Endereço para cadastrar na Stripe (webhook):"
+msgstr ""
+
+#: build/painel/index.js:19
 msgid "Configurações salvas."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "A página de contato do site foi criada."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "A página \"Como ajudar\" foi criada, com o QR Code do Pix."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Você não tem permissão para alterar as configurações."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Os dados da protetora aparecem na página de contato do site."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Ver página de contato"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
+msgid "Seções das configurações"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Protetora e site"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Pagamentos e apadrinhamento"
+msgstr ""
+
+#: build/painel/index.js:19
+#: build/painel/index.js:34
+msgid "Pagamentos"
+msgstr ""
+
+#: build/painel/index.js:19
 msgid "Escolha as fotos e os textos de destaque do site."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Identidade"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Nome da protetora ou do projeto"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "CNPJ (se houver)"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Ex.: Resgatamos e cuidamos de gatos em situação de rua."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Com DDD. O link para a conversa é criado sozinho."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Mensagem inicial do WhatsApp"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Olá! Vi o site de vocês e gostaria de saber mais."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Texto que já vem escrito quando a pessoa abre a conversa."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Ex.: segunda a sexta, das 9h às 18h"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Pode colar o link do perfil ou escrever só o @usuario."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Localização"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Só cidade, estado e bairro aparecem no site. Não pedimos endereço completo."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Cidade"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Estado"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Bairro ou região (opcional)"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Adoção"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Usado pelo formulário de pedidos de adoção."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "E-mail que recebe os pedidos de adoção"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Não aparece no site."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Taxa de adoção"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Ex.: não cobramos taxa"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Regras e requisitos para adotar"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Ex.: ser maior de 18 anos, telar janelas, aceitar visita antes da adoção…"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Privacidade"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Explica a quem preenche um formulário como os dados dela são usados (LGPD)."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Responsável pelos dados"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Nome de quem responde a pedidos sobre dados pessoais."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Texto de privacidade"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Doações por Pix"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Ao cadastrar a chave, o site ganha a página \"Como ajudar\", com o QR Code do Pix. A chave também aparece na página de contato."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Ver a página \"Como ajudar\""
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Tipo da chave"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Nome do titular"
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Como aparece no comprovante, para a pessoa conferir antes de pagar."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
+msgid "Avisos de novo padrinho, pedido de cancelamento, pagamento recusado e pagamento contestado."
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "E-mail que recebe os avisos de apadrinhamento"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Não aparece no site. Sem ele, os avisos não são enviados."
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Página de agradecimento"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Para onde a pessoa vai depois de pagar. O site cria a página \"Obrigado\" quando há um plano à venda."
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Nenhuma (volta para a página dos planos)"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Ver página de agradecimento"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Título do agradecimento"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Texto do agradecimento"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Aparece na página de agradecimento. Em branco, o site usa um texto padrão."
+msgstr ""
+
+#: build/painel/index.js:19
 msgid "Banners salvos. O site já mostra a nova versão."
 msgstr ""
 
-#: build/painel/index.js:17
+#: build/painel/index.js:19
 msgid "Você não tem permissão para alterar os banners."
 msgstr ""
 
 #. translators: %d: posição do banner na lista.
-#: build/painel/index.js:19
+#: build/painel/index.js:21
 #, js-format
 msgid "O banner %d está ligado, mas sem título. Escreva um título ou desligue o banner."
 msgstr ""
 
-#: build/painel/index.js:19
+#: build/painel/index.js:21
 msgid "São os destaques do topo da página inicial do site. Com mais de um, o visitante passa de um para o outro."
 msgstr ""
 
-#: build/painel/index.js:19
+#: build/painel/index.js:21
 msgid "Nenhum banner cadastrado. Enquanto isso, o site mostra um banner padrão com a frase da protetora."
 msgstr ""
 
 #. translators: %d: posição do banner na lista.
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 #, js-format
 msgid "Banner %d"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Aparece no site"
 msgstr ""
 
-#: build/painel/index.js:20
-#: build/painel/index.js:23
+#: build/painel/index.js:22
+#: build/painel/index.js:25
 msgid "Escondido"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Mover para cima"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Mover para baixo"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Excluir banner"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Use uma foto deitada (mais larga que alta). O texto fica à esquerda, então deixe o animal mais para a direita."
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Título"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Ex.: Juntos por mais"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Final do título, em verde"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Opcional. Ex.: vidas felizes"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Texto"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Botão principal"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Ex.: Quero adotar"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Link do botão principal"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Ex.: /animais/ ou um endereço completo (https://...)"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Segundo botão"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Opcional. Ex.: Quero ser padrinho"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Link do segundo botão"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Adicionar banner"
 msgstr ""
 
-#: build/painel/index.js:20
+#: build/painel/index.js:22
 msgid "Salvar banners"
 msgstr ""
 
 #. translators: %d: quantidade máxima de banners.
-#: build/painel/index.js:21
+#: build/painel/index.js:23
 #, js-format
 msgid "O limite é de %d banners."
 msgstr ""
 
-#: build/painel/index.js:21
+#: build/painel/index.js:23
 msgid "Plano salvo."
 msgstr ""
 
-#: build/painel/index.js:21
+#: build/painel/index.js:23
 msgid "Plano criado. Ele já aparece no site."
 msgstr ""
 
 #. translators: 1: valor mínimo em reais, 2: valor máximo em reais.
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 #, js-format
 msgid "Informe um valor mensal entre R$ %1$s e R$ %2$s."
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "Editar plano"
 msgstr ""
 
-#: build/painel/index.js:22
-#: build/painel/index.js:23
+#: build/painel/index.js:24
+#: build/painel/index.js:25
 msgid "Novo plano"
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "O plano é uma contribuição mensal no cartão. O nome e o valor aparecem no site e na página de pagamento."
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "Nome do plano"
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "Opcional. Ex.: Amigo, Protetor, Anjo da Guarda"
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "Valor por mês (R$)"
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "Quem já apadrinha neste plano continua pagando o valor antigo. O valor novo vale para quem entrar a partir de agora."
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "Descrição curta"
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "Opcional. Uma frase logo abaixo do valor."
 msgstr ""
 
-#: build/painel/index.js:22
+#: build/painel/index.js:24
 msgid "O que este plano ajuda a pagar"
 msgstr ""
 
 #. translators: %d: quantidade máxima de linhas.
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 #, js-format
 msgid "Opcional. Um item por linha, até %d. Ex.: Ajuda com a ração do mês"
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Destacar como \"Mais escolhido\" (só um plano por vez)"
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Salvar plano"
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Criar plano"
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Plano escondido do site."
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Plano de volta ao site."
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Plano excluído."
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Planos"
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "São as opções de contribuição mensal que aparecem no site. Você escolhe os nomes e os valores."
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Para criar planos, a chave da Stripe precisa estar definida (veja \"Pagamentos\")."
 msgstr ""
 
-#: build/painel/index.js:23
+#: build/painel/index.js:25
 msgid "Nenhum plano ainda. Crie o primeiro para o site começar a receber padrinhos."
 msgstr ""
 
 #. translators: %d: quantidade de padrinhos no plano.
 #. translators: %d: quantidade de padrinhos.
-#: build/painel/index.js:25
-#: build/painel/index.js:33
+#: build/painel/index.js:27
+#: build/painel/index.js:39
 #, js-format
 msgid "%d padrinho"
 msgid_plural "%d padrinhos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: build/painel/index.js:25
+#: build/painel/index.js:27
 msgid "No site"
 msgstr ""
 
 #. translators: %s: nome ou valor do plano.
-#: build/painel/index.js:26
+#: build/painel/index.js:28
 #, js-format
 msgid "Editar plano %s"
 msgstr ""
 
 #. translators: %s: nome ou valor do plano.
-#: build/painel/index.js:27
+#: build/painel/index.js:29
 #, js-format
 msgid "Excluir plano %s"
 msgstr ""
 
-#: build/painel/index.js:27
+#: build/painel/index.js:29
 msgid "Excluir este plano?"
 msgstr ""
 
-#: build/painel/index.js:27
+#: build/painel/index.js:29
 msgid "Este plano tem padrinhos e não pode ser excluído. Use a chave \"No site\" para escondê-lo: quem já apadrinha continua normalmente."
 msgstr ""
 
-#: build/painel/index.js:27
+#: build/painel/index.js:29
 msgid "O plano sai do site e deixa de ser vendido na Stripe. Isso não pode ser desfeito."
 msgstr ""
 
-#: build/painel/index.js:27
-msgid "Definida no arquivo wp-config.php do site. Para trocar, é preciso editar esse arquivo."
-msgstr ""
-
-#: build/painel/index.js:27
-msgid "Chaves guardadas."
-msgstr ""
-
-#: build/painel/index.js:27
-msgid "Chaves removidas."
-msgstr ""
-
-#: build/painel/index.js:27
-msgid "Este site não consegue guardar as chaves com segurança. Peça a quem cuida da hospedagem para defini-las no arquivo wp-config.php."
-msgstr ""
-
-#: build/painel/index.js:27
-msgid "A chave que estava guardada não pôde ser lida, porque a segurança do site foi trocada. Cole a chave de novo."
-msgstr ""
-
-#: build/painel/index.js:27
-msgid "Chave da Stripe"
-msgstr ""
-
-#: build/painel/index.js:27
-msgid "Na Stripe, abra \"Desenvolvedores\" → \"Chaves de API\" e crie uma chave restrita com as permissões da lista acima. A chave secreta completa (\"sk_\") não é aceita."
-msgstr ""
-
-#. translators: %s: começo e fim da chave em uso, ex.: rk_live_…Ab12.
-#: build/painel/index.js:28
-#, js-format
-msgid "Em uso: %s. Cole outra para trocar."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Segredo do aviso de pagamentos (webhook)"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Na Stripe, abra \"Desenvolvedores\" → \"Webhooks\", cadastre o endereço abaixo e copie o \"Segredo da assinatura\"."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Já definido. Cole outro para trocar."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Guardar chaves"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Remover chaves"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Remover as chaves da Stripe?"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "O site para de aceitar novos padrinhos e de receber os avisos de pagamento até você informar as chaves de novo. Quem já é padrinho continua sendo cobrado pela Stripe."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Funcionando:"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Pendente:"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Products (escrita): criar e renomear os planos"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Prices (escrita): definir o valor mensal de cada plano"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Checkout Sessions (escrita): abrir a página de pagamento"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Customer portal configurations (escrita): preparar a área do padrinho"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Customer portal sessions (escrita): abrir a área do padrinho"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "O que a chave precisa permitir na Stripe"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Conferir de novo"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Ao criar a chave restrita na Stripe, libere estes itens. Depois de guardar a chave, cada um é conferido aqui."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Na Stripe, edite a chave restrita, libere a escrita nos itens pendentes e toque em \"Conferir de novo\"."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Tudo liberado."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Pagamentos (Stripe)"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Ambiente de teste"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Recebendo de verdade"
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Configurada uma vez pelo administrador do site. As chaves ficam guardadas com criptografia e nunca aparecem inteiras aqui."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Chave da Stripe definida."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Falta informar a chave da Stripe."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Aviso automático de pagamentos definido."
-msgstr ""
-
-#: build/painel/index.js:28
-msgid "Falta informar o segredo do aviso de pagamentos (webhook)."
-msgstr ""
-
-#. translators: %s: lista de valores, ex.: R$ 15, R$ 30.
 #: build/painel/index.js:29
-#, js-format
-msgid "Planos mensais: %s."
+msgid "Devolvido em parte"
 msgstr ""
 
 #: build/painel/index.js:29
-msgid "Falta criar os planos mensais (em \"Planos\", logo abaixo)."
+msgid "Devolvido"
 msgstr ""
 
 #: build/painel/index.js:29
-msgid "Só o administrador do site pode informar ou trocar as chaves."
+msgid "Contestado"
 msgstr ""
 
 #: build/painel/index.js:29
-msgid "Endereço para cadastrar na Stripe (webhook):"
+msgid "Contestação perdida"
+msgstr ""
+
+#: build/painel/index.js:29
+msgid "Pago (contestação ganha)"
+msgstr ""
+
+#: build/painel/index.js:29
+msgid "Pago"
+msgstr ""
+
+#: build/painel/index.js:29
+msgid "As chaves da Stripe estão definidas: o site já pode receber os apadrinhamentos."
+msgstr ""
+
+#: build/painel/index.js:29
+msgid "Falta terminar a configuração da Stripe. Sem as duas chaves, o site não recebe os apadrinhamentos."
+msgstr ""
+
+#: build/painel/index.js:29
+msgid "Só o administrador do site pode informar as chaves."
+msgstr ""
+
+#: build/painel/index.js:29
+msgid "Abrir as configurações de pagamento"
 msgstr ""
 
 #: build/painel/index.js:29
@@ -3230,50 +3453,117 @@ msgid "Salvar ajuste"
 msgstr ""
 
 #: build/painel/index.js:31
-msgid "Padrinho"
+msgid "Este mês"
 msgstr ""
 
 #: build/painel/index.js:31
-msgid "Plano"
+msgid "Mês passado"
+msgstr ""
+
+#. translators: %s: data.
+#: build/painel/index.js:32
+#, js-format
+msgid "Total desde %s"
 msgstr ""
 
 #: build/painel/index.js:32
+msgid "Total até hoje"
+msgstr ""
+
+#: build/painel/index.js:32
+msgid "Arrecadação dos padrinhos"
+msgstr ""
+
+#: build/painel/index.js:32
+msgid "Quanto os padrinhos pagaram, já sem o que foi devolvido ou contestado. As taxas da Stripe não estão descontadas."
+msgstr ""
+
+#. translators: %d: quantidade de pagamentos.
+#: build/painel/index.js:33
+#, js-format
+msgid "%d pagamento foi contestado no banco e espera resposta. Entre na Stripe para responder: a resposta tem prazo."
+msgid_plural "%d pagamentos foram contestados no banco e esperam resposta. Entre na Stripe para responder: a resposta tem prazo."
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/painel/index.js:33
+msgid "Data"
+msgstr ""
+
+#: build/painel/index.js:33
+#: build/painel/index.js:36
+msgid "Padrinho"
+msgstr ""
+
+#: build/painel/index.js:33
+msgid "Valor"
+msgstr ""
+
+#. translators: %s: valor, ex.: R$ 15.
+#: build/painel/index.js:34
+#, js-format
+msgid "%s devolvido"
+msgstr ""
+
+#: build/painel/index.js:34
+msgid "Nenhum pagamento registrado por enquanto."
+msgstr ""
+
+#: build/painel/index.js:34
+msgid "Cada mensalidade paga aparece aqui logo depois da cobrança."
+msgstr ""
+
+#. translators: %d: quantidade de pagamentos.
+#: build/painel/index.js:35
+#, js-format
+msgid "%d pagamento"
+msgid_plural "%d pagamentos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/painel/index.js:37
 msgid "Pagamento falhou"
 msgstr ""
 
-#: build/painel/index.js:32
-msgid "Último pagamento"
+#. translators: %s: data.
+#: build/painel/index.js:38
+#, js-format
+msgid "Cancela em %s"
 msgstr ""
 
-#: build/painel/index.js:32
+#: build/painel/index.js:38
+msgid "Total doado"
+msgstr ""
+
+#: build/painel/index.js:38
 msgid "Nenhum padrinho nessa situação."
 msgstr ""
 
-#: build/painel/index.js:32
+#: build/painel/index.js:38
 msgid "Nenhum padrinho por enquanto."
 msgstr ""
 
-#: build/painel/index.js:32
+#: build/painel/index.js:38
 msgid "Quando alguém apadrinhar pelo site, o nome aparece aqui logo depois do pagamento."
 msgstr ""
 
-#: build/painel/index.js:34
+#: build/painel/index.js:40
 msgid "Quem ajuda a protetora todo mês, com pagamento por cartão."
 msgstr ""
 
-#: build/painel/index.js:34
+#: build/painel/index.js:40
 msgid "Você não tem permissão para ver os padrinhos."
 msgstr ""
 
-#: build/painel/index.js:34
+#: build/painel/index.js:40
 msgid "Página não encontrada"
 msgstr ""
 
-#: build/painel/index.js:34
+#: build/painel/index.js:40
 msgid "Esse endereço não existe no painel."
 msgstr ""
 
-#: build/painel/index.js:34
+#: build/painel/index.js:40
 msgid "Voltar ao início"
 msgstr ""
 
@@ -3547,7 +3837,7 @@ msgstr ""
 
 #: blocks/donate-banner/block.json
 msgctxt "block description"
-msgid "Chamada \"Doe por Pix\" com botão para a página \"Como ajudar\"."
+msgid "Chamada \"Doe por Pix\" com o QR Code e botão para a página \"Como ajudar\"."
 msgstr ""
 
 #: blocks/donate-banner/block.json
@@ -3661,6 +3951,7 @@ msgstr ""
 #: blocks/pix-once/block.json
 #: blocks/sponsor-area/block.json
 #: blocks/sponsorship-plans/block.json
+#: blocks/sponsorship-thanks/block.json
 msgctxt "block keyword"
 msgid "padrinho"
 msgstr ""
@@ -3677,6 +3968,7 @@ msgstr ""
 
 #: blocks/sponsor-area/block.json
 #: blocks/sponsorship-plans/block.json
+#: blocks/sponsorship-thanks/block.json
 msgctxt "block keyword"
 msgid "apadrinhamento"
 msgstr ""
@@ -3714,4 +4006,29 @@ msgstr ""
 #: blocks/sponsorship-plans/block.json
 msgctxt "block keyword"
 msgid "planos"
+msgstr ""
+
+#: blocks/sponsorship-thanks/block.json
+msgctxt "block title"
+msgid "Agradecimento ao padrinho"
+msgstr ""
+
+#: blocks/sponsorship-thanks/block.json
+msgctxt "block description"
+msgid "Mensagem de agradecimento que a pessoa vê depois de concluir o pagamento do apadrinhamento. O título e o texto são escritos nas Configurações do painel."
+msgstr ""
+
+#: blocks/sponsorship-thanks/block.json
+msgctxt "block keyword"
+msgid "obrigado"
+msgstr ""
+
+#: blocks/sponsorship-thanks/block.json
+msgctxt "block keyword"
+msgid "agradecimento"
+msgstr ""
+
+#: blocks/sponsorship-thanks/block.json
+msgctxt "block keyword"
+msgid "pagamento"
 msgstr ""
