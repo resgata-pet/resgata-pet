@@ -22,7 +22,7 @@ final class Organization {
 	/**
 	 * Campos que nunca aparecem no site (uso interno do plugin).
 	 */
-	public const PRIVATE_FIELDS = array( 'adoption_email' );
+	public const PRIVATE_FIELDS = array( 'adoption_email', 'sponsorship_email', 'sponsorship_thanks_page' );
 
 	/**
 	 * Estados (UF => nome).
@@ -97,29 +97,33 @@ final class Organization {
 	 */
 	public static function fields(): array {
 		return array(
-			'name'             => 120,
-			'tagline'          => 200,
-			'cnpj'             => 18,
-			'whatsapp'         => 20,
-			'whatsapp_message' => 300,
-			'phone'            => 20,
-			'email'            => 120,
-			'hours'            => 200,
-			'instagram'        => 200,
-			'facebook'         => 200,
-			'tiktok'           => 200,
-			'youtube'          => 200,
-			'city'             => 100,
-			'state'            => 2,
-			'neighborhood'     => 100,
-			'adoption_email'   => 120,
-			'adoption_fee'     => 200,
-			'adoption_rules'   => 5000,
-			'privacy_contact'  => 120,
-			'privacy_text'     => 10000,
-			'pix_key_type'     => 10,
-			'pix_key'          => 120,
-			'pix_holder'       => 120,
+			'name'                     => 120,
+			'tagline'                  => 200,
+			'cnpj'                     => 18,
+			'whatsapp'                 => 20,
+			'whatsapp_message'         => 300,
+			'phone'                    => 20,
+			'email'                    => 120,
+			'hours'                    => 200,
+			'instagram'                => 200,
+			'facebook'                 => 200,
+			'tiktok'                   => 200,
+			'youtube'                  => 200,
+			'city'                     => 100,
+			'state'                    => 2,
+			'neighborhood'             => 100,
+			'adoption_email'           => 120,
+			'adoption_fee'             => 200,
+			'adoption_rules'           => 5000,
+			'sponsorship_email'        => 120,
+			'sponsorship_thanks_page'  => 10,
+			'sponsorship_thanks_title' => 120,
+			'sponsorship_thanks_text'  => 600,
+			'privacy_contact'          => 120,
+			'privacy_text'             => 10000,
+			'pix_key_type'             => 10,
+			'pix_key'                  => 120,
+			'pix_holder'               => 120,
 		);
 	}
 
@@ -169,6 +173,7 @@ final class Organization {
 			switch ( $field ) {
 				case 'email':
 				case 'adoption_email':
+				case 'sponsorship_email':
 					$value = sanitize_email( $value );
 					break;
 
@@ -196,7 +201,12 @@ final class Organization {
 
 				case 'adoption_rules':
 				case 'privacy_text':
+				case 'sponsorship_thanks_text':
 					$value = sanitize_textarea_field( $value );
+					break;
+
+				case 'sponsorship_thanks_page':
+					$value = (string) preg_replace( '/\D+/', '', $value );
 					break;
 
 				default:

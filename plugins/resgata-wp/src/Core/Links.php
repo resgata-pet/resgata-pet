@@ -25,6 +25,7 @@ final class Links {
 	private const PAGE_BLOCKS = array(
 		'resgata-wp/sponsorship-plans' => 'rwp_sponsorship_page_id',
 		'resgata-wp/pix-donation'      => 'rwp_help_page_id',
+		'resgata-wp/sponsor-area'      => 'rwp_sponsor_area_page_id',
 	);
 
 	/**
@@ -48,6 +49,15 @@ final class Links {
 	 */
 	public static function sponsorship(): string {
 		return self::page_with_block( 'resgata-wp/sponsorship-plans' );
+	}
+
+	/**
+	 * Área do padrinho: a página publicada que tem o bloco dela, já com a âncora do bloco.
+	 */
+	public static function sponsor_area(): string {
+		$url = self::page_with_block( 'resgata-wp/sponsor-area' );
+
+		return '' !== $url ? $url . '#rwp-padrinho' : '';
 	}
 
 	/**

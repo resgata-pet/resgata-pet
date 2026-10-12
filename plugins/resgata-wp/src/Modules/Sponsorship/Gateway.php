@@ -81,6 +81,9 @@ final class Gateway {
 		 */
 		$excluded = array_values( array_filter( (array) apply_filters( 'rwp_sponsorship_excluded_payment_methods', array( 'boleto' ) ) ) );
 
+		// Depois de pagar, a pessoa cai na página de agradecimento; sem ela, volta para os planos.
+		$thanks = ThanksPage::url();
+
 		$params = array(
 			'mode'                   => 'subscription',
 			'line_items'             => array(
@@ -90,7 +93,7 @@ final class Gateway {
 				),
 			),
 			'locale'                 => 'pt-BR',
-			'success_url'            => add_query_arg( Checkout::RESULT_PARAM, 'obrigado', $return_url ) . '#rwp-apadrinhar',
+			'success_url'            => '' !== $thanks ? $thanks : add_query_arg( Checkout::RESULT_PARAM, 'obrigado', $return_url ) . '#rwp-apadrinhar',
 			'cancel_url'             => $return_url . '#rwp-apadrinhar',
 			'integration_identifier' => self::INTEGRATION_IDENTIFIER,
 			'metadata'               => array( self::ORIGIN_KEY => self::ORIGIN_VALUE ),
@@ -461,7 +464,7 @@ final class Gateway {
 	 * Erro para o painel quando a chave ainda não foi definida.
 	 */
 	private static function not_configured(): \WP_Error {
-		return new \WP_Error( 'rwp_stripe_not_configured', __( 'A chave da Stripe ainda não foi definida. Peça ao administrador do site para informar a chave em "Pagamentos (Stripe)".', 'resgata-wp' ), array( 'status' => 503 ) );
+		return new \WP_Error( 'rwp_stripe_not_configured', __( 'A chave da Stripe ainda não foi definida. Peça ao administrador do site para informar a chave em Configurações, na aba de pagamentos.', 'resgata-wp' ), array( 'status' => 503 ) );
 	}
 
 	/**
@@ -475,7 +478,7 @@ final class Gateway {
 		if ( $error instanceof \Stripe\Exception\PermissionException ) {
 			return new \WP_Error(
 				'rwp_stripe_permission',
-				__( 'A chave da Stripe usada no site não tem permissão para mexer nos planos. Na Stripe, edite a chave restrita e libere a escrita nos itens marcados como pendentes em "Pagamentos (Stripe)".', 'resgata-wp' ),
+				__( 'A chave da Stripe usada no site não tem permissão para mexer nos planos. Na Stripe, edite a chave restrita e libere a escrita nos itens marcados como pendentes em Configurações, na aba de pagamentos.', 'resgata-wp' ),
 				array( 'status' => 502 )
 			);
 		}

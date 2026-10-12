@@ -915,6 +915,10 @@
 	text-decoration: underline;
 }
 
+.rwp-related__row {
+	position: relative;
+}
+
 .rwp-related__list {
 	display: flex;
 	gap: 1rem;
@@ -1192,9 +1196,8 @@
 }
 
 .rwp-impact__icon svg {
-	fill: currentColor;
-	height: 1.6rem;
-	width: 1.6rem;
+	height: 1.5rem;
+	width: 1.5rem;
 }
 
 /* Doação por Pix: QR Code, valores, chave e "copia e cola" */
@@ -1497,6 +1500,75 @@
 	min-height: 3rem;
 	padding: 0.5rem 1.5rem;
 	text-decoration: none;
+}
+
+.rwp-donate__actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+	margin-top: 0.9rem;
+}
+
+.rwp-donate__copy {
+	align-items: center;
+	background: none;
+	border: 1px solid currentColor;
+	border-radius: 8px;
+	color: inherit;
+	cursor: pointer;
+	display: inline-flex;
+	font: inherit;
+	font-weight: 600;
+	gap: 0.5rem;
+	min-height: 3rem;
+	padding: 0.5rem 1.1rem;
+}
+
+.rwp-donate__copy svg {
+	height: 1.15em;
+	width: 1.15em;
+}
+
+.rwp-donate [hidden] {
+	display: none;
+}
+
+.rwp-donate__status {
+	border: 0;
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+.rwp-donate__qr {
+	flex: none;
+	font-size: 0.8125rem;
+	margin: 0;
+	max-width: 10rem;
+	text-align: center;
+}
+
+.rwp-donate__image {
+	background: #fff;
+	border-radius: 8px;
+	display: block;
+	height: auto;
+	margin: 0 auto 0.4rem;
+	padding: 0.4rem;
+	width: 9rem;
+}
+
+/* No celular o QR Code não tem como ser lido: fica o botão de copiar o código. */
+@media (max-width: 600px) {
+	.rwp-donate__qr {
+		display: none;
+	}
 }
 
 /* Templates PHP (temas clássicos) */
@@ -2285,6 +2357,91 @@
 	overflow: hidden;
 	position: absolute;
 	width: 1px;
+}
+
+/* Resumo do apadrinhamento, depois do link de acesso */
+.rwp-sponsor-area__hello {
+	font-size: 1.25rem;
+	font-weight: 700;
+	margin: 0 0 1rem;
+}
+
+.rwp-sponsor-area__total {
+	background: var(--rwp-primary-soft);
+	border-radius: var(--rwp-radius);
+	display: flex;
+	flex-direction: column;
+	gap: 0.15rem;
+	margin: 0 0 1rem;
+	padding: 1rem 1.25rem;
+}
+
+.rwp-sponsor-area__total-label,
+.rwp-sponsor-area__total-note {
+	color: var(--rwp-muted);
+	font-size: 0.9375rem;
+}
+
+.rwp-sponsor-area__total-value {
+	font-size: 1.75rem;
+	line-height: 1.2;
+}
+
+.rwp-sponsor-area__details {
+	display: grid;
+	gap: 0.75rem 1.5rem;
+	grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+	margin: 0 0 1rem;
+}
+
+.rwp-sponsor-area__details dt {
+	color: var(--rwp-muted);
+	font-size: 0.9375rem;
+}
+
+.rwp-sponsor-area__details dd {
+	font-weight: 600;
+	margin: 0;
+}
+
+.rwp-sponsor-area__summary .rwp-sponsor-area__error {
+	margin: 0 0 1rem;
+}
+
+/* Agradecimento depois do pagamento */
+.rwp-sponsorship-thanks {
+	background: var(--rwp-primary-soft);
+	border-radius: var(--rwp-radius-lg);
+	box-sizing: border-box;
+	margin-inline: auto;
+	max-width: 40rem;
+	padding: 2rem 1.5rem;
+	text-align: center;
+}
+
+.rwp-sponsorship-thanks__image {
+	border-radius: var(--rwp-radius);
+	display: block;
+	height: auto;
+	margin: 0 auto 1.5rem;
+	max-width: min(100%, 22rem);
+}
+
+.rwp-sponsorship-thanks__text > :last-child {
+	margin-bottom: 0;
+}
+
+.rwp-sponsorship-thanks__actions {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem 1.5rem;
+	justify-content: center;
+	margin: 1.5rem 0 0;
+}
+
+.rwp-sponsorship-thanks__link {
+	font-weight: 600;
 }
 
 /* Sobre a foto, a película é clara: o texto do banner fica escuro em qualquer tema. */

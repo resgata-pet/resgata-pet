@@ -128,6 +128,8 @@ final class Sponsors {
 			'payment_failed'  => '%d',
 			'last_paid_at'    => '%s',
 			'last_event_at'   => '%d',
+			'period_end'      => '%s',
+			'cancel_at'       => '%s',
 		);
 		$data    = array_intersect_key( $fields, $allowed );
 		$now     = current_time( 'mysql', true );
@@ -162,6 +164,21 @@ final class Sponsors {
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Tabela própria.
 		return false !== $wpdb->insert( self::table(), $data );
+	}
+
+	/**
+	 * Marca que o padrinho já recebeu as boas-vindas.
+	 *
+	 * @param int $id ID na tabela.
+	 * @return bool True só para a primeira chamada: é ela que envia o e-mail.
+	 */
+	public static function claim_welcome( int $id ): bool {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Tabela própria; a condição no UPDATE torna a marca atômica.
+		$updated = $wpdb->query( $wpdb->prepare( 'UPDATE %i SET welcomed_at = %s WHERE id = %d AND welcomed_at IS NULL', self::table(), current_time( 'mysql', true ), $id ) );
+
+		return 1 === $updated;
 	}
 
 	/**

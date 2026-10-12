@@ -96,12 +96,12 @@ foreach ( wp_roles()->role_objects as $rwp_role ) {
 remove_role( 'rwp_protetor_admin' );
 
 // Opções.
-foreach ( array( 'rwp_settings', 'rwp_modules', 'rwp_db_version', 'rwp_flush_rewrite', 'rwp_organization', 'rwp_contact_page_id', 'rwp_help_page_id', 'rwp_banners', 'rwp_sponsorship', 'rwp_sponsorship_counter' ) as $rwp_option ) {
+foreach ( array( 'rwp_settings', 'rwp_modules', 'rwp_db_version', 'rwp_flush_rewrite', 'rwp_organization', 'rwp_contact_page_id', 'rwp_help_page_id', 'rwp_banners', 'rwp_sponsorship', 'rwp_sponsorship_counter', 'rwp_payments_since' ) as $rwp_option ) {
 	delete_option( $rwp_option );
 }
 
-// Tabelas próprias: padrinhos (dados pessoais) e eventos da Stripe já processados.
-foreach ( array( 'rwp_sponsors', 'rwp_stripe_events' ) as $rwp_table ) {
+// Tabelas próprias: padrinhos (dados pessoais), eventos da Stripe já processados e pagamentos.
+foreach ( array( 'rwp_sponsors', 'rwp_stripe_events', 'rwp_payments' ) as $rwp_table ) {
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.SchemaChange.SchemaChange -- Nome fixo de tabela do próprio plugin, na desinstalação.
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}{$rwp_table}" );
 }

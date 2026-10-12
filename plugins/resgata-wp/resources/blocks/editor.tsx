@@ -251,6 +251,16 @@ function SponsorshipPlansEdit( { attributes, setAttributes }: EditProps< Sponsor
 	);
 }
 
+function SponsorshipThanksEdit( { attributes }: EditProps< Record< string, never > > ) {
+	return (
+		<div { ...useBlockProps() }>
+			<Disabled>
+				<ServerSideRender block="resgata-wp/sponsorship-thanks" attributes={ attributes } skipBlockSupportAttributes />
+			</Disabled>
+		</div>
+	);
+}
+
 function SponsorAreaEdit( { attributes }: EditProps< Record< string, never > > ) {
 	return (
 		<div { ...useBlockProps() }>
@@ -346,3 +356,4 @@ register( 'resgata-wp/impact', { edit: previewOnly( 'resgata-wp/impact' ), save:
 register( 'resgata-wp/adoption-form', { edit: AdoptionFormEdit, save: () => null } );
 register( 'resgata-wp/sponsorship-plans', { edit: SponsorshipPlansEdit, save: () => null } );
 register( 'resgata-wp/sponsor-area', { edit: SponsorAreaEdit, save: () => null } );
+register( 'resgata-wp/sponsorship-thanks', { edit: SponsorshipThanksEdit, save: () => null } );

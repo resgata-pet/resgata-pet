@@ -23,10 +23,12 @@ final class SponsorshipModule {
 		( new Blocks() )->register();
 		( new Checkout() )->register();
 		( new MagicLink() )->register();
+		( new ThanksPage() )->register();
 
 		add_action( 'rest_api_init', array( new WebhookController(), 'register_routes' ) );
 
 		add_action( Events::CLEANUP_HOOK, array( Events::class, 'cleanup' ) );
+		add_action( Events::CLEANUP_HOOK, array( Payments::class, 'cleanup' ) );
 		add_action( 'init', array( $this, 'schedule_cleanup' ) );
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
