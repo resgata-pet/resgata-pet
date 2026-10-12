@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import { __ } from '@wordpress/i18n';
 import { useQuery } from '@tanstack/react-query';
-import { ExternalLinkIcon, HandCoinsIcon, HeartHandshakeIcon, HomeIcon, ImagesIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
+import { ArrowLeftIcon, ExternalLinkIcon, HandCoinsIcon, HeartHandshakeIcon, HomeIcon, ImagesIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { config } from '@/lib/config';
@@ -109,6 +109,12 @@ export function Layout() {
 						<ExternalLinkIcon className="size-4" aria-hidden="true" />
 						{ __( 'Ver o site', 'resgata-wp' ) }
 					</a>
+					{ config.user.isAdmin && (
+						<a href={ config.urls.admin } className="text-muted-foreground hover:text-foreground flex items-center gap-2 px-3 text-sm">
+							<ArrowLeftIcon className="size-4" aria-hidden="true" />
+							{ __( 'Voltar ao WordPress', 'resgata-wp' ) }
+						</a>
+					) }
 					<div className="min-w-0 px-3">
 						<p className="truncate text-sm font-medium">{ config.user.name }</p>
 						<p className="text-muted-foreground truncate text-xs">{ config.user.email }</p>

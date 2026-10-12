@@ -23,8 +23,10 @@ final class Access {
 		add_action( 'admin_init', array( $this, 'keep_out_of_wp_admin' ) );
 		add_filter( 'login_redirect', array( $this, 'login_redirect' ), 10, 3 );
 		add_filter( 'show_admin_bar', array( $this, 'hide_admin_bar' ) );
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_link' ), 80 );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_link' ), 35 );
 		add_action( 'admin_menu', array( $this, 'admin_menu_link' ), 20 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'shortcut_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'shortcut_styles' ) );
 	}
 
 	/**
@@ -69,7 +71,7 @@ final class Access {
 	}
 
 	/**
-	 * Atalho "Painel Resgata" na barra do WordPress.
+	 * Botão "Painel Resgata" na barra do WordPress (no wp-admin e no site).
 	 *
 	 * @param \WP_Admin_Bar $admin_bar Barra de administração.
 	 */
@@ -81,21 +83,53 @@ final class Access {
 		$admin_bar->add_node(
 			array(
 				'id'    => 'rwp-panel',
-				'title' => esc_html__( 'Painel Resgata', 'resgata-wp' ),
+				'title' => '<span class="ab-icon dashicons dashicons-pets" aria-hidden="true"></span><span class="ab-label">' . esc_html__( 'Painel Resgata', 'resgata-wp' ) . '</span>',
 				'href'  => esc_url( Router::url() ),
+				'meta'  => array( 'title' => __( 'Abrir o painel da protetora', 'resgata-wp' ) ),
 			)
 		);
 	}
 
 	/**
-	 * Atalho para o painel no menu "Resgata WP" do wp-admin.
+	 * Botão "Painel Resgata" no topo do menu lateral do wp-admin.
 	 */
 	public function admin_menu_link(): void {
-		global $submenu;
+		global $menu;
 
-		if ( isset( $submenu['resgata-wp'] ) && current_user_can( Capabilities::PANEL ) ) {
-			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Forma suportada de adicionar um link externo ao submenu.
-			$submenu['resgata-wp'][] = array( __( 'Abrir o painel', 'resgata-wp' ), Capabilities::PANEL, esc_url( Router::url() ) );
+		if ( ! current_user_can( Capabilities::PANEL ) ) {
+			return;
 		}
+
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Forma suportada de adicionar um link externo ao menu, no topo.
+		$menu['1.5'] = array(
+			__( 'Painel Resgata', 'resgata-wp' ),
+			Capabilities::PANEL,
+			esc_url( Router::url() ),
+			'',
+			'menu-top',
+			'menu-rwp-panel',
+			'dashicons-pets',
+		);
+	}
+
+	/**
+	 * Destaca o botão da barra do topo com o verde da identidade (o do menu
+	 * lateral segue o padrão do WordPress).
+	 *
+	 * Vai junto do CSS da barra do WordPress, que existe no wp-admin e no site.
+	 */
+	public function shortcut_styles(): void {
+		if ( ! is_admin_bar_showing() || ! current_user_can( Capabilities::PANEL ) ) {
+			return;
+		}
+
+		wp_add_inline_style(
+			'admin-bar',
+			'#wpadminbar #wp-admin-bar-rwp-panel > .ab-item{background:#2f7d55;color:#fff}'
+			. '#wpadminbar #wp-admin-bar-rwp-panel > .ab-item:hover,#wpadminbar #wp-admin-bar-rwp-panel > .ab-item:focus{background:#256645;color:#fff}'
+			. '#wpadminbar #wp-admin-bar-rwp-panel .ab-icon:before{color:#fff}'
+			. '#wpadminbar #wp-admin-bar-rwp-panel .ab-icon{margin-right:6px}'
+			. '@media screen and (max-width:782px){#wpadminbar li#wp-admin-bar-rwp-panel{display:block}#wpadminbar #wp-admin-bar-rwp-panel .ab-label{display:none}#wpadminbar #wp-admin-bar-rwp-panel .ab-icon{margin-right:0}}'
+		);
 	}
 }
