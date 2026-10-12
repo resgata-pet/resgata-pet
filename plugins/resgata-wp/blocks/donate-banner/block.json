@@ -6,7 +6,7 @@
 	"title": "Banner de doação",
 	"category": "resgata-wp",
 	"icon": "megaphone",
-	"description": "Chamada \"Doe por Pix\" com botão para a página \"Como ajudar\".",
+	"description": "Chamada \"Doe por Pix\" com o QR Code e botão para a página \"Como ajudar\".",
 	"keywords": [ "pix", "doação", "banner", "chamada" ],
 	"textdomain": "resgata-wp",
 	"supports": {

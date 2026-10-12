@@ -61,8 +61,12 @@ function setup( root: HTMLElement ): void {
 			return;
 		}
 
-		if ( payload && code ) {
+		// No banner de doação o código fica num campo oculto, só para o botão de copiar.
+		if ( payload ) {
 			payload.value = pix.payload();
+		}
+
+		if ( code ) {
 			code.hidden = false;
 		}
 

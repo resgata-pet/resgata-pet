@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Blocos `resgata-wp/pix-donation` (chave, QR Code e "Pix copia e cola"),
  * `resgata-wp/pix-once` (o mesmo, como doação única dentro de outra página) e
- * `resgata-wp/donate-banner` (chamada que leva à página "Como ajudar").
+ * `resgata-wp/donate-banner` (chamada com o QR Code, que leva à página "Como ajudar").
  *
  * A chave vem das Configurações. O QR Code e o código "copia e cola" são
  * montados no navegador (biblioteca `qrcode-pix`); sem o script, a página
@@ -109,7 +109,8 @@ final class PixDonation {
 	}
 
 	/**
-	 * HTML do banner "Doe por Pix". Vazio sem chave Pix ou sem a página "Como ajudar".
+	 * HTML do banner "Doe por Pix", com o QR Code e o botão de copiar o código. Vazio sem
+	 * chave Pix ou sem a página "Como ajudar".
 	 *
 	 * Na própria página "Como ajudar" o banner não aparece (ele levaria à mesma página).
 	 *
@@ -117,8 +118,9 @@ final class PixDonation {
 	 */
 	public static function render_banner( string $wrapper_attributes = '' ): string {
 		$url = Links::help();
+		$pix = Organization::pix();
 
-		if ( '' === $url || ! Organization::pix() ) {
+		if ( '' === $url || ! $pix ) {
 			return '';
 		}
 
@@ -128,11 +130,16 @@ final class PixDonation {
 
 		wp_enqueue_style( 'rwp-frontend' );
 
+		if ( wp_script_is( self::SCRIPT_HANDLE, 'registered' ) ) {
+			wp_enqueue_script( self::SCRIPT_HANDLE );
+		}
+
 		return TemplateLoader::render(
 			'donate-banner.php',
 			array(
 				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="rwp-donate"',
 				'url'                => $url . '#rwp-pix',
+				'pix'                => $pix,
 			)
 		);
 	}
