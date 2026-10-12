@@ -76,8 +76,9 @@ final class DetailsRenderer {
 
 		wp_enqueue_style( 'rwp-frontend' );
 
-		// As setas e a troca de foto pelas miniaturas dependem do script; sem ele, a galeria rola com o dedo.
-		if ( count( $photos ) > 1 && wp_script_is( Blocks::GALLERY_HANDLE, 'registered' ) ) {
+		// As setas (das fotos e da fileira de outros animais) e a troca de foto pelas miniaturas
+		// dependem do script; sem ele, as duas rolam com o dedo ou pela barra de rolagem.
+		if ( ( count( $photos ) > 1 || $has( 'related' ) ) && wp_script_is( Blocks::GALLERY_HANDLE, 'registered' ) ) {
 			wp_enqueue_script( Blocks::GALLERY_HANDLE );
 		}
 
@@ -243,7 +244,6 @@ final class DetailsRenderer {
 			array( $animal->vet_checked(), __( 'Consulta veterinária realizada', 'resgata-wp' ), __( 'Consulta veterinária ainda não realizada', 'resgata-wp' ) ),
 			array( $animal->vaccinated(), __( 'Vacinas em dia', 'resgata-wp' ), __( 'Vacinas ainda não estão em dia', 'resgata-wp' ) ),
 			array( $animal->neutered(), __( 'Castração realizada', 'resgata-wp' ), __( 'Castração ainda não realizada', 'resgata-wp' ) ),
-			array( $animal->microchip(), __( 'Tem microchip', 'resgata-wp' ), __( 'Ainda sem microchip', 'resgata-wp' ) ),
 		);
 
 		$items = array();

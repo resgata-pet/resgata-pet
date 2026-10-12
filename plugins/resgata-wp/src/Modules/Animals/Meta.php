@@ -31,7 +31,6 @@ final class Meta {
 	public const WEIGHT        = 'rwp_weight';
 	public const VET_CHECKED   = 'rwp_vet_checked';
 	public const VACCINATED    = 'rwp_vaccinated';
-	public const MICROCHIP     = 'rwp_microchip';
 
 	/**
 	 * Tamanho máximo (em caracteres) da frase de apresentação e do resumo.
@@ -64,7 +63,6 @@ final class Meta {
 			self::WEIGHT        => array( self::class, 'sanitize_weight' ),
 			self::VET_CHECKED   => static fn( $value ) => self::sanitize_choice( $value, Options::yes_no() ),
 			self::VACCINATED    => static fn( $value ) => self::sanitize_choice( $value, Options::yes_no() ),
-			self::MICROCHIP     => static fn( $value ) => self::sanitize_choice( $value, Options::yes_no() ),
 		);
 
 		foreach ( $strings as $key => $sanitize ) {

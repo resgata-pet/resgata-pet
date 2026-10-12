@@ -28,7 +28,7 @@ final class Taxonomies {
 			'assign_terms' => 'edit_rwp_animals',
 		);
 
-		// Espécie: escolhida em um campo simples na ficha do animal (sem painel próprio no editor).
+		// Espécie e temperamento são escolhidos na ficha do animal, no painel: sem telas no wp-admin.
 		register_taxonomy(
 			self::SPECIES,
 			PostType::SLUG,
@@ -46,11 +46,9 @@ final class Taxonomies {
 				'hierarchical'       => true,
 				'public'             => false,
 				'publicly_queryable' => false,
-				'show_ui'            => true,
-				'show_admin_column'  => true,
+				'show_ui'            => false,
 				'show_in_nav_menus'  => false,
 				'show_in_rest'       => false,
-				'meta_box_cb'        => false,
 				'rewrite'            => false,
 				'capabilities'       => $caps,
 			)
@@ -76,8 +74,7 @@ final class Taxonomies {
 				'hierarchical'       => false,
 				'public'             => false,
 				'publicly_queryable' => false,
-				'show_ui'            => true,
-				'show_admin_column'  => false,
+				'show_ui'            => false,
 				'show_in_nav_menus'  => false,
 				'show_tagcloud'      => false,
 				'show_in_rest'       => true,

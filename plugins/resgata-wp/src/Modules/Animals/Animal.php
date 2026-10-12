@@ -309,13 +309,6 @@ final class Animal {
 	}
 
 	/**
-	 * Tem microchip: `yes`, `no` ou vazio (não informado).
-	 */
-	public function microchip(): string {
-		return Meta::sanitize_choice( $this->meta( Meta::MICROCHIP ), Options::yes_no() );
-	}
-
-	/**
 	 * Vacinas aplicadas.
 	 *
 	 * @return array<int, array{name: string, date: string}>

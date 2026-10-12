@@ -160,7 +160,6 @@ final class SeedCommand {
 		update_post_meta( $post_id, Meta::WEIGHT, (string) ( $is_cat ? 3.5 + ( $index % 3 ) : 8 + ( $index % 5 ) * 4 ) );
 		update_post_meta( $post_id, Meta::VET_CHECKED, 'yes' );
 		update_post_meta( $post_id, Meta::VACCINATED, 0 === $index % 5 ? 'no' : 'yes' );
-		update_post_meta( $post_id, Meta::MICROCHIP, 0 === $index % 3 ? 'yes' : 'no' );
 
 		if ( $is_cat ) {
 			update_post_meta( $post_id, Meta::FIV, 'negative' );

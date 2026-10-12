@@ -67,7 +67,6 @@ interface FormState {
 	felv: string;
 	vetChecked: string;
 	vaccinated: string;
-	microchip: string;
 	vaccines: Vaccine[];
 	tagline: string;
 	intro: string;
@@ -94,7 +93,6 @@ const emptyForm: FormState = {
 	felv: '',
 	vetChecked: '',
 	vaccinated: '',
-	microchip: '',
 	vaccines: [],
 	tagline: '',
 	intro: '',
@@ -122,7 +120,6 @@ function toForm( animal: Animal ): FormState {
 		felv: animal.felv,
 		vetChecked: animal.vet_checked,
 		vaccinated: animal.vaccinated,
-		microchip: animal.microchip,
 		vaccines: animal.vaccines,
 		tagline: animal.tagline,
 		intro: animal.intro,
@@ -186,7 +183,6 @@ function stepPayload( step: number, form: FormState ): AnimalInput {
 				felv: form.felv,
 				vet_checked: form.vetChecked,
 				vaccinated: form.vaccinated,
-				microchip: form.microchip,
 				vaccines: form.vaccines.filter( ( vaccine ) => vaccine.name.trim() !== '' ),
 			};
 		default:
@@ -340,7 +336,7 @@ export function AnimalFormPage() {
 	const isLast = step === STEPS.length;
 	const id = ( name: string ) => `${ uid }-${ name }`;
 
-	// A lista padrão, mais o que este animal já tiver e não estiver nela (cadastrado pelo wp-admin).
+	// A lista padrão, mais o que este animal já tiver e não estiver nela (lista mudada depois do cadastro).
 	const temperamentOptions = [
 		...config.options.temperaments,
 		...( animal?.temperaments ?? [] ).filter( ( name ) => ! config.options.temperaments.includes( name ) ),
@@ -598,15 +594,6 @@ export function AnimalFormPage() {
 								options={ config.options.yesNo }
 								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
 								onChange={ ( value ) => set( 'vaccinated', value ) }
-							/>
-						</Field>
-						<Field label={ __( 'Tem microchip', 'resgata-wp' ) } htmlFor={ id( 'microchip' ) }>
-							<OptionSelect
-								id={ id( 'microchip' ) }
-								value={ form.microchip }
-								options={ config.options.yesNo }
-								emptyLabel={ __( 'Não informado', 'resgata-wp' ) }
-								onChange={ ( value ) => set( 'microchip', value ) }
 							/>
 						</Field>
 						<Field label={ __( 'Teste de FIV (gatos)', 'resgata-wp' ) } htmlFor={ id( 'fiv' ) }>

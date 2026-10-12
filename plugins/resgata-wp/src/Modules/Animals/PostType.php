@@ -51,14 +51,14 @@ final class PostType {
 				'labels'          => $labels,
 				'description'     => __( 'Animais resgatados pela protetora.', 'resgata-wp' ),
 				'public'          => true,
+				// O cadastro é feito só no painel (/painel/animais): sem telas no wp-admin.
+				'show_ui'         => false,
 				'has_archive'     => true,
 				'rewrite'         => array(
 					/* translators: slug da URL da listagem de animais. */
 					'slug'       => _x( 'animais', 'slug da URL', 'resgata-wp' ),
 					'with_front' => false,
 				),
-				'menu_icon'       => 'dashicons-pets',
-				'menu_position'   => 25,
 				'supports'        => array( 'title', 'editor', 'thumbnail', 'revisions' ),
 				'show_in_rest'    => true,
 				'rest_base'       => 'animais',
@@ -66,33 +66,5 @@ final class PostType {
 				'map_meta_cap'    => true,
 			)
 		);
-	}
-
-	/**
-	 * Troca o texto de exemplo do campo de título.
-	 *
-	 * @param string   $text Texto atual.
-	 * @param \WP_Post $post Post em edição.
-	 */
-	public static function title_placeholder( string $text, $post ): string {
-		if ( $post instanceof \WP_Post && self::SLUG === $post->post_type ) {
-			return __( 'Nome do animal', 'resgata-wp' );
-		}
-
-		return $text;
-	}
-
-	/**
-	 * Usa a tela de edição clássica para os animais.
-	 *
-	 * No editor de blocos as caixas de cadastro (ficha, saúde, galeria) ficam
-	 * recolhidas em um painel no rodapé, fácil de passar despercebido. Na tela
-	 * clássica o cadastro inteiro aparece como um formulário único.
-	 *
-	 * @param bool   $use_block_editor Valor atual.
-	 * @param string $post_type        Post type.
-	 */
-	public static function disable_block_editor( $use_block_editor, $post_type ): bool {
-		return self::SLUG === $post_type ? false : (bool) $use_block_editor;
 	}
 }

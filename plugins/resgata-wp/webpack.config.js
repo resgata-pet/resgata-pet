@@ -5,7 +5,7 @@
  *   os pacotes do WordPress que NÃO dependem de React ficam externos.
  * - site: campos de escolha das páginas públicas (Select do shadcn/ui), também
  *   com o React embutido; só é carregado nas páginas que têm um `<select>`.
- * - wp: scripts que rodam dentro do WordPress (editor de blocos, wp-admin e o
+ * - wp: scripts que rodam dentro do WordPress (editor de blocos e o
  *   site público), usando o React e os pacotes que o próprio WordPress fornece.
  */
 const path = require( 'path' );
@@ -53,7 +53,6 @@ const wp = {
 	name: 'wp',
 	entry: {
 		'blocks-editor': path.resolve( __dirname, 'resources/blocks/editor.tsx' ),
-		'admin-animal': path.resolve( __dirname, 'resources/admin/animal.ts' ),
 		'animal-gallery': path.resolve( __dirname, 'resources/frontend/animal-gallery.ts' ),
 		pix: path.resolve( __dirname, 'resources/frontend/pix.ts' ),
 	},

@@ -237,7 +237,6 @@ final class AnimalsController extends BaseController {
 			'felv'           => $choice( Options::test_results() ),
 			'vet_checked'    => $choice( Options::yes_no() ),
 			'vaccinated'     => $choice( Options::yes_no() ),
-			'microchip'      => $choice( Options::yes_no() ),
 			'vaccines'       => array(
 				'type'     => 'array',
 				'maxItems' => 50,
@@ -503,7 +502,7 @@ final class AnimalsController extends BaseController {
 	 * @return array<string, mixed>
 	 */
 	private function writer_data( \WP_REST_Request $request ): array {
-		$fields = array( 'species', 'status', 'sex', 'size', 'color', 'age_years', 'age_months', 'rescue_date', 'temperaments', 'neutered', 'dewormed_date', 'fiv', 'felv', 'vaccines', 'featured_media', 'gallery', 'tagline', 'intro', 'weight', 'vet_checked', 'vaccinated', 'microchip' );
+		$fields = array( 'species', 'status', 'sex', 'size', 'color', 'age_years', 'age_months', 'rescue_date', 'temperaments', 'neutered', 'dewormed_date', 'fiv', 'felv', 'vaccines', 'featured_media', 'gallery', 'tagline', 'intro', 'weight', 'vet_checked', 'vaccinated' );
 		$data   = array();
 
 		foreach ( $fields as $field ) {
@@ -607,7 +606,6 @@ final class AnimalsController extends BaseController {
 			'felv'           => $animal->felv(),
 			'vet_checked'    => $animal->vet_checked(),
 			'vaccinated'     => $animal->vaccinated(),
-			'microchip'      => $animal->microchip(),
 			'vaccines'       => $animal->vaccines(),
 			'featured_image' => $this->image( (int) get_post_thumbnail_id( $post_id ) ),
 			'gallery'        => $gallery,

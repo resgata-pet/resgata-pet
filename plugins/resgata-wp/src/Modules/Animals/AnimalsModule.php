@@ -7,8 +7,6 @@
 
 namespace ResgataWP\Modules\Animals;
 
-use ResgataWP\Modules\Animals\Admin\ListTable;
-use ResgataWP\Modules\Animals\Admin\MetaBoxes;
 use ResgataWP\Modules\Animals\CLI\SeedCommand;
 use ResgataWP\Modules\Animals\Frontend\Blocks;
 use ResgataWP\Modules\Animals\Frontend\Shortcode;
@@ -28,17 +26,10 @@ final class AnimalsModule {
 		add_action( 'init', array( PostType::class, 'register_post_type' ) );
 		add_action( 'init', array( Taxonomies::class, 'register_taxonomies' ) );
 		add_action( 'init', array( Meta::class, 'register_meta' ) );
-		add_filter( 'enter_title_here', array( PostType::class, 'title_placeholder' ), 10, 2 );
-		add_filter( 'use_block_editor_for_post_type', array( PostType::class, 'disable_block_editor' ), 10, 2 );
 
 		( new Blocks() )->register();
 		( new Shortcode() )->register();
 		( new Templates() )->register();
-
-		if ( is_admin() ) {
-			( new MetaBoxes() )->register();
-			( new ListTable() )->register();
-		}
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			\WP_CLI::add_command( 'resgata seed-animals', SeedCommand::class );

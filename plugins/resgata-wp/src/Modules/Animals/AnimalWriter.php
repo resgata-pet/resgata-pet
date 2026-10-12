@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Grava a ficha de um animal. É o único caminho de escrita dos metadados,
- * usado tanto pelo cadastro do wp-admin quanto pela API do painel.
+ * usado pela API do painel.
  *
  * Quem chama é responsável por conferir nonce/permissão antes. Os valores são
  * validados pelas regras de `Meta` (sanitize_callback de cada metadado).
@@ -35,7 +35,6 @@ final class AnimalWriter {
 		'weight'        => Meta::WEIGHT,
 		'vet_checked'   => Meta::VET_CHECKED,
 		'vaccinated'    => Meta::VACCINATED,
-		'microchip'     => Meta::MICROCHIP,
 	);
 
 	/**

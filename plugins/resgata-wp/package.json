@@ -2,7 +2,7 @@
 	"name": "resgata-wp",
 	"version": "0.5.0",
 	"private": true,
-	"description": "Código TypeScript do plugin Resgata WP: painel, blocos e telas do wp-admin.",
+	"description": "Código TypeScript do plugin Resgata WP: painel, blocos e scripts do site.",
 	"license": "GPL-2.0-or-later",
 	"engines": {
 		"node": "^22.22.2 || ^24.15.0 || >=26"
