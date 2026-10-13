@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Rotas `resgata-wp/v1/adoptions`: fila interna de pedidos de adoção.
  *
- * Os pedidos têm dados pessoais: todas as rotas exigem `rwp_manage_adoptions`
+ * Os pedidos têm dados pessoais: todas as rotas exigem `resgata_manage_adoptions`
  * (Administrador e Protetor admin). Pedidos entram só pelo formulário do site.
  */
 final class AdoptionsController extends BaseController {
@@ -211,7 +211,7 @@ final class AdoptionsController extends BaseController {
 		$id = (int) $request['id'];
 
 		if ( ! wp_delete_post( $id, true ) ) {
-			return new \WP_Error( 'rwp_rest_delete_failed', __( 'Não foi possível excluir o pedido. Tente de novo.', 'resgata-wp' ), array( 'status' => 500 ) );
+			return new \WP_Error( 'resgata_rest_delete_failed', __( 'Não foi possível excluir o pedido. Tente de novo.', 'resgata-wp' ), array( 'status' => 500 ) );
 		}
 
 		return new \WP_REST_Response(

@@ -2,21 +2,21 @@
  * Bloco "Números da protetora" (resgata-wp/impact).
  */
 /* Números da protetora */
-.rwp-impact {
-	background: var(--rwp-section);
-	border-radius: var(--rwp-radius-lg);
+.resgata-impact {
+	background: var(--resgata-section);
+	border-radius: var(--resgata-radius-lg);
 	box-sizing: border-box;
 	padding: 1.5rem;
 }
 
-.rwp-impact__list {
+.resgata-impact__list {
 	display: grid;
 	gap: 1.25rem 1.5rem;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
 	margin: 0;
 }
 
-.rwp-impact__item {
+.resgata-impact__item {
 	display: flex;
 	flex-direction: column-reverse;
 	justify-content: center;
@@ -25,25 +25,25 @@
 	position: relative;
 }
 
-.rwp-impact__label {
-	color: var(--rwp-muted);
+.resgata-impact__label {
+	color: var(--resgata-muted);
 	font-size: var(--wp--preset--font-size--small);
 	line-height: 1.3;
 }
 
-.rwp-impact__value {
-	color: var(--rwp-heading);
+.resgata-impact__value {
+	color: var(--resgata-heading);
 	font-size: 1.75rem;
 	font-weight: 700;
 	line-height: 1.15;
 	margin: 0;
 }
 
-.rwp-impact__icon {
+.resgata-impact__icon {
 	align-items: center;
-	background: var(--rwp-impact-soft, var(--rwp-card));
+	background: var(--resgata-impact-soft, var(--resgata-card));
 	border-radius: 50%;
-	color: var(--rwp-impact-color, var(--rwp-primary));
+	color: var(--resgata-impact-color, var(--resgata-primary));
 	display: flex;
 	height: 3.25rem;
 	justify-content: center;
@@ -53,32 +53,32 @@
 	width: 3.25rem;
 }
 
-.rwp-impact__icon svg {
+.resgata-impact__icon svg {
 	height: 1.5rem;
 	width: 1.5rem;
 }
 
-.rwp-impact__item--blue {
-	--rwp-impact-color: var(--rwp-info);
-	--rwp-impact-soft: #e8f0fd;
+.resgata-impact__item--blue {
+	--resgata-impact-color: var(--resgata-info);
+	--resgata-impact-soft: #e8f0fd;
 }
 
-.rwp-impact__item--coral {
-	--rwp-impact-color: #e5484d;
-	--rwp-impact-soft: #fde9e9;
+.resgata-impact__item--coral {
+	--resgata-impact-color: #e5484d;
+	--resgata-impact-soft: #fde9e9;
 }
 
-.rwp-impact__item--purple {
-	--rwp-impact-color: var(--rwp-help);
-	--rwp-impact-soft: var(--rwp-help-soft);
+.resgata-impact__item--purple {
+	--resgata-impact-color: var(--resgata-help);
+	--resgata-impact-soft: var(--resgata-help-soft);
 }
 
-.rwp-impact__item--green {
-	--rwp-impact-soft: var(--rwp-primary-soft);
+.resgata-impact__item--green {
+	--resgata-impact-soft: var(--resgata-primary-soft);
 }
 
 /* Enfeites de fundo (formas e base em enfeites.css). */
-.rwp-impact {
+.resgata-impact {
 	--resgata-tema-decor-fill:
 		var(--resgata-tema-shape-cloud) right -2rem bottom -2.5rem / 11rem auto no-repeat,
 		var(--resgata-tema-shape-circle) left -2rem top -2.5rem / 6rem 6rem no-repeat;

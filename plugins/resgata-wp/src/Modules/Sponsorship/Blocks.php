@@ -27,7 +27,7 @@ final class Blocks {
 		// Depois dos blocos de animais (20), que registram os handles de estilo e script, e antes de o
 		// WordPress acrescentar os atributos de suporte (alinhamento, espaçamento), na prioridade 22.
 		add_action( 'init', array( $this, 'register_blocks' ), 21 );
-		add_filter( 'rwp_impact_items', array( $this, 'impact_item' ) );
+		add_filter( 'resgata_impact_items', array( $this, 'impact_item' ) );
 	}
 
 	/**
@@ -54,14 +54,14 @@ final class Blocks {
 	 * Registra os blocos.
 	 */
 	public function register_blocks(): void {
-		if ( ! wp_style_is( 'rwp-frontend', 'registered' ) ) {
-			$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
-			wp_register_style( 'rwp-frontend', $src, array(), RWP_VERSION );
+		if ( ! wp_style_is( 'resgata-frontend', 'registered' ) ) {
+			$src = current_theme_supports( 'resgata-wp' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
+			wp_register_style( 'resgata-frontend', $src, array(), RESGATA_VERSION );
 		}
 
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/sponsorship-plans' );
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/sponsor-area' );
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/sponsorship-thanks' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/sponsorship-plans' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/sponsor-area' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/sponsorship-thanks' );
 	}
 
 	/**
@@ -76,7 +76,7 @@ final class Blocks {
 			return '';
 		}
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		$plans = array();
 		foreach ( Plans::for_sale() as $plan ) {
@@ -95,7 +95,7 @@ final class Blocks {
 		return TemplateLoader::render(
 			'sponsorship-plans.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'id="rwp-apadrinhar" class="rwp-sponsorship"',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'id="resgata-apadrinhar" class="resgata-sponsorship"',
 				'plans'              => $plans,
 				'show_counter'       => $show_counter,
 				'counter_total'      => $counter['total'],
@@ -112,12 +112,12 @@ final class Blocks {
 	 * @param string $wrapper_attributes Atributos HTML do elemento externo, já escapados.
 	 */
 	public static function render_thanks( string $wrapper_attributes = '' ): string {
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		return TemplateLoader::render(
 			'sponsorship-thanks.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="rwp-sponsorship-thanks"',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="resgata-sponsorship-thanks"',
 				'image_url'          => ThanksPage::image_url(),
 				'title'              => ThanksPage::title(),
 				'text'               => ThanksPage::text(),
@@ -137,7 +137,7 @@ final class Blocks {
 			return '';
 		}
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		$error   = MagicLink::error();
 		$sponsor = MagicLink::sponsor();
@@ -145,7 +145,7 @@ final class Blocks {
 		return TemplateLoader::render(
 			'sponsor-area.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'id="rwp-padrinho" class="rwp-sponsor-area"',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'id="resgata-padrinho" class="resgata-sponsor-area"',
 				// Com erro (link vencido, por exemplo) a pessoa volta ao pedido de um link novo.
 				'token'              => '' === $error ? MagicLink::token_from_url() : '',
 				'sent'               => MagicLink::was_sent(),

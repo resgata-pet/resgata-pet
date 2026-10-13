@@ -32,11 +32,11 @@ defined( 'ABSPATH' ) || exit;
 		<!-- wp:buttons -->
 		<div class="wp-block-buttons">
 			<!-- wp:button {"className":"is-style-resgata-heart"} -->
-			<div class="wp-block-button is-style-resgata-heart"><a class="wp-block-button__link wp-element-button" href="#rwp-apadrinhar"><?php esc_html_e( 'Quero ser padrinho', 'resgata-tema' ); ?></a></div>
+			<div class="wp-block-button is-style-resgata-heart"><a class="wp-block-button__link wp-element-button" href="#resgata-apadrinhar"><?php esc_html_e( 'Quero ser padrinho', 'resgata-tema' ); ?></a></div>
 			<!-- /wp:button -->
 
 			<!-- wp:button {"className":"is-style-outline"} -->
-			<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#rwp-pix"><?php esc_html_e( 'Doar uma vez por Pix', 'resgata-tema' ); ?></a></div>
+			<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#resgata-pix"><?php esc_html_e( 'Doar uma vez por Pix', 'resgata-tema' ); ?></a></div>
 			<!-- /wp:button -->
 		</div>
 		<!-- /wp:buttons -->

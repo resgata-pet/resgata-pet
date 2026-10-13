@@ -29,14 +29,14 @@ defined( 'ABSPATH' ) || exit;
  */
 final class MagicLink {
 
-	public const NONCE_ACTION = 'rwp_sponsor_area';
-	public const NONCE_NAME   = 'rwp_sponsor_nonce';
-	public const EMAIL_FIELD  = 'rwp_sponsor_email';
-	public const TOKEN_FIELD  = 'rwp_sponsor_token';
-	public const PORTAL_FIELD = 'rwp_sponsor_portal';
-	public const HONEYPOT     = 'rwp_site';
-	public const TOKEN_PARAM  = 'rwp_padrinho';
-	public const SENT_PARAM   = 'rwp_link';
+	public const NONCE_ACTION = 'resgata_sponsor_area';
+	public const NONCE_NAME   = 'resgata_sponsor_nonce';
+	public const EMAIL_FIELD  = 'resgata_sponsor_email';
+	public const TOKEN_FIELD  = 'resgata_sponsor_token';
+	public const PORTAL_FIELD = 'resgata_sponsor_portal';
+	public const HONEYPOT     = 'resgata_site';
+	public const TOKEN_PARAM  = 'resgata_padrinho';
+	public const SENT_PARAM   = 'resgata_link';
 
 	/**
 	 * Validade do link, em segundos.
@@ -158,7 +158,7 @@ final class MagicLink {
 		}
 
 		// A resposta é igual exista ou não um padrinho com esse e-mail, para não revelar quem é padrinho.
-		wp_safe_redirect( add_query_arg( self::SENT_PARAM, 'enviado', $page ) . '#rwp-padrinho' );
+		wp_safe_redirect( add_query_arg( self::SENT_PARAM, 'enviado', $page ) . '#resgata-padrinho' );
 		exit;
 	}
 
@@ -175,7 +175,7 @@ final class MagicLink {
 			return;
 		}
 
-		$throttle = 'rwp_sponsor_mail_' . (int) $sponsor['id'];
+		$throttle = 'resgata_sponsor_mail_' . (int) $sponsor['id'];
 		if ( get_transient( $throttle ) ) {
 			return;
 		}
@@ -194,7 +194,7 @@ final class MagicLink {
 		$body = sprintf(
 			/* translators: 1: link de acesso, 2: nome da protetora. */
 			__( "Olá!\n\nPara ver quanto você já doou ou alterar o seu apadrinhamento, abra o link abaixo. Ele vale por 30 minutos e só pode ser usado uma vez.\n\n%1\$s\n\nSe você não pediu este acesso, é só ignorar este e-mail.\n\n%2\$s", 'resgata-wp' ),
-			add_query_arg( self::TOKEN_PARAM, $token, $page ) . '#rwp-padrinho',
+			add_query_arg( self::TOKEN_PARAM, $token, $page ) . '#resgata-padrinho',
 			$name
 		);
 
@@ -258,7 +258,7 @@ final class MagicLink {
 	 * @param string $token Código.
 	 */
 	private static function token_key( string $token ): string {
-		return 'rwp_sponsor_link_' . substr( hash( 'sha256', $token ), 0, 40 );
+		return 'resgata_sponsor_link_' . substr( hash( 'sha256', $token ), 0, 40 );
 	}
 
 	/**

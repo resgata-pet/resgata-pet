@@ -22,7 +22,7 @@ final class SeedCommand {
 	/**
 	 * Marca os posts e as imagens criados por este comando.
 	 */
-	private const FLAG = '_rwp_seed';
+	private const FLAG = '_resgata_seed';
 
 	/**
 	 * Gera animais de exemplo.
@@ -234,7 +234,7 @@ final class SeedCommand {
 		imagejpeg( $image, null, 85 );
 		$bits = (string) ob_get_clean();
 
-		$upload = wp_upload_bits( sanitize_title( 'rwp-exemplo-' . $title ) . '.jpg', null, $bits );
+		$upload = wp_upload_bits( sanitize_title( 'resgata-exemplo-' . $title ) . '.jpg', null, $bits );
 		if ( ! empty( $upload['error'] ) ) {
 			\WP_CLI::warning( $upload['error'] );
 			return 0;

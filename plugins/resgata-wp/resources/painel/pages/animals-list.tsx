@@ -366,7 +366,7 @@ export function AnimalsListPage() {
 
 					<div className="mt-4 flex flex-wrap items-center justify-between gap-3">
 						<div className="text-muted-foreground flex items-center gap-2 text-sm">
-							<span id="rwp-page-size">{ __( 'Itens por página', 'resgata-wp' ) }</span>
+							<span id="resgata-page-size">{ __( 'Itens por página', 'resgata-wp' ) }</span>
 							<OptionSelect
 								className="w-24"
 								ariaLabel={ __( 'Itens por página', 'resgata-wp' ) }

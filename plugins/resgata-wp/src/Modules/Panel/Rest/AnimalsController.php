@@ -39,7 +39,7 @@ final class AnimalsController extends BaseController {
 			'/animals',
 			\WP_REST_Server::READABLE,
 			array( $this, 'list_items' ),
-			static fn() => current_user_can( 'edit_rwp_animals' ),
+			static fn() => current_user_can( 'edit_resgata_animals' ),
 			array(
 				'page'     => array(
 					'type'    => 'integer',
@@ -58,7 +58,7 @@ final class AnimalsController extends BaseController {
 			'/animals',
 			\WP_REST_Server::CREATABLE,
 			array( $this, 'create_item' ),
-			static fn() => current_user_can( 'edit_rwp_animals' ),
+			static fn() => current_user_can( 'edit_resgata_animals' ),
 			$this->item_args( true )
 		);
 
@@ -347,7 +347,7 @@ final class AnimalsController extends BaseController {
 		}
 
 		// Quem não pode editar animais de outras pessoas só vê os seus.
-		if ( ! current_user_can( 'edit_others_rwp_animals' ) ) {
+		if ( ! current_user_can( 'edit_others_resgata_animals' ) ) {
 			$query_args['author'] = get_current_user_id();
 		}
 
@@ -470,7 +470,7 @@ final class AnimalsController extends BaseController {
 		$post_id = (int) $request['id'];
 
 		if ( ! wp_trash_post( $post_id ) ) {
-			return new \WP_Error( 'rwp_rest_trash_failed', __( 'Não foi possível excluir o animal. Tente de novo.', 'resgata-wp' ), array( 'status' => 500 ) );
+			return new \WP_Error( 'resgata_rest_trash_failed', __( 'Não foi possível excluir o animal. Tente de novo.', 'resgata-wp' ), array( 'status' => 500 ) );
 		}
 
 		return new \WP_REST_Response(
@@ -492,7 +492,7 @@ final class AnimalsController extends BaseController {
 			return true;
 		}
 
-		return new \WP_Error( 'rwp_rest_invalid_species', __( 'Escolha uma espécie da lista.', 'resgata-wp' ), array( 'status' => 400 ) );
+		return new \WP_Error( 'resgata_rest_invalid_species', __( 'Escolha uma espécie da lista.', 'resgata-wp' ), array( 'status' => 400 ) );
 	}
 
 	/**
@@ -526,8 +526,8 @@ final class AnimalsController extends BaseController {
 		$wanted = $request->has_param( 'post_status' ) ? (string) $request['post_status'] : '';
 
 		if ( '' !== $wanted && get_post_status( $post_id ) !== $wanted ) {
-			if ( 'publish' === $wanted && ! current_user_can( 'publish_rwp_animals' ) ) {
-				return new \WP_Error( 'rwp_rest_cannot_publish', __( 'Você não tem permissão para publicar animais.', 'resgata-wp' ), array( 'status' => 403 ) );
+			if ( 'publish' === $wanted && ! current_user_can( 'publish_resgata_animals' ) ) {
+				return new \WP_Error( 'resgata_rest_cannot_publish', __( 'Você não tem permissão para publicar animais.', 'resgata-wp' ), array( 'status' => 403 ) );
 			}
 
 			$result = wp_update_post(

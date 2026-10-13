@@ -11,99 +11,99 @@
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 // As chaves da Stripe salvas no painel saem sempre, mesmo com "Manter os dados" marcado.
-delete_option( 'rwp_stripe_keys' );
+delete_option( 'resgata_stripe_keys' );
 
-$rwp_settings = get_option( 'rwp_settings', array() );
+$resgata_settings = get_option( 'resgata_settings', array() );
 
-if ( ! is_array( $rwp_settings ) || ! array_key_exists( 'keep_data', $rwp_settings ) || $rwp_settings['keep_data'] ) {
+if ( ! is_array( $resgata_settings ) || ! array_key_exists( 'keep_data', $resgata_settings ) || $resgata_settings['keep_data'] ) {
 	return;
 }
 
 global $wpdb;
 
 // Animais (inclui metadados e vínculos com termos). As fotos continuam na biblioteca de mídia.
-$rwp_post_ids = get_posts(
+$resgata_post_ids = get_posts(
 	array(
-		'post_type'   => 'rwp_animal',
+		'post_type'   => 'resgata_animal',
 		'post_status' => array( 'publish', 'pending', 'draft', 'auto-draft', 'future', 'private', 'trash' ),
 		'numberposts' => -1,
 		'fields'      => 'ids',
 	)
 );
 
-foreach ( $rwp_post_ids as $rwp_post_id ) {
-	wp_delete_post( (int) $rwp_post_id, true );
+foreach ( $resgata_post_ids as $resgata_post_id ) {
+	wp_delete_post( (int) $resgata_post_id, true );
 }
 
 // Pedidos de adoção (dados pessoais).
-$rwp_request_ids = get_posts(
+$resgata_request_ids = get_posts(
 	array(
-		'post_type'   => 'rwp_adoption',
+		'post_type'   => 'resgata_adoption',
 		'post_status' => array( 'publish', 'private', 'draft', 'trash' ),
 		'numberposts' => -1,
 		'fields'      => 'ids',
 	)
 );
 
-foreach ( $rwp_request_ids as $rwp_request_id ) {
-	wp_delete_post( (int) $rwp_request_id, true );
+foreach ( $resgata_request_ids as $resgata_request_id ) {
+	wp_delete_post( (int) $resgata_request_id, true );
 }
 
 // Termos das taxonomias (elas não estão registradas durante a desinstalação).
-foreach ( array( 'rwp_species', 'rwp_temperament' ) as $rwp_taxonomy ) {
-	register_taxonomy( $rwp_taxonomy, 'rwp_animal' );
+foreach ( array( 'resgata_species', 'resgata_temperament' ) as $resgata_taxonomy ) {
+	register_taxonomy( $resgata_taxonomy, 'resgata_animal' );
 
-	$rwp_terms = get_terms(
+	$resgata_terms = get_terms(
 		array(
-			'taxonomy'   => $rwp_taxonomy,
+			'taxonomy'   => $resgata_taxonomy,
 			'hide_empty' => false,
 			'fields'     => 'ids',
 		)
 	);
 
-	if ( ! is_wp_error( $rwp_terms ) ) {
-		foreach ( $rwp_terms as $rwp_term_id ) {
-			wp_delete_term( (int) $rwp_term_id, $rwp_taxonomy );
+	if ( ! is_wp_error( $resgata_terms ) ) {
+		foreach ( $resgata_terms as $resgata_term_id ) {
+			wp_delete_term( (int) $resgata_term_id, $resgata_taxonomy );
 		}
 	}
 }
 
 // Capabilities.
-$rwp_caps = array(
-	'edit_rwp_animals',
-	'edit_others_rwp_animals',
-	'edit_private_rwp_animals',
-	'edit_published_rwp_animals',
-	'publish_rwp_animals',
-	'read_private_rwp_animals',
-	'delete_rwp_animals',
-	'delete_others_rwp_animals',
-	'delete_private_rwp_animals',
-	'delete_published_rwp_animals',
-	'manage_rwp_animal_terms',
-	'rwp_access_panel',
-	'rwp_manage_settings',
-	'rwp_manage_adoptions',
-	'rwp_manage_sponsorship',
+$resgata_caps = array(
+	'edit_resgata_animals',
+	'edit_others_resgata_animals',
+	'edit_private_resgata_animals',
+	'edit_published_resgata_animals',
+	'publish_resgata_animals',
+	'read_private_resgata_animals',
+	'delete_resgata_animals',
+	'delete_others_resgata_animals',
+	'delete_private_resgata_animals',
+	'delete_published_resgata_animals',
+	'manage_resgata_animal_terms',
+	'resgata_access_panel',
+	'resgata_manage_settings',
+	'resgata_manage_adoptions',
+	'resgata_manage_sponsorship',
 );
 
-foreach ( wp_roles()->role_objects as $rwp_role ) {
-	foreach ( $rwp_caps as $rwp_cap ) {
-		$rwp_role->remove_cap( $rwp_cap );
+foreach ( wp_roles()->role_objects as $resgata_role ) {
+	foreach ( $resgata_caps as $resgata_cap ) {
+		$resgata_role->remove_cap( $resgata_cap );
 	}
 }
 
-remove_role( 'rwp_protetor_admin' );
+remove_role( 'resgata_protetor_admin' );
 
 // Opções.
-foreach ( array( 'rwp_settings', 'rwp_modules', 'rwp_db_version', 'rwp_flush_rewrite', 'rwp_organization', 'rwp_contact_page_id', 'rwp_help_page_id', 'rwp_banners', 'rwp_sponsorship', 'rwp_sponsorship_counter', 'rwp_payments_since' ) as $rwp_option ) {
-	delete_option( $rwp_option );
+foreach ( array( 'resgata_settings', 'resgata_modules', 'resgata_db_version', 'resgata_flush_rewrite', 'resgata_organization', 'resgata_contact_page_id', 'resgata_help_page_id', 'resgata_banners', 'resgata_sponsorship', 'resgata_sponsorship_counter', 'resgata_payments_since' ) as $resgata_option ) {
+	delete_option( $resgata_option );
 }
 
 // Tabelas próprias: padrinhos (dados pessoais), eventos da Stripe já processados e pagamentos.
-foreach ( array( 'rwp_sponsors', 'rwp_stripe_events', 'rwp_payments' ) as $rwp_table ) {
-	// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.SchemaChange.SchemaChange -- Nome fixo de tabela do próprio plugin, na desinstalação.
-	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}{$rwp_table}" );
+foreach ( array( 'resgata_sponsors', 'resgata_stripe_events', 'resgata_payments' ) as $resgata_table ) {
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.SchemaChange.SchemaChange -- Tabela do próprio plugin, na desinstalação.
+	$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', $wpdb->prefix . $resgata_table ) );
 }
 
-wp_clear_scheduled_hook( 'rwp_stripe_events_cleanup' );
+wp_clear_scheduled_hook( 'resgata_stripe_events_cleanup' );

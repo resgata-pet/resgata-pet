@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class PixDonation {
 
-	public const SCRIPT_HANDLE = 'rwp-pix';
+	public const SCRIPT_HANDLE = 'resgata-pix';
 
 	/**
 	 * Valores sugeridos, em reais.
@@ -44,9 +44,9 @@ final class PixDonation {
 	 * Registra o script e os blocos.
 	 */
 	public function register_blocks(): void {
-		if ( ! wp_style_is( 'rwp-frontend', 'registered' ) ) {
-			$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
-			wp_register_style( 'rwp-frontend', $src, array(), RWP_VERSION );
+		if ( ! wp_style_is( 'resgata-frontend', 'registered' ) ) {
+			$src = current_theme_supports( 'resgata-wp' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
+			wp_register_style( 'resgata-frontend', $src, array(), RESGATA_VERSION );
 		}
 
 		$script = Assets::script( 'wp/pix' );
@@ -54,9 +54,9 @@ final class PixDonation {
 			wp_register_script( self::SCRIPT_HANDLE, $script['url'], $script['dependencies'], $script['version'], array( 'strategy' => 'defer' ) );
 		}
 
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/pix-donation' );
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/pix-once' );
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/donate-banner' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/pix-donation' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/pix-once' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/donate-banner' );
 	}
 
 	/**
@@ -70,7 +70,7 @@ final class PixDonation {
 		 *
 		 * @param int[] $amounts Valores em reais.
 		 */
-		$amounts = (array) apply_filters( 'rwp_pix_amounts', self::AMOUNTS );
+		$amounts = (array) apply_filters( 'resgata_pix_amounts', self::AMOUNTS );
 
 		return array_slice( array_values( array_unique( array_filter( array_map( 'absint', $amounts ) ) ) ), 0, 6 );
 	}
@@ -88,7 +88,7 @@ final class PixDonation {
 			return '';
 		}
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		if ( wp_script_is( self::SCRIPT_HANDLE, 'registered' ) ) {
 			wp_enqueue_script( self::SCRIPT_HANDLE );
@@ -97,7 +97,7 @@ final class PixDonation {
 		return TemplateLoader::render(
 			'pix-donation.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'id="rwp-pix" class="rwp-pix"',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'id="resgata-pix" class="resgata-pix"',
 				'pix'                => $pix,
 				'amounts'            => self::amounts(),
 				'title'              => $once ? __( 'Prefere doar uma vez só?', 'resgata-wp' ) : __( 'Doe por Pix', 'resgata-wp' ),
@@ -128,7 +128,7 @@ final class PixDonation {
 			return '';
 		}
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		if ( wp_script_is( self::SCRIPT_HANDLE, 'registered' ) ) {
 			wp_enqueue_script( self::SCRIPT_HANDLE );
@@ -137,8 +137,8 @@ final class PixDonation {
 		return TemplateLoader::render(
 			'donate-banner.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="rwp-donate"',
-				'url'                => $url . '#rwp-pix',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="resgata-donate"',
+				'url'                => $url . '#resgata-pix',
 				'pix'                => $pix,
 			)
 		);

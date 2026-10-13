@@ -20,7 +20,7 @@
  * cores, valem os tons do guia de design. Ficam nesta classe, aplicada ao botão
  * e à lista suspensa, para não espalhar variáveis pelo site.
  */
-.rwp-ui {
+.resgata-ui {
 	--radius: 0.5rem;
 	--foreground: var(--wp--preset--color--contrast, #14213d);
 	--card: var(--wp--preset--color--surface, #fff);
@@ -39,14 +39,14 @@
 	letter-spacing: inherit;
 }
 
-.rwp-ui *,
-.rwp-ui ::before,
-.rwp-ui ::after {
+.resgata-ui *,
+.resgata-ui ::before,
+.resgata-ui ::after {
 	box-sizing: border-box;
 }
 
 /* Sem o reset do Tailwind, o botão precisa perder a aparência padrão do navegador e do tema. */
-button.rwp-ui {
+button.resgata-ui {
 	appearance: none;
 	cursor: pointer;
 	font-weight: 400;
@@ -55,7 +55,7 @@ button.rwp-ui {
 	text-transform: none;
 }
 
-.rwp-select {
+.resgata-select {
 	display: block;
 }
 

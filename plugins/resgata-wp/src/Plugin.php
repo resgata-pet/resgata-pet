@@ -63,6 +63,6 @@ final class Plugin {
 		/**
 		 * Disparado depois que os módulos do Resgata WP foram carregados.
 		 */
-		do_action( 'rwp_loaded' );
+		do_action( 'resgata_loaded' );
 	}
 }

@@ -151,7 +151,7 @@ final class Questionnaire {
 		 *
 		 * @param array<string, array<string, mixed>> $fields Perguntas.
 		 */
-		return (array) apply_filters( 'rwp_adoption_questionnaire_fields', $fields );
+		return (array) apply_filters( 'resgata_adoption_questionnaire_fields', $fields );
 	}
 
 	/**

@@ -74,7 +74,7 @@ final class DetailsRenderer {
 		$has        = static fn( string $key ): bool => in_array( $key, $sections, true );
 		$photos     = $has( 'gallery' ) ? self::photos( $animal ) : array();
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		// As setas (das fotos e da fileira de outros animais) e a troca de foto pelas miniaturas
 		// dependem do script; sem ele, as duas rolam com o dedo ou pela barra de rolagem.
@@ -83,12 +83,12 @@ final class DetailsRenderer {
 		}
 
 		if ( '' === $wrapper_attributes ) {
-			$wrapper_attributes = 'class="rwp-animal"';
+			$wrapper_attributes = 'class="resgata-animal"';
 		}
 
 		if ( $is_page ) {
 			// Os atributos já vêm escapados; só acrescenta a classe do layout de página inteira.
-			$wrapper_attributes = (string) preg_replace( '/class="/', 'class="rwp-animal--page ', $wrapper_attributes, 1 );
+			$wrapper_attributes = (string) preg_replace( '/class="/', 'class="resgata-animal--page ', $wrapper_attributes, 1 );
 		}
 
 		return TemplateLoader::render(
@@ -325,7 +325,7 @@ final class DetailsRenderer {
 		 * @param string $url     Destino do botão.
 		 * @param int    $post_id ID do animal.
 		 */
-		return (string) apply_filters( 'rwp_animal_adopt_url', '', $post_id );
+		return (string) apply_filters( 'resgata_animal_adopt_url', '', $post_id );
 	}
 
 	/**
@@ -369,7 +369,7 @@ final class DetailsRenderer {
 		 * @param array<int, array{label: string, url: string, icon: string}> $links   Links (o primeiro é o principal).
 		 * @param int                                                         $post_id ID do animal.
 		 */
-		$links = apply_filters( 'rwp_animal_help_links', $links, $post_id );
+		$links = apply_filters( 'resgata_animal_help_links', $links, $post_id );
 
 		return is_array( $links ) ? array_values( array_filter( $links, static fn( $link ): bool => is_array( $link ) && ! empty( $link['label'] ) && ! empty( $link['url'] ) ) ) : array();
 	}

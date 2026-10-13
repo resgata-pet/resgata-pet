@@ -79,7 +79,7 @@ dois (há um atalho "Painel Resgata" na barra do WordPress).
 
 - Bloco **Lista de animais** (categoria "Resgata WP" no editor).
 - Pattern **Gatos em destaque** (com o Resgata Tema ativo).
-- Shortcode: `[rwp_animais especie="gato" quantidade="6" colunas="3" filtros="nao"]`
+- Shortcode: `[resgata_animais especie="gato" quantidade="6" colunas="3" filtros="nao"]`
 
   | Atributo | Valores | Padrão |
   |---|---|---|
@@ -181,8 +181,8 @@ Dados de cartão, CPF e endereço ficam só na Stripe.
      prioridade e bloqueiam os campos do painel:
 
      ```php
-     define( 'RWP_STRIPE_SECRET_KEY', 'rk_live_...' );
-     define( 'RWP_STRIPE_WEBHOOK_SECRET', 'whsec_...' );
+     define( 'RESGATA_STRIPE_SECRET_KEY', 'rk_live_...' );
+     define( 'RESGATA_STRIPE_WEBHOOK_SECRET', 'whsec_...' );
      ```
 
 5. Ligue o módulo em **Resgata WP → Configurações** e crie os planos em **Painel → Padrinhos
@@ -240,11 +240,11 @@ página de teste da Stripe deixa autorizar ou expirar o pagamento.
 O plugin traz templates e estilos neutros. Um tema pode:
 
 - **Assumir o visual:** declare `add_theme_support( 'resgata-wp' );` e estilize as classes
-  `.rwp-*`. O plugin deixa de carregar o CSS dele.
+  `.resgata-*`. O plugin deixa de carregar o CSS dele.
 - **Substituir um template PHP:** copie o arquivo de `plugins/resgata-wp/templates/` para a
   pasta `resgata-wp/` do tema (por exemplo, `seu-tema/resgata-wp/animal-card.php`).
-- **Temas de blocos:** crie `templates/single-rwp_animal.html` e
-  `templates/archive-rwp_animal.html`, ou edite os modelos "Página do animal" e
+- **Temas de blocos:** crie `templates/single-resgata_animal.html` e
+  `templates/archive-resgata_animal.html`, ou edite os modelos "Página do animal" e
   "Lista de animais" no Editor do Site.
 
 ## Contribuindo

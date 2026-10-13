@@ -1,6 +1,6 @@
 <?php
 /**
- * Eventos da Stripe já processados (tabela `rwp_stripe_events`).
+ * Eventos da Stripe já processados (tabela `resgata_stripe_events`).
  *
  * @package ResgataWP
  */
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Events {
 
-	public const CLEANUP_HOOK = 'rwp_stripe_events_cleanup';
+	public const CLEANUP_HOOK = 'resgata_stripe_events_cleanup';
 
 	/**
 	 * Por quantos dias um ID de evento fica guardado (a Stripe reenvia por até 3 dias).
@@ -30,7 +30,7 @@ final class Events {
 	public static function table(): string {
 		global $wpdb;
 
-		return $wpdb->prefix . 'rwp_stripe_events';
+		return $wpdb->prefix . 'resgata_stripe_events';
 	}
 
 	/**

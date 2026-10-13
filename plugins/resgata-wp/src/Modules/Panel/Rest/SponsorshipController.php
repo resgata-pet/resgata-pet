@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
  * Rotas `resgata-wp/v1/sponsorship` (resumo, contador e arrecadação), `/sponsors` (lista de
  * padrinhos) e `/payments` (pagamentos recebidos).
  *
- * Os padrinhos têm dados pessoais e os pagamentos são dados financeiros: todas as rotas exigem `rwp_manage_sponsorship`
+ * Os padrinhos têm dados pessoais e os pagamentos são dados financeiros: todas as rotas exigem `resgata_manage_sponsorship`
  * (Administrador e Protetor admin). As chaves da Stripe nunca saem daqui: a
  * resposta só diz se cada uma está definida. Só o Administrador grava as chaves
  * (`/sponsorship/keys`), porque trocar a chave é trocar a conta que recebe.
@@ -211,22 +211,22 @@ final class SponsorshipController extends BaseController {
 			$value = trim( (string) $request[ $field ] );
 
 			if ( 'constant' === Keys::source( $field ) ) {
-				return new \WP_Error( 'rwp_stripe_key_locked', __( 'Esta chave está definida no arquivo wp-config.php do site e só pode ser trocada lá.', 'resgata-wp' ), array( 'status' => 409 ) );
+				return new \WP_Error( 'resgata_stripe_key_locked', __( 'Esta chave está definida no arquivo wp-config.php do site e só pode ser trocada lá.', 'resgata-wp' ), array( 'status' => 409 ) );
 			}
 
 			if ( Keys::SECRET_KEY === $field && str_starts_with( $value, 'sk_' ) ) {
-				return new \WP_Error( 'rwp_stripe_key_full', __( 'Esta é a chave secreta completa ("sk_"), que dá acesso total à conta da Stripe, e por isso não é aceita. Crie uma chave restrita ("rk_") com as permissões da lista e cole aqui.', 'resgata-wp' ), array( 'status' => 400 ) );
+				return new \WP_Error( 'resgata_stripe_key_full', __( 'Esta é a chave secreta completa ("sk_"), que dá acesso total à conta da Stripe, e por isso não é aceita. Crie uma chave restrita ("rk_") com as permissões da lista e cole aqui.', 'resgata-wp' ), array( 'status' => 400 ) );
 			}
 
 			if ( '' !== $value && ! preg_match( $pattern, $value ) ) {
-				return new \WP_Error( 'rwp_stripe_key_format', $message, array( 'status' => 400 ) );
+				return new \WP_Error( 'resgata_stripe_key_format', $message, array( 'status' => 400 ) );
 			}
 
 			$values[ $field ] = $value;
 		}
 
 		if ( array() !== array_filter( $values ) && ! Encryption::available() ) {
-			return new \WP_Error( 'rwp_encryption_unavailable', __( 'Este site não consegue guardar a chave com segurança. Peça a quem cuida da hospedagem para definir as chaves no arquivo wp-config.php.', 'resgata-wp' ), array( 'status' => 500 ) );
+			return new \WP_Error( 'resgata_encryption_unavailable', __( 'Este site não consegue guardar a chave com segurança. Peça a quem cuida da hospedagem para definir as chaves no arquivo wp-config.php.', 'resgata-wp' ), array( 'status' => 500 ) );
 		}
 
 		if ( '' !== ( $values[ Keys::SECRET_KEY ] ?? '' ) ) {
@@ -239,7 +239,7 @@ final class SponsorshipController extends BaseController {
 
 		foreach ( $values as $field => $value ) {
 			if ( ! Keys::store( $field, $value ) ) {
-				return new \WP_Error( 'rwp_stripe_key_not_saved', __( 'Não foi possível guardar a chave. Tente de novo.', 'resgata-wp' ), array( 'status' => 500 ) );
+				return new \WP_Error( 'resgata_stripe_key_not_saved', __( 'Não foi possível guardar a chave. Tente de novo.', 'resgata-wp' ), array( 'status' => 500 ) );
 			}
 		}
 

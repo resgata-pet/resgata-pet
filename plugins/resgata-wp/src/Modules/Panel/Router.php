@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 final class Router {
 
 	public const SLUG      = 'painel';
-	public const QUERY_VAR = 'rwp_panel';
+	public const QUERY_VAR = 'resgata_panel';
 
 	/**
 	 * Registra os hooks.

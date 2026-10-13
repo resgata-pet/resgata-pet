@@ -11,7 +11,7 @@ use ResgataWP\Core\Bindings;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_groups = array(
+$resgata_groups = array(
 	'site' => array(
 		'home'    => __( 'Início', 'resgata-wp' ),
 		'animals' => __( 'Animais para adoção', 'resgata-wp' ),
@@ -25,28 +25,28 @@ $rwp_groups = array(
 	),
 );
 
-$rwp_group = isset( $rwp_groups[ $attributes['group'] ?? '' ] ) ? (string) $attributes['group'] : 'site';
-$rwp_links = array();
+$resgata_group = isset( $resgata_groups[ $attributes['group'] ?? '' ] ) ? (string) $attributes['group'] : 'site';
+$resgata_links = array();
 
 // Só entram as páginas que existem.
-foreach ( $rwp_groups[ $rwp_group ] as $rwp_key => $rwp_label ) {
-	$rwp_url = Bindings::link( $rwp_key );
+foreach ( $resgata_groups[ $resgata_group ] as $resgata_key => $resgata_label ) {
+	$resgata_url = Bindings::link( $resgata_key );
 
-	if ( '' !== $rwp_url ) {
-		$rwp_links[ $rwp_label ] = $rwp_url;
+	if ( '' !== $resgata_url ) {
+		$resgata_links[ $resgata_label ] = $resgata_url;
 	}
 }
 
-if ( 'site' === $rwp_group && '' !== (string) get_privacy_policy_url() ) {
-	$rwp_links[ __( 'Política de privacidade', 'resgata-wp' ) ] = (string) get_privacy_policy_url();
+if ( 'site' === $resgata_group && '' !== (string) get_privacy_policy_url() ) {
+	$resgata_links[ __( 'Política de privacidade', 'resgata-wp' ) ] = (string) get_privacy_policy_url();
 }
 
-if ( ! $rwp_links ) {
+if ( ! $resgata_links ) {
 	return;
 }
 ?>
-<ul <?php echo get_block_wrapper_attributes( array( 'class' => 'rwp-links' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escapado pelo core. ?>>
-	<?php foreach ( $rwp_links as $rwp_label => $rwp_url ) : ?>
-		<li><a href="<?php echo esc_url( $rwp_url ); ?>"><?php echo esc_html( $rwp_label ); ?></a></li>
+<ul <?php echo get_block_wrapper_attributes( array( 'class' => 'resgata-links' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escapado pelo core. ?>>
+	<?php foreach ( $resgata_links as $resgata_label => $resgata_url ) : ?>
+		<li><a href="<?php echo esc_url( $resgata_url ); ?>"><?php echo esc_html( $resgata_label ); ?></a></li>
 	<?php endforeach; ?>
 </ul>

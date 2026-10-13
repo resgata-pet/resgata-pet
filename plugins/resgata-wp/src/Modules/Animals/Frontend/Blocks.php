@@ -19,10 +19,10 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Blocks {
 
-	public const STYLE_HANDLE   = 'rwp-frontend';
-	public const EDITOR_HANDLE  = 'rwp-blocks-editor';
-	public const GALLERY_HANDLE = 'rwp-animal-gallery';
-	public const SELECT_HANDLE  = 'rwp-site-selects';
+	public const STYLE_HANDLE   = 'resgata-frontend';
+	public const EDITOR_HANDLE  = 'resgata-blocks-editor';
+	public const GALLERY_HANDLE = 'resgata-animal-gallery';
+	public const SELECT_HANDLE  = 'resgata-site-selects';
 
 	/**
 	 * Registra os hooks.
@@ -41,8 +41,8 @@ final class Blocks {
 		 * Se o tema declarar `add_theme_support( 'resgata-wp' )`, ele assume o
 		 * visual: registramos o handle vazio para os blocos não carregarem CSS.
 		 */
-		$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
-		wp_register_style( self::STYLE_HANDLE, $src, array(), RWP_VERSION );
+		$src = current_theme_supports( 'resgata-wp' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
+		wp_register_style( self::STYLE_HANDLE, $src, array(), RESGATA_VERSION );
 
 		$editor = Assets::script( 'wp/blocks-editor' );
 
@@ -51,13 +51,13 @@ final class Blocks {
 			self::EDITOR_HANDLE,
 			$editor ? $editor['url'] : false,
 			$editor ? $editor['dependencies'] : array(),
-			$editor ? $editor['version'] : RWP_VERSION,
+			$editor ? $editor['version'] : RESGATA_VERSION,
 			true
 		);
 
 		wp_add_inline_script(
 			self::EDITOR_HANDLE,
-			'window.rwpBlocks = ' . wp_json_encode(
+			'window.resgataBlocks = ' . wp_json_encode(
 				array(
 					'species'  => Taxonomies::species_options(),
 					'statuses' => Options::statuses(),
@@ -75,9 +75,9 @@ final class Blocks {
 
 		self::register_select_assets();
 
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/animals-list' );
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/animal-details' );
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/impact' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/animals-list' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/animal-details' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/impact' );
 	}
 
 	/**
@@ -101,7 +101,7 @@ final class Blocks {
 	}
 
 	/**
-	 * Carrega o Select do shadcn/ui na página atual (chamado por quem imprime um `<select data-rwp-select>`).
+	 * Carrega o Select do shadcn/ui na página atual (chamado por quem imprime um `<select data-resgata-select>`).
 	 */
 	public static function enqueue_select_assets(): void {
 		self::register_select_assets();

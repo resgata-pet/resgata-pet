@@ -11,24 +11,24 @@ use ResgataWP\Modules\Sponsorship\Blocks;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_html = Blocks::render_plans(
+$resgata_html = Blocks::render_plans(
 	(bool) ( $attributes['showCounter'] ?? true ),
 	get_block_wrapper_attributes(
 		array(
-			'class' => 'rwp-sponsorship',
-			'id'    => 'rwp-apadrinhar',
+			'class' => 'resgata-sponsorship',
+			'id'    => 'resgata-apadrinhar',
 		)
 	)
 );
 
-if ( '' === $rwp_html && wp_is_serving_rest_request() ) {
+if ( '' === $resgata_html && wp_is_serving_rest_request() ) {
 	// Prévia no editor enquanto a Stripe não está configurada.
-	$rwp_html = sprintf(
+	$resgata_html = sprintf(
 		'<div %s><p>%s</p></div>',
-		get_block_wrapper_attributes( array( 'class' => 'rwp-sponsorship rwp-sponsorship--placeholder' ) ),
+		get_block_wrapper_attributes( array( 'class' => 'resgata-sponsorship resgata-sponsorship--placeholder' ) ),
 		esc_html__( 'Aqui aparecem os planos de apadrinhamento quando a Stripe estiver configurada (veja Padrinhos no painel Resgata).', 'resgata-wp' )
 	);
 }
 
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template escapa cada valor; os atributos do wrapper vêm escapados do core.
-echo $rwp_html;
+echo $resgata_html;

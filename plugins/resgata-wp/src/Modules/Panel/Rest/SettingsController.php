@@ -67,7 +67,7 @@ final class SettingsController extends BaseController {
 		foreach ( array( 'email', 'adoption_email', 'sponsorship_email' ) as $field ) {
 			if ( isset( $changes[ $field ] ) && '' !== trim( $changes[ $field ] ) && ! is_email( trim( $changes[ $field ] ) ) ) {
 				return new \WP_Error(
-					'rwp_rest_invalid_email',
+					'resgata_rest_invalid_email',
 					__( 'Confira o e-mail informado: o formato não parece válido.', 'resgata-wp' ),
 					array(
 						'status' => 400,
@@ -81,7 +81,7 @@ final class SettingsController extends BaseController {
 		$thanks = isset( $changes[ ThanksPage::FIELD ] ) ? absint( $changes[ ThanksPage::FIELD ] ) : 0;
 		if ( $thanks && ( 'page' !== get_post_type( $thanks ) || 'publish' !== get_post_status( $thanks ) ) ) {
 			return new \WP_Error(
-				'rwp_rest_invalid_page',
+				'resgata_rest_invalid_page',
 				__( 'Escolha uma página publicada do site para o agradecimento.', 'resgata-wp' ),
 				array(
 					'status' => 400,

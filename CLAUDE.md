@@ -19,12 +19,12 @@ ajuda curtos, linguagem do dia a dia, desenho para celular antes do computador.
 Como os dois conversam:
 
 - Template PHP: `TemplateLoader::locate()` procura em `<tema>/resgata-wp/<arquivo>.php` e
-  depois em `plugins/resgata-wp/templates/`. As variáveis chegam em `$rwp_args`.
-- Tema de blocos: o plugin registra os modelos `single-rwp_animal` e `archive-rwp_animal`
+  depois em `plugins/resgata-wp/templates/`. As variáveis chegam em `$resgata_args`.
+- Tema de blocos: o plugin registra os modelos `single-resgata_animal` e `archive-resgata_animal`
   (`register_block_template`); o tema os substitui com arquivos de mesmo nome em `templates/`.
 - Tema clássico: `template_include` usa `single-animal.php` / `archive-animal.php`.
-- `add_theme_support( 'resgata-wp' )` faz o plugin registrar o handle `rwp-frontend` vazio; o
-  tema estiliza as classes `.rwp-*`.
+- `add_theme_support( 'resgata-wp' )` faz o plugin registrar o handle `resgata-frontend` vazio; o
+  tema estiliza as classes `.resgata-*`.
 
 ## Onde está cada instrução
 

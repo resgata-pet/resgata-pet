@@ -23,16 +23,16 @@ final class Links {
 	 * Blocos que identificam uma página do site, e onde cada resultado fica guardado por uma hora.
 	 */
 	private const PAGE_BLOCKS = array(
-		'resgata-wp/sponsorship-plans' => 'rwp_sponsorship_page_id',
-		'resgata-wp/pix-donation'      => 'rwp_help_page_id',
-		'resgata-wp/sponsor-area'      => 'rwp_sponsor_area_page_id',
+		'resgata-wp/sponsorship-plans' => 'resgata_sponsorship_page_id',
+		'resgata-wp/pix-donation'      => 'resgata_help_page_id',
+		'resgata-wp/sponsor-area'      => 'resgata_sponsor_area_page_id',
 	);
 
 	/**
 	 * Lista pública de animais.
 	 */
 	public static function animals(): string {
-		return post_type_exists( 'rwp_animal' ) ? (string) get_post_type_archive_link( 'rwp_animal' ) : '';
+		return post_type_exists( 'resgata_animal' ) ? (string) get_post_type_archive_link( 'resgata_animal' ) : '';
 	}
 
 	/**
@@ -57,7 +57,7 @@ final class Links {
 	public static function sponsor_area(): string {
 		$url = self::page_with_block( 'resgata-wp/sponsor-area' );
 
-		return '' !== $url ? $url . '#rwp-padrinho' : '';
+		return '' !== $url ? $url . '#resgata-padrinho' : '';
 	}
 
 	/**

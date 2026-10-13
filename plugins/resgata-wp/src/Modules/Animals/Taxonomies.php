@@ -14,18 +14,18 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Taxonomies {
 
-	public const SPECIES     = 'rwp_species';
-	public const TEMPERAMENT = 'rwp_temperament';
+	public const SPECIES     = 'resgata_species';
+	public const TEMPERAMENT = 'resgata_temperament';
 
 	/**
 	 * Registra as taxonomias.
 	 */
 	public static function register_taxonomies(): void {
 		$caps = array(
-			'manage_terms' => 'manage_rwp_animal_terms',
-			'edit_terms'   => 'manage_rwp_animal_terms',
-			'delete_terms' => 'manage_rwp_animal_terms',
-			'assign_terms' => 'edit_rwp_animals',
+			'manage_terms' => 'manage_resgata_animal_terms',
+			'edit_terms'   => 'manage_resgata_animal_terms',
+			'delete_terms' => 'manage_resgata_animal_terms',
+			'assign_terms' => 'edit_resgata_animals',
 		);
 
 		// Espécie e temperamento são escolhidos na ficha do animal, no painel: sem telas no wp-admin.

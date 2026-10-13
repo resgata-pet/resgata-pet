@@ -1,7 +1,7 @@
 /**
  * Campos de escolha do site público.
  *
- * Troca cada `<select data-rwp-select>` das páginas públicas pelo Select do
+ * Troca cada `<select data-resgata-select>` das páginas públicas pelo Select do
  * shadcn/ui (o mesmo componente do painel). O `<select>` original continua na
  * página, escondido, e é ele que o formulário envia; sem este script (ou sem o
  * build) o visitante usa o campo nativo normalmente.
@@ -47,7 +47,7 @@ function Field( { id, items, placeholder, initial, invalid, describedBy, require
 		>
 			<SelectTrigger
 				id={ id || undefined }
-				className="rwp-ui"
+				className="resgata-ui"
 				aria-invalid={ invalid || undefined }
 				aria-describedby={ describedBy ?? undefined }
 				aria-required={ required || undefined }
@@ -55,7 +55,7 @@ function Field( { id, items, placeholder, initial, invalid, describedBy, require
 				<SelectValue placeholder={ placeholder } />
 			</SelectTrigger>
 			{ /* Posição fixa: a barra do WordPress (para quem está logado) desloca a página e erraria a conta. */ }
-			<SelectContent className="rwp-ui" alignItemWithTrigger={ false } positionMethod="fixed">
+			<SelectContent className="resgata-ui" alignItemWithTrigger={ false } positionMethod="fixed">
 				{ items.map( ( item ) => (
 					<SelectItem key={ item.value ?? '' } value={ item.value } disabled={ item.disabled }>
 						{ item.label }
@@ -67,7 +67,7 @@ function Field( { id, items, placeholder, initial, invalid, describedBy, require
 }
 
 function enhance( select: HTMLSelectElement ): void {
-	if ( select.multiple || select.dataset.rwpSelectReady ) {
+	if ( select.multiple || select.dataset.resgataSelectReady ) {
 		return;
 	}
 
@@ -84,7 +84,7 @@ function enhance( select: HTMLSelectElement ): void {
 
 	const id = select.id;
 	const mount = document.createElement( 'span' );
-	mount.className = 'rwp-select';
+	mount.className = 'resgata-select';
 	select.after( mount );
 
 	// O rótulo (`<label for>`) passa a apontar para o botão novo.
@@ -92,7 +92,7 @@ function enhance( select: HTMLSelectElement ): void {
 	select.hidden = true;
 	select.tabIndex = -1;
 	select.setAttribute( 'aria-hidden', 'true' );
-	select.dataset.rwpSelectReady = '1';
+	select.dataset.resgataSelectReady = '1';
 
 	createRoot( mount ).render(
 		<Field
@@ -112,7 +112,7 @@ function enhance( select: HTMLSelectElement ): void {
 	);
 }
 
-const start = (): void => document.querySelectorAll< HTMLSelectElement >( 'select[data-rwp-select]' ).forEach( enhance );
+const start = (): void => document.querySelectorAll< HTMLSelectElement >( 'select[data-resgata-select]' ).forEach( enhance );
 
 if ( document.readyState === 'loading' ) {
 	document.addEventListener( 'DOMContentLoaded', start );

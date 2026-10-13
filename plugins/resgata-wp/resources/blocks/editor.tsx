@@ -22,7 +22,7 @@ type OptionMap = Record< string, string >;
 
 declare global {
 	interface Window {
-		rwpBlocks?: {
+		resgataBlocks?: {
 			species: OptionMap;
 			statuses: OptionMap;
 			bindings?: { links: OptionMap; organization: OptionMap };
@@ -58,7 +58,7 @@ interface EditProps< T > {
 	context?: { postId?: number };
 }
 
-const data = window.rwpBlocks ?? { species: {}, statuses: {} };
+const data = window.resgataBlocks ?? { species: {}, statuses: {} };
 
 function toOptions( map: OptionMap, emptyLabel?: string ) {
 	const options = Object.entries( map ).map( ( [ value, label ] ) => ( { value, label } ) );
@@ -328,7 +328,7 @@ const register = registerBlockType as unknown as (
  */
 const registerSource = ( wpBlocks as unknown as { registerBlockBindingsSource?: ( source: Record< string, unknown > ) => void } )
 	.registerBlockBindingsSource;
-const bindingValues = window.rwpBlocks?.bindings;
+const bindingValues = window.resgataBlocks?.bindings;
 
 if ( registerSource && bindingValues ) {
 	const source = ( name: string, label: string, values: OptionMap ) =>

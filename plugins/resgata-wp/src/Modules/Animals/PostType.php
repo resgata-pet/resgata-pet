@@ -10,11 +10,11 @@ namespace ResgataWP\Modules\Animals;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registra o post type `rwp_animal`.
+ * Registra o post type `resgata_animal`.
  */
 final class PostType {
 
-	public const SLUG = 'rwp_animal';
+	public const SLUG = 'resgata_animal';
 
 	/**
 	 * Registra o post type.
@@ -62,7 +62,7 @@ final class PostType {
 				'supports'        => array( 'title', 'editor', 'thumbnail', 'revisions' ),
 				'show_in_rest'    => true,
 				'rest_base'       => 'animais',
-				'capability_type' => array( 'rwp_animal', 'rwp_animals' ),
+				'capability_type' => array( 'resgata_animal', 'resgata_animals' ),
 				'map_meta_cap'    => true,
 			)
 		);

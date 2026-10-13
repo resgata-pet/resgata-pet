@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Modules {
 
-	public const OPTION = 'rwp_modules';
+	public const OPTION = 'resgata_modules';
 
 	/**
 	 * Módulos já implementados (os demais aparecem como "em breve").

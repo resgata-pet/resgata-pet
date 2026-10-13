@@ -2,7 +2,7 @@
  * Bloco "Links do site" (resgata-wp/links).
  */
 /* Links do site (rodapé) */
-.rwp-links {
+.resgata-links {
 	display: grid;
 	gap: 0.15rem;
 	list-style: none;
@@ -10,11 +10,11 @@
 	padding: 0;
 }
 
-.rwp-links li {
+.resgata-links li {
 	margin: 0;
 }
 
-.rwp-links a {
+.resgata-links a {
 	align-items: center;
 	color: inherit;
 	display: inline-flex;
@@ -22,14 +22,14 @@
 	text-decoration: none;
 }
 
-.rwp-links a:hover {
+.resgata-links a:hover {
 	text-decoration: underline;
 }
 
-.is-style-resgata-footer .rwp-links a {
+.is-style-resgata-footer .resgata-links a {
 	color: var(--wp--preset--color--text);
 }
 
-.is-style-resgata-footer .rwp-links a:hover {
+.is-style-resgata-footer .resgata-links a:hover {
 	color: var(--wp--preset--color--accent-3);
 }

@@ -78,32 +78,32 @@
 }
 
 /* Conteúdo do editor de texto (Tiptap): o reset do Tailwind zera títulos e listas. */
-.rwp-prose {
+.resgata-prose {
 	@apply min-h-40 px-3 py-2 text-base leading-relaxed outline-none;
 }
 
-.rwp-prose > * + * {
+.resgata-prose > * + * {
 	@apply mt-3;
 }
 
-.rwp-prose h2,
-.rwp-prose h3 {
+.resgata-prose h2,
+.resgata-prose h3 {
 	@apply text-lg font-semibold;
 }
 
-.rwp-prose ul {
+.resgata-prose ul {
 	@apply list-disc pl-6;
 }
 
-.rwp-prose ol {
+.resgata-prose ol {
 	@apply list-decimal pl-6;
 }
 
-.rwp-prose a {
+.resgata-prose a {
 	@apply text-primary underline underline-offset-2;
 }
 
-.rwp-prose p.is-editor-empty:first-child::before {
+.resgata-prose p.is-editor-empty:first-child::before {
 	@apply text-muted-foreground pointer-events-none float-left h-0;
 	content: attr(data-placeholder);
 }

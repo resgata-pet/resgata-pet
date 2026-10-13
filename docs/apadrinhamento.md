@@ -11,23 +11,23 @@ inclui a pasta `vendor/`). O resto do plugin funciona sem ela.
   Stripe do Brasil.
 - **`Gateway` é o único ponto que chama a API da Stripe** (`StripeClient` instanciado; sem
   `payment_method_types`; `excluded_payment_method_types` esconde o boleto).
-- As operações de planos passam antes pelo filtro `rwp_sponsorship_pre_stripe`, que os testes
+- As operações de planos passam antes pelo filtro `resgata_sponsorship_pre_stripe`, que os testes
   usam para não falar com a Stripe.
 - O padrinho só existe no site **depois do webhook**; a página de retorno do Checkout apenas
   agradece.
 
 ## Chaves (`Keys`)
 
-- Origem: constantes `RWP_STRIPE_SECRET_KEY` (de preferência restrita, `rk_`) e
-  `RWP_STRIPE_WEBHOOK_SECRET` do `wp-config.php` ou, sem elas, o que o Administrador salvou no
+- Origem: constantes `RESGATA_STRIPE_SECRET_KEY` (de preferência restrita, `rk_`) e
+  `RESGATA_STRIPE_WEBHOOK_SECRET` do `wp-config.php` ou, sem elas, o que o Administrador salvou no
   painel (`PUT /sponsorship/keys`, só `manage_options`; o Protetor admin recebe 403). A
   constante tem prioridade e bloqueia o campo (409).
 - O painel só aceita chave restrita (`rk_`); a completa (`sk_`) é recusada (no `wp-config.php`
   ela ainda funciona). A chave é testada na Stripe antes de ser gravada
   (`Gateway::verify_key()`).
-- O que vem do painel é gravado **cifrado** na option `rwp_stripe_keys` (sem autoload) por
-  `Core\Encryption`: AES-256-CTR com IV aleatório, chave derivada de `RWP_ENCRYPTION_KEY` /
-  `RWP_ENCRYPTION_SALT` ou, sem elas, de `LOGGED_IN_KEY` / `LOGGED_IN_SALT`. É a mesma lógica
+- O que vem do painel é gravado **cifrado** na option `resgata_stripe_keys` (sem autoload) por
+  `Core\Encryption`: AES-256-CTR com IV aleatório, chave derivada de `RESGATA_ENCRYPTION_KEY` /
+  `RESGATA_ENCRYPTION_SALT` ou, sem elas, de `LOGGED_IN_KEY` / `LOGGED_IN_SALT`. É a mesma lógica
   do Site Kit, reescrita, porque o código dele é Apache-2.0.
 - Sem OpenSSL ou sem essas constantes nada é gravado: não existe caminho de texto puro. Se as
   constantes mudarem, a chave fica ilegível e o painel pede para colar de novo.
@@ -59,24 +59,24 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
 - A cada mudança o portal do cliente é atualizado com os planos à venda. A chave precisa de
   escrita em Products, Prices e Customer portal configurations; sem ela o painel explica o que
   falta.
-- A option `rwp_sponsorship` guarda os planos (`plans`; o formato antigo `prices` ainda é
+- A option `resgata_sponsorship` guarda os planos (`plans`; o formato antigo `prices` ainda é
   lido), o ID do portal e o ajuste manual do contador. `wp resgata stripe-setup` continua
   funcionando e preserva os nomes já cadastrados.
 
 ## Tabelas (`Core\Schema`, schema 6)
 
-- `rwp_sponsors`: nome, e-mail, IDs de cliente/assinatura/preço, situação, aviso de pagamento
+- `resgata_sponsors`: nome, e-mail, IDs de cliente/assinatura/preço, situação, aviso de pagamento
   e datas (último pagamento, fim do período pago em `period_end`, cancelamento pedido em
   `cancel_at`, boas-vindas enviadas em `welcomed_at`). **Sem** CPF, endereço ou dados de
   pagamento.
-- `rwp_stripe_events`: IDs de eventos já processados, limpos após 30 dias.
-- `rwp_payments` (`Payments`): uma linha por fatura paga, com os IDs da fatura e do pagamento,
+- `resgata_stripe_events`: IDs de eventos já processados, limpos após 30 dias.
+- `resgata_payments` (`Payments`): uma linha por fatura paga, com os IDs da fatura e do pagamento,
   o valor, o total devolvido (`refunded`) e a contestação (`dispute`: vazio, `open`, `won` ou
   `lost`). `Payments::net()` diz quanto ficou com a protetora: nada enquanto a contestação
   está aberta ou se foi perdida; nos outros casos, o valor menos o devolvido. Linhas sem
   padrinho (faturas de outros produtos da conta) são apagadas após 30 dias.
 - Site que já tinha padrinhos antes do schema 6: os pagamentos anteriores não são
-  registrados. A option `rwp_payments_since` guarda o início do registro, e o resumo desses
+  registrados. A option `resgata_payments_since` guarda o início do registro, e o resumo desses
   padrinhos mostra "Você doou desde ...".
 
 ## Webhook
@@ -106,7 +106,7 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
   `sponsorship-plans.php` e `sponsor-area.php`). Os planos aparecem como cartões, um por
   valor, cada um com o seu botão (o botão envia o plano).
 - Contador público (`Plans::counter()`): assinaturas `active` + ajuste manual. A option
-  `rwp_sponsorship_counter` guarda o número e a data ("Atualizado em").
+  `resgata_sponsorship_counter` guarda o número e a data ("Atualizado em").
 - Área do padrinho (`MagicLink`): e-mail → link de uso único (30 min; só o resumo do código é
   gravado) → botão de confirmação → resumo do apadrinhamento (total doado, plano, situação,
   datas) → botão "Alterar ou cancelar" → sessão do portal da Stripe. A resposta ao pedido do
@@ -121,10 +121,10 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
   "Obrigado", com o bloco `resgata-wp/sponsorship-thanks` (template `sponsorship-thanks.php`),
   ao salvar o primeiro plano ou as Configurações com um plano à venda; se for apagada, nasce
   de novo no próximo salvamento. O conteúdo e o modelo vêm dos filtros
-  `rwp_thanks_page_content` e `rwp_thanks_page_template`. O título e o texto do bloco são os
+  `resgata_thanks_page_content` e `resgata_thanks_page_template`. O título e o texto do bloco são os
   campos `sponsorship_thanks_title` e `sponsorship_thanks_text`, com texto padrão quando
   vazios. O plugin não traz imagem: o site pode informar uma
-  (inclusive animada) pelo filtro `rwp_thanks_image_url`, e ela aparece no bloco e no e-mail
+  (inclusive animada) pelo filtro `resgata_thanks_image_url`, e ela aparece no bloco e no e-mail
   de agradecimento. A página leva `noindex`. Sem página publicada, a pessoa volta para a página dos
   planos, que mostra o agradecimento simples (`Checkout::is_thank_you()`).
 - A página só agradece: quem a abre direto vê a mesma mensagem. O padrinho só existe no site
@@ -137,7 +137,7 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
 - Ao padrinho: só o agradecimento, na primeira vez em que ele aparece ativo e com e-mail
   (`Sponsors::claim_welcome()` garante um envio só, em qualquer ordem de eventos). É um e-mail
   de texto; só vai em HTML (com a versão em texto junto) quando o site informa uma imagem
-  pelo filtro `rwp_thanks_image_url` (`ThanksPage::image_url()`, a mesma da página). Recibo e
+  pelo filtro `resgata_thanks_image_url` (`ThanksPage::image_url()`, a mesma da página). Recibo e
   aviso de cartão recusado são da Stripe (ligados no Dashboard dela).
 - À protetora, no e-mail `sponsorship_email` das Configurações (campo interno, como o
   `adoption_email`; sem ele nada é enviado): novo padrinho, pedido de cancelamento,
@@ -146,7 +146,7 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
 
 ## Painel
 
-`/painel/apadrinhamento` (menu "Padrinhos"), capability `rwp_manage_sponsorship`
+`/painel/apadrinhamento` (menu "Padrinhos"), capability `resgata_manage_sponsorship`
 (Administrador e Protetor admin), rotas `/sponsorship`, `/sponsors` e `/payments`.
 
 - As chaves da Stripe, o e-mail dos avisos e a página de agradecimento ficam em

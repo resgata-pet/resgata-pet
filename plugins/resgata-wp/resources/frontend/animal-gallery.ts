@@ -9,11 +9,11 @@
  */
 
 function setup( viewer: HTMLElement ): void {
-	const track = viewer.querySelector< HTMLElement >( '[data-rwp-viewer-track]' );
-	const slides = Array.from( viewer.querySelectorAll< HTMLElement >( '[data-rwp-viewer-slide]' ) );
-	const thumbs = Array.from( viewer.querySelectorAll< HTMLAnchorElement >( '[data-rwp-viewer-thumb]' ) );
-	const prev = viewer.querySelector< HTMLButtonElement >( '[data-rwp-viewer-prev]' );
-	const next = viewer.querySelector< HTMLButtonElement >( '[data-rwp-viewer-next]' );
+	const track = viewer.querySelector< HTMLElement >( '[data-resgata-viewer-track]' );
+	const slides = Array.from( viewer.querySelectorAll< HTMLElement >( '[data-resgata-viewer-slide]' ) );
+	const thumbs = Array.from( viewer.querySelectorAll< HTMLAnchorElement >( '[data-resgata-viewer-thumb]' ) );
+	const prev = viewer.querySelector< HTMLButtonElement >( '[data-resgata-viewer-prev]' );
+	const next = viewer.querySelector< HTMLButtonElement >( '[data-resgata-viewer-next]' );
 
 	if ( ! track || slides.length < 2 ) {
 		return;
@@ -90,9 +90,9 @@ function setup( viewer: HTMLElement ): void {
 
 /** Fileira que rola para o lado: setas que avançam quase uma tela de cartões por vez. */
 function setupRow( row: HTMLElement ): void {
-	const track = row.querySelector< HTMLElement >( '[data-rwp-row-track]' );
-	const prev = row.querySelector< HTMLButtonElement >( '[data-rwp-row-prev]' );
-	const next = row.querySelector< HTMLButtonElement >( '[data-rwp-row-next]' );
+	const track = row.querySelector< HTMLElement >( '[data-resgata-row-track]' );
+	const prev = row.querySelector< HTMLButtonElement >( '[data-resgata-row-prev]' );
+	const next = row.querySelector< HTMLButtonElement >( '[data-resgata-row-next]' );
 
 	if ( ! track || ! prev || ! next ) {
 		return;
@@ -131,13 +131,13 @@ function setupRow( row: HTMLElement ): void {
 	next.addEventListener( 'click', () => move( 1 ) );
 
 	// Avisa o CSS de que as setas existem: ele esconde a barra de rolagem.
-	row.dataset.rwpRow = 'ready';
+	row.dataset.resgataRow = 'ready';
 	update();
 }
 
 const start = (): void => {
-	document.querySelectorAll< HTMLElement >( '[data-rwp-viewer]' ).forEach( setup );
-	document.querySelectorAll< HTMLElement >( '[data-rwp-row]' ).forEach( setupRow );
+	document.querySelectorAll< HTMLElement >( '[data-resgata-viewer]' ).forEach( setup );
+	document.querySelectorAll< HTMLElement >( '[data-resgata-row]' ).forEach( setupRow );
 };
 
 if ( document.readyState === 'loading' ) {

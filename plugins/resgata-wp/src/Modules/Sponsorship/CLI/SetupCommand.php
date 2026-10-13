@@ -26,7 +26,7 @@ final class SetupCommand {
 	/**
 	 * Prefixo da `lookup_key` dos preços: é por ela que o comando reconhece o que já criou.
 	 */
-	private const LOOKUP_PREFIX = 'rwp_apadrinhamento_';
+	private const LOOKUP_PREFIX = 'resgata_apadrinhamento_';
 
 	/**
 	 * Cria (ou reaproveita) os planos mensais e o portal do cliente na Stripe.
@@ -34,8 +34,8 @@ final class SetupCommand {
 	 * Pode rodar quantas vezes for preciso: planos que já existem não são duplicados.
 	 * O site guarda só os IDs dos preços.
 	 *
-	 * A chave usada é a da variável de ambiente RWP_STRIPE_SETUP_KEY, se existir, ou
-	 * a constante RWP_STRIPE_SECRET_KEY. Ela precisa de permissão de escrita em
+	 * A chave usada é a da variável de ambiente RESGATA_STRIPE_SETUP_KEY, se existir, ou
+	 * a constante RESGATA_STRIPE_SECRET_KEY. Ela precisa de permissão de escrita em
 	 * Produtos, Preços e Configurações do portal do cliente (a chave do dia a dia do
 	 * site não precisa disso).
 	 *
@@ -60,12 +60,12 @@ final class SetupCommand {
 	 * @param array<string, string> $assoc_args Argumentos nomeados.
 	 */
 	public function __invoke( array $args, array $assoc_args ): void {
-		$setup_key = getenv( 'RWP_STRIPE_SETUP_KEY' );
+		$setup_key = getenv( 'RESGATA_STRIPE_SETUP_KEY' );
 		$api_key   = is_string( $setup_key ) && '' !== trim( $setup_key ) ? trim( $setup_key ) : Keys::secret_key();
 		$client    = Gateway::client( $api_key );
 
 		if ( ! $client ) {
-			\WP_CLI::error( 'Informe a chave da Stripe no painel ou defina RWP_STRIPE_SECRET_KEY no wp-config.php (ou a variável de ambiente RWP_STRIPE_SETUP_KEY) antes de rodar este comando.' );
+			\WP_CLI::error( 'Informe a chave da Stripe no painel ou defina RESGATA_STRIPE_SECRET_KEY no wp-config.php (ou a variável de ambiente RESGATA_STRIPE_SETUP_KEY) antes de rodar este comando.' );
 		}
 
 		if ( str_contains( $api_key, '_live_' ) ) {

@@ -6,29 +6,29 @@
  *
  * @package ResgataWP
  *
- * @var array{wrapper_attributes: string, image_url: string, title: string, text: string, area_url: string, animals_url: string} $rwp_args
+ * @var array{wrapper_attributes: string, image_url: string, title: string, text: string, area_url: string, animals_url: string} $resgata_args
  */
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div <?php echo $rwp_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
-	<?php if ( '' !== $rwp_args['image_url'] ) : ?>
-		<img class="rwp-sponsorship-thanks__image" src="<?php echo esc_url( $rwp_args['image_url'] ); ?>" alt="" decoding="async">
+<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+	<?php if ( '' !== $resgata_args['image_url'] ) : ?>
+		<img class="resgata-sponsorship-thanks__image" src="<?php echo esc_url( $resgata_args['image_url'] ); ?>" alt="" decoding="async">
 	<?php endif; ?>
 
-	<h2 class="rwp-sponsorship__title"><?php echo esc_html( $rwp_args['title'] ); ?></h2>
+	<h2 class="resgata-sponsorship__title"><?php echo esc_html( $resgata_args['title'] ); ?></h2>
 
-	<div class="rwp-sponsorship-thanks__text">
-		<?php echo wp_kses_post( wpautop( esc_html( $rwp_args['text'] ) ) ); ?>
+	<div class="resgata-sponsorship-thanks__text">
+		<?php echo wp_kses_post( wpautop( esc_html( $resgata_args['text'] ) ) ); ?>
 	</div>
 
-	<?php if ( '' !== $rwp_args['area_url'] || '' !== $rwp_args['animals_url'] ) : ?>
-		<p class="rwp-sponsorship-thanks__actions">
-			<?php if ( '' !== $rwp_args['animals_url'] ) : ?>
-				<a class="rwp-button wp-element-button" href="<?php echo esc_url( $rwp_args['animals_url'] ); ?>"><?php esc_html_e( 'Ver os animais', 'resgata-wp' ); ?></a>
+	<?php if ( '' !== $resgata_args['area_url'] || '' !== $resgata_args['animals_url'] ) : ?>
+		<p class="resgata-sponsorship-thanks__actions">
+			<?php if ( '' !== $resgata_args['animals_url'] ) : ?>
+				<a class="resgata-button wp-element-button" href="<?php echo esc_url( $resgata_args['animals_url'] ); ?>"><?php esc_html_e( 'Ver os animais', 'resgata-wp' ); ?></a>
 			<?php endif; ?>
-			<?php if ( '' !== $rwp_args['area_url'] ) : ?>
-				<a class="rwp-sponsorship-thanks__link" href="<?php echo esc_url( $rwp_args['area_url'] ); ?>"><?php esc_html_e( 'Abrir a área do padrinho', 'resgata-wp' ); ?></a>
+			<?php if ( '' !== $resgata_args['area_url'] ) : ?>
+				<a class="resgata-sponsorship-thanks__link" href="<?php echo esc_url( $resgata_args['area_url'] ); ?>"><?php esc_html_e( 'Abrir a área do padrinho', 'resgata-wp' ); ?></a>
 			<?php endif; ?>
 		</p>
 	<?php endif; ?>

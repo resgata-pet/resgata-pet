@@ -17,14 +17,14 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RWP_VERSION', '0.5.0' );
-define( 'RWP_DB_VERSION', 6 );
-define( 'RWP_PLUGIN_FILE', __FILE__ );
-define( 'RWP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define( 'RWP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'RESGATA_VERSION', '0.5.0' );
+define( 'RESGATA_DB_VERSION', 6 );
+define( 'RESGATA_PLUGIN_FILE', __FILE__ );
+define( 'RESGATA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'RESGATA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-if ( is_readable( RWP_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
-	require_once RWP_PLUGIN_DIR . 'vendor/autoload.php';
+if ( is_readable( RESGATA_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
+	require_once RESGATA_PLUGIN_DIR . 'vendor/autoload.php';
 } else {
 	// Autoload PSR-4 de reserva, para o plugin funcionar sem `composer install`.
 	spl_autoload_register(
@@ -33,7 +33,7 @@ if ( is_readable( RWP_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
 			if ( ! str_starts_with( $class_name, $prefix ) ) {
 				return;
 			}
-			$file = RWP_PLUGIN_DIR . 'src/' . str_replace( '\\', '/', substr( $class_name, strlen( $prefix ) ) ) . '.php';
+			$file = RESGATA_PLUGIN_DIR . 'src/' . str_replace( '\\', '/', substr( $class_name, strlen( $prefix ) ) ) . '.php';
 			if ( is_readable( $file ) ) {
 				require_once $file;
 			}

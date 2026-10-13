@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class HelpPage {
 
-	public const OPTION = 'rwp_help_page_id';
+	public const OPTION = 'resgata_help_page_id';
 
 	/**
 	 * Página "Como ajudar", se existir e não estiver na lixeira.
@@ -78,7 +78,7 @@ final class HelpPage {
 		 *
 		 * @param string $content Conteúdo em blocos.
 		 */
-		$content = (string) apply_filters( 'rwp_help_page_content', '<!-- wp:resgata-wp/pix-donation /-->' );
+		$content = (string) apply_filters( 'resgata_help_page_content', '<!-- wp:resgata-wp/pix-donation /-->' );
 
 		if ( ! str_contains( $content, '<!-- wp:resgata-wp/pix-donation ' ) ) {
 			$content = '<!-- wp:resgata-wp/pix-donation /-->';
@@ -106,7 +106,7 @@ final class HelpPage {
 		 *
 		 * @param string $template Slug do modelo; vazio usa o modelo padrão de páginas.
 		 */
-		$template = sanitize_key( (string) apply_filters( 'rwp_help_page_template', '' ) );
+		$template = sanitize_key( (string) apply_filters( 'resgata_help_page_template', '' ) );
 
 		if ( '' !== $template ) {
 			update_post_meta( $page_id, '_wp_page_template', $template );

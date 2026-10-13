@@ -97,7 +97,7 @@ final class ThanksPage {
 		 *
 		 * @param string $url Endereço da imagem; vazio (padrão) não mostra imagem.
 		 */
-		return esc_url_raw( (string) apply_filters( 'rwp_thanks_image_url', '' ) );
+		return esc_url_raw( (string) apply_filters( 'resgata_thanks_image_url', '' ) );
 	}
 
 	/**
@@ -120,7 +120,7 @@ final class ThanksPage {
 		 *
 		 * @param string $content Conteúdo em blocos.
 		 */
-		$content = (string) apply_filters( 'rwp_thanks_page_content', self::BLOCK );
+		$content = (string) apply_filters( 'resgata_thanks_page_content', self::BLOCK );
 
 		if ( ! str_contains( $content, '<!-- wp:resgata-wp/sponsorship-thanks ' ) ) {
 			$content = self::BLOCK;
@@ -148,7 +148,7 @@ final class ThanksPage {
 		 *
 		 * @param string $template Slug do modelo; vazio usa o modelo padrão de páginas.
 		 */
-		$template = sanitize_key( (string) apply_filters( 'rwp_thanks_page_template', '' ) );
+		$template = sanitize_key( (string) apply_filters( 'resgata_thanks_page_template', '' ) );
 
 		if ( '' !== $template ) {
 			update_post_meta( $page_id, '_wp_page_template', $template );

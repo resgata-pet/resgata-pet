@@ -34,7 +34,7 @@ final class TemplateLoader {
 		$path = locate_template( self::THEME_DIR . '/' . $name );
 
 		if ( ! $path ) {
-			$path = RWP_PLUGIN_DIR . 'templates/' . $name;
+			$path = RESGATA_PLUGIN_DIR . 'templates/' . $name;
 		}
 
 		/**
@@ -43,7 +43,7 @@ final class TemplateLoader {
 		 * @param string $path Caminho absoluto do template.
 		 * @param string $name Nome do arquivo de template.
 		 */
-		$path = (string) apply_filters( 'rwp_locate_template', $path, $name );
+		$path = (string) apply_filters( 'resgata_locate_template', $path, $name );
 
 		return is_readable( $path ) ? $path : '';
 	}
@@ -52,7 +52,7 @@ final class TemplateLoader {
 	 * Renderiza um template e devolve o HTML.
 	 *
 	 * @param string               $name Nome do arquivo de template.
-	 * @param array<string, mixed> $args Variáveis disponíveis no template em `$rwp_args`.
+	 * @param array<string, mixed> $args Variáveis disponíveis no template em `$resgata_args`.
 	 */
 	public static function render( string $name, array $args = array() ): string {
 		$path = self::locate( $name );
@@ -69,10 +69,10 @@ final class TemplateLoader {
 	/**
 	 * Inclui o template em um escopo isolado.
 	 *
-	 * @param string               $rwp_path Caminho do template.
-	 * @param array<string, mixed> $rwp_args Variáveis do template.
+	 * @param string               $resgata_path Caminho do template.
+	 * @param array<string, mixed> $resgata_args Variáveis do template.
 	 */
-	private static function include_template( string $rwp_path, array $rwp_args ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Usada pelo template incluído.
-		include $rwp_path;
+	private static function include_template( string $resgata_path, array $resgata_args ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Usada pelo template incluído.
+		include $resgata_path;
 	}
 }

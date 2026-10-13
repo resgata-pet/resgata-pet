@@ -1,6 +1,6 @@
 # Configurações da protetora, contato, banners, números e Pix
 
-Código em `src/Modules/Settings/`. Tudo aqui usa a capability `rwp_manage_settings`
+Código em `src/Modules/Settings/`. Tudo aqui usa a capability `resgata_manage_settings`
 (Administrador e Protetor admin; o Editor comum não).
 
 A tela "Resgata WP → Configurações" do wp-admin (módulos ativos e retenção de dados) é outra
@@ -8,7 +8,7 @@ coisa e continua só para o Administrador.
 
 ## Configurações da protetora
 
-- Tela em `/painel/configuracoes`; dados na option `rwp_organization`.
+- Tela em `/painel/configuracoes`; dados na option `resgata_organization`.
 - `Organization.php` reúne campos, tamanhos máximos e sanitização: campo novo entra só ali.
 - Campos: identidade (nome, frase, CNPJ), contato (WhatsApp, mensagem inicial, telefone,
   e-mail, horário), redes (Instagram, Facebook, TikTok, YouTube; aceita link ou @usuario),
@@ -36,16 +36,16 @@ coisa e continua só para o Administrador.
 - Com `compact: true` (template `contact-compact.php`, usado no rodapé): WhatsApp, telefone,
   e-mail, local e redes sociais em ícones.
 - Ao salvar as configurações pela primeira vez, `ContactPage::ensure()` cria a página
-  "Contato" (option `rwp_contact_page_id`); se a página for apagada, é recriada no próximo
-  salvamento. O conteúdo e o modelo vêm dos filtros `rwp_contact_page_content` e
-  `rwp_contact_page_template`.
+  "Contato" (option `resgata_contact_page_id`); se a página for apagada, é recriada no próximo
+  salvamento. O conteúdo e o modelo vêm dos filtros `resgata_contact_page_content` e
+  `resgata_contact_page_template`.
 
 ## Banners
 
 - Tela `/painel/banners` (no celular, o acesso é por Configurações). Até 5 banners, cada um
   com foto, título, final do título em verde, texto e dois botões com link; dá para
   ligar/desligar e reordenar.
-- Dados na option `rwp_banners`. `Banners.php` reúne limites, sanitização e renderização.
+- Dados na option `resgata_banners`. `Banners.php` reúne limites, sanitização e renderização.
 - Links dos botões: endereço completo `http(s)://`, caminho do site (`/animais/`) ou âncora;
   qualquer outra coisa é recusada (`Banners::sanitize_url()`).
 - Site: bloco `resgata-wp/banners` (template `banners.php`). Sem banner ligado, mostra um
@@ -55,7 +55,7 @@ coisa e continua só para o Administrador.
 ## Números da protetora
 
 Bloco `resgata-wp/impact` (template `impact.php`): animais resgatados, adoções, esperando um
-lar e padrinhos ativos, contados dos cadastros (filtro `rwp_impact_items`).
+lar e padrinhos ativos, contados dos cadastros (filtro `resgata_impact_items`).
 
 ## Doação por Pix e página "Como ajudar"
 
@@ -64,20 +64,20 @@ lar e padrinhos ativos, contados dos cadastros (filtro `rwp_impact_items`).
 - O Pix cai direto na conta: **as doações não são registradas**. Doação com confirmação
   automática fica para o módulo de doações avulsas pela Stripe.
 - Bloco `resgata-wp/pix-donation` (template `pix-donation.php`, `Settings\PixDonation`): QR
-  Code, valores sugeridos (filtro `rwp_pix_amounts`), chave com botão de copiar e "Pix copia e
+  Code, valores sugeridos (filtro `resgata_pix_amounts`), chave com botão de copiar e "Pix copia e
   cola". O código e o QR são montados no navegador pela biblioteca `qrcode-pix` (MIT), em
   `resources/frontend/pix.ts` (configuração `wp` do webpack, com o polyfill `buffer`). Sem o
   script, a página mostra só a chave e o titular.
 - **A página publicada que tem esse bloco é a "Como ajudar" do site** (`Core\Links::help()`).
   Ao salvar as Configurações com chave Pix, `HelpPage::ensure()` cria essa página (option
-  `rwp_help_page_id`); se já existir uma página com o bloco, ela é aproveitada, e se a página
+  `resgata_help_page_id`); se já existir uma página com o bloco, ela é aproveitada, e se a página
   for apagada, nasce de novo no próximo salvamento. O conteúdo e o modelo vêm dos filtros
-  `rwp_help_page_content` e `rwp_help_page_template`.
+  `resgata_help_page_content` e `resgata_help_page_template`.
 - Bloco `resgata-wp/pix-once`: o mesmo QR Code e a mesma chave, com textos de "doação única",
   para colocar dentro de outras páginas sem que elas virem a "Como ajudar".
 - Bloco `resgata-wp/donate-banner` (template `donate-banner.php`): chamada "Doe por Pix" com o
   QR Code (sem valor: a pessoa escolhe no app), o botão "Copiar código Pix" e o botão que leva
-  à "Como ajudar". Usa o mesmo `pix.ts` (`data-rwp-pix`), com o código num campo oculto; sem o
+  à "Como ajudar". Usa o mesmo `pix.ts` (`data-resgata-pix`), com o código num campo oculto; sem o
   script, ficam o texto e o botão. No celular o tema esconde o QR Code, que não tem como ser
   lido na própria tela, e fica o botão de copiar. Fica invisível sem chave Pix, sem a página
   ou na própria página.

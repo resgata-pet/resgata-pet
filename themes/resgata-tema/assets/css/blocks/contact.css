@@ -2,32 +2,32 @@
  * Bloco "Contato" completo (resgata-wp/contact sem a opção "compact").
  */
 /* Contato da protetora */
-.rwp-contact {
+.resgata-contact {
 	display: grid;
 	gap: 1.25rem;
 }
 
-.rwp-contact .rwp-icon {
+.resgata-contact .resgata-icon {
 	flex: none;
 	height: 1.25em;
 	width: 1.25em;
 }
 
-.rwp-contact__name {
-	color: var(--rwp-heading);
+.resgata-contact__name {
+	color: var(--resgata-heading);
 	font-size: 1.25rem;
 	font-weight: 700;
 	margin: 0;
 }
 
-.rwp-contact__tagline {
-	color: var(--rwp-muted);
+.resgata-contact__tagline {
+	color: var(--resgata-muted);
 	margin: 0.25rem 0 0;
 }
 
-.rwp-contact__heading {
+.resgata-contact__heading {
 	align-items: center;
-	color: var(--rwp-heading);
+	color: var(--resgata-heading);
 	display: flex;
 	font-size: 1.125rem;
 	font-weight: 600;
@@ -37,10 +37,10 @@
 }
 
 /* WhatsApp em destaque */
-.rwp-contact__whatsapp {
+.resgata-contact__whatsapp {
 	align-items: center;
-	background: var(--rwp-section);
-	border-radius: var(--rwp-radius-lg);
+	background: var(--resgata-section);
+	border-radius: var(--resgata-radius-lg);
 	box-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
@@ -48,11 +48,11 @@
 	padding: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
 }
 
-.rwp-contact__whatsapp-icon {
+.resgata-contact__whatsapp-icon {
 	align-items: center;
-	background: var(--rwp-card);
+	background: var(--resgata-card);
 	border-radius: 50%;
-	color: var(--rwp-primary);
+	color: var(--resgata-primary);
 	display: flex;
 	flex: none;
 	height: 3.25rem;
@@ -60,25 +60,25 @@
 	width: 3.25rem;
 }
 
-.rwp-contact__whatsapp-icon svg {
+.resgata-contact__whatsapp-icon svg {
 	height: 1.75rem;
 	width: 1.75rem;
 }
 
-.rwp-contact__whatsapp-text {
+.resgata-contact__whatsapp-text {
 	flex: 1 1 16rem;
 	min-width: 0;
 }
 
-.rwp-contact__whatsapp-text p {
-	color: var(--rwp-text);
+.resgata-contact__whatsapp-text p {
+	color: var(--resgata-text);
 	font-size: 0.9375rem;
 	margin: 0.3rem 0 0;
 }
 
-.rwp-contact .rwp-button {
+.resgata-contact .resgata-button {
 	align-items: center;
-	border-radius: var(--rwp-radius-sm);
+	border-radius: var(--resgata-radius-sm);
 	box-sizing: border-box;
 	display: inline-flex;
 	font-size: 1rem;
@@ -90,43 +90,43 @@
 	text-decoration: none;
 }
 
-.rwp-contact .rwp-button--outline {
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-primary);
-	color: var(--rwp-primary);
+.resgata-contact .resgata-button--outline {
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-primary);
+	color: var(--resgata-primary);
 	min-height: 2.75rem;
 	padding: 0.4rem 1.1rem;
 }
 
 /* Telefone, e-mail, horário, localização: um cartão por dado */
-.rwp-contact__items {
+.resgata-contact__items {
 	display: grid;
 	gap: 1rem;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
 	margin: 0;
 }
 
-.rwp-contact__item {
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-line);
-	border-radius: var(--rwp-radius);
+.resgata-contact__item {
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-line);
+	border-radius: var(--resgata-radius);
 	box-sizing: border-box;
 	min-height: 4.5rem;
 	padding: 1rem 1rem 1rem 4.25rem;
 	position: relative;
 }
 
-.rwp-contact__item dt {
-	color: var(--rwp-muted);
+.resgata-contact__item dt {
+	color: var(--resgata-muted);
 	font-size: 0.8125rem;
 	line-height: 1.3;
 }
 
-.rwp-contact__item-icon {
+.resgata-contact__item-icon {
 	align-items: center;
-	background: var(--rwp-info-soft, var(--rwp-tile));
+	background: var(--resgata-info-soft, var(--resgata-tile));
 	border-radius: 50%;
-	color: var(--rwp-info);
+	color: var(--resgata-info);
 	display: flex;
 	height: 2.5rem;
 	justify-content: center;
@@ -136,31 +136,31 @@
 	width: 2.5rem;
 }
 
-.rwp-contact__item dd {
-	color: var(--rwp-heading);
+.resgata-contact__item dd {
+	color: var(--resgata-heading);
 	font-weight: 600;
 	line-height: 1.4;
 	margin: 0.15rem 0 0;
 	overflow-wrap: anywhere;
 }
 
-.rwp-contact__item dd a {
+.resgata-contact__item dd a {
 	color: inherit;
 	text-decoration: underline;
-	text-decoration-color: var(--rwp-line);
+	text-decoration-color: var(--resgata-line);
 	text-underline-offset: 3px;
 }
 
-.rwp-contact__item dd a:hover {
-	color: var(--rwp-primary);
+.resgata-contact__item dd a:hover {
+	color: var(--resgata-primary);
 }
 
-.rwp-contact__section {
+.resgata-contact__section {
 	display: grid;
 	gap: 0.75rem;
 }
 
-.rwp-contact__networks {
+.resgata-contact__networks {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.6rem;
@@ -169,16 +169,16 @@
 	padding: 0;
 }
 
-.rwp-contact__networks li {
+.resgata-contact__networks li {
 	margin: 0;
 }
 
-.rwp-contact__networks a {
+.resgata-contact__networks a {
 	align-items: center;
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-line);
-	border-radius: var(--rwp-radius-sm);
-	color: var(--rwp-heading);
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-line);
+	border-radius: var(--resgata-radius-sm);
+	color: var(--resgata-heading);
 	display: inline-flex;
 	font-weight: 600;
 	gap: 0.5rem;
@@ -187,80 +187,80 @@
 	text-decoration: none;
 }
 
-.rwp-contact__networks a:hover,
-.rwp-contact__networks a:focus-visible {
-	border-color: var(--rwp-primary);
-	color: var(--rwp-primary);
+.resgata-contact__networks a:hover,
+.resgata-contact__networks a:focus-visible {
+	border-color: var(--resgata-primary);
+	color: var(--resgata-primary);
 }
 
-.rwp-contact a:focus-visible {
-	outline: 2px solid var(--rwp-primary);
+.resgata-contact a:focus-visible {
+	outline: 2px solid var(--resgata-primary);
 	outline-offset: 2px;
 }
 
-.rwp-contact__pix {
-	background: var(--rwp-help-soft);
-	border-radius: var(--rwp-radius-lg);
+.resgata-contact__pix {
+	background: var(--resgata-help-soft);
+	border-radius: var(--resgata-radius-lg);
 	box-sizing: border-box;
 	padding: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
 }
 
-.rwp-contact__pix .rwp-contact__heading .rwp-icon {
-	color: var(--rwp-help);
+.resgata-contact__pix .resgata-contact__heading .resgata-icon {
+	color: var(--resgata-help);
 	fill: currentColor;
 }
 
-.rwp-contact__pix-data {
+.resgata-contact__pix-data {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.75rem 2.5rem;
 	margin: 0;
 }
 
-.rwp-contact__pix-data dt {
-	color: var(--rwp-muted);
+.resgata-contact__pix-data dt {
+	color: var(--resgata-muted);
 	font-size: 0.8125rem;
 }
 
-.rwp-contact__pix-data dd {
-	color: var(--rwp-heading);
+.resgata-contact__pix-data dd {
+	color: var(--resgata-heading);
 	font-weight: 600;
 	margin: 0.1rem 0 0;
 }
 
-.rwp-contact__pix-key {
+.resgata-contact__pix-key {
 	overflow-wrap: anywhere;
 	user-select: all;
 }
 
-.rwp-contact__pix-link {
+.resgata-contact__pix-link {
 	margin: 0;
 }
 
-.rwp-contact {
-	--rwp-info-soft: #e8f0fd;
+.resgata-contact {
+	--resgata-info-soft: #e8f0fd;
 }
 
-.rwp-contact .rwp-button--primary,
-.rwp-contact .rwp-button--primary:visited {
-	background: var(--rwp-primary);
-	border: 1px solid var(--rwp-primary);
+.resgata-contact .resgata-button--primary,
+.resgata-contact .resgata-button--primary:visited {
+	background: var(--resgata-primary);
+	border: 1px solid var(--resgata-primary);
 	color: #fff;
 }
 
-.rwp-contact .rwp-button--primary:hover,
-.rwp-contact .rwp-button--primary:focus-visible {
-	background: var(--rwp-primary-dark);
-	border-color: var(--rwp-primary-dark);
+.resgata-contact .resgata-button--primary:hover,
+.resgata-contact .resgata-button--primary:focus-visible {
+	background: var(--resgata-primary-dark);
+	border-color: var(--resgata-primary-dark);
 	color: #fff;
 }
 
-.rwp-contact .rwp-button--outline {
-	border-color: var(--rwp-help);
-	color: var(--rwp-help);
+.resgata-contact .resgata-button--outline {
+	border-color: var(--resgata-help);
+	color: var(--resgata-help);
 }
 
-.rwp-contact .rwp-button--outline:hover,
-.rwp-contact .rwp-button--outline:focus-visible {
-	background: color-mix(in srgb, var(--rwp-help) 12%, #fff);
+.resgata-contact .resgata-button--outline:hover,
+.resgata-contact .resgata-button--outline:focus-visible {
+	background: color-mix(in srgb, var(--resgata-help) 12%, #fff);
 }

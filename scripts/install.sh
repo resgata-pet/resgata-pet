@@ -67,13 +67,13 @@ $WP theme activate resgata-tema
 # Em uma instalação nova, liga todos os módulos prontos, para o ambiente já mostrar o kit
 # inteiro (o apadrinhamento vem desligado por padrão em um site de verdade).
 if [ "$NOVO" = "1" ]; then
-	$WP option update rwp_modules '["animals","adoptions","sponsorship"]' --format=json
+	$WP option update resgata_modules '["animals","adoptions","sponsorship"]' --format=json
 fi
 
 # Usuário de teste do painel (perfil "Protetor admin").
 if ! $WP user get "${WP_PANEL_USER:-protetora}" --field=ID >/dev/null 2>&1; then
 	$WP user create "${WP_PANEL_USER:-protetora}" "${WP_PANEL_EMAIL:-protetora@example.org}" \
-		--role=rwp_protetor_admin \
+		--role=resgata_protetor_admin \
 		--user_pass="${WP_PANEL_PASSWORD:-protetora}" \
 		--display_name="Protetora Teste"
 fi

@@ -64,7 +64,7 @@ final class PlanService {
 	 */
 	private static function invalid_amount(): \WP_Error {
 		return new \WP_Error(
-			'rwp_plan_invalid_amount',
+			'resgata_plan_invalid_amount',
 			sprintf(
 				/* translators: 1: valor mínimo, 2: valor máximo. */
 				__( 'Informe um valor mensal entre %1$s e %2$s.', 'resgata-wp' ),
@@ -90,7 +90,7 @@ final class PlanService {
 		}
 
 		if ( count( Plans::all() ) >= Plans::MAX_PLANS ) {
-			return new \WP_Error( 'rwp_plan_limit', __( 'O limite de planos foi atingido. Exclua um plano que não é mais usado antes de criar outro.', 'resgata-wp' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'resgata_plan_limit', __( 'O limite de planos foi atingido. Exclua um plano que não é mais usado antes de criar outro.', 'resgata-wp' ), array( 'status' => 400 ) );
 		}
 
 		$created = Gateway::create_plan( self::product_name( $name, $amount ), $amount );
@@ -147,7 +147,7 @@ final class PlanService {
 			}
 
 			if ( '' === $plan['product_id'] ) {
-				return new \WP_Error( 'rwp_plan_legacy', __( 'Este plano foi criado em uma versão antiga e não aceita mudança de valor. Crie um plano novo e esconda este.', 'resgata-wp' ), array( 'status' => 400 ) );
+				return new \WP_Error( 'resgata_plan_legacy', __( 'Este plano foi criado em uma versão antiga e não aceita mudança de valor. Crie um plano novo e esconda este.', 'resgata-wp' ), array( 'status' => 400 ) );
 			}
 
 			$price_id = Gateway::replace_price( $plan['product_id'], $amount, $plan['price_id'] );
@@ -222,7 +222,7 @@ final class PlanService {
 		}
 
 		if ( self::subscribers( $plan ) > 0 ) {
-			return new \WP_Error( 'rwp_plan_in_use', __( 'Este plano tem padrinhos, por isso não pode ser excluído. Esconda-o do site: quem já apadrinha continua normalmente.', 'resgata-wp' ), array( 'status' => 409 ) );
+			return new \WP_Error( 'resgata_plan_in_use', __( 'Este plano tem padrinhos, por isso não pode ser excluído. Esconda-o do site: quem já apadrinha continua normalmente.', 'resgata-wp' ), array( 'status' => 409 ) );
 		}
 
 		$archived = Gateway::archive_plan( $plan['product_id'], Plans::price_ids( $plan ) );
@@ -331,6 +331,6 @@ final class PlanService {
 	 * Erro de plano inexistente.
 	 */
 	private static function not_found(): \WP_Error {
-		return new \WP_Error( 'rwp_plan_not_found', __( 'Plano não encontrado. Atualize a página e tente de novo.', 'resgata-wp' ), array( 'status' => 404 ) );
+		return new \WP_Error( 'resgata_plan_not_found', __( 'Plano não encontrado. Atualize a página e tente de novo.', 'resgata-wp' ), array( 'status' => 404 ) );
 	}
 }

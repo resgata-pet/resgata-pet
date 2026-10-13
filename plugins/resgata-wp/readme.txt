@@ -32,7 +32,7 @@ The plugin works with any theme. A theme can replace the templates by creating a
 1. Upload the `resgata-wp` folder to `wp-content/plugins/`.
 2. Activate the plugin in "Plugins".
 3. Add the animals at yoursite.org/painel. The site must use pretty permalinks (any option other than "Plain").
-4. The public list is at `/animais/`. To show animals on another page, use the "Lista de animais" block or the `[rwp_animais]` shortcode.
+4. The public list is at `/animais/`. To show animals on another page, use the "Lista de animais" block or the `[resgata_animais]` shortcode.
 
 == Frequently Asked Questions ==
 
@@ -42,7 +42,7 @@ By default, those with the status "Disponível para adoção" (available) or "Re
 
 = How do I use the shortcode? =
 
-`[rwp_animais especie="gato" quantidade="6" colunas="3" filtros="nao" paginacao="nao" status="disponivel,reservado"]`
+`[resgata_animais especie="gato" quantidade="6" colunas="3" filtros="nao" paginacao="nao" status="disponivel,reservado"]`
 
 = What happens to the data if I delete the plugin? =
 

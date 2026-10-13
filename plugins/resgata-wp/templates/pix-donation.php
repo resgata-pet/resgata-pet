@@ -15,55 +15,55 @@
  *     amounts: int[],
  *     title: string,
  *     text: string
- * } $rwp_args
+ * } $resgata_args
  */
 
 use ResgataWP\Core\Icons;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_pix = $rwp_args['pix'];
+$resgata_pix = $resgata_args['pix'];
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() devolve SVG fixo do plugin; atributos do wrapper escapados na origem.
 ?>
 <section
-	<?php echo $rwp_args['wrapper_attributes']; ?>
-	aria-labelledby="rwp-pix-titulo"
-	data-rwp-pix
-	data-key="<?php echo esc_attr( $rwp_pix['code_key'] ); ?>"
-	data-name="<?php echo esc_attr( $rwp_pix['code_name'] ); ?>"
-	data-city="<?php echo esc_attr( $rwp_pix['code_city'] ); ?>"
+	<?php echo $resgata_args['wrapper_attributes']; ?>
+	aria-labelledby="resgata-pix-titulo"
+	data-resgata-pix
+	data-key="<?php echo esc_attr( $resgata_pix['code_key'] ); ?>"
+	data-name="<?php echo esc_attr( $resgata_pix['code_name'] ); ?>"
+	data-city="<?php echo esc_attr( $resgata_pix['code_city'] ); ?>"
 >
-	<div class="rwp-pix__intro">
-		<h2 class="rwp-pix__title" id="rwp-pix-titulo">
+	<div class="resgata-pix__intro">
+		<h2 class="resgata-pix__title" id="resgata-pix-titulo">
 			<?php echo Icons::svg( 'heart' ); ?>
-			<?php echo esc_html( $rwp_args['title'] ); ?>
+			<?php echo esc_html( $resgata_args['title'] ); ?>
 		</h2>
-		<p class="rwp-pix__text"><?php echo esc_html( $rwp_args['text'] ); ?></p>
+		<p class="resgata-pix__text"><?php echo esc_html( $resgata_args['text'] ); ?></p>
 	</div>
 
-	<div class="rwp-pix__body">
-		<div class="rwp-pix__qr" data-rwp-pix-qr hidden>
-			<img class="rwp-pix__image" data-rwp-pix-image alt="<?php esc_attr_e( 'QR Code para doar por Pix', 'resgata-wp' ); ?>" width="220" height="220">
-			<p class="rwp-pix__hint"><?php esc_html_e( 'Abra o app do seu banco, escolha Pix e aponte a câmera.', 'resgata-wp' ); ?></p>
+	<div class="resgata-pix__body">
+		<div class="resgata-pix__qr" data-resgata-pix-qr hidden>
+			<img class="resgata-pix__image" data-resgata-pix-image alt="<?php esc_attr_e( 'QR Code para doar por Pix', 'resgata-wp' ); ?>" width="220" height="220">
+			<p class="resgata-pix__hint"><?php esc_html_e( 'Abra o app do seu banco, escolha Pix e aponte a câmera.', 'resgata-wp' ); ?></p>
 		</div>
 
-		<div class="rwp-pix__details">
-			<?php if ( $rwp_args['amounts'] ) : ?>
-				<fieldset class="rwp-pix__amounts" data-rwp-pix-amounts hidden>
-					<legend class="rwp-pix__label"><?php esc_html_e( 'Quanto você quer doar?', 'resgata-wp' ); ?></legend>
-					<div class="rwp-pix__options">
-						<label class="rwp-pix__option">
-							<input type="radio" name="rwp_pix_valor" value="" checked>
+		<div class="resgata-pix__details">
+			<?php if ( $resgata_args['amounts'] ) : ?>
+				<fieldset class="resgata-pix__amounts" data-resgata-pix-amounts hidden>
+					<legend class="resgata-pix__label"><?php esc_html_e( 'Quanto você quer doar?', 'resgata-wp' ); ?></legend>
+					<div class="resgata-pix__options">
+						<label class="resgata-pix__option">
+							<input type="radio" name="resgata_pix_valor" value="" checked>
 							<span><?php esc_html_e( 'Eu escolho no app', 'resgata-wp' ); ?></span>
 						</label>
-						<?php foreach ( $rwp_args['amounts'] as $rwp_amount ) : ?>
-							<label class="rwp-pix__option">
-								<input type="radio" name="rwp_pix_valor" value="<?php echo esc_attr( (string) $rwp_amount ); ?>">
+						<?php foreach ( $resgata_args['amounts'] as $resgata_amount ) : ?>
+							<label class="resgata-pix__option">
+								<input type="radio" name="resgata_pix_valor" value="<?php echo esc_attr( (string) $resgata_amount ); ?>">
 								<span>
 									<?php
 									/* translators: %s: valor em reais, sem centavos. */
-									echo esc_html( sprintf( __( 'R$ %s', 'resgata-wp' ), number_format_i18n( $rwp_amount ) ) );
+									echo esc_html( sprintf( __( 'R$ %s', 'resgata-wp' ), number_format_i18n( $resgata_amount ) ) );
 									?>
 								</span>
 							</label>
@@ -72,48 +72,48 @@ $rwp_pix = $rwp_args['pix'];
 				</fieldset>
 			<?php endif; ?>
 
-			<dl class="rwp-pix__data">
-				<div class="rwp-pix__row">
-					<dt class="rwp-pix__label">
+			<dl class="resgata-pix__data">
+				<div class="resgata-pix__row">
+					<dt class="resgata-pix__label">
 						<?php
 						echo esc_html(
-							'' !== $rwp_pix['type_label']
+							'' !== $resgata_pix['type_label']
 								/* translators: %s: tipo da chave Pix (CPF, CNPJ, e-mail...). */
-								? sprintf( __( 'Chave Pix (%s)', 'resgata-wp' ), $rwp_pix['type_label'] )
+								? sprintf( __( 'Chave Pix (%s)', 'resgata-wp' ), $resgata_pix['type_label'] )
 								: __( 'Chave Pix', 'resgata-wp' )
 						);
 						?>
 					</dt>
-					<dd class="rwp-pix__value">
-						<span class="rwp-pix__key"><?php echo esc_html( $rwp_pix['key'] ); ?></span>
-						<button type="button" class="rwp-pix__copy" data-rwp-pix-copy="<?php echo esc_attr( $rwp_pix['key'] ); ?>" hidden>
+					<dd class="resgata-pix__value">
+						<span class="resgata-pix__key"><?php echo esc_html( $resgata_pix['key'] ); ?></span>
+						<button type="button" class="resgata-pix__copy" data-resgata-pix-copy="<?php echo esc_attr( $resgata_pix['key'] ); ?>" hidden>
 							<?php echo Icons::svg( 'copy' ); ?>
-							<span data-rwp-pix-copy-label data-done="<?php esc_attr_e( 'Copiado!', 'resgata-wp' ); ?>"><?php esc_html_e( 'Copiar chave', 'resgata-wp' ); ?></span>
+							<span data-resgata-pix-copy-label data-done="<?php esc_attr_e( 'Copiado!', 'resgata-wp' ); ?>"><?php esc_html_e( 'Copiar chave', 'resgata-wp' ); ?></span>
 						</button>
 					</dd>
 				</div>
-				<div class="rwp-pix__row">
-					<dt class="rwp-pix__label"><?php esc_html_e( 'Titular', 'resgata-wp' ); ?></dt>
-					<dd class="rwp-pix__value"><?php echo esc_html( $rwp_pix['holder'] ); ?></dd>
+				<div class="resgata-pix__row">
+					<dt class="resgata-pix__label"><?php esc_html_e( 'Titular', 'resgata-wp' ); ?></dt>
+					<dd class="resgata-pix__value"><?php echo esc_html( $resgata_pix['holder'] ); ?></dd>
 				</div>
 			</dl>
 
-			<div class="rwp-pix__code" data-rwp-pix-code hidden>
-				<label class="rwp-pix__label" for="rwp-pix-codigo"><?php esc_html_e( 'Pix copia e cola', 'resgata-wp' ); ?></label>
-				<div class="rwp-pix__code-row">
-					<input type="text" id="rwp-pix-codigo" class="rwp-pix__payload" data-rwp-pix-payload readonly>
-					<button type="button" class="rwp-button rwp-button--primary wp-element-button rwp-pix__copy-code" data-rwp-pix-copy-code>
+			<div class="resgata-pix__code" data-resgata-pix-code hidden>
+				<label class="resgata-pix__label" for="resgata-pix-codigo"><?php esc_html_e( 'Pix copia e cola', 'resgata-wp' ); ?></label>
+				<div class="resgata-pix__code-row">
+					<input type="text" id="resgata-pix-codigo" class="resgata-pix__payload" data-resgata-pix-payload readonly>
+					<button type="button" class="resgata-button resgata-button--primary wp-element-button resgata-pix__copy-code" data-resgata-pix-copy-code>
 						<?php echo Icons::svg( 'copy' ); ?>
-						<span data-rwp-pix-copy-label data-done="<?php esc_attr_e( 'Copiado!', 'resgata-wp' ); ?>"><?php esc_html_e( 'Copiar código', 'resgata-wp' ); ?></span>
+						<span data-resgata-pix-copy-label data-done="<?php esc_attr_e( 'Copiado!', 'resgata-wp' ); ?>"><?php esc_html_e( 'Copiar código', 'resgata-wp' ); ?></span>
 					</button>
 				</div>
 			</div>
 
-			<p class="rwp-pix__note" role="status" aria-live="polite" data-rwp-pix-status></p>
-			<p class="rwp-pix__note">
+			<p class="resgata-pix__note" role="status" aria-live="polite" data-resgata-pix-status></p>
+			<p class="resgata-pix__note">
 				<?php
 				/* translators: %s: nome do titular da conta. */
-				echo esc_html( sprintf( __( 'Antes de confirmar no app, confira se o nome que aparece é %s.', 'resgata-wp' ), $rwp_pix['holder'] ) );
+				echo esc_html( sprintf( __( 'Antes de confirmar no app, confira se o nome que aparece é %s.', 'resgata-wp' ), $resgata_pix['holder'] ) );
 				?>
 			</p>
 		</div>

@@ -27,7 +27,7 @@ final class Form {
 		// Depois dos blocos de animais (20), que registram os handles de estilo e script, e antes de o
 		// WordPress acrescentar os atributos de suporte (alinhamento, espaçamento), na prioridade 22.
 		add_action( 'init', array( $this, 'register_block' ), 21 );
-		add_filter( 'rwp_animal_adopt_url', array( $this, 'adopt_url' ), 10, 2 );
+		add_filter( 'resgata_animal_adopt_url', array( $this, 'adopt_url' ), 10, 2 );
 	}
 
 	/**
@@ -37,14 +37,14 @@ final class Form {
 	 * @param int    $animal_id ID do animal.
 	 */
 	public function adopt_url( $url, $animal_id ): string {
-		return Submission::is_adoptable( (int) $animal_id ) ? '#rwp-adocao' : (string) $url;
+		return Submission::is_adoptable( (int) $animal_id ) ? '#resgata-adocao' : (string) $url;
 	}
 
 	/**
 	 * Registra o bloco.
 	 */
 	public function register_block(): void {
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/adoption-form' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/adoption-form' );
 	}
 
 	/**
@@ -95,9 +95,9 @@ final class Form {
 	 * @param string $wrapper_attributes Atributos HTML do elemento externo, já escapados.
 	 */
 	public static function render( int $context_post_id, string $wrapper_attributes = '' ): string {
-		$wrapper = '' !== $wrapper_attributes ? $wrapper_attributes : 'id="rwp-adocao" class="rwp-adoption"';
+		$wrapper = '' !== $wrapper_attributes ? $wrapper_attributes : 'id="resgata-adocao" class="resgata-adoption"';
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		$confirmed = Submission::confirmed_request_id();
 		if ( $confirmed ) {
@@ -126,7 +126,7 @@ final class Form {
 		} else {
 			$animals = self::adoptable_animals();
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Só pré-seleciona um animal da lista pública.
-			$animal_id = isset( $_GET['rwp_animal'] ) ? absint( wp_unslash( $_GET['rwp_animal'] ) ) : 0;
+			$animal_id = isset( $_GET['resgata_animal'] ) ? absint( wp_unslash( $_GET['resgata_animal'] ) ) : 0;
 			$animal_id = isset( $animals[ $animal_id ] ) ? $animal_id : 0;
 		}
 

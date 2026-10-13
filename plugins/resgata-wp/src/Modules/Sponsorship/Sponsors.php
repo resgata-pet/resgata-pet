@@ -1,6 +1,6 @@
 <?php
 /**
- * Padrinhos (tabela `rwp_sponsors`).
+ * Padrinhos (tabela `resgata_sponsors`).
  *
  * @package ResgataWP
  */
@@ -25,7 +25,7 @@ final class Sponsors {
 	public static function table(): string {
 		global $wpdb;
 
-		return $wpdb->prefix . 'rwp_sponsors';
+		return $wpdb->prefix . 'resgata_sponsors';
 	}
 
 	/**

@@ -40,7 +40,7 @@ export function RichText( {
 		content: value,
 		editorProps: {
 			attributes: {
-				class: 'rwp-prose',
+				class: 'resgata-prose',
 				role: 'textbox',
 				'aria-multiline': 'true',
 				...( labelledBy ? { 'aria-labelledby': labelledBy } : {} ),

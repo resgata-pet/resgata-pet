@@ -66,7 +66,7 @@ final class Icons {
 
 		return sprintf(
 			'<svg class="%s" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">%s</svg>',
-			esc_attr( trim( 'rwp-icon rwp-icon--' . $name . ' ' . $extra_class ) ),
+			esc_attr( trim( 'resgata-icon resgata-icon--' . $name . ' ' . $extra_class ) ),
 			self::PATHS[ $name ]
 		);
 	}
@@ -98,6 +98,6 @@ final class Icons {
 			return self::svg( $fallback, $extra_class );
 		}
 
-		return '<svg class="' . esc_attr( trim( 'rwp-icon rwp-icon--' . $service . ' ' . $extra_class ) ) . '" fill="currentColor" ' . substr( $svg, 5 );
+		return '<svg class="' . esc_attr( trim( 'resgata-icon resgata-icon--' . $service . ' ' . $extra_class ) ) . '" fill="currentColor" ' . substr( $svg, 5 );
 	}
 }

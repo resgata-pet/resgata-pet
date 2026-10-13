@@ -14,15 +14,15 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Lê e guarda as chaves da Stripe.
  *
- * Cada chave vem da constante do `wp-config.php` (`RWP_STRIPE_SECRET_KEY`,
- * `RWP_STRIPE_WEBHOOK_SECRET`) ou, sem ela, do que o administrador salvou no
+ * Cada chave vem da constante do `wp-config.php` (`RESGATA_STRIPE_SECRET_KEY`,
+ * `RESGATA_STRIPE_WEBHOOK_SECRET`) ou, sem ela, do que o administrador salvou no
  * painel. O que vem do painel é gravado cifrado (`Core\Encryption`), numa option
  * própria que não é carregada junto com as demais. As chaves nunca são
  * mostradas em tela: o painel só informa se cada uma está definida.
  */
 final class Keys {
 
-	public const OPTION = 'rwp_stripe_keys';
+	public const OPTION = 'resgata_stripe_keys';
 
 	public const SECRET_KEY     = 'secret_key';
 	public const WEBHOOK_SECRET = 'webhook_secret';
@@ -31,8 +31,8 @@ final class Keys {
 	 * Constante do `wp-config.php` de cada chave.
 	 */
 	private const CONSTANTS = array(
-		self::SECRET_KEY     => 'RWP_STRIPE_SECRET_KEY',
-		self::WEBHOOK_SECRET => 'RWP_STRIPE_WEBHOOK_SECRET',
+		self::SECRET_KEY     => 'RESGATA_STRIPE_SECRET_KEY',
+		self::WEBHOOK_SECRET => 'RESGATA_STRIPE_WEBHOOK_SECRET',
 	);
 
 	/**

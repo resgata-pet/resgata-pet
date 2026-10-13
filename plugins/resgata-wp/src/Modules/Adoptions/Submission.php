@@ -18,11 +18,11 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Submission {
 
-	public const NONCE_ACTION = 'rwp_adoption_submit';
-	public const NONCE_NAME   = 'rwp_adoption_nonce';
-	public const FIELD        = 'rwp_adoption';
-	public const HONEYPOT     = 'rwp_site';
-	public const TOKEN_PARAM  = 'rwp_pedido';
+	public const NONCE_ACTION = 'resgata_adoption_submit';
+	public const NONCE_NAME   = 'resgata_adoption_nonce';
+	public const FIELD        = 'resgata_adoption';
+	public const HONEYPOT     = 'resgata_site';
+	public const TOKEN_PARAM  = 'resgata_pedido';
 
 	/**
 	 * Pedidos aceitos por hora vindos do mesmo endereço de rede.
@@ -111,12 +111,12 @@ final class Submission {
 		set_transient( self::rate_limit_key(), self::rate_limit_count() + 1, HOUR_IN_SECONDS );
 
 		$token = wp_generate_password( 24, false );
-		set_transient( 'rwp_adoption_done_' . $token, $result, 30 * MINUTE_IN_SECONDS );
+		set_transient( 'resgata_adoption_done_' . $token, $result, 30 * MINUTE_IN_SECONDS );
 
 		$page = get_queried_object_id() ? get_permalink( get_queried_object_id() ) : home_url( '/' );
 
 		// PRG: evita reenviar o formulário ao atualizar a página.
-		wp_safe_redirect( add_query_arg( self::TOKEN_PARAM, $token, (string) $page ) . '#rwp-adocao' );
+		wp_safe_redirect( add_query_arg( self::TOKEN_PARAM, $token, (string) $page ) . '#resgata-adocao' );
 		exit;
 	}
 
@@ -141,7 +141,7 @@ final class Submission {
 		}
 
 		if ( $errors ) {
-			return new \WP_Error( 'rwp_adoption_invalid', __( 'Confira os campos destacados.', 'resgata-wp' ), $errors );
+			return new \WP_Error( 'resgata_adoption_invalid', __( 'Confira os campos destacados.', 'resgata-wp' ), $errors );
 		}
 
 		$request_id = wp_insert_post(
@@ -156,7 +156,7 @@ final class Submission {
 		);
 
 		if ( is_wp_error( $request_id ) ) {
-			return new \WP_Error( 'rwp_adoption_failed', __( 'Não foi possível registrar o pedido. Tente de novo.', 'resgata-wp' ) );
+			return new \WP_Error( 'resgata_adoption_failed', __( 'Não foi possível registrar o pedido. Tente de novo.', 'resgata-wp' ) );
 		}
 
 		update_post_meta( $request_id, PostType::META_STATUS, PostType::STATUS_DEFAULT );
@@ -182,7 +182,7 @@ final class Submission {
 		 * @param int $request_id ID do pedido.
 		 * @param int $animal_id  ID do animal.
 		 */
-		do_action( 'rwp_adoption_created', $request_id, $animal_id );
+		do_action( 'resgata_adoption_created', $request_id, $animal_id );
 
 		return $request_id;
 	}
@@ -212,7 +212,7 @@ final class Submission {
 			return 0;
 		}
 
-		$request_id = (int) get_transient( 'rwp_adoption_done_' . $token );
+		$request_id = (int) get_transient( 'resgata_adoption_done_' . $token );
 
 		return $request_id && PostType::SLUG === get_post_type( $request_id ) ? $request_id : 0;
 	}
@@ -223,7 +223,7 @@ final class Submission {
 	private static function rate_limit_key(): string {
 		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 
-		return 'rwp_adoption_rl_' . md5( wp_hash( $ip ) );
+		return 'resgata_adoption_rl_' . md5( wp_hash( $ip ) );
 	}
 
 	/**

@@ -23,7 +23,7 @@ final class RateLimit {
 	 */
 	public static function allow( string $action, int $limit ): bool {
 		$ip    = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-		$key   = 'rwp_rl_' . $action . '_' . md5( wp_hash( $ip ) );
+		$key   = 'resgata_rl_' . $action . '_' . md5( wp_hash( $ip ) );
 		$count = (int) get_transient( $key );
 
 		if ( $count >= $limit ) {

@@ -64,11 +64,11 @@ abstract class BaseController {
 	 */
 	private function guard( \WP_REST_Request $request, callable $permission ) {
 		if ( ! is_user_logged_in() ) {
-			return new \WP_Error( 'rwp_rest_not_logged_in', __( 'Faça login para continuar.', 'resgata-wp' ), array( 'status' => 401 ) );
+			return new \WP_Error( 'resgata_rest_not_logged_in', __( 'Faça login para continuar.', 'resgata-wp' ), array( 'status' => 401 ) );
 		}
 
 		if ( ! current_user_can( Capabilities::PANEL ) || true !== $permission( $request ) ) {
-			return new \WP_Error( 'rwp_rest_forbidden', __( 'Você não tem permissão para fazer isso.', 'resgata-wp' ), array( 'status' => 403 ) );
+			return new \WP_Error( 'resgata_rest_forbidden', __( 'Você não tem permissão para fazer isso.', 'resgata-wp' ), array( 'status' => 403 ) );
 		}
 
 		return true;

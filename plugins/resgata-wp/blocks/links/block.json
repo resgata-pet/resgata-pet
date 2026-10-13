@@ -22,7 +22,7 @@
 		"typography": { "fontSize": true },
 		"color": { "text": true, "link": true }
 	},
-	"editorScript": "rwp-blocks-editor",
-	"style": "rwp-frontend",
+	"editorScript": "resgata-blocks-editor",
+	"style": "resgata-frontend",
 	"render": "file:./render.php"
 }

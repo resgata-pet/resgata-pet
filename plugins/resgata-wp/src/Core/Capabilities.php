@@ -17,22 +17,22 @@ final class Capabilities {
 	/**
 	 * Permissão para entrar no painel (/painel) e usar a API dele.
 	 */
-	public const PANEL = 'rwp_access_panel';
+	public const PANEL = 'resgata_access_panel';
 
 	/**
 	 * Permissão para editar os dados da protetora em /painel/configuracoes.
 	 */
-	public const SETTINGS = 'rwp_manage_settings';
+	public const SETTINGS = 'resgata_manage_settings';
 
 	/**
 	 * Permissão para ver e responder os pedidos de adoção (dados pessoais).
 	 */
-	public const ADOPTIONS = 'rwp_manage_adoptions';
+	public const ADOPTIONS = 'resgata_manage_adoptions';
 
 	/**
 	 * Permissão para ver os padrinhos (dados pessoais) e ajustar o contador.
 	 */
-	public const SPONSORSHIP = 'rwp_manage_sponsorship';
+	public const SPONSORSHIP = 'resgata_manage_sponsorship';
 
 	/**
 	 * Papéis com acesso às configurações, aos pedidos de adoção e aos padrinhos (o Editor comum não).
@@ -42,7 +42,7 @@ final class Capabilities {
 	/**
 	 * Perfil da protetora: usa somente o painel, nunca o wp-admin.
 	 */
-	public const PANEL_ROLE = 'rwp_protetor_admin';
+	public const PANEL_ROLE = 'resgata_protetor_admin';
 
 	/**
 	 * Papéis que recebem acesso ao cadastro de animais e ao painel.
@@ -56,17 +56,17 @@ final class Capabilities {
 	 */
 	public static function animals(): array {
 		return array(
-			'edit_rwp_animals',
-			'edit_others_rwp_animals',
-			'edit_private_rwp_animals',
-			'edit_published_rwp_animals',
-			'publish_rwp_animals',
-			'read_private_rwp_animals',
-			'delete_rwp_animals',
-			'delete_others_rwp_animals',
-			'delete_private_rwp_animals',
-			'delete_published_rwp_animals',
-			'manage_rwp_animal_terms',
+			'edit_resgata_animals',
+			'edit_others_resgata_animals',
+			'edit_private_resgata_animals',
+			'edit_published_resgata_animals',
+			'publish_resgata_animals',
+			'read_private_resgata_animals',
+			'delete_resgata_animals',
+			'delete_others_resgata_animals',
+			'delete_private_resgata_animals',
+			'delete_published_resgata_animals',
+			'manage_resgata_animal_terms',
 		);
 	}
 

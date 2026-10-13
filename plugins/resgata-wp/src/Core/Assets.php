@@ -21,7 +21,7 @@ final class Assets {
 	 * @return array{url: string, dependencies: string[], version: string}|null Null se o build não existir.
 	 */
 	public static function script( string $name ): ?array {
-		$asset_file = RWP_PLUGIN_DIR . 'build/' . $name . '.asset.php';
+		$asset_file = RESGATA_PLUGIN_DIR . 'build/' . $name . '.asset.php';
 
 		if ( ! is_readable( $asset_file ) ) {
 			return null;
@@ -30,9 +30,9 @@ final class Assets {
 		$asset = require $asset_file;
 
 		return array(
-			'url'          => RWP_PLUGIN_URL . 'build/' . $name . '.js',
+			'url'          => RESGATA_PLUGIN_URL . 'build/' . $name . '.js',
 			'dependencies' => (array) ( $asset['dependencies'] ?? array() ),
-			'version'      => (string) ( $asset['version'] ?? RWP_VERSION ),
+			'version'      => (string) ( $asset['version'] ?? RESGATA_VERSION ),
 		);
 	}
 
@@ -42,7 +42,7 @@ final class Assets {
 	 * @param string $name Caminho dentro de `build/`, sem extensão.
 	 */
 	public static function style_url( string $name ): string {
-		return is_readable( RWP_PLUGIN_DIR . 'build/' . $name . '.css' ) ? RWP_PLUGIN_URL . 'build/' . $name . '.css' : '';
+		return is_readable( RESGATA_PLUGIN_DIR . 'build/' . $name . '.css' ) ? RESGATA_PLUGIN_URL . 'build/' . $name . '.css' : '';
 	}
 
 	/**

@@ -19,8 +19,8 @@ defined( 'ABSPATH' ) || exit;
  */
 final class SettingsModule {
 
-	public const OPTION     = 'rwp_settings';
-	public const GROUP      = 'rwp_settings_group';
+	public const OPTION     = 'resgata_settings';
+	public const GROUP      = 'resgata_settings_group';
 	public const PAGE       = 'resgata-wp';
 	public const CAPABILITY = 'manage_options';
 
@@ -46,19 +46,19 @@ final class SettingsModule {
 		add_action( 'update_option_' . Modules::OPTION, array( $this, 'schedule_rewrite_flush' ) );
 		add_action( 'add_option_' . Modules::OPTION, array( $this, 'schedule_rewrite_flush' ) );
 		add_action( 'init', array( $this, 'maybe_flush_rewrite' ), 99 );
-		add_filter( 'plugin_action_links_' . plugin_basename( RWP_PLUGIN_FILE ), array( $this, 'action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( RESGATA_PLUGIN_FILE ), array( $this, 'action_links' ) );
 	}
 
 	/**
 	 * Registra o bloco "Links do site".
 	 */
 	public function register_links_block(): void {
-		if ( ! wp_style_is( 'rwp-frontend', 'registered' ) ) {
-			$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
-			wp_register_style( 'rwp-frontend', $src, array(), RWP_VERSION );
+		if ( ! wp_style_is( 'resgata-frontend', 'registered' ) ) {
+			$src = current_theme_supports( 'resgata-wp' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
+			wp_register_style( 'resgata-frontend', $src, array(), RESGATA_VERSION );
 		}
 
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/links' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/links' );
 	}
 
 	/**
@@ -134,7 +134,7 @@ final class SettingsModule {
 		);
 
 		add_settings_section(
-			'rwp_section_modules',
+			'resgata_section_modules',
 			__( 'Módulos ativos', 'resgata-wp' ),
 			static function (): void {
 				echo '<p>' . esc_html__( 'Ligue somente o que a sua protetora vai usar. Desligar um módulo não apaga os dados dele.', 'resgata-wp' ) . '</p>';
@@ -143,26 +143,26 @@ final class SettingsModule {
 		);
 
 		add_settings_field(
-			'rwp_modules',
+			'resgata_modules',
 			__( 'Módulos', 'resgata-wp' ),
 			array( $this, 'render_modules_field' ),
 			self::PAGE,
-			'rwp_section_modules'
+			'resgata_section_modules'
 		);
 
 		add_settings_section(
-			'rwp_section_data',
+			'resgata_section_data',
 			__( 'Dados', 'resgata-wp' ),
 			'__return_false',
 			self::PAGE
 		);
 
 		add_settings_field(
-			'rwp_keep_data',
+			'resgata_keep_data',
 			__( 'Ao excluir o plugin', 'resgata-wp' ),
 			array( $this, 'render_keep_data_field' ),
 			self::PAGE,
-			'rwp_section_data'
+			'resgata_section_data'
 		);
 	}
 

@@ -7,7 +7,7 @@ depende do `resgata-tema`.
 
 ```
 resgata-wp/
-  resgata-wp.php          cabeçalho, constantes RWP_*, autoload, hooks de ativação
+  resgata-wp.php          cabeçalho, constantes RESGATA_*, autoload, hooks de ativação
   uninstall.php           só apaga dados se "Manter os dados" estiver desmarcado
   src/Plugin.php          bootstrap (plugins_loaded): carrega os módulos ativos
   src/Core/               Activator, Assets, Bindings, Capabilities, Encryption, Icons, Links,
@@ -37,7 +37,7 @@ Antes de mexer em um módulo, leia o documento dele (pasta `docs/`, na raiz do r
 Previstos, ainda sem código: doações avulsas por Pix (Stripe Checkout) e prestação de contas
 (lançamentos, fechamento mensal, página pública, conciliação OFX).
 
-Os módulos ligam e desligam em Resgata WP → Configurações (option `rwp_modules`). Para criar
+Os módulos ligam e desligam em Resgata WP → Configurações (option `resgata_modules`). Para criar
 um módulo:
 
 1. Acrescente-o em `Core\Modules::all()` e em `AVAILABLE`.
@@ -47,16 +47,15 @@ um módulo:
 
 ## Padrões PHP
 
-- Slug e text domain `resgata-wp`, prefixo `rwp_` (constantes `RWP_`), namespace `ResgataWP`
+- Slug e text domain `resgata-wp`, prefixo `resgata_` (constantes `RESGATA_`), namespace `ResgataWP`
   com autoload PSR-4 em `src/`. O arquivo principal tem um autoloader de reserva: o plugin
   funciona sem `composer install`.
 - Funções de tradução só a partir do hook `init`. O que roda em `plugins_loaded`
   (`Modules::is_enabled()`, `Capabilities::grant()`) usa rótulos sem tradução.
-- O sniff `PrefixAllGlobals` do PHPCS está desligado (ele recusa prefixos de 3 letras):
-  confira o prefixo `rwp_` em revisão.
+- O PHPCS confere o prefixo `resgata_` em tudo o que é global (sniff `PrefixAllGlobals`).
 - Capability nova entra em `custom_capabilities` no `phpcs.xml.dist`.
 - Tabela própria (dados financeiros): `dbDelta` em `Core\Schema`. A cada mudança, incremente
-  `RWP_DB_VERSION`, liste a tabela em `table_names()` e remova-a no `uninstall.php`.
+  `RESGATA_DB_VERSION`, liste a tabela em `table_names()` e remova-a no `uninstall.php`.
   `Schema::install()` também reaplica perfis e permissões e agenda a recriação das regras de
   URL.
 - HTML vindo do painel (texto rico) passa por `wp_kses_post()` no servidor.
@@ -64,7 +63,7 @@ um módulo:
 ## API do painel
 
 Toda rota fica em `resgata-wp/v1` e é registrada por `BaseController::route()`, que nega por
-padrão (login + `rwp_access_panel` + verificação própria da rota) e valida os parâmetros pelo
+padrão (login + `resgata_access_panel` + verificação própria da rota) e valida os parâmetros pelo
 schema. A única rota pública do namespace, e a única registrada fora de `route()`, é o webhook
 da Stripe.
 
@@ -78,8 +77,8 @@ Administrador. O teste cria e apaga usuários e animais temporários no site de 
   atributos de suporte (alinhamento, espaçamento) na prioridade 22, e um bloco registrado
   depois falha na prévia do editor ("Erro ao carregar o bloco").
 - O `render.php` monta os dados e chama um template de `templates/` pelo `TemplateLoader`. A
-  marcação é neutra, com classes `.rwp-*`; o visual é do tema.
-- Todo `<select>` de template público leva o atributo `data-rwp-select`, e quem o imprime
+  marcação é neutra, com classes `.resgata-*`; o visual é do tema.
+- Todo `<select>` de template público leva o atributo `data-resgata-select`, e quem o imprime
   chama `Blocks::enqueue_select_assets()`.
 - Ícones do site: `Core\Icons::svg()` (Lucide em SVG embutido) e `Icons::brand()` (redes
   sociais, com os ícones do WordPress).
@@ -101,7 +100,7 @@ O `webpack.config.js` tem três configurações:
   `@wordpress/i18n`, que ficam externos. Os pacotes do WordPress que dependem de React
   (`@wordpress/components`, `@wordpress/data`, `@wordpress/element`) rodariam no React 18 do
   WordPress, ao lado do nosso: ficam fora do painel.
-- `site`: `resources/site/selects.tsx` troca os `<select data-rwp-select>` das páginas
+- `site`: `resources/site/selects.tsx` troca os `<select data-resgata-select>` das páginas
   públicas pelo Select do shadcn/ui (o mesmo `components/ui/select.tsx` do painel), também
   com React embutido (~120 KB comprimido), carregado só onde há um `<select>`. O `<select>`
   nativo continua na página, escondido, e é ele que o formulário envia; sem o build, o

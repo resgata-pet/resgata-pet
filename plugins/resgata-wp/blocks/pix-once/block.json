@@ -24,7 +24,7 @@
 			"margin": true
 		}
 	},
-	"editorScript": "rwp-blocks-editor",
-	"style": "rwp-frontend",
+	"editorScript": "resgata-blocks-editor",
+	"style": "resgata-frontend",
 	"render": "file:./render.php"
 }

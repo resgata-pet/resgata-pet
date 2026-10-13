@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Page {
 
-	private const HANDLE = 'rwp-painel';
+	private const HANDLE = 'resgata-painel';
 
 	/**
 	 * Imprime a página.
@@ -38,7 +38,7 @@ final class Page {
 
 		if ( $script ) {
 			wp_enqueue_script( self::HANDLE, $script['url'], $script['dependencies'], $script['version'], true );
-			wp_add_inline_script( self::HANDLE, 'window.rwpPainel = ' . wp_json_encode( $this->config() ) . ';', 'before' );
+			wp_add_inline_script( self::HANDLE, 'window.resgataPainel = ' . wp_json_encode( $this->config() ) . ';', 'before' );
 			wp_enqueue_style( self::HANDLE, Assets::style_url( 'painel/index' ), array(), $script['version'] );
 		}
 		?>
@@ -56,7 +56,7 @@ final class Page {
 		?>
 </head>
 <body>
-	<div id="rwp-painel">
+	<div id="resgata-painel">
 		<?php if ( ! $script ) : ?>
 			<p style="font-family: sans-serif; margin: 2rem;"><?php echo esc_html( Assets::missing_build_message() ); ?></p>
 		<?php endif; ?>

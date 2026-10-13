@@ -33,8 +33,8 @@ export interface PanelConfig {
 
 declare global {
 	interface Window {
-		rwpPainel: PanelConfig;
+		resgataPainel: PanelConfig;
 	}
 }
 
-export const config: PanelConfig = window.rwpPainel;
+export const config: PanelConfig = window.resgataPainel;

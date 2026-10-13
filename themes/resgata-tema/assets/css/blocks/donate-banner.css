@@ -1,10 +1,10 @@
 /*
  * Bloco "Doe por Pix" (resgata-wp/donate-banner): chamada, botões e, à direita, o QR Code.
  */
-.rwp-donate {
+.resgata-donate {
 	align-items: center;
-	background: var(--rwp-help-soft);
-	border-radius: var(--rwp-radius-lg);
+	background: var(--resgata-help-soft);
+	border-radius: var(--resgata-radius-lg);
 	box-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
@@ -12,11 +12,11 @@
 	padding: clamp(1.25rem, 1rem + 1.2vw, 2rem);
 }
 
-.rwp-donate__icon {
+.resgata-donate__icon {
 	align-items: center;
-	background: var(--rwp-card);
+	background: var(--resgata-card);
 	border-radius: 50%;
-	color: var(--rwp-help);
+	color: var(--resgata-help);
 	display: flex;
 	flex: none;
 	height: 3.25rem;
@@ -24,32 +24,32 @@
 	width: 3.25rem;
 }
 
-.rwp-donate__icon svg {
+.resgata-donate__icon svg {
 	fill: currentColor;
 	height: 1.6rem;
 	width: 1.6rem;
 }
 
-.rwp-donate__text {
+.resgata-donate__text {
 	flex: 1 1 18rem;
 	min-width: 0;
 }
 
-.rwp-donate__title {
-	color: var(--rwp-heading);
+.resgata-donate__title {
+	color: var(--resgata-heading);
 	font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
 	line-height: 1.2;
 	margin: 0;
 }
 
-.rwp-donate__text p {
-	color: var(--rwp-text);
+.resgata-donate__text p {
+	color: var(--resgata-text);
 	margin: 0.35rem 0 0;
 }
 
-.rwp-donate .rwp-button {
+.resgata-donate .resgata-button {
 	align-items: center;
-	border-radius: var(--rwp-radius-sm);
+	border-radius: var(--resgata-radius-sm);
 	box-sizing: border-box;
 	display: inline-flex;
 	font-size: 1rem;
@@ -60,26 +60,26 @@
 	text-decoration: none;
 }
 
-.rwp-donate .rwp-button--primary,
-.rwp-donate .rwp-button--primary:visited {
-	background: var(--rwp-help);
-	border: 1px solid var(--rwp-help);
+.resgata-donate .resgata-button--primary,
+.resgata-donate .resgata-button--primary:visited {
+	background: var(--resgata-help);
+	border: 1px solid var(--resgata-help);
 	color: #fff;
 }
 
-.rwp-donate .rwp-button--primary:hover,
-.rwp-donate .rwp-button--primary:focus-visible {
-	background: var(--rwp-help-dark);
-	border-color: var(--rwp-help-dark);
+.resgata-donate .resgata-button--primary:hover,
+.resgata-donate .resgata-button--primary:focus-visible {
+	background: var(--resgata-help-dark);
+	border-color: var(--resgata-help-dark);
 	color: #fff;
 }
 
-.rwp-donate .rwp-button--primary:focus-visible {
-	outline: 2px solid var(--rwp-help);
+.resgata-donate .resgata-button--primary:focus-visible {
+	outline: 2px solid var(--resgata-help);
 	outline-offset: 2px;
 }
 
-.rwp-donate__actions {
+.resgata-donate__actions {
 	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
@@ -88,13 +88,13 @@
 }
 
 /* Copiar o código Pix: ação secundária, contornada. */
-.rwp-donate__copy {
+.resgata-donate__copy {
 	align-items: center;
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-help);
-	border-radius: var(--rwp-radius-sm);
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-help);
+	border-radius: var(--resgata-radius-sm);
 	box-sizing: border-box;
-	color: var(--rwp-help);
+	color: var(--resgata-help);
 	cursor: pointer;
 	display: inline-flex;
 	font: inherit;
@@ -106,27 +106,27 @@
 	padding: 0.5rem 1.1rem;
 }
 
-.rwp-donate__copy:hover,
-.rwp-donate__copy:focus-visible {
-	background: color-mix(in srgb, var(--rwp-help) 18%, #fff);
+.resgata-donate__copy:hover,
+.resgata-donate__copy:focus-visible {
+	background: color-mix(in srgb, var(--resgata-help) 18%, #fff);
 }
 
-.rwp-donate__copy:focus-visible {
-	outline: 2px solid var(--rwp-help);
+.resgata-donate__copy:focus-visible {
+	outline: 2px solid var(--resgata-help);
 	outline-offset: 2px;
 }
 
-.rwp-donate__copy svg {
+.resgata-donate__copy svg {
 	flex: none;
 	height: 1.15em;
 	width: 1.15em;
 }
 
-.rwp-donate [hidden] {
+.resgata-donate [hidden] {
 	display: none;
 }
 
-.rwp-donate__status {
+.resgata-donate__status {
 	border: 0;
 	clip-path: inset(50%);
 	height: 1px;
@@ -139,11 +139,11 @@
 }
 
 /* QR Code: cartão branco à direita, pronto para a câmera do app do banco. */
-.rwp-donate__qr {
-	background: var(--rwp-card);
-	border-radius: var(--rwp-radius);
-	box-shadow: var(--rwp-shadow);
-	color: var(--rwp-muted);
+.resgata-donate__qr {
+	background: var(--resgata-card);
+	border-radius: var(--resgata-radius);
+	box-shadow: var(--resgata-shadow);
+	color: var(--resgata-muted);
 	flex: none;
 	font-size: 0.8125rem;
 	line-height: 1.3;
@@ -153,7 +153,7 @@
 	width: 9rem;
 }
 
-.rwp-donate__image {
+.resgata-donate__image {
 	display: block;
 	height: auto;
 	margin-bottom: 0.35rem;
@@ -162,14 +162,14 @@
 
 /* No celular o QR Code não tem como ser lido: fica o botão de copiar o código. */
 @media (max-width: 600px) {
-	.rwp-donate__qr {
+	.resgata-donate__qr {
 		display: none;
 	}
 }
 
 /* Enfeites de fundo, na cor de "ajuda" (formas e base em enfeites.css). */
-.rwp-donate {
-	--resgata-tema-decor-tone: var(--rwp-help);
+.resgata-donate {
+	--resgata-tema-decor-tone: var(--resgata-help);
 	--resgata-tema-decor-fill:
 		var(--resgata-tema-shape-heart-fill) right -1rem bottom -1.5rem / 6.5rem 6.5rem no-repeat,
 		var(--resgata-tema-shape-circle) left -2.5rem top -2.5rem / 7rem 7rem no-repeat;
@@ -178,7 +178,7 @@
 }
 
 @media (min-width: 782px) {
-	.rwp-donate {
+	.resgata-donate {
 		--resgata-tema-decor-fill:
 			var(--resgata-tema-shape-heart-fill) right 11.5rem bottom -1.75rem / 7rem 7rem no-repeat,
 			var(--resgata-tema-shape-circle) left -2.5rem top -2.5rem / 7rem 7rem no-repeat,

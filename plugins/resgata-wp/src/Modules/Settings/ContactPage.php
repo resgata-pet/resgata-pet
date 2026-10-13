@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class ContactPage {
 
-	public const OPTION = 'rwp_contact_page_id';
+	public const OPTION = 'resgata_contact_page_id';
 
 	/**
 	 * Página de contato, se existir e não estiver na lixeira.
@@ -61,7 +61,7 @@ final class ContactPage {
 		 *
 		 * @param string $content Conteúdo em blocos.
 		 */
-		$content = (string) apply_filters( 'rwp_contact_page_content', '<!-- wp:resgata-wp/contact /-->' );
+		$content = (string) apply_filters( 'resgata_contact_page_content', '<!-- wp:resgata-wp/contact /-->' );
 
 		if ( ! str_contains( $content, '<!-- wp:resgata-wp/contact ' ) ) {
 			$content = '<!-- wp:resgata-wp/contact /-->';
@@ -89,7 +89,7 @@ final class ContactPage {
 		 *
 		 * @param string $template Slug do modelo; vazio usa o modelo padrão de páginas.
 		 */
-		$template = sanitize_key( (string) apply_filters( 'rwp_contact_page_template', '' ) );
+		$template = sanitize_key( (string) apply_filters( 'resgata_contact_page_template', '' ) );
 
 		if ( '' !== $template ) {
 			update_post_meta( $page_id, '_wp_page_template', $template );

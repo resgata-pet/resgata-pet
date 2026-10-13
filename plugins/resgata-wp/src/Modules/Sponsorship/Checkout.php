@@ -17,10 +17,10 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Checkout {
 
-	public const NONCE_ACTION = 'rwp_sponsorship_checkout';
-	public const NONCE_NAME   = 'rwp_sponsorship_nonce';
-	public const FIELD        = 'rwp_plan';
-	public const RESULT_PARAM = 'rwp_apadrinhamento';
+	public const NONCE_ACTION = 'resgata_sponsorship_checkout';
+	public const NONCE_NAME   = 'resgata_sponsorship_nonce';
+	public const FIELD        = 'resgata_plan';
+	public const RESULT_PARAM = 'resgata_apadrinhamento';
 
 	/**
 	 * Sessões de Checkout abertas por hora pelo mesmo endereço de rede.

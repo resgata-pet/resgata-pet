@@ -6,7 +6,7 @@
  *
  * @package ResgataWP
  *
- * @var array<string, mixed> $rwp_args {
+ * @var array<string, mixed> $resgata_args {
  *     @type string   $wrapper_attributes Atributos HTML do elemento externo (já escapados).
  *     @type int[]    $animal_ids         IDs dos animais encontrados.
  *     @type int      $total              Total de animais encontrados (todas as páginas).
@@ -26,68 +26,68 @@ use ResgataWP\Modules\Animals\Frontend\ListRenderer;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_filter_fields = array(
+$resgata_filter_fields = array(
 	'species' => array( ListRenderer::PARAM_SPECIES, __( 'Espécie', 'resgata-wp' ), __( 'Todas', 'resgata-wp' ) ),
 	'sex'     => array( ListRenderer::PARAM_SEX, __( 'Sexo', 'resgata-wp' ), __( 'Todos', 'resgata-wp' ) ),
 	'size'    => array( ListRenderer::PARAM_SIZE, __( 'Porte', 'resgata-wp' ), __( 'Todos', 'resgata-wp' ) ),
 );
 ?>
-<div <?php echo $rwp_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
-	<?php if ( $rwp_args['show_filters'] ) : ?>
-		<form class="rwp-filters" method="get" action="<?php echo esc_url( $rwp_args['form_action'] ); ?>" aria-label="<?php esc_attr_e( 'Filtrar animais', 'resgata-wp' ); ?>">
-			<?php foreach ( $rwp_args['hidden_fields'] as $rwp_name => $rwp_value ) : ?>
-				<input type="hidden" name="<?php echo esc_attr( $rwp_name ); ?>" value="<?php echo esc_attr( $rwp_value ); ?>">
+<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+	<?php if ( $resgata_args['show_filters'] ) : ?>
+		<form class="resgata-filters" method="get" action="<?php echo esc_url( $resgata_args['form_action'] ); ?>" aria-label="<?php esc_attr_e( 'Filtrar animais', 'resgata-wp' ); ?>">
+			<?php foreach ( $resgata_args['hidden_fields'] as $resgata_name => $resgata_value ) : ?>
+				<input type="hidden" name="<?php echo esc_attr( $resgata_name ); ?>" value="<?php echo esc_attr( $resgata_value ); ?>">
 			<?php endforeach; ?>
 
 			<?php
-			foreach ( $rwp_filter_fields as $rwp_key => $rwp_field ) :
-				if ( empty( $rwp_args['filters'][ $rwp_key ] ) ) {
+			foreach ( $resgata_filter_fields as $resgata_key => $resgata_field ) :
+				if ( empty( $resgata_args['filters'][ $resgata_key ] ) ) {
 					continue;
 				}
-				$rwp_field_id = wp_unique_id( 'rwp-filter-' );
+				$resgata_field_id = wp_unique_id( 'resgata-filter-' );
 				?>
-				<p class="rwp-filters__field">
-					<label for="<?php echo esc_attr( $rwp_field_id ); ?>"><?php echo esc_html( $rwp_field[1] ); ?></label>
-					<select data-rwp-select id="<?php echo esc_attr( $rwp_field_id ); ?>" name="<?php echo esc_attr( $rwp_field[0] ); ?>">
-						<option value=""><?php echo esc_html( $rwp_field[2] ); ?></option>
-						<?php foreach ( $rwp_args['filters'][ $rwp_key ] as $rwp_value => $rwp_label ) : ?>
-							<option value="<?php echo esc_attr( $rwp_value ); ?>" <?php selected( $rwp_args['selected'][ $rwp_key ], (string) $rwp_value ); ?>><?php echo esc_html( $rwp_label ); ?></option>
+				<p class="resgata-filters__field">
+					<label for="<?php echo esc_attr( $resgata_field_id ); ?>"><?php echo esc_html( $resgata_field[1] ); ?></label>
+					<select data-resgata-select id="<?php echo esc_attr( $resgata_field_id ); ?>" name="<?php echo esc_attr( $resgata_field[0] ); ?>">
+						<option value=""><?php echo esc_html( $resgata_field[2] ); ?></option>
+						<?php foreach ( $resgata_args['filters'][ $resgata_key ] as $resgata_value => $resgata_label ) : ?>
+							<option value="<?php echo esc_attr( $resgata_value ); ?>" <?php selected( $resgata_args['selected'][ $resgata_key ], (string) $resgata_value ); ?>><?php echo esc_html( $resgata_label ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</p>
 			<?php endforeach; ?>
 
-			<p class="rwp-filters__actions">
-				<button type="submit" class="rwp-button rwp-button--primary wp-element-button"><?php esc_html_e( 'Filtrar', 'resgata-wp' ); ?></button>
-				<?php if ( $rwp_args['has_active_filters'] ) : ?>
-					<a class="rwp-filters__clear" href="<?php echo esc_url( $rwp_args['form_action'] ); ?>"><?php esc_html_e( 'Limpar filtros', 'resgata-wp' ); ?></a>
+			<p class="resgata-filters__actions">
+				<button type="submit" class="resgata-button resgata-button--primary wp-element-button"><?php esc_html_e( 'Filtrar', 'resgata-wp' ); ?></button>
+				<?php if ( $resgata_args['has_active_filters'] ) : ?>
+					<a class="resgata-filters__clear" href="<?php echo esc_url( $resgata_args['form_action'] ); ?>"><?php esc_html_e( 'Limpar filtros', 'resgata-wp' ); ?></a>
 				<?php endif; ?>
 			</p>
 		</form>
 	<?php endif; ?>
 
-	<?php if ( $rwp_args['animal_ids'] ) : ?>
-		<?php if ( $rwp_args['show_filters'] ) : ?>
-			<p class="rwp-animals__count" role="status">
+	<?php if ( $resgata_args['animal_ids'] ) : ?>
+		<?php if ( $resgata_args['show_filters'] ) : ?>
+			<p class="resgata-animals__count" role="status">
 				<?php
 				/* translators: %s: quantidade de animais encontrados. */
-				echo esc_html( sprintf( _n( '%s animal encontrado', '%s animais encontrados', $rwp_args['total'], 'resgata-wp' ), number_format_i18n( $rwp_args['total'] ) ) );
+				echo esc_html( sprintf( _n( '%s animal encontrado', '%s animais encontrados', $resgata_args['total'], 'resgata-wp' ), number_format_i18n( $resgata_args['total'] ) ) );
 				?>
 			</p>
 		<?php endif; ?>
-		<ul class="rwp-grid" style="--rwp-columns: <?php echo esc_attr( (string) $rwp_args['columns'] ); ?>;">
+		<ul class="resgata-grid" style="--resgata-columns: <?php echo esc_attr( (string) $resgata_args['columns'] ); ?>;">
 			<?php
-			foreach ( $rwp_args['animal_ids'] as $rwp_animal_id ) {
+			foreach ( $resgata_args['animal_ids'] as $resgata_animal_id ) {
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template do cartão escapa cada valor.
-				echo TemplateLoader::render( 'animal-card.php', array( 'animal' => new ResgataWP\Modules\Animals\Animal( $rwp_animal_id ) ) );
+				echo TemplateLoader::render( 'animal-card.php', array( 'animal' => new ResgataWP\Modules\Animals\Animal( $resgata_animal_id ) ) );
 			}
 			?>
 		</ul>
 	<?php else : ?>
-		<p class="rwp-empty <?php echo esc_attr( $rwp_args['has_active_filters'] ? 'rwp-empty--filtered' : 'rwp-empty--none' ); ?>">
+		<p class="resgata-empty <?php echo esc_attr( $resgata_args['has_active_filters'] ? 'resgata-empty--filtered' : 'resgata-empty--none' ); ?>">
 			<?php
 			echo esc_html(
-				$rwp_args['has_active_filters']
+				$resgata_args['has_active_filters']
 					? __( 'Nenhum animal encontrado com esses filtros. Tente outra combinação.', 'resgata-wp' )
 					: __( 'Nenhum animal por aqui no momento. Volte em breve!', 'resgata-wp' )
 			);
@@ -95,9 +95,9 @@ $rwp_filter_fields = array(
 		</p>
 	<?php endif; ?>
 
-	<?php if ( $rwp_args['pagination'] ) : ?>
-		<nav class="rwp-pagination" aria-label="<?php esc_attr_e( 'Páginas da lista de animais', 'resgata-wp' ); ?>">
-			<?php echo wp_kses_post( $rwp_args['pagination'] ); ?>
+	<?php if ( $resgata_args['pagination'] ) : ?>
+		<nav class="resgata-pagination" aria-label="<?php esc_attr_e( 'Páginas da lista de animais', 'resgata-wp' ); ?>">
+			<?php echo wp_kses_post( $resgata_args['pagination'] ); ?>
 		</nav>
 	<?php endif; ?>
 </div>

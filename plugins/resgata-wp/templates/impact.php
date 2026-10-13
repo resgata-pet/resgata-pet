@@ -9,7 +9,7 @@
  * @var array{
  *     wrapper_attributes: string,
  *     items: array<int, array{icon: string, value: int, label: string, tone: string}>
- * } $rwp_args
+ * } $resgata_args
  */
 
 use ResgataWP\Core\Icons;
@@ -18,14 +18,14 @@ defined( 'ABSPATH' ) || exit;
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() devolve SVG fixo do plugin; atributos do wrapper escapados na origem.
 ?>
-<section <?php echo $rwp_args['wrapper_attributes']; ?> aria-label="<?php esc_attr_e( 'Nossos números', 'resgata-wp' ); ?>">
-	<dl class="rwp-impact__list">
-		<?php foreach ( $rwp_args['items'] as $rwp_item ) : ?>
-			<div class="rwp-impact__item rwp-impact__item--<?php echo esc_attr( sanitize_html_class( (string) ( $rwp_item['tone'] ?? 'green' ) ) ); ?>">
-				<dt class="rwp-impact__label"><?php echo esc_html( $rwp_item['label'] ); ?></dt>
-				<dd class="rwp-impact__value">
-					<span class="rwp-impact__icon"><?php echo Icons::svg( (string) ( $rwp_item['icon'] ?? 'paw-print' ) ); ?></span>
-					<?php echo esc_html( number_format_i18n( (int) $rwp_item['value'] ) ); ?>
+<section <?php echo $resgata_args['wrapper_attributes']; ?> aria-label="<?php esc_attr_e( 'Nossos números', 'resgata-wp' ); ?>">
+	<dl class="resgata-impact__list">
+		<?php foreach ( $resgata_args['items'] as $resgata_item ) : ?>
+			<div class="resgata-impact__item resgata-impact__item--<?php echo esc_attr( sanitize_html_class( (string) ( $resgata_item['tone'] ?? 'green' ) ) ); ?>">
+				<dt class="resgata-impact__label"><?php echo esc_html( $resgata_item['label'] ); ?></dt>
+				<dd class="resgata-impact__value">
+					<span class="resgata-impact__icon"><?php echo Icons::svg( (string) ( $resgata_item['icon'] ?? 'paw-print' ) ); ?></span>
+					<?php echo esc_html( number_format_i18n( (int) $resgata_item['value'] ) ); ?>
 				</dd>
 			</div>
 		<?php endforeach; ?>

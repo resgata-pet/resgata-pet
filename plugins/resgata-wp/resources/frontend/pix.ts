@@ -16,7 +16,7 @@ async function copy( text: string, button: HTMLElement, status: HTMLElement | nu
 		return;
 	}
 
-	const label = button.querySelector< HTMLElement >( '[data-rwp-pix-copy-label]' );
+	const label = button.querySelector< HTMLElement >( '[data-resgata-pix-copy-label]' );
 
 	if ( ! label ) {
 		return;
@@ -40,12 +40,12 @@ async function copy( text: string, button: HTMLElement, status: HTMLElement | nu
 
 function setup( root: HTMLElement ): void {
 	const { key, name, city } = root.dataset;
-	const qr = root.querySelector< HTMLElement >( '[data-rwp-pix-qr]' );
-	const image = root.querySelector< HTMLImageElement >( '[data-rwp-pix-image]' );
-	const code = root.querySelector< HTMLElement >( '[data-rwp-pix-code]' );
-	const payload = root.querySelector< HTMLInputElement >( '[data-rwp-pix-payload]' );
-	const amounts = root.querySelector< HTMLElement >( '[data-rwp-pix-amounts]' );
-	const status = root.querySelector< HTMLElement >( '[data-rwp-pix-status]' );
+	const qr = root.querySelector< HTMLElement >( '[data-resgata-pix-qr]' );
+	const image = root.querySelector< HTMLImageElement >( '[data-resgata-pix-image]' );
+	const code = root.querySelector< HTMLElement >( '[data-resgata-pix-code]' );
+	const payload = root.querySelector< HTMLInputElement >( '[data-resgata-pix-payload]' );
+	const amounts = root.querySelector< HTMLElement >( '[data-resgata-pix-amounts]' );
+	const status = root.querySelector< HTMLElement >( '[data-resgata-pix-status]' );
 
 	if ( ! key || ! name || ! city ) {
 		return;
@@ -86,12 +86,12 @@ function setup( root: HTMLElement ): void {
 		void render( input.value === '' ? undefined : Number( input.value ) );
 	} );
 
-	root.querySelectorAll< HTMLButtonElement >( '[data-rwp-pix-copy]' ).forEach( ( button ) => {
+	root.querySelectorAll< HTMLButtonElement >( '[data-resgata-pix-copy]' ).forEach( ( button ) => {
 		button.hidden = ! navigator.clipboard;
-		button.addEventListener( 'click', () => void copy( button.dataset.rwpPixCopy ?? '', button, status ) );
+		button.addEventListener( 'click', () => void copy( button.dataset.resgataPixCopy ?? '', button, status ) );
 	} );
 
-	const copyCode = root.querySelector< HTMLButtonElement >( '[data-rwp-pix-copy-code]' );
+	const copyCode = root.querySelector< HTMLButtonElement >( '[data-resgata-pix-copy-code]' );
 	if ( copyCode ) {
 		copyCode.hidden = ! navigator.clipboard;
 		copyCode.addEventListener( 'click', () => void copy( payload?.value ?? '', copyCode, status ) );
@@ -102,7 +102,7 @@ function setup( root: HTMLElement ): void {
 	void render();
 }
 
-const start = (): void => document.querySelectorAll< HTMLElement >( '[data-rwp-pix]' ).forEach( setup );
+const start = (): void => document.querySelectorAll< HTMLElement >( '[data-resgata-pix]' ).forEach( setup );
 
 if ( document.readyState === 'loading' ) {
 	document.addEventListener( 'DOMContentLoaded', start );

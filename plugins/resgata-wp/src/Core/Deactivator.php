@@ -18,8 +18,8 @@ final class Deactivator {
 	 * Remove as regras de URL do plugin.
 	 */
 	public static function deactivate(): void {
-		unregister_post_type( 'rwp_animal' );
-		wp_clear_scheduled_hook( 'rwp_stripe_events_cleanup' );
+		unregister_post_type( 'resgata_animal' );
+		wp_clear_scheduled_hook( 'resgata_stripe_events_cleanup' );
 		flush_rewrite_rules();
 	}
 }

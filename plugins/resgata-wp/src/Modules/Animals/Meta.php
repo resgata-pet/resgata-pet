@@ -14,23 +14,23 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Meta {
 
-	public const STATUS        = 'rwp_status';
-	public const SEX           = 'rwp_sex';
-	public const SIZE          = 'rwp_size';
-	public const COLOR         = 'rwp_color';
-	public const BIRTH_DATE    = 'rwp_birth_date';
-	public const RESCUE_DATE   = 'rwp_rescue_date';
-	public const GALLERY       = 'rwp_gallery';
-	public const VACCINES      = 'rwp_vaccines';
-	public const DEWORMED_DATE = 'rwp_dewormed_date';
-	public const NEUTERED      = 'rwp_neutered';
-	public const FIV           = 'rwp_fiv';
-	public const FELV          = 'rwp_felv';
-	public const TAGLINE       = 'rwp_tagline';
-	public const INTRO         = 'rwp_intro';
-	public const WEIGHT        = 'rwp_weight';
-	public const VET_CHECKED   = 'rwp_vet_checked';
-	public const VACCINATED    = 'rwp_vaccinated';
+	public const STATUS        = 'resgata_status';
+	public const SEX           = 'resgata_sex';
+	public const SIZE          = 'resgata_size';
+	public const COLOR         = 'resgata_color';
+	public const BIRTH_DATE    = 'resgata_birth_date';
+	public const RESCUE_DATE   = 'resgata_rescue_date';
+	public const GALLERY       = 'resgata_gallery';
+	public const VACCINES      = 'resgata_vaccines';
+	public const DEWORMED_DATE = 'resgata_dewormed_date';
+	public const NEUTERED      = 'resgata_neutered';
+	public const FIV           = 'resgata_fiv';
+	public const FELV          = 'resgata_felv';
+	public const TAGLINE       = 'resgata_tagline';
+	public const INTRO         = 'resgata_intro';
+	public const WEIGHT        = 'resgata_weight';
+	public const VET_CHECKED   = 'resgata_vet_checked';
+	public const VACCINATED    = 'resgata_vaccinated';
 
 	/**
 	 * Tamanho máximo (em caracteres) da frase de apresentação e do resumo.

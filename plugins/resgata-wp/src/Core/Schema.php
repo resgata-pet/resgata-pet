@@ -14,28 +14,28 @@ defined( 'ABSPATH' ) || exit;
  *
  * Tabelas atuais: padrinhos, eventos da Stripe já processados (módulo de
  * apadrinhamento, schema 5) e pagamentos dos padrinhos (schema 6). Cada
- * mudança de schema deve incrementar RWP_DB_VERSION e ser adicionada em
+ * mudança de schema deve incrementar RESGATA_DB_VERSION e ser adicionada em
  * `tables()`.
  */
 final class Schema {
 
-	public const OPTION = 'rwp_db_version';
+	public const OPTION = 'resgata_db_version';
 
 	/**
 	 * Marca que as regras de URL precisam ser recriadas no próximo `init`.
 	 */
-	public const FLUSH_FLAG = 'rwp_flush_rewrite';
+	public const FLUSH_FLAG = 'resgata_flush_rewrite';
 
 	/**
 	 * Momento em que o site começou a registrar os pagamentos, quando já havia padrinhos antes disso.
 	 */
-	public const PAYMENTS_SINCE = 'rwp_payments_since';
+	public const PAYMENTS_SINCE = 'resgata_payments_since';
 
 	/**
 	 * Roda as migrações pendentes, se houver.
 	 */
 	public static function maybe_upgrade(): void {
-		if ( (int) get_option( self::OPTION, 0 ) >= RWP_DB_VERSION ) {
+		if ( (int) get_option( self::OPTION, 0 ) >= RESGATA_DB_VERSION ) {
 			return;
 		}
 
@@ -68,7 +68,7 @@ final class Schema {
 			global $wpdb;
 
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Tabela própria, na migração.
-			$wpdb->query( $wpdb->prepare( 'UPDATE %i SET welcomed_at = created_at WHERE welcomed_at IS NULL', $wpdb->prefix . 'rwp_sponsors' ) );
+			$wpdb->query( $wpdb->prepare( 'UPDATE %i SET welcomed_at = created_at WHERE welcomed_at IS NULL', $wpdb->prefix . 'resgata_sponsors' ) );
 			add_option( self::PAYMENTS_SINCE, time(), '', false );
 		}
 
@@ -76,7 +76,7 @@ final class Schema {
 		Capabilities::grant();
 		update_option( self::FLUSH_FLAG, 1, false );
 
-		update_option( self::OPTION, RWP_DB_VERSION, false );
+		update_option( self::OPTION, RESGATA_DB_VERSION, false );
 	}
 
 	/**
@@ -90,7 +90,7 @@ final class Schema {
 		$charset = $wpdb->get_charset_collate();
 
 		return array(
-			"CREATE TABLE {$wpdb->prefix}rwp_sponsors (
+			"CREATE TABLE {$wpdb->prefix}resgata_sponsors (
 				id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 				customer_id varchar(64) NOT NULL,
 				subscription_id varchar(64) NOT NULL DEFAULT '',
@@ -111,14 +111,14 @@ final class Schema {
 				KEY email (email),
 				KEY status (status)
 			) $charset;",
-			"CREATE TABLE {$wpdb->prefix}rwp_stripe_events (
+			"CREATE TABLE {$wpdb->prefix}resgata_stripe_events (
 				event_id varchar(64) NOT NULL,
 				type varchar(64) NOT NULL DEFAULT '',
 				processed_at datetime NOT NULL,
 				PRIMARY KEY  (event_id),
 				KEY processed_at (processed_at)
 			) $charset;",
-			"CREATE TABLE {$wpdb->prefix}rwp_payments (
+			"CREATE TABLE {$wpdb->prefix}resgata_payments (
 				id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 				sponsor_id bigint(20) unsigned NOT NULL DEFAULT 0,
 				invoice_id varchar(64) NOT NULL,
@@ -142,6 +142,6 @@ final class Schema {
 	 * @return string[]
 	 */
 	public static function table_names(): array {
-		return array( 'rwp_sponsors', 'rwp_stripe_events', 'rwp_payments' );
+		return array( 'resgata_sponsors', 'resgata_stripe_events', 'resgata_payments' );
 	}
 }

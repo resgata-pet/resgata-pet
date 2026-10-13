@@ -16,8 +16,8 @@ defined( 'ABSPATH' ) || exit;
  * Garante uma listagem e uma página individual funcionais em qualquer tema.
  *
  * - Temas de blocos: o plugin registra modelos (editáveis no Editor do Site)
- *   que o tema pode substituir com `templates/single-rwp_animal.html` e
- *   `templates/archive-rwp_animal.html`.
+ *   que o tema pode substituir com `templates/single-resgata_animal.html` e
+ *   `templates/archive-resgata_animal.html`.
  * - Temas clássicos: o plugin usa seus templates PHP, que o tema pode
  *   substituir em `resgata-wp/single-animal.php` e `resgata-wp/archive-animal.php`.
  */

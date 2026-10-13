@@ -104,7 +104,7 @@ final class Bindings {
 				return Links::help();
 			case 'donate':
 				$help = Links::help();
-				return '' !== $help ? $help . '#rwp-pix' : '';
+				return '' !== $help ? $help . '#resgata-pix' : '';
 			case 'sponsorship':
 				return Links::sponsorship();
 			case 'contact':

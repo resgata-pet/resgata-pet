@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
  * Cifra e decifra textos antes de gravá-los no banco (ex.: chaves da Stripe).
  *
  * A chave de criptografia nunca fica no banco: vem das constantes
- * `RWP_ENCRYPTION_KEY` e `RWP_ENCRYPTION_SALT` do `wp-config.php` ou, sem elas,
+ * `RESGATA_ENCRYPTION_KEY` e `RESGATA_ENCRYPTION_SALT` do `wp-config.php` ou, sem elas,
  * de `LOGGED_IN_KEY` e `LOGGED_IN_SALT`. Quem copia só o banco (backup, falha
  * de outro plugin) não consegue ler o valor. Se essas constantes mudarem, o que
  * já foi gravado deixa de ser legível e precisa ser informado de novo.
@@ -94,12 +94,12 @@ final class Encryption {
 	}
 
 	/**
-	 * Lê `RWP_ENCRYPTION_<tipo>` ou, na falta dela, `LOGGED_IN_<tipo>`.
+	 * Lê `RESGATA_ENCRYPTION_<tipo>` ou, na falta dela, `LOGGED_IN_<tipo>`.
 	 *
 	 * @param string $type `KEY` ou `SALT`.
 	 */
 	private static function secret( string $type ): string {
-		foreach ( array( 'RWP_ENCRYPTION_' . $type, 'LOGGED_IN_' . $type ) as $name ) {
+		foreach ( array( 'RESGATA_ENCRYPTION_' . $type, 'LOGGED_IN_' . $type ) as $name ) {
 			$value = defined( $name ) ? constant( $name ) : '';
 
 			if ( is_string( $value ) && '' !== $value && self::PLACEHOLDER !== $value ) {

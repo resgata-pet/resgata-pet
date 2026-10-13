@@ -13,12 +13,12 @@ use ResgataWP\Core\TemplateLoader;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Guarda os banners escolhidos no painel (option `rwp_banners`) e renderiza o
+ * Guarda os banners escolhidos no painel (option `resgata_banners`) e renderiza o
  * bloco `resgata-wp/banners`, que os mostra no site.
  */
 final class Banners {
 
-	public const OPTION = 'rwp_banners';
+	public const OPTION = 'resgata_banners';
 
 	/**
 	 * Quantidade máxima de banners.
@@ -56,12 +56,12 @@ final class Banners {
 	 * Registra o bloco.
 	 */
 	public function register_block(): void {
-		if ( ! wp_style_is( 'rwp-frontend', 'registered' ) ) {
-			$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
-			wp_register_style( 'rwp-frontend', $src, array(), RWP_VERSION );
+		if ( ! wp_style_is( 'resgata-frontend', 'registered' ) ) {
+			$src = current_theme_supports( 'resgata-wp' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
+			wp_register_style( 'resgata-frontend', $src, array(), RESGATA_VERSION );
 		}
 
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/banners' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/banners' );
 	}
 
 	/**
@@ -190,17 +190,17 @@ final class Banners {
 			$banners = array( self::fallback() );
 		}
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		// Setas e bolinhas dependem do script; sem ele, os banners rolam com o dedo.
-		if ( count( $banners ) > 1 && wp_script_is( 'rwp-animal-gallery', 'registered' ) ) {
-			wp_enqueue_script( 'rwp-animal-gallery' );
+		if ( count( $banners ) > 1 && wp_script_is( 'resgata-animal-gallery', 'registered' ) ) {
+			wp_enqueue_script( 'resgata-animal-gallery' );
 		}
 
 		return TemplateLoader::render(
 			'banners.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="rwp-banners"',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="resgata-banners"',
 				'banners'            => $banners,
 				// Na página inicial, o primeiro banner é o título principal da página.
 				'first_is_h1'        => is_front_page(),

@@ -53,14 +53,14 @@ final class DashboardController extends BaseController {
 	 * @return array{total: int, drafts: int, by_status: array<string, int>}|null
 	 */
 	private function animals(): ?array {
-		if ( ! Modules::is_enabled( 'animals' ) || ! current_user_can( 'edit_rwp_animals' ) ) {
+		if ( ! Modules::is_enabled( 'animals' ) || ! current_user_can( 'edit_resgata_animals' ) ) {
 			return null;
 		}
 
 		global $wpdb;
 
 		// 0 = todos os autores; quem não pode editar animais de outras pessoas só conta os seus.
-		$author = current_user_can( 'edit_others_rwp_animals' ) ? 0 : get_current_user_id();
+		$author = current_user_can( 'edit_others_resgata_animals' ) ? 0 : get_current_user_id();
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Contagem agrupada, só para a tela Início do painel.
 		$rows = $wpdb->get_results(

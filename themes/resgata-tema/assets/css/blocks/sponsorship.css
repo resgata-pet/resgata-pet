@@ -2,21 +2,21 @@
  * Blocos de apadrinhamento (resgata-wp/sponsorship-plans e resgata-wp/sponsor-area).
  */
 /* Apadrinhamento: planos, contador e área do padrinho */
-.rwp-sponsorship {
+.resgata-sponsorship {
 	scroll-margin-top: 6rem;
 }
 
-.rwp-sponsor-area {
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-line);
-	border-radius: var(--rwp-radius);
-	box-shadow: var(--rwp-shadow);
+.resgata-sponsor-area {
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-line);
+	border-radius: var(--resgata-radius);
+	box-shadow: var(--resgata-shadow);
 	box-sizing: border-box;
 	padding: 1.5rem;
 	scroll-margin-top: 6rem;
 }
 
-:is(.rwp-sponsorship, .rwp-sponsor-area) .screen-reader-text {
+:is(.resgata-sponsorship, .resgata-sponsor-area) .screen-reader-text {
 	border: 0;
 	clip-path: inset(50%);
 	height: 1px;
@@ -28,11 +28,11 @@
 	width: 1px;
 }
 
-.rwp-sponsorship__counter {
+.resgata-sponsorship__counter {
 	align-items: center;
-	background: var(--rwp-primary-soft);
-	border-radius: var(--rwp-radius-pill);
-	color: var(--rwp-heading);
+	background: var(--resgata-primary-soft);
+	border-radius: var(--resgata-radius-pill);
+	color: var(--resgata-heading);
 	display: inline-flex;
 	flex-wrap: wrap;
 	font-size: 0.9375rem;
@@ -41,25 +41,25 @@
 	padding: 0.4rem 1rem;
 }
 
-.rwp-sponsorship__count {
-	color: var(--rwp-primary);
+.resgata-sponsorship__count {
+	color: var(--resgata-primary);
 	font-size: 1.125rem;
 	font-weight: 700;
 }
 
-.rwp-sponsorship__updated {
-	color: var(--rwp-muted);
+.resgata-sponsorship__updated {
+	color: var(--resgata-muted);
 	font-size: 0.8125rem;
 }
 
-.rwp-sponsorship__title {
-	color: var(--rwp-heading);
+.resgata-sponsorship__title {
+	color: var(--resgata-heading);
 	font-size: clamp(1.5rem, 1.2rem + 1vw, 1.75rem);
 	line-height: 1.2;
 	margin: 0 0 0.4rem;
 }
 
-.rwp-sponsorship__plans {
+.resgata-sponsorship__plans {
 	display: grid;
 	gap: 1.25rem;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
@@ -69,13 +69,13 @@
 }
 
 /* Cartão de plano: ícone, valor e botão, na cor de apoio do plano. */
-.rwp-sponsorship__plan {
-	--rwp-tone: var(--rwp-primary);
-	--rwp-tone-soft: var(--rwp-tile);
+.resgata-sponsorship__plan {
+	--resgata-tone: var(--resgata-primary);
+	--resgata-tone-soft: var(--resgata-tile);
 	align-items: center;
-	background: var(--rwp-tone-soft);
-	border: 1px solid color-mix(in srgb, var(--rwp-tone) 14%, transparent);
-	border-radius: var(--rwp-radius-lg);
+	background: var(--resgata-tone-soft);
+	border: 1px solid color-mix(in srgb, var(--resgata-tone) 14%, transparent);
+	border-radius: var(--resgata-radius-lg);
 	display: flex;
 	flex-direction: column;
 	gap: 0.9rem;
@@ -84,50 +84,50 @@
 	text-align: center;
 }
 
-.rwp-sponsorship__plan-icon {
+.resgata-sponsorship__plan-icon {
 	align-items: center;
-	background: var(--rwp-card);
+	background: var(--resgata-card);
 	border-radius: 50%;
-	color: var(--rwp-tone);
+	color: var(--resgata-tone);
 	display: flex;
 	height: 3rem;
 	justify-content: center;
 	width: 3rem;
 }
 
-.rwp-sponsorship__plan-icon svg {
+.resgata-sponsorship__plan-icon svg {
 	fill: currentColor;
 	height: 1.5rem;
 	width: 1.5rem;
 }
 
-.rwp-sponsorship__price {
+.resgata-sponsorship__price {
 	align-items: baseline;
-	color: var(--rwp-heading);
+	color: var(--resgata-heading);
 	display: flex;
 	gap: 0.3rem;
 	justify-content: center;
 	margin: 0;
 }
 
-.rwp-sponsorship__price strong {
+.resgata-sponsorship__price strong {
 	font-size: 2rem;
 	font-weight: 700;
 	line-height: 1.1;
 }
 
-.rwp-sponsorship__price span {
-	color: var(--rwp-muted);
+.resgata-sponsorship__price span {
+	color: var(--resgata-muted);
 	font-size: 1rem;
 }
 
-.rwp-sponsorship__choose {
+.resgata-sponsorship__choose {
 	align-items: center;
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-tone);
-	border-radius: var(--rwp-radius-sm);
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-tone);
+	border-radius: var(--resgata-radius-sm);
 	box-sizing: border-box;
-	color: var(--rwp-tone);
+	color: var(--resgata-tone);
 	display: flex;
 	font: inherit;
 	font-size: 0.9375rem;
@@ -139,44 +139,44 @@
 	width: 100%;
 }
 
-.rwp-sponsorship__choose:hover,
-.rwp-sponsorship__choose:focus-visible {
-	background: var(--rwp-tone);
-	color: var(--rwp-card);
+.resgata-sponsorship__choose:hover,
+.resgata-sponsorship__choose:focus-visible {
+	background: var(--resgata-tone);
+	color: var(--resgata-card);
 }
 
-.rwp-sponsorship__choose:focus-visible {
-	outline: 2px solid var(--rwp-tone);
+.resgata-sponsorship__choose:focus-visible {
+	outline: 2px solid var(--resgata-tone);
 	outline-offset: 2px;
 }
 
-.rwp-sponsorship__plan {
+.resgata-sponsorship__plan {
 	position: relative;
 }
 
-.rwp-sponsorship__plan-head {
+.resgata-sponsorship__plan-head {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
 	gap: 0.6rem;
 }
 
-.rwp-sponsorship__plan-name {
-	color: var(--rwp-tone);
+.resgata-sponsorship__plan-name {
+	color: var(--resgata-tone);
 	font-size: 1.125rem;
 	font-weight: 600;
 	line-height: 1.25;
 	margin: 0;
 }
 
-.rwp-sponsorship__plan-text {
-	color: var(--rwp-text);
+.resgata-sponsorship__plan-text {
+	color: var(--resgata-text);
 	font-size: 0.9375rem;
 	line-height: 1.4;
 	margin: 0;
 }
 
-.rwp-sponsorship__benefits {
+.resgata-sponsorship__benefits {
 	align-self: stretch;
 	display: grid;
 	font-size: var(--wp--preset--font-size--small);
@@ -188,15 +188,15 @@
 	text-align: left;
 }
 
-.rwp-sponsorship__benefits li {
+.resgata-sponsorship__benefits li {
 	align-items: flex-start;
 	display: flex;
 	gap: 0.5rem;
 	margin: 0;
 }
 
-.rwp-sponsorship__benefits svg {
-	color: var(--rwp-tone);
+.resgata-sponsorship__benefits svg {
+	color: var(--resgata-tone);
 	flex: none;
 	height: 1.1rem;
 	margin-top: 0.05rem;
@@ -205,14 +205,14 @@
 }
 
 /* Plano em destaque: selo "Mais escolhido" e o único botão preenchido. */
-.rwp-sponsorship__plan--featured {
-	border: 2px solid var(--rwp-tone);
+.resgata-sponsorship__plan--featured {
+	border: 2px solid var(--resgata-tone);
 }
 
-.rwp-sponsorship__flag {
-	background: var(--rwp-tone);
-	border-radius: var(--rwp-radius-pill);
-	color: var(--rwp-card);
+.resgata-sponsorship__flag {
+	background: var(--resgata-tone);
+	border-radius: var(--resgata-radius-pill);
+	color: var(--resgata-card);
 	font-size: 0.75rem;
 	font-weight: 600;
 	line-height: 1.4;
@@ -222,18 +222,18 @@
 	top: -0.7rem;
 }
 
-.rwp-sponsorship__plan--featured .rwp-sponsorship__choose {
-	background: var(--rwp-tone);
-	color: var(--rwp-card);
+.resgata-sponsorship__plan--featured .resgata-sponsorship__choose {
+	background: var(--resgata-tone);
+	color: var(--resgata-card);
 }
 
-.rwp-sponsorship__plan--featured .rwp-sponsorship__choose:hover,
-.rwp-sponsorship__plan--featured .rwp-sponsorship__choose:focus-visible {
+.resgata-sponsorship__plan--featured .resgata-sponsorship__choose:hover,
+.resgata-sponsorship__plan--featured .resgata-sponsorship__choose:focus-visible {
 	filter: brightness(0.9);
 }
 
-.rwp-sponsorship__actions .rwp-button,
-.rwp-sponsor-area__actions .rwp-button {
+.resgata-sponsorship__actions .resgata-button,
+.resgata-sponsor-area__actions .resgata-button {
 	align-items: center;
 	box-sizing: border-box;
 	cursor: pointer;
@@ -245,57 +245,57 @@
 	text-decoration: none;
 }
 
-.rwp-sponsor-area__actions {
+.resgata-sponsor-area__actions {
 	margin: 0 0 0.75rem;
 }
 
-.rwp-sponsorship__note,
-.rwp-sponsor-area__note {
-	color: var(--rwp-muted);
+.resgata-sponsorship__note,
+.resgata-sponsor-area__note {
+	color: var(--resgata-muted);
 	font-size: 0.9375rem;
 	margin: 0;
 }
 
-.rwp-sponsorship__error,
-.rwp-sponsor-area__error {
-	background: var(--rwp-danger-soft);
-	border-radius: var(--rwp-radius-sm);
-	color: var(--rwp-danger);
+.resgata-sponsorship__error,
+.resgata-sponsor-area__error {
+	background: var(--resgata-danger-soft);
+	border-radius: var(--resgata-radius-sm);
+	color: var(--resgata-danger);
 	margin: 1rem 0 0;
 	padding: 0.75rem 1rem;
 }
 
-.rwp-sponsorship__success {
-	background: var(--rwp-primary-soft);
-	border-radius: var(--rwp-radius-lg);
+.resgata-sponsorship__success {
+	background: var(--resgata-primary-soft);
+	border-radius: var(--resgata-radius-lg);
 	padding: 1.5rem;
 }
 
-.rwp-sponsorship__plan--green {
-	--rwp-tone-soft: var(--wp--preset--color--accent-5);
+.resgata-sponsorship__plan--green {
+	--resgata-tone-soft: var(--wp--preset--color--accent-5);
 }
 
-.rwp-sponsorship__plan--blue {
-	--rwp-tone: var(--rwp-info);
-	--rwp-tone-soft: #eef4fe;
+.resgata-sponsorship__plan--blue {
+	--resgata-tone: var(--resgata-info);
+	--resgata-tone-soft: #eef4fe;
 }
 
-.rwp-sponsorship__plan--orange {
-	--rwp-tone: #b3610a;
-	--rwp-tone-soft: #fef5e8;
+.resgata-sponsorship__plan--orange {
+	--resgata-tone: #b3610a;
+	--resgata-tone-soft: #fef5e8;
 }
 
-.rwp-sponsorship__plan--purple {
-	--rwp-tone: var(--rwp-help);
-	--rwp-tone-soft: #f5f0fe;
+.resgata-sponsorship__plan--purple {
+	--resgata-tone: var(--resgata-help);
+	--resgata-tone-soft: #f5f0fe;
 }
 
-.rwp-sponsorship__success > :last-child,
-.rwp-sponsor-area__success > :last-child {
+.resgata-sponsorship__success > :last-child,
+.resgata-sponsor-area__success > :last-child {
 	margin-bottom: 0;
 }
 
-.rwp-sponsor-area__field {
+.resgata-sponsor-area__field {
 	display: flex;
 	flex-direction: column;
 	gap: 0.4rem;
@@ -303,16 +303,16 @@
 	max-width: 28rem;
 }
 
-.rwp-sponsor-area__field > label {
+.resgata-sponsor-area__field > label {
 	font-size: var(--wp--preset--font-size--small);
 	font-weight: 600;
-	color: var(--rwp-heading);
+	color: var(--resgata-heading);
 }
 
-.rwp-sponsor-area__field input {
-	background: var(--rwp-field);
-	border: 1px solid var(--rwp-line);
-	border-radius: var(--rwp-radius-sm);
+.resgata-sponsor-area__field input {
+	background: var(--resgata-field);
+	border: 1px solid var(--resgata-line);
+	border-radius: var(--resgata-radius-sm);
 	box-sizing: border-box;
 	color: inherit;
 	font: inherit;
@@ -321,13 +321,13 @@
 	width: 100%;
 }
 
-.rwp-sponsor-area__field input:focus-visible {
-	border-color: var(--rwp-primary);
-	outline: 2px solid var(--rwp-primary);
+.resgata-sponsor-area__field input:focus-visible {
+	border-color: var(--resgata-primary);
+	outline: 2px solid var(--resgata-primary);
 	outline-offset: 1px;
 }
 
-.rwp-sponsor-area__hp {
+.resgata-sponsor-area__hp {
 	height: 1px;
 	left: -9999px;
 	overflow: hidden;
@@ -336,16 +336,16 @@
 }
 
 /* Resumo do apadrinhamento, depois do link de acesso */
-.rwp-sponsor-area__hello {
-	color: var(--rwp-heading);
+.resgata-sponsor-area__hello {
+	color: var(--resgata-heading);
 	font-size: var(--wp--preset--font-size--large);
 	font-weight: 700;
 	margin: 0 0 var(--wp--preset--spacing--30);
 }
 
-.rwp-sponsor-area__total {
-	background: var(--rwp-primary-soft);
-	border-radius: var(--rwp-radius-sm);
+.resgata-sponsor-area__total {
+	background: var(--resgata-primary-soft);
+	border-radius: var(--resgata-radius-sm);
 	display: flex;
 	flex-direction: column;
 	gap: 0.15rem;
@@ -353,44 +353,44 @@
 	padding: 1rem 1.25rem;
 }
 
-.rwp-sponsor-area__total-label,
-.rwp-sponsor-area__total-note {
-	color: var(--rwp-muted);
+.resgata-sponsor-area__total-label,
+.resgata-sponsor-area__total-note {
+	color: var(--resgata-muted);
 	font-size: var(--wp--preset--font-size--small);
 }
 
-.rwp-sponsor-area__total-value {
-	color: var(--rwp-heading);
+.resgata-sponsor-area__total-value {
+	color: var(--resgata-heading);
 	font-size: var(--wp--preset--font-size--x-large);
 	line-height: 1.2;
 }
 
-.rwp-sponsor-area__details {
+.resgata-sponsor-area__details {
 	display: grid;
 	gap: 0.75rem 1.5rem;
 	grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
 	margin: 0 0 var(--wp--preset--spacing--30);
 }
 
-.rwp-sponsor-area__details dt {
-	color: var(--rwp-muted);
+.resgata-sponsor-area__details dt {
+	color: var(--resgata-muted);
 	font-size: var(--wp--preset--font-size--small);
 }
 
-.rwp-sponsor-area__details dd {
-	color: var(--rwp-heading);
+.resgata-sponsor-area__details dd {
+	color: var(--resgata-heading);
 	font-weight: 600;
 	margin: 0;
 }
 
-.rwp-sponsor-area__summary .rwp-sponsor-area__error {
+.resgata-sponsor-area__summary .resgata-sponsor-area__error {
 	margin: 0 0 var(--wp--preset--spacing--30);
 }
 
 /* Agradecimento depois do pagamento */
-.rwp-sponsorship-thanks {
-	background: var(--rwp-primary-soft);
-	border-radius: var(--rwp-radius-lg);
+.resgata-sponsorship-thanks {
+	background: var(--resgata-primary-soft);
+	border-radius: var(--resgata-radius-lg);
 	box-sizing: border-box;
 	margin-inline: auto;
 	max-width: 40rem;
@@ -398,19 +398,19 @@
 	text-align: center;
 }
 
-.rwp-sponsorship-thanks__image {
-	border-radius: var(--rwp-radius);
+.resgata-sponsorship-thanks__image {
+	border-radius: var(--resgata-radius);
 	display: block;
 	height: auto;
 	margin: 0 auto var(--wp--preset--spacing--40);
 	max-width: min(100%, 22rem);
 }
 
-.rwp-sponsorship-thanks__text > :last-child {
+.resgata-sponsorship-thanks__text > :last-child {
 	margin-bottom: 0;
 }
 
-.rwp-sponsorship-thanks__actions {
+.resgata-sponsorship-thanks__actions {
 	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
@@ -419,7 +419,7 @@
 	margin: var(--wp--preset--spacing--40) 0 0;
 }
 
-.rwp-sponsorship-thanks__actions .rwp-button {
+.resgata-sponsorship-thanks__actions .resgata-button {
 	align-items: center;
 	box-sizing: border-box;
 	display: inline-flex;
@@ -429,14 +429,14 @@
 	text-decoration: none;
 }
 
-.rwp-sponsorship-thanks__link {
-	color: var(--rwp-heading);
+.resgata-sponsorship-thanks__link {
+	color: var(--resgata-heading);
 	font-weight: 600;
 }
 
 /* Enfeites de fundo do cartão de plano, na cor do plano (formas e base em enfeites.css). */
-.rwp-sponsorship__plan {
-	--resgata-tema-decor-tone: var(--rwp-tone);
+.resgata-sponsorship__plan {
+	--resgata-tema-decor-tone: var(--resgata-tone);
 	--resgata-tema-decor-fill:
 		var(--resgata-tema-shape-circle) right -2.25rem top -2.25rem / 7rem 7rem no-repeat,
 		var(--resgata-tema-shape-paw-fill) left -0.9rem bottom 3.75rem / 4rem 4rem no-repeat;

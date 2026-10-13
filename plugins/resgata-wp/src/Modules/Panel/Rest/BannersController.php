@@ -89,7 +89,7 @@ final class BannersController extends BaseController {
 
 				if ( '' !== $url && '' === Banners::sanitize_url( $url ) ) {
 					return new \WP_Error(
-						'rwp_rest_invalid_url',
+						'resgata_rest_invalid_url',
 						__( 'Confira o link do botão: use um endereço completo (https://...) ou um caminho do site, como /animais/.', 'resgata-wp' ),
 						array( 'status' => 400 )
 					);

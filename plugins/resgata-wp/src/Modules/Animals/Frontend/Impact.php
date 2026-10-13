@@ -82,7 +82,7 @@ final class Impact {
 		 *
 		 * @param array<int, array{icon: string, value: int, label: string, tone: string}> $items Números.
 		 */
-		$items = (array) apply_filters( 'rwp_impact_items', $items );
+		$items = (array) apply_filters( 'resgata_impact_items', $items );
 
 		return array_values( array_filter( $items, static fn( $item ): bool => is_array( $item ) && ! empty( $item['value'] ) && ! empty( $item['label'] ) ) );
 	}
@@ -99,12 +99,12 @@ final class Impact {
 			return '';
 		}
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		return TemplateLoader::render(
 			'impact.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="rwp-impact"',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="resgata-impact"',
 				'items'              => $items,
 			)
 		);

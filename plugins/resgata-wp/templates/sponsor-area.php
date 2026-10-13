@@ -6,106 +6,106 @@
  *
  * @package ResgataWP
  *
- * @var array{wrapper_attributes: string, token: string, sent: bool, error: string, summary: array<string, mixed>|null} $rwp_args
+ * @var array{wrapper_attributes: string, token: string, sent: bool, error: string, summary: array<string, mixed>|null} $resgata_args
  */
 
 use ResgataWP\Modules\Sponsorship\MagicLink;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_summary = $rwp_args['summary'] ?? null;
+$resgata_summary = $resgata_args['summary'] ?? null;
 ?>
-<div <?php echo $rwp_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
-	<?php if ( $rwp_summary ) : ?>
-		<div class="rwp-sponsor-area__summary">
-			<p class="rwp-sponsor-area__hello">
+<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+	<?php if ( $resgata_summary ) : ?>
+		<div class="resgata-sponsor-area__summary">
+			<p class="resgata-sponsor-area__hello">
 				<?php
-				if ( '' !== $rwp_summary['first_name'] ) {
+				if ( '' !== $resgata_summary['first_name'] ) {
 					/* translators: %s: primeiro nome do padrinho. */
-					echo esc_html( sprintf( __( 'Olá, %s!', 'resgata-wp' ), $rwp_summary['first_name'] ) );
+					echo esc_html( sprintf( __( 'Olá, %s!', 'resgata-wp' ), $resgata_summary['first_name'] ) );
 				} else {
 					esc_html_e( 'Olá!', 'resgata-wp' );
 				}
 				?>
 			</p>
 
-			<?php if ( '' !== $rwp_summary['total'] ) : ?>
-				<p class="rwp-sponsor-area__total">
-					<span class="rwp-sponsor-area__total-label">
+			<?php if ( '' !== $resgata_summary['total'] ) : ?>
+				<p class="resgata-sponsor-area__total">
+					<span class="resgata-sponsor-area__total-label">
 						<?php
-						if ( '' !== $rwp_summary['total_since'] ) {
+						if ( '' !== $resgata_summary['total_since'] ) {
 							/* translators: %s: data. */
-							echo esc_html( sprintf( __( 'Você doou desde %s', 'resgata-wp' ), $rwp_summary['total_since'] ) );
+							echo esc_html( sprintf( __( 'Você doou desde %s', 'resgata-wp' ), $resgata_summary['total_since'] ) );
 						} else {
 							esc_html_e( 'Você já doou', 'resgata-wp' );
 						}
 						?>
 					</span>
-					<strong class="rwp-sponsor-area__total-value"><?php echo esc_html( $rwp_summary['total'] ); ?></strong>
-					<span class="rwp-sponsor-area__total-note">
+					<strong class="resgata-sponsor-area__total-value"><?php echo esc_html( $resgata_summary['total'] ); ?></strong>
+					<span class="resgata-sponsor-area__total-note">
 						<?php
 						/* translators: %s: número de pagamentos. */
-						echo esc_html( sprintf( _n( 'em %s pagamento. Muito obrigado!', 'em %s pagamentos. Muito obrigado!', $rwp_summary['payments'], 'resgata-wp' ), number_format_i18n( $rwp_summary['payments'] ) ) );
+						echo esc_html( sprintf( _n( 'em %s pagamento. Muito obrigado!', 'em %s pagamentos. Muito obrigado!', $resgata_summary['payments'], 'resgata-wp' ), number_format_i18n( $resgata_summary['payments'] ) ) );
 						?>
 					</span>
 				</p>
 			<?php endif; ?>
 
-			<?php if ( $rwp_summary['payment_failed'] ) : ?>
-				<p class="rwp-sponsor-area__error" role="alert"><?php esc_html_e( 'A última cobrança foi recusada pelo cartão. Toque em "Alterar ou cancelar" para trocar o cartão.', 'resgata-wp' ); ?></p>
+			<?php if ( $resgata_summary['payment_failed'] ) : ?>
+				<p class="resgata-sponsor-area__error" role="alert"><?php esc_html_e( 'A última cobrança foi recusada pelo cartão. Toque em "Alterar ou cancelar" para trocar o cartão.', 'resgata-wp' ); ?></p>
 			<?php endif; ?>
 
-			<dl class="rwp-sponsor-area__details">
+			<dl class="resgata-sponsor-area__details">
 				<div>
 					<dt><?php esc_html_e( 'Plano', 'resgata-wp' ); ?></dt>
-					<dd><?php echo esc_html( $rwp_summary['plan'] ); ?></dd>
+					<dd><?php echo esc_html( $resgata_summary['plan'] ); ?></dd>
 				</div>
-				<?php if ( '' !== $rwp_summary['status'] ) : ?>
+				<?php if ( '' !== $resgata_summary['status'] ) : ?>
 					<div>
 						<dt><?php esc_html_e( 'Situação', 'resgata-wp' ); ?></dt>
-						<dd><?php echo esc_html( $rwp_summary['status'] ); ?></dd>
+						<dd><?php echo esc_html( $resgata_summary['status'] ); ?></dd>
 					</div>
 				<?php endif; ?>
 				<div>
 					<dt><?php esc_html_e( 'Padrinho desde', 'resgata-wp' ); ?></dt>
-					<dd><?php echo esc_html( $rwp_summary['since'] ); ?></dd>
+					<dd><?php echo esc_html( $resgata_summary['since'] ); ?></dd>
 				</div>
-				<?php if ( '' !== $rwp_summary['last_paid'] ) : ?>
+				<?php if ( '' !== $resgata_summary['last_paid'] ) : ?>
 					<div>
 						<dt><?php esc_html_e( 'Último pagamento', 'resgata-wp' ); ?></dt>
-						<dd><?php echo esc_html( $rwp_summary['last_paid'] ); ?></dd>
+						<dd><?php echo esc_html( $resgata_summary['last_paid'] ); ?></dd>
 					</div>
 				<?php endif; ?>
-				<?php if ( '' !== $rwp_summary['ends_at'] ) : ?>
+				<?php if ( '' !== $resgata_summary['ends_at'] ) : ?>
 					<div>
 						<dt><?php esc_html_e( 'Cancelamento pedido', 'resgata-wp' ); ?></dt>
 						<dd>
 							<?php
 							/* translators: %s: data. */
-							echo esc_html( sprintf( __( 'Ativo até %s, sem novas cobranças', 'resgata-wp' ), $rwp_summary['ends_at'] ) );
+							echo esc_html( sprintf( __( 'Ativo até %s, sem novas cobranças', 'resgata-wp' ), $resgata_summary['ends_at'] ) );
 							?>
 						</dd>
 					</div>
-				<?php elseif ( '' !== $rwp_summary['next_charge'] ) : ?>
+				<?php elseif ( '' !== $resgata_summary['next_charge'] ) : ?>
 					<div>
 						<dt><?php esc_html_e( 'Próxima cobrança', 'resgata-wp' ); ?></dt>
-						<dd><?php echo esc_html( $rwp_summary['next_charge'] ); ?></dd>
+						<dd><?php echo esc_html( $resgata_summary['next_charge'] ); ?></dd>
 					</div>
 				<?php endif; ?>
 			</dl>
 
-			<?php if ( '' !== $rwp_args['error'] ) : ?>
-				<p class="rwp-sponsor-area__error" role="alert"><?php echo esc_html( $rwp_args['error'] ); ?></p>
+			<?php if ( '' !== $resgata_args['error'] ) : ?>
+				<p class="resgata-sponsor-area__error" role="alert"><?php echo esc_html( $resgata_args['error'] ); ?></p>
 			<?php endif; ?>
 
-			<form class="rwp-sponsor-area__form" method="post" action="#rwp-padrinho">
+			<form class="resgata-sponsor-area__form" method="post" action="#resgata-padrinho">
 				<?php wp_nonce_field( MagicLink::NONCE_ACTION, MagicLink::NONCE_NAME ); ?>
-				<input type="hidden" name="<?php echo esc_attr( MagicLink::TOKEN_FIELD ); ?>" value="<?php echo esc_attr( $rwp_summary['token'] ); ?>">
+				<input type="hidden" name="<?php echo esc_attr( MagicLink::TOKEN_FIELD ); ?>" value="<?php echo esc_attr( $resgata_summary['token'] ); ?>">
 				<input type="hidden" name="<?php echo esc_attr( MagicLink::PORTAL_FIELD ); ?>" value="1">
-				<p class="rwp-sponsor-area__actions">
-					<button type="submit" class="rwp-button wp-element-button">
+				<p class="resgata-sponsor-area__actions">
+					<button type="submit" class="resgata-button wp-element-button">
 						<?php
-						if ( $rwp_summary['active'] ) {
+						if ( $resgata_summary['active'] ) {
 							esc_html_e( 'Alterar ou cancelar', 'resgata-wp' );
 						} else {
 							esc_html_e( 'Ver meus pagamentos', 'resgata-wp' );
@@ -113,44 +113,44 @@ $rwp_summary = $rwp_args['summary'] ?? null;
 						?>
 					</button>
 				</p>
-				<p class="rwp-sponsor-area__note">
+				<p class="resgata-sponsor-area__note">
 					<?php esc_html_e( 'Você vai para a página segura da Stripe. Lá dá para trocar o cartão, mudar o valor, ver os recibos e cancelar.', 'resgata-wp' ); ?>
 				</p>
 			</form>
 		</div>
-	<?php elseif ( '' !== $rwp_args['token'] ) : ?>
-		<form class="rwp-sponsor-area__form" method="post" action="#rwp-padrinho">
+	<?php elseif ( '' !== $resgata_args['token'] ) : ?>
+		<form class="resgata-sponsor-area__form" method="post" action="#resgata-padrinho">
 			<?php wp_nonce_field( MagicLink::NONCE_ACTION, MagicLink::NONCE_NAME ); ?>
-			<input type="hidden" name="<?php echo esc_attr( MagicLink::TOKEN_FIELD ); ?>" value="<?php echo esc_attr( $rwp_args['token'] ); ?>">
+			<input type="hidden" name="<?php echo esc_attr( MagicLink::TOKEN_FIELD ); ?>" value="<?php echo esc_attr( $resgata_args['token'] ); ?>">
 			<p><?php esc_html_e( 'Tudo certo! Toque no botão para ver quanto você já doou, trocar o cartão, mudar o valor ou cancelar.', 'resgata-wp' ); ?></p>
-			<p class="rwp-sponsor-area__actions">
-				<button type="submit" class="rwp-button wp-element-button"><?php esc_html_e( 'Abrir meu apadrinhamento', 'resgata-wp' ); ?></button>
+			<p class="resgata-sponsor-area__actions">
+				<button type="submit" class="resgata-button wp-element-button"><?php esc_html_e( 'Abrir meu apadrinhamento', 'resgata-wp' ); ?></button>
 			</p>
 		</form>
-	<?php elseif ( $rwp_args['sent'] && '' === $rwp_args['error'] ) : ?>
-		<div class="rwp-sponsor-area__success" role="status">
+	<?php elseif ( $resgata_args['sent'] && '' === $resgata_args['error'] ) : ?>
+		<div class="resgata-sponsor-area__success" role="status">
 			<p><?php esc_html_e( 'Se este e-mail for de um padrinho, o link de acesso chega em alguns minutos. Confira também a caixa de spam. O link vale por 30 minutos.', 'resgata-wp' ); ?></p>
 		</div>
 	<?php else : ?>
-		<form class="rwp-sponsor-area__form" method="post" action="#rwp-padrinho">
+		<form class="resgata-sponsor-area__form" method="post" action="#resgata-padrinho">
 			<?php wp_nonce_field( MagicLink::NONCE_ACTION, MagicLink::NONCE_NAME ); ?>
 
-			<?php if ( '' !== $rwp_args['error'] ) : ?>
-				<p class="rwp-sponsor-area__error" role="alert"><?php echo esc_html( $rwp_args['error'] ); ?></p>
+			<?php if ( '' !== $resgata_args['error'] ) : ?>
+				<p class="resgata-sponsor-area__error" role="alert"><?php echo esc_html( $resgata_args['error'] ); ?></p>
 			<?php endif; ?>
 
-			<p class="rwp-sponsor-area__field">
-				<label for="rwp-sponsor-email"><?php esc_html_e( 'E-mail usado no apadrinhamento', 'resgata-wp' ); ?></label>
-				<input type="email" id="rwp-sponsor-email" name="<?php echo esc_attr( MagicLink::EMAIL_FIELD ); ?>" autocomplete="email" required>
+			<p class="resgata-sponsor-area__field">
+				<label for="resgata-sponsor-email"><?php esc_html_e( 'E-mail usado no apadrinhamento', 'resgata-wp' ); ?></label>
+				<input type="email" id="resgata-sponsor-email" name="<?php echo esc_attr( MagicLink::EMAIL_FIELD ); ?>" autocomplete="email" required>
 			</p>
-			<p class="rwp-sponsor-area__hp" aria-hidden="true">
-				<label for="rwp-sponsor-site"><?php esc_html_e( 'Não preencha este campo', 'resgata-wp' ); ?></label>
-				<input type="text" id="rwp-sponsor-site" name="<?php echo esc_attr( MagicLink::HONEYPOT ); ?>" tabindex="-1" autocomplete="off">
+			<p class="resgata-sponsor-area__hp" aria-hidden="true">
+				<label for="resgata-sponsor-site"><?php esc_html_e( 'Não preencha este campo', 'resgata-wp' ); ?></label>
+				<input type="text" id="resgata-sponsor-site" name="<?php echo esc_attr( MagicLink::HONEYPOT ); ?>" tabindex="-1" autocomplete="off">
 			</p>
-			<p class="rwp-sponsor-area__actions">
-				<button type="submit" class="rwp-button wp-element-button"><?php esc_html_e( 'Receber link de acesso', 'resgata-wp' ); ?></button>
+			<p class="resgata-sponsor-area__actions">
+				<button type="submit" class="resgata-button wp-element-button"><?php esc_html_e( 'Receber link de acesso', 'resgata-wp' ); ?></button>
 			</p>
-			<p class="rwp-sponsor-area__note">
+			<p class="resgata-sponsor-area__note">
 				<?php esc_html_e( 'Enviamos um link para o seu e-mail. Não precisa de senha.', 'resgata-wp' ); ?>
 			</p>
 		</form>

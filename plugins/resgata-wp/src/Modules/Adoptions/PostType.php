@@ -12,21 +12,21 @@ use ResgataWP\Core\Capabilities;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registra o post type `rwp_adoption`.
+ * Registra o post type `resgata_adoption`.
  *
  * Os pedidos têm dados pessoais: o post type não é público, não tem tela no
  * wp-admin, não aparece na REST do WordPress nem em buscas. O único acesso é
- * pela API do painel, com a capability `rwp_manage_adoptions`.
+ * pela API do painel, com a capability `resgata_manage_adoptions`.
  */
 final class PostType {
 
-	public const SLUG = 'rwp_adoption';
+	public const SLUG = 'resgata_adoption';
 
-	public const META_STATUS  = 'rwp_adoption_status';
-	public const META_ANIMAL  = 'rwp_adoption_animal_id';
-	public const META_ANSWERS = 'rwp_adoption_answers';
-	public const META_CONSENT = 'rwp_adoption_consent';
-	public const META_NOTES   = 'rwp_adoption_notes';
+	public const META_STATUS  = 'resgata_adoption_status';
+	public const META_ANIMAL  = 'resgata_adoption_animal_id';
+	public const META_ANSWERS = 'resgata_adoption_answers';
+	public const META_CONSENT = 'resgata_adoption_consent';
+	public const META_NOTES   = 'resgata_adoption_notes';
 
 	public const STATUS_DEFAULT = 'new';
 

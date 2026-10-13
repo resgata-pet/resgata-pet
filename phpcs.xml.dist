@@ -39,31 +39,32 @@
 	<rule ref="WordPress.WP.Capabilities">
 		<properties>
 			<property name="custom_capabilities" type="array">
-				<element value="edit_rwp_animals"/>
-				<element value="edit_others_rwp_animals"/>
-				<element value="edit_private_rwp_animals"/>
-				<element value="edit_published_rwp_animals"/>
-				<element value="publish_rwp_animals"/>
-				<element value="read_private_rwp_animals"/>
-				<element value="delete_rwp_animals"/>
-				<element value="delete_others_rwp_animals"/>
-				<element value="delete_private_rwp_animals"/>
-				<element value="delete_published_rwp_animals"/>
-				<element value="manage_rwp_animal_terms"/>
-				<element value="rwp_access_panel"/>
-				<element value="rwp_manage_settings"/>
-				<element value="rwp_manage_adoptions"/>
-				<element value="rwp_manage_sponsorship"/>
+				<element value="edit_resgata_animals"/>
+				<element value="edit_others_resgata_animals"/>
+				<element value="edit_private_resgata_animals"/>
+				<element value="edit_published_resgata_animals"/>
+				<element value="publish_resgata_animals"/>
+				<element value="read_private_resgata_animals"/>
+				<element value="delete_resgata_animals"/>
+				<element value="delete_others_resgata_animals"/>
+				<element value="delete_private_resgata_animals"/>
+				<element value="delete_published_resgata_animals"/>
+				<element value="manage_resgata_animal_terms"/>
+				<element value="resgata_access_panel"/>
+				<element value="resgata_manage_settings"/>
+				<element value="resgata_manage_adoptions"/>
+				<element value="resgata_manage_sponsorship"/>
 			</property>
 		</properties>
 	</rule>
 
-	<!--
-		O prefixo global do projeto é `rwp_` (constantes `RWP_`, namespace `ResgataWP`).
-		O sniff PrefixAllGlobals recusa prefixos com menos de 4 caracteres, então não
-		consegue validar `rwp_`. Ele fica desligado; a regra do prefixo é conferida em revisão.
-	-->
+	<!-- Prefixo global: `resgata_` (constantes `RESGATA_`, namespace `ResgataWP`); o tema usa `resgata_tema_`. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-		<severity>0</severity>
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="resgata"/>
+				<element value="ResgataWP"/>
+			</property>
+		</properties>
 	</rule>
 </ruleset>

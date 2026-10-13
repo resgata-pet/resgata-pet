@@ -21,10 +21,10 @@
 	.is-style-resgata-hero,
 	.is-style-resgata-band,
 	.is-style-resgata-band-hug,
-	.rwp-donate,
-	.rwp-impact,
-	.rwp-sponsorship__plan,
-	.rwp-animal__help
+	.resgata-donate,
+	.resgata-impact,
+	.resgata-sponsorship__plan,
+	.resgata-animal__help
 ) {
 	--resgata-tema-decor-tone: var(--wp--preset--color--accent-3);
 	isolation: isolate;
@@ -35,19 +35,19 @@
 	.is-style-resgata-hero,
 	.is-style-resgata-band,
 	.is-style-resgata-band-hug,
-	.rwp-donate,
-	.rwp-impact,
-	.rwp-sponsorship__plan,
-	.rwp-animal__help
+	.resgata-donate,
+	.resgata-impact,
+	.resgata-sponsorship__plan,
+	.resgata-animal__help
 )::before,
 :is(
 	.is-style-resgata-hero,
 	.is-style-resgata-band,
 	.is-style-resgata-band-hug,
-	.rwp-donate,
-	.rwp-impact,
-	.rwp-sponsorship__plan,
-	.rwp-animal__help
+	.resgata-donate,
+	.resgata-impact,
+	.resgata-sponsorship__plan,
+	.resgata-animal__help
 )::after {
 	border-radius: inherit;
 	content: "";
@@ -61,10 +61,10 @@
 	.is-style-resgata-hero,
 	.is-style-resgata-band,
 	.is-style-resgata-band-hug,
-	.rwp-donate,
-	.rwp-impact,
-	.rwp-sponsorship__plan,
-	.rwp-animal__help
+	.resgata-donate,
+	.resgata-impact,
+	.resgata-sponsorship__plan,
+	.resgata-animal__help
 )::before {
 	background: color-mix(in srgb, var(--resgata-tema-decor-tone) 10%, transparent);
 	mask: var(--resgata-tema-decor-fill, var(--resgata-tema-shape-none));
@@ -74,10 +74,10 @@
 	.is-style-resgata-hero,
 	.is-style-resgata-band,
 	.is-style-resgata-band-hug,
-	.rwp-donate,
-	.rwp-impact,
-	.rwp-sponsorship__plan,
-	.rwp-animal__help
+	.resgata-donate,
+	.resgata-impact,
+	.resgata-sponsorship__plan,
+	.resgata-animal__help
 )::after {
 	background: color-mix(in srgb, var(--resgata-tema-decor-tone) 36%, transparent);
 	mask: var(--resgata-tema-decor-line, var(--resgata-tema-shape-none));

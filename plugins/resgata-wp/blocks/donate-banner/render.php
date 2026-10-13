@@ -9,16 +9,16 @@ use ResgataWP\Modules\Settings\PixDonation;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_html = PixDonation::render_banner( get_block_wrapper_attributes( array( 'class' => 'rwp-donate' ) ) );
+$resgata_html = PixDonation::render_banner( get_block_wrapper_attributes( array( 'class' => 'resgata-donate' ) ) );
 
-if ( '' === $rwp_html && wp_is_serving_rest_request() ) {
+if ( '' === $resgata_html && wp_is_serving_rest_request() ) {
 	// Prévia no editor enquanto a chave Pix (ou a página "Como ajudar") não existe.
-	$rwp_html = sprintf(
+	$resgata_html = sprintf(
 		'<div %s><p>%s</p></div>',
-		get_block_wrapper_attributes( array( 'class' => 'rwp-donate rwp-donate--placeholder' ) ),
+		get_block_wrapper_attributes( array( 'class' => 'resgata-donate resgata-donate--placeholder' ) ),
 		esc_html__( 'Aqui aparece a doação por Pix quando a chave estiver cadastrada em Configurações, no painel Resgata.', 'resgata-wp' )
 	);
 }
 
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template escapa cada valor; os atributos do wrapper vêm escapados do core.
-echo $rwp_html;
+echo $resgata_html;

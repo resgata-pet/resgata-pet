@@ -8,18 +8,18 @@ x-wp-env: &wp-env
   WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-resgata}
   WORDPRESS_DEBUG: 1
   # Chaves do SANDBOX da Stripe (módulo de apadrinhamento), vindas do .env.
-  RWP_STRIPE_SECRET_KEY: ${STRIPE_SANDBOX_SECRET_KEY:-}
-  RWP_STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+  RESGATA_STRIPE_SECRET_KEY: ${STRIPE_SANDBOX_SECRET_KEY:-}
+  RESGATA_STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
   # Com STRIPE_KEYS_IN_PANEL=1 no .env, as chaves ficam fora do wp-config.php e são informadas pelo painel.
-  RWP_STRIPE_KEYS_IN_PANEL: ${STRIPE_KEYS_IN_PANEL:-}
+  RESGATA_STRIPE_KEYS_IN_PANEL: ${STRIPE_KEYS_IN_PANEL:-}
   WORDPRESS_CONFIG_EXTRA: |
     define( 'WP_DEBUG_LOG', true );
     define( 'WP_DEBUG_DISPLAY', true );
     define( 'SCRIPT_DEBUG', true );
     define( 'WP_ENVIRONMENT_TYPE', 'local' );
-    if ( ! getenv( 'RWP_STRIPE_KEYS_IN_PANEL' ) ) {
-      define( 'RWP_STRIPE_SECRET_KEY', (string) getenv( 'RWP_STRIPE_SECRET_KEY' ) );
-      define( 'RWP_STRIPE_WEBHOOK_SECRET', (string) getenv( 'RWP_STRIPE_WEBHOOK_SECRET' ) );
+    if ( ! getenv( 'RESGATA_STRIPE_KEYS_IN_PANEL' ) ) {
+      define( 'RESGATA_STRIPE_SECRET_KEY', (string) getenv( 'RESGATA_STRIPE_SECRET_KEY' ) );
+      define( 'RESGATA_STRIPE_WEBHOOK_SECRET', (string) getenv( 'RESGATA_STRIPE_WEBHOOK_SECRET' ) );
     }
 
 x-wp-volumes: &wp-volumes

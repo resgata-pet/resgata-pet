@@ -10,14 +10,14 @@ namespace ResgataWP\Modules\Settings;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Dados da protetora cadastrados em /painel/configuracoes (option `rwp_organization`):
+ * Dados da protetora cadastrados em /painel/configuracoes (option `resgata_organization`):
  * identidade, contato, redes sociais, localização, adoção, privacidade e Pix.
  *
  * Os valores devolvidos NÃO estão escapados: escape na saída.
  */
 final class Organization {
 
-	public const OPTION = 'rwp_organization';
+	public const OPTION = 'resgata_organization';
 
 	/**
 	 * Campos que nunca aparecem no site (uso interno do plugin).

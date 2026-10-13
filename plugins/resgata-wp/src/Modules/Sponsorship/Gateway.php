@@ -29,7 +29,7 @@ final class Gateway {
 	/**
 	 * Marca, nos metadados da sessão, que ela nasceu neste módulo (a conta pode vender outras coisas).
 	 */
-	public const ORIGIN_KEY   = 'rwp_origin';
+	public const ORIGIN_KEY   = 'resgata_origin';
 	public const ORIGIN_VALUE = 'sponsorship';
 
 	/**
@@ -79,7 +79,7 @@ final class Gateway {
 		 *
 		 * @param string[] $types Tipos de forma de pagamento da Stripe.
 		 */
-		$excluded = array_values( array_filter( (array) apply_filters( 'rwp_sponsorship_excluded_payment_methods', array( 'boleto' ) ) ) );
+		$excluded = array_values( array_filter( (array) apply_filters( 'resgata_sponsorship_excluded_payment_methods', array( 'boleto' ) ) ) );
 
 		// Depois de pagar, a pessoa cai na página de agradecimento; sem ela, volta para os planos.
 		$thanks = ThanksPage::url();
@@ -93,8 +93,8 @@ final class Gateway {
 				),
 			),
 			'locale'                 => 'pt-BR',
-			'success_url'            => '' !== $thanks ? $thanks : add_query_arg( Checkout::RESULT_PARAM, 'obrigado', $return_url ) . '#rwp-apadrinhar',
-			'cancel_url'             => $return_url . '#rwp-apadrinhar',
+			'success_url'            => '' !== $thanks ? $thanks : add_query_arg( Checkout::RESULT_PARAM, 'obrigado', $return_url ) . '#resgata-apadrinhar',
+			'cancel_url'             => $return_url . '#resgata-apadrinhar',
 			'integration_identifier' => self::INTEGRATION_IDENTIFIER,
 			'metadata'               => array( self::ORIGIN_KEY => self::ORIGIN_VALUE ),
 		);
@@ -164,7 +164,7 @@ final class Gateway {
 		 * @param string               $operation Nome da operação.
 		 * @param array<string, mixed> $params    Dados da operação.
 		 */
-		return apply_filters( 'rwp_sponsorship_pre_stripe', null, $operation, $params );
+		return apply_filters( 'resgata_sponsorship_pre_stripe', null, $operation, $params );
 	}
 
 	/**
@@ -217,7 +217,7 @@ final class Gateway {
 			return self::not_configured();
 		}
 
-		$missing = 'rwp_verificacao';
+		$missing = 'resgata_verificacao';
 		$probes  = array(
 			'products'       => static fn() => $client->products->update( 'prod_' . $missing, array() ),
 			'prices'         => static fn() => $client->prices->update( 'price_' . $missing, array() ),
@@ -464,7 +464,7 @@ final class Gateway {
 	 * Erro para o painel quando a chave ainda não foi definida.
 	 */
 	private static function not_configured(): \WP_Error {
-		return new \WP_Error( 'rwp_stripe_not_configured', __( 'A chave da Stripe ainda não foi definida. Peça ao administrador do site para informar a chave em Configurações, na aba de pagamentos.', 'resgata-wp' ), array( 'status' => 503 ) );
+		return new \WP_Error( 'resgata_stripe_not_configured', __( 'A chave da Stripe ainda não foi definida. Peça ao administrador do site para informar a chave em Configurações, na aba de pagamentos.', 'resgata-wp' ), array( 'status' => 503 ) );
 	}
 
 	/**
@@ -477,24 +477,24 @@ final class Gateway {
 
 		if ( $error instanceof \Stripe\Exception\PermissionException ) {
 			return new \WP_Error(
-				'rwp_stripe_permission',
+				'resgata_stripe_permission',
 				__( 'A chave da Stripe usada no site não tem permissão para mexer nos planos. Na Stripe, edite a chave restrita e libere a escrita nos itens marcados como pendentes em Configurações, na aba de pagamentos.', 'resgata-wp' ),
 				array( 'status' => 502 )
 			);
 		}
 
 		if ( $error instanceof \Stripe\Exception\AuthenticationException ) {
-			return new \WP_Error( 'rwp_stripe_auth', __( 'A Stripe não reconheceu a chave. Confira se ela foi copiada inteira e se ainda está ativa.', 'resgata-wp' ), array( 'status' => 502 ) );
+			return new \WP_Error( 'resgata_stripe_auth', __( 'A Stripe não reconheceu a chave. Confira se ela foi copiada inteira e se ainda está ativa.', 'resgata-wp' ), array( 'status' => 502 ) );
 		}
 
-		return new \WP_Error( 'rwp_stripe_failed', __( 'A Stripe não aceitou a operação. Tente de novo em alguns minutos.', 'resgata-wp' ), array( 'status' => 502 ) );
+		return new \WP_Error( 'resgata_stripe_failed', __( 'A Stripe não aceitou a operação. Tente de novo em alguns minutos.', 'resgata-wp' ), array( 'status' => 502 ) );
 	}
 
 	/**
 	 * Erro mostrado ao visitante quando a Stripe não está configurada ou não respondeu.
 	 */
 	private static function unavailable(): \WP_Error {
-		return new \WP_Error( 'rwp_stripe_unavailable', __( 'Não foi possível abrir o pagamento agora. Tente de novo em alguns minutos.', 'resgata-wp' ) );
+		return new \WP_Error( 'resgata_stripe_unavailable', __( 'Não foi possível abrir o pagamento agora. Tente de novo em alguns minutos.', 'resgata-wp' ) );
 	}
 
 	/**

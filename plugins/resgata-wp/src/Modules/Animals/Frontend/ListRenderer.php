@@ -20,10 +20,10 @@ defined( 'ABSPATH' ) || exit;
  */
 final class ListRenderer {
 
-	public const PARAM_SPECIES = 'rwp_especie';
-	public const PARAM_SEX     = 'rwp_sexo';
-	public const PARAM_SIZE    = 'rwp_porte';
-	public const PARAM_PAGE    = 'rwp_pg';
+	public const PARAM_SPECIES = 'resgata_especie';
+	public const PARAM_SEX     = 'resgata_sexo';
+	public const PARAM_SIZE    = 'resgata_porte';
+	public const PARAM_PAGE    = 'resgata_pg';
 
 	/**
 	 * Valores padrão da listagem.
@@ -155,9 +155,9 @@ final class ListRenderer {
 		 * @param array<string, mixed> $query_args Argumentos do WP_Query.
 		 * @param array<string, mixed> $args       Argumentos da listagem.
 		 */
-		$query = new \WP_Query( apply_filters( 'rwp_animals_list_query_args', $query_args, $args ) );
+		$query = new \WP_Query( apply_filters( 'resgata_animals_list_query_args', $query_args, $args ) );
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		if ( $args['show_filters'] ) {
 			Blocks::enqueue_select_assets();
@@ -166,7 +166,7 @@ final class ListRenderer {
 		return TemplateLoader::render(
 			'animals-list.php',
 			array(
-				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="rwp-animals"',
+				'wrapper_attributes' => '' !== $wrapper_attributes ? $wrapper_attributes : 'class="resgata-animals"',
 				'animal_ids'         => array_map( 'intval', wp_list_pluck( $query->posts, 'ID' ) ),
 				'total'              => $args['show_pagination'] ? (int) $query->found_posts : count( $query->posts ),
 				'columns'            => $args['columns'],

@@ -1,84 +1,84 @@
 /*
  * Bloco "Página do animal" (resgata-wp/animal-details).
  */
-.rwp-animal__subheading {
+.resgata-animal__subheading {
 	font-size: var(--wp--preset--font-size--medium);
 	margin: var(--wp--preset--spacing--40) 0 var(--wp--preset--spacing--20);
 }
 
-.rwp-facts {
+.resgata-facts {
 	display: grid;
 	gap: var(--wp--preset--spacing--20);
 	grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
 	margin: 0;
 }
 
-.rwp-facts__item {
-	background: var(--rwp-tile);
-	border-radius: var(--rwp-radius);
+.resgata-facts__item {
+	background: var(--resgata-tile);
+	border-radius: var(--resgata-radius);
 	padding: 0.75rem 1rem;
 }
 
-.rwp-facts dt {
-	color: var(--rwp-muted);
+.resgata-facts dt {
+	color: var(--resgata-muted);
 	font-size: var(--wp--preset--font-size--small);
 }
 
-.rwp-facts dd {
-	color: var(--rwp-heading);
+.resgata-facts dd {
+	color: var(--resgata-heading);
 	font-weight: 600;
 	margin: 0;
 	overflow-wrap: anywhere;
 }
 
-.rwp-vaccine-list {
+.resgata-vaccine-list {
 	margin: 0;
 	padding-left: 1.25rem;
 }
 
-.rwp-vaccine-list__date {
-	color: var(--rwp-muted);
+.resgata-vaccine-list__date {
+	color: var(--resgata-muted);
 }
 
 /* Página inteira: caminho, fotos + resumo, cartões e outros animais. */
-.rwp-animal--page {
-	color: var(--rwp-text);
+.resgata-animal--page {
+	color: var(--resgata-text);
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
 }
 
-.rwp-animal__top {
+.resgata-animal__top {
 	align-items: start;
 	display: grid;
 	gap: 1.5rem 2.25rem;
 	grid-template-columns: minmax(0, 1fr);
 }
 
-.rwp-animal__cards {
+.resgata-animal__cards {
 	display: grid;
 	gap: 1rem;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
 }
 
 @media (min-width: 960px) {
-	.rwp-animal__top {
+	.resgata-animal__top {
 		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
 	}
 
-	.rwp-animal__top:has(> :only-child) {
+	.resgata-animal__top:has(> :only-child) {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.rwp-animal__cards > .rwp-animal__story:not(:only-child) {
+	.resgata-animal__cards > .resgata-animal__story:not(:only-child) {
 		grid-column: span 2;
 	}
 }
 
 /* Caminho (Início › Animais › Nome) */
-.rwp-breadcrumb__list {
+.resgata-breadcrumb__list {
 	align-items: center;
-	color: var(--rwp-muted);
+	color: var(--resgata-muted);
 	display: flex;
 	flex-wrap: wrap;
 	font-size: var(--wp--preset--font-size--small);
@@ -88,13 +88,13 @@
 	padding: 0;
 }
 
-.rwp-breadcrumb__list li {
+.resgata-breadcrumb__list li {
 	align-items: center;
 	display: flex;
 	gap: 0.4rem;
 }
 
-.rwp-breadcrumb__list a {
+.resgata-breadcrumb__list a {
 	align-items: center;
 	color: inherit;
 	display: inline-flex;
@@ -102,33 +102,33 @@
 	text-decoration: none;
 }
 
-.rwp-breadcrumb__list a:hover {
+.resgata-breadcrumb__list a:hover {
 	text-decoration: underline;
 }
 
-.rwp-breadcrumb__list [aria-current] {
-	color: var(--rwp-heading);
+.resgata-breadcrumb__list [aria-current] {
+	color: var(--resgata-heading);
 	font-weight: 500;
 }
 
-.rwp-animal .rwp-breadcrumb__separator {
+.resgata-animal .resgata-breadcrumb__separator {
 	height: 1em;
 	width: 1em;
 }
 
 /* Fotos: uma por vez, rolando para o lado; miniaturas embaixo. */
-.rwp-viewer {
+.resgata-viewer {
 	min-width: 0;
 }
 
-.rwp-viewer__stage {
-	background: var(--rwp-tile);
-	border-radius: var(--rwp-radius-lg);
+.resgata-viewer__stage {
+	background: var(--resgata-tile);
+	border-radius: var(--resgata-radius-lg);
 	overflow: hidden;
 	position: relative;
 }
 
-.rwp-viewer__track {
+.resgata-viewer__track {
 	aspect-ratio: 4 / 3;
 	display: flex;
 	list-style: none;
@@ -140,31 +140,31 @@
 	scrollbar-width: none;
 }
 
-.rwp-viewer__track::-webkit-scrollbar {
+.resgata-viewer__track::-webkit-scrollbar {
 	display: none;
 }
 
-.rwp-viewer__track:focus-visible {
+.resgata-viewer__track:focus-visible {
 	outline-offset: -2px;
 }
 
-.rwp-viewer__slide {
+.resgata-viewer__slide {
 	flex: 0 0 100%;
 	margin: 0;
 	position: relative;
 	scroll-snap-align: start;
 }
 
-.rwp-viewer__slide img {
+.resgata-viewer__slide img {
 	display: block;
 	height: 100%;
 	object-fit: cover;
 	width: 100%;
 }
 
-.rwp-viewer__caption {
+.resgata-viewer__caption {
 	background: rgba(20, 33, 61, 0.75);
-	border-radius: var(--rwp-radius-pill);
+	border-radius: var(--resgata-radius-pill);
 	bottom: 0.75rem;
 	color: #fff;
 	font-size: 0.8125rem;
@@ -174,7 +174,7 @@
 	position: absolute;
 }
 
-.rwp-viewer__status {
+.resgata-viewer__status {
 	align-items: center;
 	display: inline-flex;
 	gap: 0.4rem;
@@ -183,7 +183,7 @@
 	top: 0.75rem;
 }
 
-.rwp-viewer__thumbs {
+.resgata-viewer__thumbs {
 	display: flex;
 	gap: 0.6rem;
 	list-style: none;
@@ -193,13 +193,13 @@
 	scrollbar-width: thin;
 }
 
-.rwp-viewer__thumbs li {
+.resgata-viewer__thumbs li {
 	flex: 0 0 calc((100% - 2.4rem) / 5);
 	margin: 0;
 	min-width: 4.5rem;
 }
 
-.rwp-viewer__thumb {
+.resgata-viewer__thumb {
 	aspect-ratio: 4 / 3;
 	border: 2px solid transparent;
 	border-radius: 10px;
@@ -207,11 +207,11 @@
 	overflow: hidden;
 }
 
-.rwp-viewer__thumb[aria-current] {
-	border-color: var(--rwp-primary);
+.resgata-viewer__thumb[aria-current] {
+	border-color: var(--resgata-primary);
 }
 
-.rwp-viewer__thumb img {
+.resgata-viewer__thumb img {
 	display: block;
 	height: 100%;
 	object-fit: cover;
@@ -219,14 +219,14 @@
 }
 
 @media (min-width: 600px) {
-	.rwp-viewer__track {
+	.resgata-viewer__track {
 		aspect-ratio: 16 / 10;
 	}
 }
 
 /* Resumo: nome, frase, dados, temperamento e botões. */
-.rwp-animal__name {
-	color: var(--rwp-heading);
+.resgata-animal__name {
+	color: var(--resgata-heading);
 	font-size: clamp(2rem, 1.4rem + 2.4vw, 2.75rem);
 	font-weight: 700;
 	letter-spacing: -0.01em;
@@ -234,39 +234,39 @@
 	margin: 0;
 }
 
-.rwp-animal__status {
+.resgata-animal__status {
 	margin: 0.6rem 0 0;
 }
 
-.rwp-animal__tagline {
-	color: var(--rwp-text);
+.resgata-animal__tagline {
+	color: var(--resgata-text);
 	font-size: 1.125rem;
 	margin: 0.4rem 0 0;
 }
 
-.rwp-animal__intro {
-	color: var(--rwp-muted);
+.resgata-animal__intro {
+	color: var(--resgata-muted);
 	font-size: 0.9375rem;
 	line-height: 1.55;
 	margin: 0.75rem 0 0;
 }
 
-.rwp-animal__intro > * {
+.resgata-animal__intro > * {
 	margin: 0;
 }
 
-.rwp-animal__intro > * + * {
+.resgata-animal__intro > * + * {
 	margin-top: 0.5rem;
 }
 
-.rwp-animal .rwp-facts {
+.resgata-animal .resgata-facts {
 	gap: 0.6rem 0.9rem;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	margin: 1.1rem 0 0;
 }
 
-.rwp-animal .rwp-facts__item {
-	background: var(--rwp-tile);
+.resgata-animal .resgata-facts__item {
+	background: var(--resgata-tile);
 	border: 0;
 	border-radius: 10px;
 	min-height: 3.25rem;
@@ -274,8 +274,8 @@
 	position: relative;
 }
 
-.rwp-animal .rwp-facts__icon {
-	color: var(--rwp-info);
+.resgata-animal .resgata-facts__icon {
+	color: var(--resgata-info);
 	height: 1.5rem;
 	left: 0.9rem;
 	position: absolute;
@@ -283,43 +283,43 @@
 	width: 1.5rem;
 }
 
-.rwp-animal .rwp-facts dt {
-	color: var(--rwp-muted);
+.resgata-animal .resgata-facts dt {
+	color: var(--resgata-muted);
 	font-size: 0.8125rem;
 	line-height: 1.3;
 }
 
-.rwp-animal .rwp-facts dd {
-	color: var(--rwp-heading);
+.resgata-animal .resgata-facts dd {
+	color: var(--resgata-heading);
 	font-size: 0.9375rem;
 	font-weight: 500;
 	line-height: 1.35;
 }
 
-.rwp-animal__actions {
+.resgata-animal__actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.75rem;
 	margin: 1.25rem 0 0;
 }
 
-.rwp-animal__actions .rwp-button {
+.resgata-animal__actions .resgata-button {
 	flex: 1 1 13rem;
 }
 
 /* Cartões: história, saúde e "Não pode adotar?". */
-.rwp-panel {
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-line);
-	border-radius: var(--rwp-radius);
-	box-shadow: var(--rwp-shadow);
+.resgata-panel {
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-line);
+	border-radius: var(--resgata-radius);
+	box-shadow: var(--resgata-shadow);
 	min-width: 0;
 	padding: 1.25rem 1.4rem;
 }
 
-.rwp-panel__title {
+.resgata-panel__title {
 	align-items: center;
-	color: var(--rwp-heading);
+	color: var(--resgata-heading);
 	display: flex;
 	font-size: 1.0625rem;
 	font-weight: 600;
@@ -328,25 +328,25 @@
 	margin: 0 0 0.75rem;
 }
 
-.rwp-animal .rwp-panel__title .rwp-icon {
+.resgata-animal .resgata-panel__title .resgata-icon {
 	height: 1.35rem;
 	width: 1.35rem;
 }
 
-.rwp-animal__story-text {
+.resgata-animal__story-text {
 	font-size: 0.9375rem;
 	line-height: 1.6;
 }
 
-.rwp-animal__story-text > :first-child {
+.resgata-animal__story-text > :first-child {
 	margin-top: 0;
 }
 
-.rwp-animal__story-text > :last-child {
+.resgata-animal__story-text > :last-child {
 	margin-bottom: 0;
 }
 
-.rwp-checklist {
+.resgata-checklist {
 	display: grid;
 	gap: 0.5rem;
 	list-style: none;
@@ -354,7 +354,7 @@
 	padding: 0;
 }
 
-.rwp-checklist__item {
+.resgata-checklist__item {
 	align-items: flex-start;
 	display: flex;
 	font-size: 0.9375rem;
@@ -363,92 +363,92 @@
 	margin: 0;
 }
 
-.rwp-checklist__item .rwp-icon {
-	color: var(--rwp-primary);
+.resgata-checklist__item .resgata-icon {
+	color: var(--resgata-primary);
 }
 
-.rwp-checklist__item--pending,
-.rwp-checklist__item--pending .rwp-icon {
-	color: var(--rwp-muted);
+.resgata-checklist__item--pending,
+.resgata-checklist__item--pending .resgata-icon {
+	color: var(--resgata-muted);
 }
 
-.rwp-pairs {
-	border-top: 1px solid var(--rwp-line);
+.resgata-pairs {
+	border-top: 1px solid var(--resgata-line);
 	font-size: 0.9375rem;
 	margin: 0.9rem 0 0;
 	padding-top: 0.75rem;
 }
 
-.rwp-pairs__item {
+.resgata-pairs__item {
 	display: flex;
 	gap: 1rem;
 	justify-content: space-between;
 }
 
-.rwp-pairs dt {
-	color: var(--rwp-muted);
+.resgata-pairs dt {
+	color: var(--resgata-muted);
 }
 
-.rwp-pairs dd {
-	color: var(--rwp-heading);
+.resgata-pairs dd {
+	color: var(--resgata-heading);
 	font-weight: 500;
 	margin: 0;
 }
 
-.rwp-animal .rwp-animal__subheading {
-	color: var(--rwp-heading);
+.resgata-animal .resgata-animal__subheading {
+	color: var(--resgata-heading);
 	font-size: 0.9375rem;
 	font-weight: 600;
 	margin: 0.9rem 0 0.35rem;
 }
 
-.rwp-animal .rwp-vaccine-list {
+.resgata-animal .resgata-vaccine-list {
 	font-size: 0.9375rem;
 }
 
-.rwp-animal__help {
-	background: var(--rwp-help-soft);
+.resgata-animal__help {
+	background: var(--resgata-help-soft);
 	border-color: transparent;
 	box-shadow: none;
 }
 
 /* Enfeites de fundo do cartão "Não pode adotar?" (formas e base em enfeites.css). */
-.rwp-animal__help {
-	--resgata-tema-decor-tone: var(--rwp-help);
+.resgata-animal__help {
+	--resgata-tema-decor-tone: var(--resgata-help);
 	--resgata-tema-decor-fill:
 		var(--resgata-tema-shape-heart-fill) right 0.25rem top 1.5rem / 3.5rem 3.5rem no-repeat,
 		var(--resgata-tema-shape-circle) right 3.5rem top 4.25rem / 0.75rem 0.75rem no-repeat,
 		var(--resgata-tema-shape-circle) left -2rem bottom -2rem / 5.5rem 5.5rem no-repeat;
 }
 
-.rwp-animal__help .rwp-panel__title .rwp-icon {
-	color: var(--rwp-help);
+.resgata-animal__help .resgata-panel__title .resgata-icon {
+	color: var(--resgata-help);
 	fill: currentColor;
 }
 
-.rwp-animal__help-text {
+.resgata-animal__help-text {
 	font-size: 0.9375rem;
 	margin: 0 0 0.9rem;
 }
 
-.rwp-animal__help-actions {
+.resgata-animal__help-actions {
 	display: grid;
 	gap: 0.6rem;
 	margin: 0;
 }
 
-.rwp-animal .rwp-animal__help-actions .rwp-button {
+.resgata-animal .resgata-animal__help-actions .resgata-button {
 	min-height: 2.75rem;
 }
 
-.rwp-animal .rwp-button--help-outline {
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-help);
-	color: var(--rwp-help);
+.resgata-animal .resgata-button--help-outline {
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-help);
+	color: var(--resgata-help);
 }
 
 /* Outros animais: fileira que rola para o lado. */
-.rwp-related__header {
+.resgata-related__header {
 	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
@@ -457,13 +457,13 @@
 	margin-bottom: 0.9rem;
 }
 
-.rwp-related__header .rwp-panel__title {
+.resgata-related__header .resgata-panel__title {
 	margin: 0;
 }
 
-.rwp-related__all {
+.resgata-related__all {
 	align-items: center;
-	color: var(--rwp-primary);
+	color: var(--resgata-primary);
 	display: inline-flex;
 	font-size: 0.9375rem;
 	font-weight: 500;
@@ -472,11 +472,11 @@
 	text-decoration: none;
 }
 
-.rwp-related__all:hover {
+.resgata-related__all:hover {
 	text-decoration: underline;
 }
 
-.rwp-related__list {
+.resgata-related__list {
 	display: flex;
 	gap: 1rem;
 	list-style: none;
@@ -491,62 +491,62 @@
  * Com o script, a fileira ganha setas: a barra de rolagem some e as pontas esmaecem do
  * lado em que ainda há cartões. Sem ele, fica a barra de rolagem.
  */
-.rwp-related__row {
+.resgata-related__row {
 	position: relative;
 }
 
-.rwp-related__row[data-rwp-row="ready"] .rwp-related__list {
-	--rwp-fade-prev: 0px;
-	--rwp-fade-next: 0px;
-	mask-image: linear-gradient(to right, transparent, #000 var(--rwp-fade-prev), #000 calc(100% - var(--rwp-fade-next)), transparent);
+.resgata-related__row[data-resgata-row="ready"] .resgata-related__list {
+	--resgata-fade-prev: 0px;
+	--resgata-fade-next: 0px;
+	mask-image: linear-gradient(to right, transparent, #000 var(--resgata-fade-prev), #000 calc(100% - var(--resgata-fade-next)), transparent);
 	padding-bottom: 2px;
 	scroll-behavior: smooth;
 	scrollbar-width: none;
 }
 
-.rwp-related__row[data-rwp-row="ready"] .rwp-related__list::-webkit-scrollbar {
+.resgata-related__row[data-resgata-row="ready"] .resgata-related__list::-webkit-scrollbar {
 	display: none;
 }
 
-.rwp-related__row:has([data-rwp-row-prev]:enabled:not([hidden])) .rwp-related__list {
-	--rwp-fade-prev: 3rem;
+.resgata-related__row:has([data-resgata-row-prev]:enabled:not([hidden])) .resgata-related__list {
+	--resgata-fade-prev: 3rem;
 }
 
-.rwp-related__row:has([data-rwp-row-next]:enabled:not([hidden])) .rwp-related__list {
-	--rwp-fade-next: 3rem;
+.resgata-related__row:has([data-resgata-row-next]:enabled:not([hidden])) .resgata-related__list {
+	--resgata-fade-next: 3rem;
 }
 
-.rwp-related__row .rwp-viewer__arrow--prev {
+.resgata-related__row .resgata-viewer__arrow--prev {
 	left: -0.6rem;
 }
 
-.rwp-related__row .rwp-viewer__arrow--next {
+.resgata-related__row .resgata-viewer__arrow--next {
 	right: -0.6rem;
 }
 
 /* No fim da fileira a seta daquele lado some, em vez de ficar apagada sobre um cartão. */
-.rwp-related__row .rwp-viewer__arrow:disabled {
+.resgata-related__row .resgata-viewer__arrow:disabled {
 	opacity: 0;
 	pointer-events: none;
 }
 
 /* No celular a fileira rola com o dedo: sem setas. */
 @media (max-width: 600px) {
-	.rwp-related__row .rwp-viewer__arrow {
+	.resgata-related__row .resgata-viewer__arrow {
 		display: none;
 	}
 }
 
-.rwp-related__item {
+.resgata-related__item {
 	flex: 0 0 clamp(9.5rem, 22%, 13rem);
 	margin: 0;
 	scroll-snap-align: start;
 }
 
-.rwp-related__link {
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-line);
-	border-radius: var(--rwp-radius);
+.resgata-related__link {
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-line);
+	border-radius: var(--resgata-radius);
 	color: inherit;
 	display: block;
 	height: 100%;
@@ -554,75 +554,75 @@
 	text-decoration: none;
 }
 
-.rwp-related__media {
+.resgata-related__media {
 	aspect-ratio: 4 / 3;
-	background: var(--rwp-tile);
+	background: var(--resgata-tile);
 	display: block;
 }
 
-.rwp-related__media img {
+.resgata-related__media img {
 	display: block;
 	height: 100%;
 	object-fit: cover;
 	width: 100%;
 }
 
-.rwp-related__name {
-	color: var(--rwp-heading);
+.resgata-related__name {
+	color: var(--resgata-heading);
 	display: block;
 	font-weight: 600;
 	padding: 0.6rem 0.8rem 0;
 }
 
-.rwp-related__link:hover .rwp-related__name {
+.resgata-related__link:hover .resgata-related__name {
 	text-decoration: underline;
 }
 
-.rwp-related__meta {
-	color: var(--rwp-muted);
+.resgata-related__meta {
+	color: var(--resgata-muted);
 	display: block;
 	font-size: var(--wp--preset--font-size--small);
 	padding: 0.1rem 0.8rem 0.7rem;
 }
 
-.rwp-related__name:last-child {
+.resgata-related__name:last-child {
 	padding-bottom: 0.7rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.rwp-viewer__track,
-	.rwp-related__list {
+	.resgata-viewer__track,
+	.resgata-related__list {
 		scroll-behavior: auto;
 	}
 }
 
-.rwp-animal .rwp-button--help,
-.rwp-animal .rwp-button--help:visited {
-	background: var(--rwp-help);
-	border: 1px solid var(--rwp-help);
+.resgata-animal .resgata-button--help,
+.resgata-animal .resgata-button--help:visited {
+	background: var(--resgata-help);
+	border: 1px solid var(--resgata-help);
 	color: #fff;
 }
 
-.rwp-animal .rwp-button--help:hover,
-.rwp-animal .rwp-button--help:focus-visible {
-	background: var(--rwp-help-dark);
-	border-color: var(--rwp-help-dark);
+.resgata-animal .resgata-button--help:hover,
+.resgata-animal .resgata-button--help:focus-visible {
+	background: var(--resgata-help-dark);
+	border-color: var(--resgata-help-dark);
 	color: #fff;
 }
 
-.rwp-animal .rwp-button--help-outline:hover,
-.rwp-animal .rwp-button--help-outline:focus-visible {
-	background: color-mix(in srgb, var(--rwp-help) 18%, #fff);
+.resgata-animal .resgata-button--help-outline:hover,
+.resgata-animal .resgata-button--help-outline:focus-visible {
+	background: color-mix(in srgb, var(--resgata-help) 18%, #fff);
 }
 
-.rwp-animal .rwp-button--primary .rwp-icon--paw-print {
+.resgata-animal .resgata-button--primary .resgata-icon--paw-print {
 	fill: currentColor;
 }
 
-.rwp-animal .rwp-panel__title .rwp-icon {
-	color: var(--rwp-heading);
+.resgata-animal .resgata-panel__title .resgata-icon {
+	color: var(--resgata-heading);
 }
 
-.rwp-animal .rwp-animal__help .rwp-panel__title .rwp-icon {
-	color: var(--rwp-help);
+.resgata-animal .resgata-animal__help .resgata-panel__title .resgata-icon {
+	color: var(--resgata-help);
 }

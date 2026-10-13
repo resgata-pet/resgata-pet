@@ -1,6 +1,6 @@
 <?php
 /**
- * Pagamentos dos padrinhos (tabela `rwp_payments`).
+ * Pagamentos dos padrinhos (tabela `resgata_payments`).
  *
  * @package ResgataWP
  */
@@ -40,7 +40,7 @@ final class Payments {
 	public static function table(): string {
 		global $wpdb;
 
-		return $wpdb->prefix . 'rwp_payments';
+		return $wpdb->prefix . 'resgata_payments';
 	}
 
 	/**

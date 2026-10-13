@@ -10,16 +10,16 @@ Todo trabalho visual começa lendo o que já está feito e termina reaproveitand
 ## Antes de desenhar ou implementar
 
 1. **Ache o equivalente que já existe.** Procure, na tabela de [Onde o estilo mora](#onde-o-estilo-mora),
-   o componente, pattern, estilo de bloco ou classe `.rwp-*` mais próximo do que você vai
+   o componente, pattern, estilo de bloco ou classe `.resgata-*` mais próximo do que você vai
    fazer, e abra o arquivo. Um cartão novo parte do cartão existente; uma tela nova do painel
    parte de uma tela vizinha.
 2. **Reaproveite antes de criar.** Use o componente, o pattern ou o estilo de bloco como está.
    Se faltar uma variação, estenda o que existe no próprio arquivo dele.
 3. **Use os tokens.** Cada cor, raio, sombra e espaçamento que você escrever é um preset do
-   `theme.json`, uma variável `--rwp-*` ou uma variável do painel (`--primary`, `--border`...).
+   `theme.json`, uma variável `--resgata-*` ou uma variável do painel (`--primary`, `--border`...).
 4. **Precisa de um valor novo?** Crie o token na fonte (`theme.json` para o site,
    `resources/painel/index.css` para o painel) e use o token. Cor nova do site entra na paleta
-   do `theme.json` e ganha a sua `--rwp-*` no topo de `assets/css/comum.css`.
+   do `theme.json` e ganha a sua `--resgata-*` no topo de `assets/css/comum.css`.
 5. **Confira.** O trabalho está pronto quando todo valor visual da mudança aponta para um
    token existente (ou criado no passo 4), o resultado fica coerente ao lado de uma tela já
    pronta do mesmo tipo e, no site, a página continua editável no Editor do Site e legível com
@@ -35,9 +35,9 @@ Todo trabalho visual começa lendo o que já está feito e termina reaproveitand
 | Paletas prontas para trocar as cores do site de uma vez (Oceano, Terracota, Ameixa, Mel, Petróleo, Framboesa, Oliva, Grafite) | `themes/resgata-tema/styles/colors/*.json` |
 | Estilos de bloco ("Cartão", "Faixa suave", "Faixa suave com abraço", "Chamada do topo", "Cabeçalho do site", "Rodapé do site") | `themes/resgata-tema/styles/blocks/*.json` |
 | Estilos de bloco com CSS (ícone ao lado do título, passo numerado, grupo com ilustração, botão com coração/pata, link com seta) | `resgata_tema_block_styles()` em `functions.php` + `.is-style-resgata-*` em `assets/css/blocks/core-group.css` e `core-button.css` |
-| Visual dos blocos do plugin (classes `.rwp-*`) | `themes/resgata-tema/assets/css/blocks/<bloco>.css`, um arquivo por bloco |
-| Variáveis `--rwp-*` e peças que mais de um bloco usa (botões, selos, etiquetas, setas) | `themes/resgata-tema/assets/css/comum.css` (variáveis no topo) |
-| Selos de situação do animal (`.rwp-badge--*`) | `comum.css`; única regra com cor fixa |
+| Visual dos blocos do plugin (classes `.resgata-*`) | `themes/resgata-tema/assets/css/blocks/<bloco>.css`, um arquivo por bloco |
+| Variáveis `--resgata-*` e peças que mais de um bloco usa (botões, selos, etiquetas, setas) | `themes/resgata-tema/assets/css/comum.css` (variáveis no topo) |
+| Selos de situação do animal (`.resgata-badge--*`) | `comum.css`; única regra com cor fixa |
 | Enfeites de fundo das faixas e dos cartões (corações, patas, nuvens, círculos) | formas e base em `themes/resgata-tema/assets/css/enfeites.css`; a composição de cada peça, no CSS do bloco dela |
 | Composição das páginas e seções | `themes/resgata-tema/templates/`, `parts/` e `patterns/` |
 | Marcação neutra dos blocos | `plugins/resgata-wp/templates/` e `blocks/` |
@@ -63,7 +63,7 @@ blocos do WordPress. Na prática:
 
 - **`theme.json` primeiro.** A aparência é declarada em `settings` (presets) e `styles`
   (elementos e blocos). CSS próprio só para o que o `theme.json` não expressa, e sempre com as
-  variáveis `--wp--preset--*` / `--rwp-*`.
+  variáveis `--wp--preset--*` / `--resgata-*`.
 - **Herde do tema pai.** Fontes, tamanhos de texto, espaçamentos e os estilos `text-display` e
   `text-subtitle` vêm do Twenty Twenty-Five; o tema filho declara só o que muda.
 - **Blocos nativos e seus recursos.** Layout com Grupo (grade, linha, empilhado), Colunas,
@@ -72,7 +72,7 @@ blocos do WordPress. Na prática:
   marcação de blocos pura, com texto traduzível; conteúdo dinâmico por ligações de blocos
   (`resgata-wp/link`, `resgata-wp/organization`).
 - **Aparência no tema, funcionalidade no plugin.** O plugin entrega marcação neutra com
-  classes `.rwp-*` e funciona com qualquer tema; o tema é quem a estiliza.
+  classes `.resgata-*` e funciona com qualquer tema; o tema é quem a estiliza.
 - **Padrões de código do WordPress.** Prefixo `resgata_tema_`, text domain `resgata-tema`,
   toda saída escapada, strings pelas funções de tradução, PHPCS (`make phpcs`).
 

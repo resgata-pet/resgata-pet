@@ -1,54 +1,54 @@
 /*
- * Resgata Tema – base dos blocos do plugin Resgata WP: variáveis `--rwp-*` e as peças
+ * Resgata Tema – base dos blocos do plugin Resgata WP: variáveis `--resgata-*` e as peças
  * que mais de um bloco usa (botões, selos, etiquetas, setas). Carrega junto com o CSS de
  * qualquer bloco do plugin. As cores vêm do theme.json, então acompanham o que a protetora
  * mudar no Editor do Site. Antes de criar uma regra, veja o guia de design (designer.md).
  */
-.rwp-animals,
-.rwp-animal,
-.rwp-contact,
-.rwp-adoption,
-.rwp-sponsorship,
-.rwp-sponsor-area,
-.rwp-banners,
-.rwp-impact,
-.rwp-pix,
-.rwp-donate,
-.rwp-contact-compact {
-	--rwp-primary: var(--wp--preset--color--accent-3);
-	--rwp-primary-dark: var(--wp--preset--color--primary-dark);
-	--rwp-primary-soft: var(--wp--preset--color--accent-2);
-	--rwp-heading: var(--wp--preset--color--contrast);
-	--rwp-text: var(--wp--preset--color--text);
-	--rwp-muted: var(--wp--preset--color--accent-4);
-	--rwp-line: var(--wp--preset--color--accent-6);
-	--rwp-card: var(--wp--preset--color--surface);
-	--rwp-field: var(--wp--preset--color--surface);
-	--rwp-tile: var(--wp--preset--color--tile);
-	--rwp-section: var(--wp--preset--color--accent-5);
-	--rwp-banner-fade: var(--wp--preset--color--base);
-	--rwp-info: var(--wp--preset--color--info);
-	--rwp-help: var(--wp--preset--color--help);
-	--rwp-help-dark: color-mix(in srgb, var(--wp--preset--color--help) 82%, #000);
-	--rwp-help-soft: var(--wp--preset--color--help-soft);
-	--rwp-danger: #b3261e;
-	--rwp-danger-soft: #fdecea;
-	--rwp-radius-sm: var(--wp--preset--border-radius--small);
-	--rwp-radius: var(--wp--preset--border-radius--medium);
-	--rwp-radius-lg: 16px;
-	--rwp-radius-pill: var(--wp--preset--border-radius--pill);
-	--rwp-shadow: var(--wp--preset--shadow--card);
-	--rwp-shadow-float: var(--wp--preset--shadow--floating);
+.resgata-animals,
+.resgata-animal,
+.resgata-contact,
+.resgata-adoption,
+.resgata-sponsorship,
+.resgata-sponsor-area,
+.resgata-banners,
+.resgata-impact,
+.resgata-pix,
+.resgata-donate,
+.resgata-contact-compact {
+	--resgata-primary: var(--wp--preset--color--accent-3);
+	--resgata-primary-dark: var(--wp--preset--color--primary-dark);
+	--resgata-primary-soft: var(--wp--preset--color--accent-2);
+	--resgata-heading: var(--wp--preset--color--contrast);
+	--resgata-text: var(--wp--preset--color--text);
+	--resgata-muted: var(--wp--preset--color--accent-4);
+	--resgata-line: var(--wp--preset--color--accent-6);
+	--resgata-card: var(--wp--preset--color--surface);
+	--resgata-field: var(--wp--preset--color--surface);
+	--resgata-tile: var(--wp--preset--color--tile);
+	--resgata-section: var(--wp--preset--color--accent-5);
+	--resgata-banner-fade: var(--wp--preset--color--base);
+	--resgata-info: var(--wp--preset--color--info);
+	--resgata-help: var(--wp--preset--color--help);
+	--resgata-help-dark: color-mix(in srgb, var(--wp--preset--color--help) 82%, #000);
+	--resgata-help-soft: var(--wp--preset--color--help-soft);
+	--resgata-danger: #b3261e;
+	--resgata-danger-soft: #fdecea;
+	--resgata-radius-sm: var(--wp--preset--border-radius--small);
+	--resgata-radius: var(--wp--preset--border-radius--medium);
+	--resgata-radius-lg: 16px;
+	--resgata-radius-pill: var(--wp--preset--border-radius--pill);
+	--resgata-shadow: var(--wp--preset--shadow--card);
+	--resgata-shadow-float: var(--wp--preset--shadow--floating);
 }
 
-.rwp-button {
+.resgata-button {
 	cursor: pointer;
 }
 
 /* Selos de situação (cores do guia de design) */
-.rwp-badge {
+.resgata-badge {
 	background: #eef1f5;
-	border-radius: var(--rwp-radius-pill);
+	border-radius: var(--resgata-radius-pill);
 	color: #3d4759;
 	display: inline-block;
 	font-size: 0.8125rem;
@@ -57,48 +57,48 @@
 	padding: 0.3rem 0.8rem;
 }
 
-.rwp-badge--available {
+.resgata-badge--available {
 	background: #ddf0e3;
 	color: #1f5c3d;
 }
 
-.rwp-badge--reserved {
+.resgata-badge--reserved {
 	background: #e8f0fd;
 	color: #1d4fa8;
 }
 
-.rwp-badge--treatment {
+.resgata-badge--treatment {
 	background: #fcd98a;
 	color: #5c3d00;
 }
 
-.rwp-badge--adopted {
+.resgata-badge--adopted {
 	background: #d9ccfa;
 	color: #3f1f99;
 }
 
-.rwp-badge .rwp-icon {
+.resgata-badge .resgata-icon {
 	fill: currentColor;
 	height: 1em;
 	width: 1em;
 }
 
-.rwp-empty {
-	background: var(--rwp-tile);
-	color: var(--rwp-muted);
-	border-radius: var(--rwp-radius);
+.resgata-empty {
+	background: var(--resgata-tile);
+	color: var(--resgata-muted);
+	border-radius: var(--resgata-radius);
 	padding: var(--wp--preset--spacing--50);
 	text-align: center;
 }
 
 /* Listagem e página do animal */
-.rwp-animals,
-.rwp-animal--page {
-	color: var(--rwp-text);
+.resgata-animals,
+.resgata-animal--page {
+	color: var(--resgata-text);
 	font-size: 1rem;
 }
 
-:is(.rwp-animal, .rwp-banners) .screen-reader-text {
+:is(.resgata-animal, .resgata-banners) .screen-reader-text {
 	border: 0;
 	clip-path: inset(50%);
 	height: 1px;
@@ -110,21 +110,21 @@
 	width: 1px;
 }
 
-:is(.rwp-animal, .rwp-banners) .rwp-icon {
+:is(.resgata-animal, .resgata-banners) .resgata-icon {
 	flex: none;
 	height: 1.25em;
 	width: 1.25em;
 }
 
-:is(.rwp-animal, .rwp-banners) a:focus-visible,
-:is(.rwp-animal, .rwp-banners) button:focus-visible,
-:is(.rwp-animal, .rwp-banners) [tabindex]:focus-visible {
-	outline: 2px solid var(--rwp-primary);
+:is(.resgata-animal, .resgata-banners) a:focus-visible,
+:is(.resgata-animal, .resgata-banners) button:focus-visible,
+:is(.resgata-animal, .resgata-banners) [tabindex]:focus-visible {
+	outline: 2px solid var(--resgata-primary);
 	outline-offset: 2px;
 }
 
 /* Setas dos carrosséis (fotos do animal e banners). */
-.rwp-viewer__arrow {
+.resgata-viewer__arrow {
 	align-items: center;
 	background: #fff;
 	border: 0;
@@ -141,25 +141,25 @@
 	width: 2.75rem;
 }
 
-.rwp-viewer__arrow[hidden] {
+.resgata-viewer__arrow[hidden] {
 	display: none;
 }
 
-.rwp-viewer__arrow:disabled {
+.resgata-viewer__arrow:disabled {
 	cursor: default;
 	opacity: 0.45;
 }
 
-.rwp-viewer__arrow--prev {
+.resgata-viewer__arrow--prev {
 	left: 0.75rem;
 }
 
-.rwp-viewer__arrow--next {
+.resgata-viewer__arrow--next {
 	right: 0.75rem;
 }
 
 /* Temperamento (cartão e página do animal). */
-.rwp-tags {
+.resgata-tags {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.5rem;
@@ -168,10 +168,10 @@
 	padding: 0;
 }
 
-.rwp-tag {
-	background: var(--rwp-tile);
-	border-radius: var(--rwp-radius-pill);
-	color: var(--rwp-text);
+.resgata-tag {
+	background: var(--resgata-tile);
+	border-radius: var(--resgata-radius-pill);
+	color: var(--resgata-text);
 	font-size: 0.8125rem;
 	font-weight: 500;
 	line-height: 1.4;
@@ -180,9 +180,9 @@
 }
 
 /* Botões da página do animal e dos banners. */
-:is(.rwp-animal, .rwp-banners) .rwp-button {
+:is(.resgata-animal, .resgata-banners) .resgata-button {
 	align-items: center;
-	border-radius: var(--rwp-radius-sm);
+	border-radius: var(--resgata-radius-sm);
 	box-sizing: border-box;
 	display: inline-flex;
 	font-size: 1rem;
@@ -196,28 +196,28 @@
 	text-decoration: none;
 }
 
-:is(.rwp-animal, .rwp-banners) .rwp-button--outline {
-	background: var(--rwp-card);
-	border: 1px solid var(--rwp-primary);
-	color: var(--rwp-primary);
+:is(.resgata-animal, .resgata-banners) .resgata-button--outline {
+	background: var(--resgata-card);
+	border: 1px solid var(--resgata-primary);
+	color: var(--resgata-primary);
 }
 
 /* Cores do guia: botões da listagem e da página do animal. */
-:is(.rwp-animals, .rwp-animal, .rwp-banners, .rwp-pix) .rwp-button--primary,
-:is(.rwp-animals, .rwp-animal, .rwp-banners, .rwp-pix) .rwp-button--primary:visited {
-	background: var(--rwp-primary);
-	border: 1px solid var(--rwp-primary);
+:is(.resgata-animals, .resgata-animal, .resgata-banners, .resgata-pix) .resgata-button--primary,
+:is(.resgata-animals, .resgata-animal, .resgata-banners, .resgata-pix) .resgata-button--primary:visited {
+	background: var(--resgata-primary);
+	border: 1px solid var(--resgata-primary);
 	color: #fff;
 }
 
-:is(.rwp-animals, .rwp-animal, .rwp-banners, .rwp-pix) .rwp-button--primary:hover,
-:is(.rwp-animals, .rwp-animal, .rwp-banners, .rwp-pix) .rwp-button--primary:focus-visible {
-	background: var(--rwp-primary-dark);
-	border-color: var(--rwp-primary-dark);
+:is(.resgata-animals, .resgata-animal, .resgata-banners, .resgata-pix) .resgata-button--primary:hover,
+:is(.resgata-animals, .resgata-animal, .resgata-banners, .resgata-pix) .resgata-button--primary:focus-visible {
+	background: var(--resgata-primary-dark);
+	border-color: var(--resgata-primary-dark);
 	color: #fff;
 }
 
-:is(.rwp-animal, .rwp-banners) .rwp-button--outline:hover,
-:is(.rwp-animal, .rwp-banners) .rwp-button--outline:focus-visible {
-	background: var(--rwp-primary-soft);
+:is(.resgata-animal, .resgata-banners) .resgata-button--outline:hover,
+:is(.resgata-animal, .resgata-banners) .resgata-button--outline:focus-visible {
+	background: var(--resgata-primary-soft);
 }

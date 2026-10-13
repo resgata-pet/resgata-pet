@@ -148,6 +148,6 @@ final class Options {
 		 *
 		 * @param string[] $list Nomes dos temperamentos.
 		 */
-		return array_values( array_filter( array_map( 'strval', (array) apply_filters( 'rwp_temperament_options', $list ) ) ) );
+		return array_values( array_filter( array_map( 'strval', (array) apply_filters( 'resgata_temperament_options', $list ) ) ) );
 	}
 }

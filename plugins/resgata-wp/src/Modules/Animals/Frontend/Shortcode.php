@@ -10,13 +10,13 @@ namespace ResgataWP\Modules\Animals\Frontend;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Shortcode `[rwp_animais]`, para temas e editores sem blocos.
+ * Shortcode `[resgata_animais]`, para temas e editores sem blocos.
  *
- * Exemplo: `[rwp_animais especie="gato" quantidade="6" colunas="3" filtros="nao"]`
+ * Exemplo: `[resgata_animais especie="gato" quantidade="6" colunas="3" filtros="nao"]`
  */
 final class Shortcode {
 
-	public const TAG = 'rwp_animais';
+	public const TAG = 'resgata_animais';
 
 	/**
 	 * Situações aceitas no atributo `status`, em português.

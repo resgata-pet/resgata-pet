@@ -48,7 +48,7 @@ function resgata_tema_block_css_files(): array {
 
 /**
  * Registra o CSS de cada bloco. Os dos blocos do Resgata WP dependem de
- * assets/css/comum.css (variáveis `--rwp-*` e peças que mais de um bloco usa), que por sua
+ * assets/css/comum.css (variáveis `--resgata-*` e peças que mais de um bloco usa), que por sua
  * vez depende de assets/css/enfeites.css (formas dos enfeites de fundo).
  */
 function resgata_tema_register_block_css(): void {
@@ -119,13 +119,13 @@ function resgata_tema_collect_block_css( $content, $block ) {
 add_filter( 'render_block', 'resgata_tema_collect_block_css', 10, 2 );
 
 /**
- * A lista de animais também existe como shortcode ([rwp_animais]), fora de um bloco.
+ * A lista de animais também existe como shortcode ([resgata_animais]), fora de um bloco.
  *
  * @param string $output HTML do shortcode.
  * @param string $tag    Nome do shortcode.
  */
 function resgata_tema_shortcode_css( $output, $tag ) {
-	if ( 'rwp_animais' === $tag ) {
+	if ( 'resgata_animais' === $tag ) {
 		resgata_tema_needed_block_css( 'animals-list' );
 	}
 
@@ -137,7 +137,7 @@ add_filter( 'do_shortcode_tag', 'resgata_tema_shortcode_css', 10, 2 );
  * Carrega só o CSS dos blocos que a página tem; o editor carrega todos.
  *
  * Fica neste gancho, e não em `wp_enqueue_block_style()`, para sair depois dos estilos
- * globais: as regras `.rwp-*` contam com essa ordem para vencer os empates com eles.
+ * globais: as regras `.resgata-*` contam com essa ordem para vencer os empates com eles.
  */
 function resgata_tema_enqueue_block_css(): void {
 	$files = array_unique( resgata_tema_block_css_files() );
@@ -177,7 +177,7 @@ function resgata_tema_help_page_content( $content ) {
 
 	return is_array( $pattern ) && ! empty( $pattern['content'] ) ? $pattern['content'] : $content;
 }
-add_filter( 'rwp_help_page_content', 'resgata_tema_help_page_content' );
+add_filter( 'resgata_help_page_content', 'resgata_tema_help_page_content' );
 
 /**
  * A página "Como ajudar" usa o modelo sem título: a chamada do topo já traz o título.
@@ -185,7 +185,7 @@ add_filter( 'rwp_help_page_content', 'resgata_tema_help_page_content' );
 function resgata_tema_help_page_template(): string {
 	return 'page-no-title';
 }
-add_filter( 'rwp_help_page_template', 'resgata_tema_help_page_template' );
+add_filter( 'resgata_help_page_template', 'resgata_tema_help_page_template' );
 
 /**
  * A página de agradecimento do apadrinhamento usa o modelo sem título: o bloco já traz o título.
@@ -193,7 +193,7 @@ add_filter( 'rwp_help_page_template', 'resgata_tema_help_page_template' );
 function resgata_tema_thanks_page_template(): string {
 	return 'page-no-title';
 }
-add_filter( 'rwp_thanks_page_template', 'resgata_tema_thanks_page_template' );
+add_filter( 'resgata_thanks_page_template', 'resgata_tema_thanks_page_template' );
 
 /**
  * Layout da página "Contato" que o plugin cria ao salvar as configurações:
@@ -206,8 +206,8 @@ function resgata_tema_contact_page_content( $content ) {
 
 	return is_array( $pattern ) && ! empty( $pattern['content'] ) ? $pattern['content'] : $content;
 }
-add_filter( 'rwp_contact_page_content', 'resgata_tema_contact_page_content' );
-add_filter( 'rwp_contact_page_template', 'resgata_tema_help_page_template' );
+add_filter( 'resgata_contact_page_content', 'resgata_tema_contact_page_content' );
+add_filter( 'resgata_contact_page_template', 'resgata_tema_help_page_template' );
 
 /**
  * Estilos de bloco do tema que dependem de CSS (ícones, numeração, ilustrações).

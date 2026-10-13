@@ -7,16 +7,16 @@ As regras de build e de importação estão em `plugins/CLAUDE.md`; o visual, em
 ## Acesso
 
 - `Router` cria a regra de URL e confere o acesso; `Page` imprime o HTML e os dados iniciais
-  em `window.rwpPainel`.
-- Entra quem tem a capability `rwp_access_panel`: Administrador, Editor e Protetor admin. Quem
+  em `window.resgataPainel`.
+- Entra quem tem a capability `resgata_access_panel`: Administrador, Editor e Protetor admin. Quem
   não está logado vai para o login padrão do WordPress e volta para a tela pedida.
-- Perfil **Protetor admin** (`rwp_protetor_admin`): cópia do Editor. `Access` o redireciona de
+- Perfil **Protetor admin** (`resgata_protetor_admin`): cópia do Editor. `Access` o redireciona de
   qualquer tela do wp-admin para `/painel` (AJAX liberado) e esconde a barra do WordPress.
 - O Administrador usa os dois lados. No wp-admin, o link "Painel Resgata" fica no topo do
   menu lateral e, como botão verde, na barra fixa do topo (que também aparece no site), para
-  quem tem `rwp_access_panel` (`Access::admin_menu_link()` e `admin_bar_link()`).
-- Capabilities por área: `rwp_manage_settings`, `rwp_manage_adoptions` e
-  `rwp_manage_sponsorship` (Administrador e Protetor admin; o Editor comum não tem nenhuma).
+  quem tem `resgata_access_panel` (`Access::admin_menu_link()` e `admin_bar_link()`).
+- Capabilities por área: `resgata_manage_settings`, `resgata_manage_adoptions` e
+  `resgata_manage_sponsorship` (Administrador e Protetor admin; o Editor comum não tem nenhuma).
 - Menu: Início, Animais, Adoções, Padrinhos, Banners e Configurações (para quem pode) e Minha
   conta.
 

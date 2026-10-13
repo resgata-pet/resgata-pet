@@ -19,12 +19,12 @@ final class Plans {
 	/**
 	 * Option com os preços, a configuração do portal e o ajuste manual do contador.
 	 */
-	public const OPTION = 'rwp_sponsorship';
+	public const OPTION = 'resgata_sponsorship';
 
 	/**
 	 * Option com o número de padrinhos ativos e a data da última mudança.
 	 */
-	public const COUNTER_OPTION = 'rwp_sponsorship_counter';
+	public const COUNTER_OPTION = 'resgata_sponsorship_counter';
 
 	public const ADJUSTMENT_MIN = -9999;
 	public const ADJUSTMENT_MAX = 9999;
@@ -40,7 +40,7 @@ final class Plans {
 		 *
 		 * @param int[] $amounts Valores em centavos.
 		 */
-		$amounts = (array) apply_filters( 'rwp_sponsorship_plan_amounts', array( 1500, 3000, 5000, 7500, 10000 ) );
+		$amounts = (array) apply_filters( 'resgata_sponsorship_plan_amounts', array( 1500, 3000, 5000, 7500, 10000 ) );
 
 		return array_values( array_unique( array_filter( array_map( 'absint', $amounts ) ) ) );
 	}

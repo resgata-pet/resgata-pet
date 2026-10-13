@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  * avisos de cobrança ao padrinho (recibo, cartão recusado) são da Stripe.
  *
  * Todos são e-mails de texto. O agradecimento só vai em HTML (com a versão em
- * texto junto) quando o site informa uma imagem pelo filtro `rwp_thanks_image_url`.
+ * texto junto) quando o site informa uma imagem pelo filtro `resgata_thanks_image_url`.
  */
 final class Notifications {
 

@@ -82,7 +82,7 @@ final class Access {
 
 		$admin_bar->add_node(
 			array(
-				'id'    => 'rwp-panel',
+				'id'    => 'resgata-panel',
 				'title' => '<span class="ab-icon dashicons dashicons-pets" aria-hidden="true"></span><span class="ab-label">' . esc_html__( 'Painel Resgata', 'resgata-wp' ) . '</span>',
 				'href'  => esc_url( Router::url() ),
 				'meta'  => array( 'title' => __( 'Abrir o painel da protetora', 'resgata-wp' ) ),
@@ -107,7 +107,7 @@ final class Access {
 			esc_url( Router::url() ),
 			'',
 			'menu-top',
-			'menu-rwp-panel',
+			'menu-resgata-panel',
 			'dashicons-pets',
 		);
 	}
@@ -125,11 +125,11 @@ final class Access {
 
 		wp_add_inline_style(
 			'admin-bar',
-			'#wpadminbar #wp-admin-bar-rwp-panel > .ab-item{background:#2f7d55;color:#fff}'
-			. '#wpadminbar #wp-admin-bar-rwp-panel > .ab-item:hover,#wpadminbar #wp-admin-bar-rwp-panel > .ab-item:focus{background:#256645;color:#fff}'
-			. '#wpadminbar #wp-admin-bar-rwp-panel .ab-icon:before{color:#fff}'
-			. '#wpadminbar #wp-admin-bar-rwp-panel .ab-icon{margin-right:6px}'
-			. '@media screen and (max-width:782px){#wpadminbar li#wp-admin-bar-rwp-panel{display:block}#wpadminbar #wp-admin-bar-rwp-panel .ab-label{display:none}#wpadminbar #wp-admin-bar-rwp-panel .ab-icon{margin-right:0}}'
+			'#wpadminbar #wp-admin-bar-resgata-panel > .ab-item{background:#2f7d55;color:#fff}'
+			. '#wpadminbar #wp-admin-bar-resgata-panel > .ab-item:hover,#wpadminbar #wp-admin-bar-resgata-panel > .ab-item:focus{background:#256645;color:#fff}'
+			. '#wpadminbar #wp-admin-bar-resgata-panel .ab-icon:before{color:#fff}'
+			. '#wpadminbar #wp-admin-bar-resgata-panel .ab-icon{margin-right:6px}'
+			. '@media screen and (max-width:782px){#wpadminbar li#wp-admin-bar-resgata-panel{display:block}#wpadminbar #wp-admin-bar-resgata-panel .ab-label{display:none}#wpadminbar #wp-admin-bar-resgata-panel .ab-icon{margin-right:0}}'
 		);
 	}
 }

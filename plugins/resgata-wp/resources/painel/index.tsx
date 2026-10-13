@@ -43,7 +43,7 @@ const router = createBrowserRouter(
 	{ basename: config.basePath }
 );
 
-const container = document.getElementById( 'rwp-painel' );
+const container = document.getElementById( 'resgata-painel' );
 
 if ( container ) {
 	createRoot( container ).render(

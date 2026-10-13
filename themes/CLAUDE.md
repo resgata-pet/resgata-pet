@@ -26,7 +26,7 @@ isso:
     `copyright`.
   - Listas de links (rodapé) usam o bloco `resgata-wp/links`, que só lista as páginas que
     existem.
-  - O editor mostra os valores reais (`rwpBlocks.bindings`).
+  - O editor mostra os valores reais (`resgataBlocks.bindings`).
 - **Aparência no `theme.json` e em estilos de bloco**, em vez de classes soltas. Cores, raios
   (`settings.border.radiusSizes`), sombras, botões (inclusive o contornado), campos de
   formulário, título do site e menu ficam no `theme.json`. Os estilos de bloco ("Cartão",
@@ -49,12 +49,12 @@ isso:
 ## CSS dos blocos do plugin
 
 `functions.php` declara `add_theme_support( 'resgata-wp' )`: o plugin deixa de enviar o CSS
-dele e o tema estiliza as classes `.rwp-*`.
+dele e o tema estiliza as classes `.resgata-*`.
 
 O CSS é dividido por bloco, em `assets/css/blocks/`, e cada página carrega só os arquivos dos
 blocos que tem (o editor carrega todos). A lista bloco → arquivo fica em
 `resgata_tema_block_css_files()`, no `functions.php`: bloco novo do plugin ganha um arquivo e
-uma linha ali. `assets/css/comum.css` traz as variáveis `--rwp-*` e as peças que mais de um
+uma linha ali. `assets/css/comum.css` traz as variáveis `--resgata-*` e as peças que mais de um
 bloco usa (botões, selos, etiquetas, setas) e acompanha qualquer arquivo de bloco do plugin.
 Os arquivos `core-*.css` são os ajustes dos blocos do WordPress (Grupo, Botão, Navegação,
 Paginação da consulta e Conteúdo).
@@ -70,8 +70,8 @@ cantos, longe do texto.
 
 As ilustrações ficam em `assets/img/ilustracoes/` (WebP, recortadas e com até 560px; os
 originais, em `docs/ilustracoes/`, fora do pacote do tema). São enfeite, então entram como
-fundo de um `::before`, por CSS: na lista de animais vazia, pelas classes `.rwp-empty--none` e
-`.rwp-empty--filtered` que o plugin entrega (`animals-list.css`); em modelos e patterns, pelos
+fundo de um `::before`, por CSS: na lista de animais vazia, pelas classes `.resgata-empty--none` e
+`.resgata-empty--filtered` que o plugin entrega (`animals-list.css`); em modelos e patterns, pelos
 estilos "Com ilustração" do bloco Grupo (`.is-style-resgata-art-*`, em `core-group.css`).
 Ilustração nova segue o bloco de estilo do `designer.md`.
 
@@ -81,18 +81,18 @@ suave"): a foto `seja-um-padrinho.webp` fica apoiada na base da faixa, por CSS, 
 (`core-group.css`), no lugar dos enfeites em traço. É a única imagem em estilo de foto; as
 demais são ilustrações.
 
-O CSS sai depois dos estilos globais (gancho `enqueue_block_assets`), e as regras `.rwp-*`
+O CSS sai depois dos estilos globais (gancho `enqueue_block_assets`), e as regras `.resgata-*`
 contam com essa ordem: por isso o tema não usa `wp_enqueue_block_style()`, que o colocaria
 antes.
 
-As regras dos blocos do plugin usam só as variáveis `--rwp-*`, declaradas uma vez no topo do
+As regras dos blocos do plugin usam só as variáveis `--resgata-*`, declaradas uma vez no topo do
 `comum.css` a partir das cores, raios e sombras do `theme.json`. A única cor fixa são os
-selos de situação do animal (`.rwp-badge--*`). O painel tem a mesma paleta em outro arquivo:
+selos de situação do animal (`.resgata-badge--*`). O painel tem a mesma paleta em outro arquivo:
 ao mudar uma cor da marca, mude nos dois (`designer.md`).
 
 ## Modelos, parts e patterns
 
-- `templates/single-rwp_animal.html` e `archive-rwp_animal.html` substituem os modelos que o
+- `templates/single-resgata_animal.html` e `archive-resgata_animal.html` substituem os modelos que o
   plugin registra. A página do animal usa só os blocos `resgata-wp/animal-details` e
   `resgata-wp/adoption-form`; o arquivo `/animais/` usa o pattern `animais-chamada` (título e
   apresentação) e a lista em 4 colunas. Modelo `.html` não é traduzível: todo texto fica em
@@ -122,10 +122,10 @@ ao mudar uma cor da marca, mude nos dois (`designer.md`).
   `pagina-apadrinhamento` (chamada, planos, doação única por Pix, números, "Como funciona?",
   animais e "Já é padrinho?").
 - As páginas "Contato" e "Como ajudar" são criadas pelo plugin; o tema aplica o pattern e o
-  modelo a elas pelos filtros `rwp_contact_page_content` / `rwp_contact_page_template` e
-  `rwp_help_page_content` / `rwp_help_page_template`.
+  modelo a elas pelos filtros `resgata_contact_page_content` / `resgata_contact_page_template` e
+  `resgata_help_page_content` / `resgata_help_page_template`.
 - A página "Obrigado" (agradecimento do apadrinhamento) também é criada pelo plugin; o tema
-  só aplica o modelo sem título (`rwp_thanks_page_template`). O CSS do bloco
+  só aplica o modelo sem título (`resgata_thanks_page_template`). O CSS do bloco
   `resgata-wp/sponsorship-thanks` fica em `assets/css/blocks/sponsorship.css`.
 - O plugin acha a página de apadrinhamento e a "Como ajudar" pelo bloco que está **no conteúdo
   da página** (`Core\Links`). Mantenha os blocos `resgata-wp/sponsorship-plans` e

@@ -32,12 +32,12 @@ final class ContactBlock {
 	 * Registra o bloco.
 	 */
 	public function register_block(): void {
-		if ( ! wp_style_is( 'rwp-frontend', 'registered' ) ) {
-			$src = current_theme_supports( 'resgata-wp' ) ? false : RWP_PLUGIN_URL . 'assets/css/frontend.css';
-			wp_register_style( 'rwp-frontend', $src, array(), RWP_VERSION );
+		if ( ! wp_style_is( 'resgata-frontend', 'registered' ) ) {
+			$src = current_theme_supports( 'resgata-wp' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
+			wp_register_style( 'resgata-frontend', $src, array(), RESGATA_VERSION );
 		}
 
-		register_block_type( RWP_PLUGIN_DIR . 'blocks/contact' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/contact' );
 	}
 
 	/**
@@ -66,10 +66,10 @@ final class ContactBlock {
 
 		$help_url = Links::help();
 
-		wp_enqueue_style( 'rwp-frontend' );
+		wp_enqueue_style( 'resgata-frontend' );
 
 		if ( '' === $wrapper_attributes ) {
-			$wrapper_attributes = $compact ? 'class="rwp-contact-compact"' : 'class="rwp-contact"';
+			$wrapper_attributes = $compact ? 'class="resgata-contact-compact"' : 'class="resgata-contact"';
 		}
 
 		return TemplateLoader::render(
@@ -85,7 +85,7 @@ final class ContactBlock {
 				'network_icons'      => $icons,
 				'show_pix'           => $show_pix && '' !== $data['pix_key'],
 				'pix_type_label'     => Organization::pix_key_types()[ $data['pix_key_type'] ] ?? '',
-				'help_url'           => '' !== $help_url ? $help_url . '#rwp-pix' : '',
+				'help_url'           => '' !== $help_url ? $help_url . '#resgata-pix' : '',
 			)
 		);
 	}

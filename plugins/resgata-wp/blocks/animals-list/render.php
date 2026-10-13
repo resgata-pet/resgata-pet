@@ -11,7 +11,7 @@ use ResgataWP\Modules\Animals\Frontend\ListRenderer;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_html = ListRenderer::render(
+$resgata_html = ListRenderer::render(
 	array(
 		'species'         => $attributes['species'] ?? '',
 		'statuses'        => $attributes['statuses'] ?? array(),
@@ -20,8 +20,8 @@ $rwp_html = ListRenderer::render(
 		'show_filters'    => $attributes['showFilters'] ?? true,
 		'show_pagination' => $attributes['showPagination'] ?? true,
 	),
-	get_block_wrapper_attributes( array( 'class' => 'rwp-animals' ) )
+	get_block_wrapper_attributes( array( 'class' => 'resgata-animals' ) )
 );
 
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template escapa cada valor; os atributos do wrapper vêm escapados do core.
-echo $rwp_html;
+echo $resgata_html;

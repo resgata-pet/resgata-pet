@@ -6,60 +6,60 @@
  *
  * @package ResgataWP
  *
- * @var array<string, mixed> $rwp_args Os mesmos dados de `contact.php`.
+ * @var array<string, mixed> $resgata_args Os mesmos dados de `contact.php`.
  */
 
 use ResgataWP\Core\Icons;
 
 defined( 'ABSPATH' ) || exit;
 
-$rwp_data  = $rwp_args['data'];
-$rwp_items = array();
+$resgata_data  = $resgata_args['data'];
+$resgata_items = array();
 
 // Cada item: HTML do ícone, texto e link (vazio = texto simples).
-if ( '' !== $rwp_args['whatsapp_url'] ) {
-	$rwp_items[] = array( Icons::whatsapp(), $rwp_args['whatsapp_label'], $rwp_args['whatsapp_url'], __( 'WhatsApp', 'resgata-wp' ) );
+if ( '' !== $resgata_args['whatsapp_url'] ) {
+	$resgata_items[] = array( Icons::whatsapp(), $resgata_args['whatsapp_label'], $resgata_args['whatsapp_url'], __( 'WhatsApp', 'resgata-wp' ) );
 }
-if ( '' !== $rwp_data['phone'] && $rwp_data['phone'] !== $rwp_data['whatsapp'] ) {
-	$rwp_items[] = array( Icons::svg( 'phone' ), $rwp_args['phone_label'], 'tel:+55' . $rwp_data['phone'], __( 'Telefone', 'resgata-wp' ) );
+if ( '' !== $resgata_data['phone'] && $resgata_data['phone'] !== $resgata_data['whatsapp'] ) {
+	$resgata_items[] = array( Icons::svg( 'phone' ), $resgata_args['phone_label'], 'tel:+55' . $resgata_data['phone'], __( 'Telefone', 'resgata-wp' ) );
 }
-if ( '' !== $rwp_data['email'] ) {
-	$rwp_items[] = array( Icons::svg( 'mail' ), $rwp_data['email'], 'mailto:' . $rwp_data['email'], __( 'E-mail', 'resgata-wp' ) );
+if ( '' !== $resgata_data['email'] ) {
+	$resgata_items[] = array( Icons::svg( 'mail' ), $resgata_data['email'], 'mailto:' . $resgata_data['email'], __( 'E-mail', 'resgata-wp' ) );
 }
-if ( '' !== $rwp_args['location'] ) {
-	$rwp_items[] = array( Icons::svg( 'map-pin' ), $rwp_args['location'], '', __( 'Onde estamos', 'resgata-wp' ) );
+if ( '' !== $resgata_args['location'] ) {
+	$resgata_items[] = array( Icons::svg( 'map-pin' ), $resgata_args['location'], '', __( 'Onde estamos', 'resgata-wp' ) );
 }
 
-if ( ! $rwp_items && ! $rwp_args['networks'] ) {
+if ( ! $resgata_items && ! $resgata_args['networks'] ) {
 	return;
 }
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() e Icons::brand() devolvem SVG do plugin ou do WordPress; atributos do wrapper escapados na origem.
 ?>
-<div <?php echo $rwp_args['wrapper_attributes']; ?>>
-	<?php if ( $rwp_items ) : ?>
-		<ul class="rwp-contact-compact__list">
-			<?php foreach ( $rwp_items as $rwp_item ) : ?>
+<div <?php echo $resgata_args['wrapper_attributes']; ?>>
+	<?php if ( $resgata_items ) : ?>
+		<ul class="resgata-contact-compact__list">
+			<?php foreach ( $resgata_items as $resgata_item ) : ?>
 				<li>
-					<?php echo $rwp_item[0]; ?>
-					<span class="screen-reader-text"><?php echo esc_html( $rwp_item[3] ); ?>:</span>
-					<?php if ( '' !== $rwp_item[2] ) : ?>
-						<a href="<?php echo esc_url( $rwp_item[2] ); ?>"<?php echo str_starts_with( $rwp_item[2], 'http' ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $rwp_item[1] ); ?></a>
+					<?php echo $resgata_item[0]; ?>
+					<span class="screen-reader-text"><?php echo esc_html( $resgata_item[3] ); ?>:</span>
+					<?php if ( '' !== $resgata_item[2] ) : ?>
+						<a href="<?php echo esc_url( $resgata_item[2] ); ?>"<?php echo str_starts_with( $resgata_item[2], 'http' ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $resgata_item[1] ); ?></a>
 					<?php else : ?>
-						<span><?php echo esc_html( $rwp_item[1] ); ?></span>
+						<span><?php echo esc_html( $resgata_item[1] ); ?></span>
 					<?php endif; ?>
 				</li>
 			<?php endforeach; ?>
 		</ul>
 	<?php endif; ?>
 
-	<?php if ( $rwp_args['networks'] ) : ?>
-		<ul class="rwp-contact-compact__networks" aria-label="<?php esc_attr_e( 'Redes sociais', 'resgata-wp' ); ?>">
-			<?php foreach ( $rwp_args['networks'] as $rwp_network => $rwp_url ) : ?>
+	<?php if ( $resgata_args['networks'] ) : ?>
+		<ul class="resgata-contact-compact__networks" aria-label="<?php esc_attr_e( 'Redes sociais', 'resgata-wp' ); ?>">
+			<?php foreach ( $resgata_args['networks'] as $resgata_network => $resgata_url ) : ?>
 				<li>
-					<a href="<?php echo esc_url( $rwp_url ); ?>" target="_blank" rel="noopener noreferrer">
-						<?php echo Icons::brand( (string) ( $rwp_args['network_icons'][ $rwp_network ] ?? '' ) ); ?>
-						<span class="screen-reader-text"><?php echo esc_html( $rwp_network ); ?></span>
+					<a href="<?php echo esc_url( $resgata_url ); ?>" target="_blank" rel="noopener noreferrer">
+						<?php echo Icons::brand( (string) ( $resgata_args['network_icons'][ $resgata_network ] ?? '' ) ); ?>
+						<span class="screen-reader-text"><?php echo esc_html( $resgata_network ); ?></span>
 					</a>
 				</li>
 			<?php endforeach; ?>
