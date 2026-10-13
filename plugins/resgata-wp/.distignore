@@ -13,3 +13,10 @@
 /postcss.config.js
 /components.json
 /composer.lock
+# Arquivos de desenvolvimento que vêm com a biblioteca da Stripe (a licença dela fica).
+/vendor/stripe/stripe-php/.claude
+/vendor/stripe/stripe-php/.gitignore
+/vendor/stripe/stripe-php/justfile
+/vendor/stripe/stripe-php/CHANGELOG.md
+/vendor/stripe/stripe-php/CONTRIBUTING.md
+/vendor/stripe/stripe-php/README.md
