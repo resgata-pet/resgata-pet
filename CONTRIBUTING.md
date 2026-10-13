@@ -61,7 +61,7 @@ código, mas são a referência mais completa também para pessoas:
 
 - **PHP 8.1+ e WordPress 6.9+**, só com APIs nativas do WordPress (sem ACF nem outros plugins).
 - **WordPress Coding Standards**, conferidos por `make phpcs` (`make phpcbf` corrige o que for
-  automático). Prefixo `rwp_` no plugin e `resgata_tema_` no tema.
+  automático). Prefixo `resgata_` no plugin e `resgata_tema_` no tema.
 - **TypeScript** para todo JavaScript do plugin, em `plugins/resgata-wp/resources/`.
 - **Textos em português do Brasil**, sempre pelas funções de tradução (`__()`, `esc_html__()`;
   no TypeScript, `__()` de `@wordpress/i18n`). Ao criar ou mudar textos, rode `make pot` e
@@ -112,6 +112,19 @@ pull request e aponte os trechos que merecem revisão cuidadosa.
 Mudança que cria rota, tabela, permissão ou módulo novo precisa vir com o teste
 correspondente e com a documentação atualizada (`plugins/CLAUDE.md` e o arquivo do módulo em
 `docs/`).
+
+## Publicar uma versão
+
+Só quem mantém o projeto publica versões.
+
+1. Atualize a versão em `plugins/resgata-wp/resgata-wp.php` (`Version` e `RESGATA_VERSION`) e em
+   `plugins/resgata-wp/readme.txt` (`Stable tag` e o `Changelog`).
+2. Leve a mudança ao `main`.
+3. Crie e envie a tag com o mesmo número, sem `v`: `git tag 0.5.1 && git push origin 0.5.1`.
+
+O fluxo `.github/workflows/release.yml` confere a versão, gera os pacotes (`make zip`) e cria a
+release no GitHub com `resgata-wp.zip` e `resgata-tema.zip`. Com a variável `WPORG_SLUG`
+definida no repositório, ele também envia a versão do plugin ao WordPress.org.
 
 ## Usando assistentes de código
 
