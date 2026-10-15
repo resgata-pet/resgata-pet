@@ -29,7 +29,7 @@ Pergunta nova entra só ali.
 
 ## Formulário e envio
 
-- Bloco `resgata-wp/adoption-form` (templates `adoption-form.php` e `adoption-success.php`),
+- Bloco `resgata-pet/adoption-form` (templates `adoption-form.php` e `adoption-success.php`),
   já incluído nos modelos da página do animal. Só aparece para animal publicado e
   "disponível". Em outra página, mostra um seletor de animais disponíveis (`?resgata_animal=ID`
   pré-seleciona).

@@ -35,7 +35,7 @@ Código em `src/Modules/Animals/`.
 
 - Excluir pelo painel manda o animal para a lixeira do WordPress (30 dias). Como não há tela
   no wp-admin, restaurar é por WP-CLI: `wp post untrash <ID>`.
-- **Página do animal**: bloco `resgata-wp/animal-details` (template `animal-details.php`,
+- **Página do animal**: bloco `resgata-pet/animal-details` (template `animal-details.php`,
   dados montados em `Frontend\DetailsRenderer`). Desenha a página inteira (caminho, fotos,
   resumo, história, saúde, "Não pode adotar?" e outros animais) ou uma seção só (atributo
   `section`). A página não mostra localização.
@@ -45,7 +45,7 @@ Código em `src/Modules/Animals/`.
   só acrescenta setas e miniaturas. O mesmo script dá setas à fileira "Outros animais para
   adoção" (`data-resgata-row`): elas aparecem só quando a fileira não cabe na tela, e o tema então
   esconde a barra de rolagem; sem o script, fica a barra.
-- **Lista de animais**: bloco `resgata-wp/animals-list` (templates `animals-list.php` e
+- **Lista de animais**: bloco `resgata-pet/animals-list` (templates `animals-list.php` e
   `animal-card.php`): filtros, contagem, cartões (foto, situação, nome, resumo de
   `Animal::card_summary()`, até três temperamentos e "Ver perfil") e paginação.
 - Também há o shortcode `[resgata_animais]`. Filtros por GET: `resgata_especie`, `resgata_sexo`,

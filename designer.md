@@ -1,4 +1,4 @@
-# Guia de design — Resgata WP
+# Guia de design — Resgata Pet
 
 Vale para o site público (`themes/resgata-tema` e os blocos do plugin) e para o painel
 (`/painel`).
@@ -40,15 +40,15 @@ Todo trabalho visual começa lendo o que já está feito e termina reaproveitand
 | Selos de situação do animal (`.resgata-badge--*`) | `comum.css`; única regra com cor fixa |
 | Enfeites de fundo das faixas e dos cartões (corações, patas, nuvens, círculos) | formas e base em `themes/resgata-tema/assets/css/enfeites.css`; a composição de cada peça, no CSS do bloco dela |
 | Composição das páginas e seções | `themes/resgata-tema/templates/`, `parts/` e `patterns/` |
-| Marcação neutra dos blocos | `plugins/resgata-wp/templates/` e `blocks/` |
-| CSS mínimo para outros temas | `plugins/resgata-wp/assets/css/frontend.css` |
+| Marcação neutra dos blocos | `plugins/resgata-pet/templates/` e `blocks/` |
+| CSS mínimo para outros temas | `plugins/resgata-pet/assets/css/frontend.css` |
 | Ícones | `Core\Icons::svg()` (Lucide) e `Icons::brand()` (redes sociais) |
 
 ### Painel
 
 | O quê | Onde |
 | --- | --- |
-| Cores, raio base e fonte | `plugins/resgata-wp/resources/painel/index.css` |
+| Cores, raio base e fonte | `plugins/resgata-pet/resources/painel/index.css` |
 | Componentes de base (botão, selo, campo, popover, tabela...) | `resources/painel/components/ui/` |
 | Componentes do projeto (`PageHeader`, `Field`, `OptionSelect`, `DatePicker`, `MaskedInput`, `ImageDropzone`, `RichText`, `Stepper`, filtros...) | `resources/painel/components/` |
 | Estrutura das telas (menu, cabeçalho, largura) | `components/layout.tsx` e as telas em `pages/` |
@@ -70,7 +70,7 @@ blocos do WordPress. Na prática:
   Botões; variações visuais como estilos de bloco, que aparecem no painel "Estilos".
 - **Tudo editável no Editor do Site.** Templates e parts em HTML de blocos; patterns em
   marcação de blocos pura, com texto traduzível; conteúdo dinâmico por ligações de blocos
-  (`resgata-wp/link`, `resgata-wp/organization`).
+  (`resgata-pet/link`, `resgata-pet/organization`).
 - **Aparência no tema, funcionalidade no plugin.** O plugin entrega marcação neutra com
   classes `.resgata-*` e funciona com qualquer tema; o tema é quem a estiliza.
 - **Padrões de código do WordPress.** Prefixo `resgata_tema_`, text domain `resgata-tema`,

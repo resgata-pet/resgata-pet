@@ -1,6 +1,6 @@
 <?php
 /**
- * Resgata Tema: somente aparência. Toda a funcionalidade fica no plugin Resgata WP.
+ * Resgata Tema: somente aparência. Toda a funcionalidade fica no plugin Resgata Pet.
  *
  * @package ResgataTema
  */
@@ -8,10 +8,10 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Avisa o plugin Resgata WP que este tema cuida do visual dos blocos dele.
+ * Avisa o plugin Resgata Pet que este tema cuida do visual dos blocos dele.
  */
 function resgata_tema_setup(): void {
-	add_theme_support( 'resgata-wp' );
+	add_theme_support( 'resgata-pet' );
 }
 add_action( 'after_setup_theme', 'resgata_tema_setup' );
 
@@ -24,30 +24,30 @@ add_action( 'after_setup_theme', 'resgata_tema_setup' );
  */
 function resgata_tema_block_css_files(): array {
 	return array(
-		'resgata-wp/animals-list'       => 'animals-list',
-		'resgata-wp/animal-details'     => 'animal-details',
-		'resgata-wp/banners'            => 'banners',
-		'resgata-wp/impact'             => 'impact',
-		'resgata-wp/pix-donation'       => 'pix',
-		'resgata-wp/pix-once'           => 'pix',
-		'resgata-wp/donate-banner'      => 'donate-banner',
-		'resgata-wp/contact'            => 'contact',
-		'resgata-wp/contact#compact'    => 'contact-compact',
-		'resgata-wp/links'              => 'links',
-		'resgata-wp/adoption-form'      => 'adoption-form',
-		'resgata-wp/sponsorship-plans'  => 'sponsorship',
-		'resgata-wp/sponsor-area'       => 'sponsorship',
-		'resgata-wp/sponsorship-thanks' => 'sponsorship',
-		'core/group'                    => 'core-group',
-		'core/navigation'               => 'core-navigation',
-		'core/button'                   => 'core-button',
-		'core/query-pagination'         => 'core-query-pagination',
-		'core/post-content'             => 'core-post-content',
+		'resgata-pet/animals-list'       => 'animals-list',
+		'resgata-pet/animal-details'     => 'animal-details',
+		'resgata-pet/banners'            => 'banners',
+		'resgata-pet/impact'             => 'impact',
+		'resgata-pet/pix-donation'       => 'pix',
+		'resgata-pet/pix-once'           => 'pix',
+		'resgata-pet/donate-banner'      => 'donate-banner',
+		'resgata-pet/contact'            => 'contact',
+		'resgata-pet/contact#compact'    => 'contact-compact',
+		'resgata-pet/links'              => 'links',
+		'resgata-pet/adoption-form'      => 'adoption-form',
+		'resgata-pet/sponsorship-plans'  => 'sponsorship',
+		'resgata-pet/sponsor-area'       => 'sponsorship',
+		'resgata-pet/sponsorship-thanks' => 'sponsorship',
+		'core/group'                     => 'core-group',
+		'core/navigation'                => 'core-navigation',
+		'core/button'                    => 'core-button',
+		'core/query-pagination'          => 'core-query-pagination',
+		'core/post-content'              => 'core-post-content',
 	);
 }
 
 /**
- * Registra o CSS de cada bloco. Os dos blocos do Resgata WP dependem de
+ * Registra o CSS de cada bloco. Os dos blocos do Resgata Pet dependem de
  * assets/css/comum.css (variáveis `--resgata-*` e peças que mais de um bloco usa), que por sua
  * vez depende de assets/css/enfeites.css (formas dos enfeites de fundo).
  */
@@ -104,7 +104,7 @@ function resgata_tema_needed_block_css( string $file = '' ): array {
 function resgata_tema_collect_block_css( $content, $block ) {
 	$name = (string) ( $block['blockName'] ?? '' );
 
-	if ( 'resgata-wp/contact' === $name && ! empty( $block['attrs']['compact'] ) ) {
+	if ( 'resgata-pet/contact' === $name && ! empty( $block['attrs']['compact'] ) ) {
 		$name .= '#compact';
 	}
 

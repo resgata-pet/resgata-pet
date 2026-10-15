@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Instala o WordPress em pt_BR e ativa o plugin e o tema do Resgata WP.
+# Instala o WordPress em pt_BR e ativa o plugin e o tema do Resgata Pet.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -61,7 +61,7 @@ $WP rewrite structure '/%postname%/'
 $WP theme is-installed twentytwentyfive || $WP theme install twentytwentyfive
 $WP language theme install twentytwentyfive pt_BR || true
 
-$WP plugin activate resgata-wp
+$WP plugin activate resgata-pet
 $WP theme activate resgata-tema
 
 # Em uma instalação nova, liga todos os módulos prontos, para o ambiente já mostrar o kit

@@ -1,4 +1,4 @@
-# Plugin `resgata-wp`
+# Plugin `resgata-pet`
 
 Toda a funcionalidade do kit. Tem de funcionar com qualquer tema: nenhuma regra de negócio
 depende do `resgata-tema`.
@@ -6,8 +6,8 @@ depende do `resgata-tema`.
 ## Mapa
 
 ```
-resgata-wp/
-  resgata-wp.php          cabeçalho, constantes RESGATA_*, autoload, hooks de ativação
+resgata-pet/
+  resgata-pet.php         cabeçalho, constantes RESGATA_*, autoload, hooks de ativação
   uninstall.php           só apaga dados se "Manter os dados" estiver desmarcado
   src/Plugin.php          bootstrap (plugins_loaded): carrega os módulos ativos
   src/Core/               Activator, Assets, Bindings, Capabilities, Encryption, Icons, Links,
@@ -28,7 +28,7 @@ Antes de mexer em um módulo, leia o documento dele (pasta `docs/`, na raiz do r
 
 | Área | Código | Documento |
 | --- | --- | --- |
-| Painel `/painel` (React) e a API `resgata-wp/v1` | `src/Modules/Panel/`, `resources/painel/` | `docs/painel.md` |
+| Painel `/painel` (React) e a API `resgata-pet/v1` | `src/Modules/Panel/`, `resources/painel/` | `docs/painel.md` |
 | Animais | `src/Modules/Animals/` | `docs/animais.md` |
 | Pedidos de adoção | `src/Modules/Adoptions/` | `docs/adocoes.md` |
 | Apadrinhamento (Stripe) | `src/Modules/Sponsorship/` | `docs/apadrinhamento.md` |
@@ -37,7 +37,7 @@ Antes de mexer em um módulo, leia o documento dele (pasta `docs/`, na raiz do r
 Previstos, ainda sem código: doações avulsas por Pix (Stripe Checkout) e prestação de contas
 (lançamentos, fechamento mensal, página pública, conciliação OFX).
 
-Os módulos ligam e desligam em Resgata WP → Configurações (option `resgata_modules`). Para criar
+Os módulos ligam e desligam em Resgata Pet → Configurações (option `resgata_modules`). Para criar
 um módulo:
 
 1. Acrescente-o em `Core\Modules::all()` e em `AVAILABLE`.
@@ -47,7 +47,7 @@ um módulo:
 
 ## Padrões PHP
 
-- Slug e text domain `resgata-wp`, prefixo `resgata_` (constantes `RESGATA_`), namespace `ResgataWP`
+- Slug e text domain `resgata-pet`, prefixo `resgata_` (constantes `RESGATA_`), namespace `ResgataPet`
   com autoload PSR-4 em `src/`. O arquivo principal tem um autoloader de reserva: o plugin
   funciona sem `composer install`.
 - Funções de tradução só a partir do hook `init`. O que roda em `plugins_loaded`
@@ -62,7 +62,7 @@ um módulo:
 
 ## API do painel
 
-Toda rota fica em `resgata-wp/v1` e é registrada por `BaseController::route()`, que nega por
+Toda rota fica em `resgata-pet/v1` e é registrada por `BaseController::route()`, que nega por
 padrão (login + `resgata_access_panel` + verificação própria da rota) e valida os parâmetros pelo
 schema. A única rota pública do namespace, e a única registrada fora de `route()`, é o webhook
 da Stripe.
@@ -117,10 +117,10 @@ existe em português.
 
 ## Pacote
 
-`make zip` gera `dist/resgata-wp.zip` só com o que roda no site: o código PHP, `blocks/`,
+`make zip` gera `dist/resgata-pet.zip` só com o que roda no site: o código PHP, `blocks/`,
 `templates/`, `assets/`, `languages/`, `build/`, a pasta `vendor/` (biblioteca da Stripe) e uma
-cópia da `LICENSE` da raiz. O que fica de fora está em `plugins/resgata-wp/.distignore`
+cópia da `LICENSE` da raiz. O que fica de fora está em `plugins/resgata-pet/.distignore`
 (`resources/`, `tests/`, `node_modules/`, `.wordpress-org/` e os arquivos de configuração do
 build): arquivo novo que não roda no site entra ali. O `readme.txt` é em **inglês** (regra do
 WordPress.org) e aponta para o repositório como a origem do que está compilado em `build/`. Este arquivo e os de `docs/` ficam fora do pacote de propósito:
-documentação para agentes mora fora de `plugins/resgata-wp/`.
+documentação para agentes mora fora de `plugins/resgata-pet/`.

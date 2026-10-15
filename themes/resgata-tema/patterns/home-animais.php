@@ -8,7 +8,7 @@
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
- * plugin Resgata WP (`resgata-wp/link`), resolvidas a cada exibição.
+ * plugin Resgata Pet (`resgata-pet/link`), resolvidas a cada exibição.
  *
  * @package ResgataTema
  */
@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<!-- wp:buttons -->
 		<div class="wp-block-buttons">
-			<!-- wp:button {"className":"is-style-resgata-arrow-link","metadata":{"bindings":{"url":{"source":"resgata-wp/link","args":{"key":"animals"}}}}} -->
+			<!-- wp:button {"className":"is-style-resgata-arrow-link","metadata":{"bindings":{"url":{"source":"resgata-pet/link","args":{"key":"animals"}}}}} -->
 			<div class="wp-block-button is-style-resgata-arrow-link"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Ver todos os animais', 'resgata-tema' ); ?></a></div>
 			<!-- /wp:button -->
 		</div>
@@ -41,6 +41,6 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:resgata-wp/animals-list {"statuses":["available"],"perPage":4,"columns":4,"showFilters":false,"showPagination":false} /-->
+	<!-- wp:resgata-pet/animals-list {"statuses":["available"],"perPage":4,"columns":4,"showFilters":false,"showPagination":false} /-->
 </div>
 <!-- /wp:group -->

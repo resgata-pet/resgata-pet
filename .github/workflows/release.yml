@@ -23,7 +23,7 @@ jobs:
     name: Pacotes e publicação
     runs-on: ubuntu-latest
     env:
-      PLUGIN: plugins/resgata-wp
+      PLUGIN: plugins/resgata-pet
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
@@ -31,8 +31,8 @@ jobs:
         env:
           TAG: ${{ github.ref_name }}
         run: |
-          header="$(sed -n 's/^ \* Version: *//p' "$PLUGIN/resgata-wp.php")"
-          constant="$(sed -n "s/^define( 'RESGATA_VERSION', '\(.*\)' );/\1/p" "$PLUGIN/resgata-wp.php")"
+          header="$(sed -n 's/^ \* Version: *//p' "$PLUGIN/resgata-pet.php")"
+          constant="$(sed -n "s/^define( 'RESGATA_VERSION', '\(.*\)' );/\1/p" "$PLUGIN/resgata-pet.php")"
           stable="$(sed -n 's/^Stable tag: *//p' "$PLUGIN/readme.txt")"
           for value in "$header" "$constant" "$stable"; do
             if [ "$value" != "$TAG" ]; then
@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: plugins/resgata-wp/package-lock.json
+          cache-dependency-path: plugins/resgata-pet/package-lock.json
 
       - name: Gera os pacotes
         run: make zip
@@ -55,7 +55,7 @@ jobs:
         with:
           generate_release_notes: true
           files: |
-            dist/resgata-wp.zip
+            dist/resgata-pet.zip
             dist/resgata-tema.zip
 
       # O WordPress.org recebe exatamente o conteúdo do pacote do plugin.
@@ -64,7 +64,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq subversion
-          unzip -q dist/resgata-wp.zip -d dist/wporg
+          unzip -q dist/resgata-pet.zip -d dist/wporg
 
       - name: Envia ao WordPress.org
         if: vars.WPORG_SLUG != ''
@@ -73,5 +73,5 @@ jobs:
           SLUG: ${{ vars.WPORG_SLUG }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          BUILD_DIR: dist/wporg/resgata-wp
-          ASSETS_DIR: plugins/resgata-wp/.wordpress-org
+          BUILD_DIR: dist/wporg/resgata-pet
+          ASSETS_DIR: plugins/resgata-pet/.wordpress-org

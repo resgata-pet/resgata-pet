@@ -1,4 +1,4 @@
-# Resgata WP
+# Resgata Pet
 
 Kit open source para WordPress que ajuda **protetoras independentes de animais** a:
 
@@ -10,7 +10,7 @@ O kit tem duas partes, neste repositório:
 
 | Pasta | O que é |
 |---|---|
-| `plugins/resgata-wp` | Plugin com toda a funcionalidade e os dados. Funciona com qualquer tema. |
+| `plugins/resgata-pet` | Plugin com toda a funcionalidade e os dados. Funciona com qualquer tema. |
 | `themes/resgata-tema` | Tema de blocos (filho do Twenty Twenty-Five) com visual acolhedor, editável pelo Editor do Site. |
 
 ## Situação atual
@@ -36,11 +36,11 @@ O kit tem duas partes, neste repositório:
 
 ## Instalação em um site WordPress
 
-1. Gere os pacotes com `make zip` (cria `dist/resgata-wp.zip` e `dist/resgata-tema.zip`).
+1. Gere os pacotes com `make zip` (cria `dist/resgata-pet.zip` e `dist/resgata-tema.zip`).
    Copiar a pasta do plugin direto do repositório não basta: o painel precisa dos arquivos
    gerados pelo build.
 2. No WordPress, vá em **Plugins → Adicionar plugin → Enviar plugin**, envie o
-   `resgata-wp.zip` e ative.
+   `resgata-pet.zip` e ative.
 3. Opcional: instale o tema Twenty Twenty-Five, vá em **Aparência → Temas → Adicionar tema →
    Enviar tema**, envie o `resgata-tema.zip` e ative o **Resgata Tema**.
 4. O site precisa usar links permanentes (qualquer opção diferente de "Padrão" em
@@ -77,7 +77,7 @@ dois (há um atalho "Painel Resgata" na barra do WordPress).
 
 ### Mostrando animais em outras páginas
 
-- Bloco **Lista de animais** (categoria "Resgata WP" no editor).
+- Bloco **Lista de animais** (categoria "Resgata Pet" no editor).
 - Pattern **Gatos em destaque** (com o Resgata Tema ativo).
 - Shortcode: `[resgata_animais especie="gato" quantidade="6" colunas="3" filtros="nao"]`
 
@@ -93,8 +93,8 @@ dois (há um atalho "Painel Resgata" na barra do WordPress).
 ## Desenvolvimento local
 
 ```bash
-git clone https://github.com/resgatawp/resgata-wp.git
-cd resgata-wp
+git clone https://github.com/resgata-pet/resgata-pet.git
+cd resgata-pet
 make setup
 ```
 
@@ -132,7 +132,7 @@ Comandos mais usados (`make help` mostra todos):
 | `make typecheck` | Confere os tipos do TypeScript |
 | `make test` | Testa as permissões da API do painel e o processamento dos webhooks da Stripe |
 | `make stripe-setup` / `make stripe-secret` / `make stripe` | Apadrinhamento: cria os planos no sandbox / mostra o segredo dos webhooks / repassa os eventos ao site local |
-| `make zip` | Gera `dist/resgata-wp.zip` (plugin) e `dist/resgata-tema.zip` (tema) para instalar em um site |
+| `make zip` | Gera `dist/resgata-pet.zip` (plugin) e `dist/resgata-tema.zip` (tema) para instalar em um site |
 | `make phpcs` / `make phpcbf` | Verifica / corrige o padrão de código |
 | `make check` | Roda o Plugin Check |
 | `make pot` | Gera os arquivos de tradução (`.pot`) do plugin e do tema |
@@ -163,7 +163,7 @@ Dados de cartão, CPF e endereço ficam só na Stripe.
    *Checkout Sessions*, *Customer portal sessions*, *Products*, *Prices* e *Customer portal
    configurations*. As três últimas servem para criar e alterar os planos pelo painel. Não
    use a chave secreta completa.
-3. Cadastre o webhook `https://seusite.org/wp-json/resgata-wp/v1/stripe/webhook` com os eventos
+3. Cadastre o webhook `https://seusite.org/wp-json/resgata-pet/v1/stripe/webhook` com os eventos
    `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`,
    `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`,
    `invoice_payment.paid`, `charge.refunded`, `charge.dispute.created`, `charge.dispute.updated`,
@@ -185,7 +185,7 @@ Dados de cartão, CPF e endereço ficam só na Stripe.
      define( 'RESGATA_STRIPE_WEBHOOK_SECRET', 'whsec_...' );
      ```
 
-5. Ligue o módulo em **Resgata WP → Configurações** e crie os planos em **Painel → Padrinhos
+5. Ligue o módulo em **Resgata Pet → Configurações** e crie os planos em **Painel → Padrinhos
    → Planos**: cada plano tem nome (opcional), valor mensal, descrição, lista do que ajuda a
    pagar e o selo "Mais escolhido". Mudar o valor cria um preço novo na Stripe; quem já
    apadrinha continua no valor antigo. Um plano com padrinhos não é excluído, só escondido
@@ -210,10 +210,10 @@ Dados de cartão, CPF e endereço ficam só na Stripe.
 2. `make stripe-secret` mostra o segredo dos webhooks locais (`whsec_...`): cole em
    `STRIPE_WEBHOOK_SECRET` no `.env` e rode `make up` para o WordPress receber as chaves.
 3. O `make setup` já liga o módulo. Se ele estiver desligado, marque "Apadrinhamento" em
-   Resgata WP → Configurações.
+   Resgata Pet → Configurações.
 4. `make stripe-setup` cria os planos e o portal no sandbox.
 5. Deixe `make stripe` rodando em outro terminal: ele repassa os eventos da Stripe para
-   `http://wordpress/wp-json/resgata-wp/v1/stripe/webhook`.
+   `http://wordpress/wp-json/resgata-pet/v1/stripe/webhook`.
 
 Para testar o cadastro das chaves pelo painel, ponha `STRIPE_KEYS_IN_PANEL=1` no `.env` e rode
 `make up`: o site deixa de ler as chaves do `.env` (o `make stripe` continua usando) e passa a
@@ -239,10 +239,10 @@ página de teste da Stripe deixa autorizar ou expirar o pagamento.
 
 O plugin traz templates e estilos neutros. Um tema pode:
 
-- **Assumir o visual:** declare `add_theme_support( 'resgata-wp' );` e estilize as classes
+- **Assumir o visual:** declare `add_theme_support( 'resgata-pet' );` e estilize as classes
   `.resgata-*`. O plugin deixa de carregar o CSS dele.
-- **Substituir um template PHP:** copie o arquivo de `plugins/resgata-wp/templates/` para a
-  pasta `resgata-wp/` do tema (por exemplo, `seu-tema/resgata-wp/animal-card.php`).
+- **Substituir um template PHP:** copie o arquivo de `plugins/resgata-pet/templates/` para a
+  pasta `resgata-pet/` do tema (por exemplo, `seu-tema/resgata-pet/animal-card.php`).
 - **Temas de blocos:** crie `templates/single-resgata_animal.html` e
   `templates/archive-resgata_animal.html`, ou edite os modelos "Página do animal" e
   "Lista de animais" no Editor do Site.
@@ -260,9 +260,9 @@ Encontrou uma falha? Não abra issue pública: siga a [política de segurança](
 
 ## Licença
 
-Copyright (C) 2026 contribuidores do Resgata WP.
+Copyright (C) 2026 contribuidores do Resgata Pet.
 
-O Resgata WP é software livre: você pode redistribuí-lo e modificá-lo sob os termos da
+O Resgata Pet é software livre: você pode redistribuí-lo e modificá-lo sob os termos da
 Licença Pública Geral GNU, versão 2 ou (à sua escolha) qualquer versão posterior, publicada
 pela Free Software Foundation. Ele é distribuído sem nenhuma garantia. O texto completo está
 em [`LICENSE`](LICENSE) e acompanha os pacotes gerados pelo `make zip`.
@@ -282,8 +282,8 @@ Os pacotes incluem bibliotecas com licenças compatíveis com a GPLv2:
 - O tema é filho do [Twenty Twenty-Five](https://wordpress.org/themes/twentytwentyfive/)
   (GPL-2.0-or-later), que não é distribuído junto.
 
-O ícone do plugin (`plugins/resgata-wp/.wordpress-org/`) e a imagem de apresentação do tema
+O ícone do plugin (`plugins/resgata-pet/.wordpress-org/`) e a imagem de apresentação do tema
 (`themes/resgata-tema/screenshot.png`) foram criados para o projeto e seguem a mesma licença.
 
-A lista completa e as versões estão em `plugins/resgata-wp/package.json` e
-`plugins/resgata-wp/composer.json`.
+A lista completa e as versões estão em `plugins/resgata-pet/package.json` e
+`plugins/resgata-pet/composer.json`.

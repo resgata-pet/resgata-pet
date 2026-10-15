@@ -10,7 +10,7 @@
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
- * plugin Resgata WP (`resgata-wp/link`), resolvidas a cada exibição.
+ * plugin Resgata Pet (`resgata-pet/link`), resolvidas a cada exibição.
  *
  * @package ResgataTema
  */
@@ -43,11 +43,11 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:pattern {"slug":"resgata-tema/home-atalhos"} /-->
 
-<!-- wp:resgata-wp/pix-donation {"align":"wide"} /-->
+<!-- wp:resgata-pet/pix-donation {"align":"wide"} /-->
 
 <!-- wp:pattern {"slug":"resgata-tema/home-chamada"} /-->
 
-<!-- wp:resgata-wp/impact {"align":"wide"} /-->
+<!-- wp:resgata-pet/impact {"align":"wide"} /-->
 
 <!-- wp:pattern {"slug":"resgata-tema/home-animais"} /-->
 

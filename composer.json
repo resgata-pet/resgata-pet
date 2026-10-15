@@ -1,6 +1,6 @@
 {
-	"name": "resgata-wp/monorepo",
-	"description": "Ferramentas de desenvolvimento do monorepo Resgata WP (plugin + tema).",
+	"name": "resgata-pet/monorepo",
+	"description": "Ferramentas de desenvolvimento do monorepo Resgata Pet (plugin + tema).",
 	"license": "GPL-2.0-or-later",
 	"type": "project",
 	"require-dev": {

@@ -1,4 +1,4 @@
-# Resgata WP
+# Resgata Pet
 
 Kit open source (GPL-2.0-or-later) para WordPress, para protetoras independentes de animais:
 divulgar animais e receber pedidos de adoção, arrecadar com apadrinhamento mensal e Pix, e
@@ -11,19 +11,19 @@ ajuda curtos, linguagem do dia a dia, desenho para celular antes do computador.
 
 **Funcionalidade no plugin, aparência no tema.**
 
-- `plugins/resgata-wp/`: dados, regras de negócio, formulários, painel, blocos e templates
+- `plugins/resgata-pet/`: dados, regras de negócio, formulários, painel, blocos e templates
   neutros. Funciona com qualquer tema.
 - `themes/resgata-tema/`: block theme filho do Twenty Twenty-Five. Só `theme.json`, modelos,
   parts, patterns e o CSS dos blocos do plugin.
 
 Como os dois conversam:
 
-- Template PHP: `TemplateLoader::locate()` procura em `<tema>/resgata-wp/<arquivo>.php` e
-  depois em `plugins/resgata-wp/templates/`. As variáveis chegam em `$resgata_args`.
+- Template PHP: `TemplateLoader::locate()` procura em `<tema>/resgata-pet/<arquivo>.php` e
+  depois em `plugins/resgata-pet/templates/`. As variáveis chegam em `$resgata_args`.
 - Tema de blocos: o plugin registra os modelos `single-resgata_animal` e `archive-resgata_animal`
   (`register_block_template`); o tema os substitui com arquivos de mesmo nome em `templates/`.
 - Tema clássico: `template_include` usa `single-animal.php` / `archive-animal.php`.
-- `add_theme_support( 'resgata-wp' )` faz o plugin registrar o handle `resgata-frontend` vazio; o
+- `add_theme_support( 'resgata-pet' )` faz o plugin registrar o handle `resgata-frontend` vazio; o
   tema estiliza as classes `.resgata-*`.
 
 ## Onde está cada instrução

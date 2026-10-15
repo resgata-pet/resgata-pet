@@ -1,7 +1,7 @@
-# Resgata WP – comandos de desenvolvimento. Rode `make help` para ver a lista.
+# Resgata Pet – comandos de desenvolvimento. Rode `make help` para ver a lista.
 SHELL := /bin/bash
 WP := docker compose run --rm -T wpcli wp
-PLUGIN := plugins/resgata-wp
+PLUGIN := plugins/resgata-pet
 
 # Node e Composer: usa os da máquina quando existem (o Node, só se a versão servir); senão,
 # roda os dois pelo Docker, para o projeto exigir apenas Docker e Make.
@@ -70,8 +70,8 @@ typecheck: $(PLUGIN)/node_modules ## Confere os tipos do TypeScript
 	$(NPM) --prefix $(PLUGIN) run typecheck
 
 test: ## Testa as permissões da API do painel e o processamento dos webhooks da Stripe
-	$(WP) eval-file wp-content/plugins/resgata-wp/tests/rest-permissions.php
-	$(WP) eval-file wp-content/plugins/resgata-wp/tests/stripe-webhooks.php
+	$(WP) eval-file wp-content/plugins/resgata-pet/tests/rest-permissions.php
+	$(WP) eval-file wp-content/plugins/resgata-pet/tests/stripe-webhooks.php
 
 stripe-setup: ## Cria os planos de apadrinhamento e o portal do cliente no sandbox da Stripe
 	$(WP) resgata stripe-setup
@@ -82,19 +82,19 @@ stripe-secret: ## Mostra o segredo dos webhooks locais (cole em STRIPE_WEBHOOK_S
 stripe: ## Repassa os eventos do sandbox da Stripe para o site local (deixe rodando)
 	docker compose --profile stripe up stripe
 
-zip: build ## Gera dist/resgata-wp.zip (plugin) e dist/resgata-tema.zip (tema), prontos para instalar
+zip: build ## Gera dist/resgata-pet.zip (plugin) e dist/resgata-tema.zip (tema), prontos para instalar
 	$(COMPOSER) --working-dir=$(PLUGIN) install --no-dev --optimize-autoloader
-	@mkdir -p dist && rm -f dist/resgata-wp.zip dist/resgata-tema.zip
+	@mkdir -p dist && rm -f dist/resgata-pet.zip dist/resgata-tema.zip
 	@# Cada pacote leva a sua cópia da licença (a GPL pede que ela acompanhe o programa).
 	@cp LICENSE $(PLUGIN)/LICENSE && cp LICENSE themes/resgata-tema/LICENSE
 	@# O plugin leva só o que roda no site: o que fica de fora está em .distignore.
 	@sed -e '/^#/d' -e '/^$$/d' -e 's|^/||' $(PLUGIN)/.distignore \
-		| awk '{ print "resgata-wp/" $$0; print "resgata-wp/" $$0 "/*" }' > dist/.plugin-exclude
-	cd plugins && zip -rq ../dist/resgata-wp.zip resgata-wp -x '*/.DS_Store' -x@../dist/.plugin-exclude
+		| awk '{ print "resgata-pet/" $$0; print "resgata-pet/" $$0 "/*" }' > dist/.plugin-exclude
+	cd plugins && zip -rq ../dist/resgata-pet.zip resgata-pet -x '*/.DS_Store' -x@../dist/.plugin-exclude
 	@rm -f dist/.plugin-exclude
 	cd themes && zip -rq ../dist/resgata-tema.zip resgata-tema -x '*/.DS_Store'
 	@rm -f $(PLUGIN)/LICENSE themes/resgata-tema/LICENSE
-	@echo "Pacotes gerados em dist/resgata-wp.zip e dist/resgata-tema.zip"
+	@echo "Pacotes gerados em dist/resgata-pet.zip e dist/resgata-tema.zip"
 
 phpcs: vendor ## Verifica o padrão de código (WordPress Coding Standards)
 	$(COMPOSER) run-script phpcs
@@ -105,7 +105,7 @@ phpcbf: vendor ## Corrige automaticamente o que for possível
 check: ## Roda o Plugin Check no plugin
 	$(WP) plugin is-installed plugin-check || $(WP) plugin install plugin-check
 	$(WP) plugin activate plugin-check
-	$(WP) plugin check resgata-wp --exclude-directories=vendor,node_modules,resources,tests,.wordpress-org
+	$(WP) plugin check resgata-pet --exclude-directories=vendor,node_modules,resources,tests,.wordpress-org
 
 # O .pot do plugin inclui as frases do painel, lidas do build (o WP-CLI não lê TypeScript).
 # Roda com mais memória, por causa do tamanho do build, e como o usuário da máquina, para
@@ -113,7 +113,7 @@ check: ## Roda o Plugin Check no plugin
 POT := docker compose run --rm -T --user $(shell id -u):$(shell id -g) -e HOME=/tmp wpcli php -d memory_limit=2G /usr/local/bin/wp i18n make-pot
 
 pot: build ## Gera os arquivos .pot de tradução do plugin e do tema
-	$(POT) wp-content/plugins/resgata-wp wp-content/plugins/resgata-wp/languages/resgata-wp.pot --exclude=vendor,node_modules,tests
+	$(POT) wp-content/plugins/resgata-pet wp-content/plugins/resgata-pet/languages/resgata-pet.pot --exclude=vendor,node_modules,tests
 	$(POT) wp-content/themes/resgata-tema wp-content/themes/resgata-tema/languages/resgata-tema.pot
 
 vendor:

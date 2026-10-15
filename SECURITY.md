@@ -1,6 +1,6 @@
 # Política de segurança
 
-O Resgata WP guarda dados pessoais de quem pede para adotar e de quem apadrinha, e conversa
+O Resgata Pet guarda dados pessoais de quem pede para adotar e de quem apadrinha, e conversa
 com a Stripe para receber pagamentos. Por isso, falhas de segurança são tratadas com
 prioridade e **em privado**, até existir uma correção.
 
@@ -41,8 +41,8 @@ uma versão anterior, atualize.
 
 ## O que entra nesta política
 
-- O plugin `resgata-wp` e o tema `resgata-tema` deste repositório.
-- Em especial: a API do painel (`resgata-wp/v1`), o webhook da Stripe, o formulário de
+- O plugin `resgata-pet` e o tema `resgata-tema` deste repositório.
+- Em especial: a API do painel (`resgata-pet/v1`), o webhook da Stripe, o formulário de
   adoção, a área do padrinho (link de acesso e resumo das doações), o registro dos
   pagamentos, o armazenamento das chaves da Stripe e as permissões dos perfis
   (Administrador, Editor e Protetor admin).
@@ -68,7 +68,7 @@ webhook, injeção de SQL, XSS, CSRF e contorno do limite de envios.
 - Use apenas chaves de sandbox da Stripe.
 - Não acesse, altere nem apague dados que não sejam seus.
 
-## Para quem usa o Resgata WP em um site
+## Para quem usa o Resgata Pet em um site
 
 - Mantenha o WordPress, o plugin e o tema atualizados.
 - Na Stripe, use sempre uma **chave restrita** (`rk_`), só com as permissões que o painel

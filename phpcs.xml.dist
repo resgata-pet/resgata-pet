@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="Resgata WP">
-	<description>WordPress Coding Standards para o plugin e o tema do Resgata WP.</description>
+<ruleset name="Resgata Pet">
+	<description>WordPress Coding Standards para o plugin e o tema do Resgata Pet.</description>
 
-	<file>plugins/resgata-wp</file>
+	<file>plugins/resgata-pet</file>
 	<file>themes/resgata-tema</file>
 	<file>docker/mu-plugins</file>
 
@@ -30,7 +30,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="resgata-wp"/>
+				<element value="resgata-pet"/>
 				<element value="resgata-tema"/>
 			</property>
 		</properties>
@@ -58,12 +58,12 @@
 		</properties>
 	</rule>
 
-	<!-- Prefixo global: `resgata_` (constantes `RESGATA_`, namespace `ResgataWP`); o tema usa `resgata_tema_`. -->
+	<!-- Prefixo global: `resgata_` (constantes `RESGATA_`, namespace `ResgataPet`); o tema usa `resgata_tema_`. -->
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
 				<element value="resgata"/>
-				<element value="ResgataWP"/>
+				<element value="ResgataPet"/>
 			</property>
 		</properties>
 	</rule>

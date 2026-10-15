@@ -8,7 +8,7 @@
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
- * plugin Resgata WP (`resgata-wp/link`), resolvidas a cada exibição.
+ * plugin Resgata Pet (`resgata-pet/link`), resolvidas a cada exibição.
  *
  * @package ResgataTema
  */
@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
 			</div>
 			<!-- /wp:group -->
 
-			<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"resgata-wp/organization","args":{"key":"tagline"}}}},"textColor":"accent-4"} -->
+			<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"resgata-pet/organization","args":{"key":"tagline"}}}},"textColor":"accent-4"} -->
 			<p class="has-accent-4-color has-text-color"></p>
 			<!-- /wp:paragraph -->
 		</div>
@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) || exit;
 			<h2 class="wp-block-heading has-medium-font-size"><?php esc_html_e( 'O site', 'resgata-tema' ); ?></h2>
 			<!-- /wp:heading -->
 
-			<!-- wp:resgata-wp/links {"group":"site"} /-->
+			<!-- wp:resgata-pet/links {"group":"site"} /-->
 		</div>
 		<!-- /wp:group -->
 
@@ -51,7 +51,7 @@ defined( 'ABSPATH' ) || exit;
 			<h2 class="wp-block-heading has-medium-font-size"><?php esc_html_e( 'Ajude', 'resgata-tema' ); ?></h2>
 			<!-- /wp:heading -->
 
-			<!-- wp:resgata-wp/links {"group":"help"} /-->
+			<!-- wp:resgata-pet/links {"group":"help"} /-->
 		</div>
 		<!-- /wp:group -->
 
@@ -61,7 +61,7 @@ defined( 'ABSPATH' ) || exit;
 			<h2 class="wp-block-heading has-medium-font-size"><?php esc_html_e( 'Fale com a gente', 'resgata-tema' ); ?></h2>
 			<!-- /wp:heading -->
 
-			<!-- wp:resgata-wp/contact {"showPix":false,"compact":true} /-->
+			<!-- wp:resgata-pet/contact {"showPix":false,"compact":true} /-->
 		</div>
 		<!-- /wp:group -->
 	</div>
@@ -69,7 +69,7 @@ defined( 'ABSPATH' ) || exit;
 
 	<!-- wp:group {"align":"wide","className":"is-style-resgata-footer-bottom","layout":{"type":"default"}} -->
 	<div class="wp-block-group alignwide is-style-resgata-footer-bottom">
-		<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"resgata-wp/organization","args":{"key":"copyright"}}}},"textColor":"accent-4","fontSize":"small"} -->
+		<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"resgata-pet/organization","args":{"key":"copyright"}}}},"textColor":"accent-4","fontSize":"small"} -->
 		<p class="has-accent-4-color has-text-color has-small-font-size"></p>
 		<!-- /wp:paragraph -->
 	</div>

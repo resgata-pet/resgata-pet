@@ -1,0 +1,47 @@
+<?php
+/**
+ * Plugin Name:       Resgata Pet
+ * Plugin URI:        https://github.com/resgata-pet/resgata-pet
+ * Description:       Kit para protetoras independentes de animais: divulgação de animais para adoção, pedidos de adoção, apadrinhamento e prestação de contas.
+ * Version:           0.5.0
+ * Requires at least: 6.9
+ * Requires PHP:      8.1
+ * Author:            Resgata Pet
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       resgata-pet
+ * Domain Path:       /languages
+ *
+ * @package ResgataPet
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+define( 'RESGATA_VERSION', '0.5.0' );
+define( 'RESGATA_DB_VERSION', 6 );
+define( 'RESGATA_PLUGIN_FILE', __FILE__ );
+define( 'RESGATA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'RESGATA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+if ( is_readable( RESGATA_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
+	require_once RESGATA_PLUGIN_DIR . 'vendor/autoload.php';
+} else {
+	// Autoload PSR-4 de reserva, para o plugin funcionar sem `composer install`.
+	spl_autoload_register(
+		static function ( string $class_name ): void {
+			$prefix = 'ResgataPet\\';
+			if ( ! str_starts_with( $class_name, $prefix ) ) {
+				return;
+			}
+			$file = RESGATA_PLUGIN_DIR . 'src/' . str_replace( '\\', '/', substr( $class_name, strlen( $prefix ) ) ) . '.php';
+			if ( is_readable( $file ) ) {
+				require_once $file;
+			}
+		}
+	);
+}
+
+register_activation_hook( __FILE__, array( ResgataPet\Core\Activator::class, 'activate' ) );
+register_deactivation_hook( __FILE__, array( ResgataPet\Core\Deactivator::class, 'deactivate' ) );
+
+add_action( 'plugins_loaded', array( ResgataPet\Plugin::class, 'boot' ) );

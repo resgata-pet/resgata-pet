@@ -1,6 +1,6 @@
-# Como contribuir com o Resgata WP
+# Como contribuir com o Resgata Pet
 
-Obrigado por querer ajudar. O Resgata WP é um kit para WordPress usado por protetoras
+Obrigado por querer ajudar. O Resgata Pet é um kit para WordPress usado por protetoras
 independentes de animais, pessoas que em geral **não são técnicas**. Toda contribuição é
 avaliada pensando nelas: telas simples, textos curtos, nada de jargão.
 
@@ -25,8 +25,8 @@ adotantes e padrinhos em issues, pull requests ou capturas de tela.
 Você precisa de Docker (com Compose) e Make. No Windows, use o WSL.
 
 ```bash
-git clone <endereço do seu fork> resgata-wp
-cd resgata-wp
+git clone <endereço do seu fork> resgata-pet
+cd resgata-pet
 make setup
 ```
 
@@ -41,7 +41,7 @@ TypeScript a cada alteração.
 
 | Pasta | O que tem |
 |---|---|
-| `plugins/resgata-wp` | Toda a funcionalidade: cadastros, formulários, painel, blocos, pagamentos |
+| `plugins/resgata-pet` | Toda a funcionalidade: cadastros, formulários, painel, blocos, pagamentos |
 | `themes/resgata-tema` | Só a aparência: `theme.json`, modelos, patterns e CSS dos blocos |
 
 **Regra de ouro: funcionalidade no plugin, aparência no tema.** O plugin precisa funcionar
@@ -62,7 +62,7 @@ código, mas são a referência mais completa também para pessoas:
 - **PHP 8.1+ e WordPress 6.9+**, só com APIs nativas do WordPress (sem ACF nem outros plugins).
 - **WordPress Coding Standards**, conferidos por `make phpcs` (`make phpcbf` corrige o que for
   automático). Prefixo `resgata_` no plugin e `resgata_tema_` no tema.
-- **TypeScript** para todo JavaScript do plugin, em `plugins/resgata-wp/resources/`.
+- **TypeScript** para todo JavaScript do plugin, em `plugins/resgata-pet/resources/`.
 - **Textos em português do Brasil**, sempre pelas funções de tradução (`__()`, `esc_html__()`;
   no TypeScript, `__()` de `@wordpress/i18n`). Ao criar ou mudar textos, rode `make pot` e
   inclua os arquivos `.pot` atualizados no pull request.
@@ -117,13 +117,13 @@ correspondente e com a documentação atualizada (`plugins/CLAUDE.md` e o arquiv
 
 Só quem mantém o projeto publica versões.
 
-1. Atualize a versão em `plugins/resgata-wp/resgata-wp.php` (`Version` e `RESGATA_VERSION`) e em
-   `plugins/resgata-wp/readme.txt` (`Stable tag` e o `Changelog`).
+1. Atualize a versão em `plugins/resgata-pet/resgata-pet.php` (`Version` e `RESGATA_VERSION`) e em
+   `plugins/resgata-pet/readme.txt` (`Stable tag` e o `Changelog`).
 2. Leve a mudança ao `main`.
 3. Crie e envie a tag com o mesmo número, sem `v`: `git tag 0.5.1 && git push origin 0.5.1`.
 
 O fluxo `.github/workflows/release.yml` confere a versão, gera os pacotes (`make zip`) e cria a
-release no GitHub com `resgata-wp.zip` e `resgata-tema.zip`. Com a variável `WPORG_SLUG`
+release no GitHub com `resgata-pet.zip` e `resgata-tema.zip`. Com a variável `WPORG_SLUG`
 definida no repositório, ele também envia a versão do plugin ao WordPress.org.
 
 ## Usando assistentes de código

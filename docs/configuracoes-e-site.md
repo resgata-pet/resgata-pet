@@ -3,7 +3,7 @@
 Código em `src/Modules/Settings/`. Tudo aqui usa a capability `resgata_manage_settings`
 (Administrador e Protetor admin; o Editor comum não).
 
-A tela "Resgata WP → Configurações" do wp-admin (módulos ativos e retenção de dados) é outra
+A tela "Resgata Pet → Configurações" do wp-admin (módulos ativos e retenção de dados) é outra
 coisa e continua só para o Administrador.
 
 ## Configurações da protetora
@@ -29,7 +29,7 @@ coisa e continua só para o Administrador.
 
 ## Contato
 
-- Bloco `resgata-wp/contact` (template `contact.php`): WhatsApp em destaque, um cartão por
+- Bloco `resgata-pet/contact` (template `contact.php`): WhatsApp em destaque, um cartão por
   dado (telefone, e-mail, horário, localização, CNPJ), redes sociais com o logotipo de cada
   uma (`Icons::brand()`) e a chave Pix com o botão "Doar com QR Code" quando existe a página
   "Como ajudar".
@@ -48,13 +48,13 @@ coisa e continua só para o Administrador.
 - Dados na option `resgata_banners`. `Banners.php` reúne limites, sanitização e renderização.
 - Links dos botões: endereço completo `http(s)://`, caminho do site (`/animais/`) ou âncora;
   qualquer outra coisa é recusada (`Banners::sanitize_url()`).
-- Site: bloco `resgata-wp/banners` (template `banners.php`). Sem banner ligado, mostra um
+- Site: bloco `resgata-pet/banners` (template `banners.php`). Sem banner ligado, mostra um
   banner padrão com a frase da protetora. Com mais de um, rolam para o lado com o mesmo script
   da galeria do animal, sem avançar sozinhos.
 
 ## Números da protetora
 
-Bloco `resgata-wp/impact` (template `impact.php`): animais resgatados, adoções, esperando um
+Bloco `resgata-pet/impact` (template `impact.php`): animais resgatados, adoções, esperando um
 lar e padrinhos ativos, contados dos cadastros (filtro `resgata_impact_items`).
 
 ## Doação por Pix e página "Como ajudar"
@@ -63,7 +63,7 @@ lar e padrinhos ativos, contados dos cadastros (filtro `resgata_impact_items`).
   devolve a chave, o titular e os valores já no formato do QR Code.
 - O Pix cai direto na conta: **as doações não são registradas**. Doação com confirmação
   automática fica para o módulo de doações avulsas pela Stripe.
-- Bloco `resgata-wp/pix-donation` (template `pix-donation.php`, `Settings\PixDonation`): QR
+- Bloco `resgata-pet/pix-donation` (template `pix-donation.php`, `Settings\PixDonation`): QR
   Code, valores sugeridos (filtro `resgata_pix_amounts`), chave com botão de copiar e "Pix copia e
   cola". O código e o QR são montados no navegador pela biblioteca `qrcode-pix` (MIT), em
   `resources/frontend/pix.ts` (configuração `wp` do webpack, com o polyfill `buffer`). Sem o
@@ -73,9 +73,9 @@ lar e padrinhos ativos, contados dos cadastros (filtro `resgata_impact_items`).
   `resgata_help_page_id`); se já existir uma página com o bloco, ela é aproveitada, e se a página
   for apagada, nasce de novo no próximo salvamento. O conteúdo e o modelo vêm dos filtros
   `resgata_help_page_content` e `resgata_help_page_template`.
-- Bloco `resgata-wp/pix-once`: o mesmo QR Code e a mesma chave, com textos de "doação única",
+- Bloco `resgata-pet/pix-once`: o mesmo QR Code e a mesma chave, com textos de "doação única",
   para colocar dentro de outras páginas sem que elas virem a "Como ajudar".
-- Bloco `resgata-wp/donate-banner` (template `donate-banner.php`): chamada "Doe por Pix" com o
+- Bloco `resgata-pet/donate-banner` (template `donate-banner.php`): chamada "Doe por Pix" com o
   QR Code (sem valor: a pessoa escolhe no app), o botão "Copiar código Pix" e o botão que leva
   à "Como ajudar". Usa o mesmo `pix.ts` (`data-resgata-pix`), com o código num campo oculto; sem o
   script, ficam o texto e o botão. No celular o tema esconde o QR Code, que não tem como ser

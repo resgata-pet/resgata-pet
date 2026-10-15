@@ -7,11 +7,11 @@ Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Tema de blocos acolhedor para protetoras de animais, feito para o plugin Resgata WP.
+Tema de blocos acolhedor para protetoras de animais, feito para o plugin Resgata Pet.
 
 == Description ==
 
-O Resgata Tema dá ao site da protetora um visual acolhedor e pronto para o celular. Ele é um tema filho do Twenty Twenty-Five e cuida só da aparência: os animais, os pedidos de adoção, o apadrinhamento e os demais dados ficam no plugin Resgata WP.
+O Resgata Tema dá ao site da protetora um visual acolhedor e pronto para o celular. Ele é um tema filho do Twenty Twenty-Five e cuida só da aparência: os animais, os pedidos de adoção, o apadrinhamento e os demais dados ficam no plugin Resgata Pet.
 
 O que o tema traz:
 
@@ -22,20 +22,20 @@ O que o tema traz:
 * Cabeçalho com o botão "Quero ajudar" e rodapé com contato e links.
 * Estilos de bloco: "Cartão", "Faixa suave", "Chamada do topo", "Cabeçalho do site" e "Rodapé do site".
 * Oito paletas de cores prontas: Oceano, Terracota, Ameixa, Mel, Petróleo, Framboesa, Oliva e Grafite.
-* O visual dos blocos do plugin Resgata WP (lista e página do animal, formulário de adoção, planos de apadrinhamento, área do padrinho, Pix, contato, banners e números).
+* O visual dos blocos do plugin Resgata Pet (lista e página do animal, formulário de adoção, planos de apadrinhamento, área do padrinho, Pix, contato, banners e números).
 
 Logo, cores, textos, modelos e patterns são editáveis em "Aparência → Editor".
 
 == Installation ==
 
 1. Instale e ative o tema Twenty Twenty-Five, que é o tema pai.
-2. Instale e ative o plugin Resgata WP. Sem ele, as seções de animais, adoção e apadrinhamento não aparecem.
+2. Instale e ative o plugin Resgata Pet. Sem ele, as seções de animais, adoção e apadrinhamento não aparecem.
 3. Em "Aparência → Temas → Adicionar tema → Enviar tema", envie o arquivo `resgata-tema.zip` e ative o Resgata Tema.
 4. Para trocar as cores de uma vez, abra "Aparência → Editor → Estilos → Cores" e escolha uma das paletas.
 
 == Frequently Asked Questions ==
 
-= Preciso do plugin Resgata WP? =
+= Preciso do plugin Resgata Pet? =
 
 Sim, para o site completo. O tema só cuida da aparência; os animais, os formulários e os pagamentos são do plugin.
 
@@ -47,7 +47,7 @@ Sim. O Resgata Tema é um tema filho e usa os modelos, as fontes e parte dos pat
 
 Sim, tudo pelo Editor do Site, sem mexer em código. As paletas prontas trocam todas as cores do site de uma vez.
 
-= Posso usar o plugin Resgata WP com outro tema? =
+= Posso usar o plugin Resgata Pet com outro tema? =
 
 Sim. O plugin funciona com qualquer tema e traz um visual neutro próprio.
 
@@ -74,7 +74,7 @@ Sim. O plugin funciona com qualquer tema e traz um visual neutro próprio.
 
 == Copyright ==
 
-Resgata Tema, Copyright (C) 2026 contribuidores do Resgata WP.
+Resgata Tema, Copyright (C) 2026 contribuidores do Resgata Pet.
 O Resgata Tema é distribuído sob os termos da GNU GPL, versão 2 ou posterior.
 
 Este programa é software livre: você pode redistribuí-lo e modificá-lo sob os termos da Licença Pública Geral GNU, publicada pela Free Software Foundation, na versão 2 da licença ou (à sua escolha) em qualquer versão posterior.
@@ -88,7 +88,7 @@ O Resgata Tema é um tema filho do Twenty Twenty-Five, (C) the WordPress team, d
 O tema não traz fontes: elas vêm do Twenty Twenty-Five.
 
 Imagem de apresentação (screenshot.png)
-Criada pelos contribuidores do Resgata WP para o projeto.
+Criada pelos contribuidores do Resgata Pet para o projeto.
 Licença: GNU GPL, versão 2 ou posterior
 
 Ícones do Lucide, embutidos no CSS dos blocos

@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-pet/donate-banner",
+	"version": "0.1.0",
+	"title": "Banner de doação",
+	"category": "resgata-pet",
+	"icon": "megaphone",
+	"description": "Chamada \"Doe por Pix\" com o QR Code e botão para a página \"Como ajudar\".",
+	"keywords": [ "pix", "doação", "banner", "chamada" ],
+	"textdomain": "resgata-pet",
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true }
+	},
+	"editorScript": "resgata-blocks-editor",
+	"style": "resgata-frontend",
+	"render": "file:./render.php"
+}

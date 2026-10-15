@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: Resgata WP – Mailpit (somente desenvolvimento)
+ * Plugin Name: Resgata Pet – Mailpit (somente desenvolvimento)
  * Description: Envia todos os e-mails do WordPress para o Mailpit do ambiente Docker local.
  *
- * @package ResgataWP
+ * @package ResgataPet
  */
 
 defined( 'ABSPATH' ) || exit;

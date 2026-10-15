@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-pet/pix-once",
+	"version": "0.1.0",
+	"title": "Doação única por Pix",
+	"category": "resgata-pet",
+	"icon": "money-alt",
+	"description": "Mostra o QR Code e a chave Pix como opção de doação única, para colocar em outras páginas (ex.: a de apadrinhamento). Não define a página \"Como ajudar\".",
+	"keywords": [
+		"pix",
+		"doação única",
+		"qr code",
+		"padrinho"
+	],
+	"textdomain": "resgata-pet",
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		],
+		"spacing": {
+			"margin": true
+		}
+	},
+	"editorScript": "resgata-blocks-editor",
+	"style": "resgata-frontend",
+	"render": "file:./render.php"
+}

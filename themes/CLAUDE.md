@@ -19,12 +19,12 @@ isso:
   com `esc_html_e()`. O que o pattern imprime vira conteúdo salvo quando alguém edita, então
   consultas a páginas, opções ou ao plugin e `return` condicional ficam fora dele.
 - **Links e textos dinâmicos vêm de ligações de blocos** (`Core\Bindings`, no plugin):
-  - `resgata-wp/link` no `url` de um botão, com as chaves `animals`, `help`, `donate`,
+  - `resgata-pet/link` no `url` de um botão, com as chaves `animals`, `help`, `donate`,
     `sponsorship`, `contact` e `home`. Se a página não existe, vale a próxima da lista de
     reserva.
-  - `resgata-wp/organization` no `content` de um parágrafo, com `name`, `tagline` e
+  - `resgata-pet/organization` no `content` de um parágrafo, com `name`, `tagline` e
     `copyright`.
-  - Listas de links (rodapé) usam o bloco `resgata-wp/links`, que só lista as páginas que
+  - Listas de links (rodapé) usam o bloco `resgata-pet/links`, que só lista as páginas que
     existem.
   - O editor mostra os valores reais (`resgataBlocks.bindings`).
 - **Aparência no `theme.json` e em estilos de bloco**, em vez de classes soltas. Cores, raios
@@ -48,7 +48,7 @@ isso:
 
 ## CSS dos blocos do plugin
 
-`functions.php` declara `add_theme_support( 'resgata-wp' )`: o plugin deixa de enviar o CSS
+`functions.php` declara `add_theme_support( 'resgata-pet' )`: o plugin deixa de enviar o CSS
 dele e o tema estiliza as classes `.resgata-*`.
 
 O CSS é dividido por bloco, em `assets/css/blocks/`, e cada página carrega só os arquivos dos
@@ -93,11 +93,11 @@ ao mudar uma cor da marca, mude nos dois (`designer.md`).
 ## Modelos, parts e patterns
 
 - `templates/single-resgata_animal.html` e `archive-resgata_animal.html` substituem os modelos que o
-  plugin registra. A página do animal usa só os blocos `resgata-wp/animal-details` e
-  `resgata-wp/adoption-form`; o arquivo `/animais/` usa o pattern `animais-chamada` (título e
+  plugin registra. A página do animal usa só os blocos `resgata-pet/animal-details` e
+  `resgata-pet/adoption-form`; o arquivo `/animais/` usa o pattern `animais-chamada` (título e
   apresentação) e a lista em 4 colunas. Modelo `.html` não é traduzível: todo texto fica em
   pattern.
-- Template PHP do plugin: para sobrescrever um, crie `resgata-wp/<arquivo>.php` na pasta do
+- Template PHP do plugin: para sobrescrever um, crie `resgata-pet/<arquivo>.php` na pasta do
   tema.
 - `templates/front-page.html`: banners, atalhos, animais para adoção, banner de doação,
   números e chamada final. As seções são os patterns `home-*`.
@@ -115,7 +115,7 @@ ao mudar uma cor da marca, mude nos dois (`designer.md`).
 - `parts/header.html` → pattern `cabecalho`, com o botão "Quero ajudar" (leva à "Como
   ajudar").
 - `parts/footer.html` → pattern `rodape`: nome do site e frase da protetora, links das páginas
-  que existem ("O site" e "Ajude"), contato resumido (bloco `resgata-wp/contact` com
+  que existem ("O site" e "Ajude"), contato resumido (bloco `resgata-pet/contact` com
   `compact: true`) e linha de direitos, com a política de privacidade se houver.
 - Patterns de página, para usar com o modelo "Página sem título": `pagina-contato`,
   `pagina-como-ajudar` (chamada, atalhos, Pix, apadrinhamento, números e animais) e
@@ -126,11 +126,11 @@ ao mudar uma cor da marca, mude nos dois (`designer.md`).
   `resgata_help_page_content` / `resgata_help_page_template`.
 - A página "Obrigado" (agradecimento do apadrinhamento) também é criada pelo plugin; o tema
   só aplica o modelo sem título (`resgata_thanks_page_template`). O CSS do bloco
-  `resgata-wp/sponsorship-thanks` fica em `assets/css/blocks/sponsorship.css`.
+  `resgata-pet/sponsorship-thanks` fica em `assets/css/blocks/sponsorship.css`.
 - O plugin acha a página de apadrinhamento e a "Como ajudar" pelo bloco que está **no conteúdo
-  da página** (`Core\Links`). Mantenha os blocos `resgata-wp/sponsorship-plans` e
-  `resgata-wp/pix-donation` no pattern da página, fora do modelo.
-- O bloco `resgata-wp/donate-banner` está na página inicial, na lista de animais e na página
+  da página** (`Core\Links`). Mantenha os blocos `resgata-pet/sponsorship-plans` e
+  `resgata-pet/pix-donation` no pattern da página, fora do modelo.
+- O bloco `resgata-pet/donate-banner` está na página inicial, na lista de animais e na página
   do animal.
 
 ## Conferir

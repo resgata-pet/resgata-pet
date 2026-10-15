@@ -1,5 +1,5 @@
-# Ambiente de desenvolvimento local do Resgata WP. Não use em produção.
-name: resgata-wp
+# Ambiente de desenvolvimento local do Resgata Pet. Não use em produção.
+name: resgata-pet
 
 x-wp-env: &wp-env
   WORDPRESS_DB_HOST: db
@@ -24,7 +24,7 @@ x-wp-env: &wp-env
 
 x-wp-volumes: &wp-volumes
   - wp_data:/var/www/html
-  - ./plugins/resgata-wp:/var/www/html/wp-content/plugins/resgata-wp
+  - ./plugins/resgata-pet:/var/www/html/wp-content/plugins/resgata-pet
   - ./themes/resgata-tema:/var/www/html/wp-content/themes/resgata-tema
   - ./docker/mu-plugins:/var/www/html/wp-content/mu-plugins:ro
 
@@ -80,11 +80,11 @@ services:
         condition: service_started
     environment:
       STRIPE_API_KEY: ${STRIPE_SANDBOX_SECRET_KEY:-}
-      STRIPE_DEVICE_NAME: resgata-wp-local
+      STRIPE_DEVICE_NAME: resgata-pet-local
     command:
       - listen
       - --forward-to
-      - http://wordpress/wp-json/resgata-wp/v1/stripe/webhook
+      - http://wordpress/wp-json/resgata-pet/v1/stripe/webhook
       - --events
       - checkout.session.completed,customer.subscription.created,customer.subscription.updated,customer.subscription.deleted,invoice.paid,invoice.payment_failed,invoice_payment.paid,charge.refunded,charge.dispute.created,charge.dispute.updated,charge.dispute.closed,customer.updated
 

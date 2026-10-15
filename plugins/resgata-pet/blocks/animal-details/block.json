@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-pet/animal-details",
+	"version": "0.2.0",
+	"title": "Página do animal",
+	"category": "resgata-pet",
+	"icon": "id-alt",
+	"description": "Mostra a página do animal: fotos, resumo, história, saúde e outros animais para adoção.",
+	"keywords": [ "animal", "ficha", "saúde", "galeria" ],
+	"textdomain": "resgata-pet",
+	"attributes": {
+		"section": {
+			"type": "string",
+			"enum": [ "all", "breadcrumb", "gallery", "summary", "story", "health", "help", "related", "facts" ],
+			"default": "all"
+		}
+	},
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true, "padding": true }
+	},
+	"editorScript": "resgata-blocks-editor",
+	"style": "resgata-frontend",
+	"render": "file:./render.php"
+}

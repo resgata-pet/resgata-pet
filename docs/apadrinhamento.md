@@ -81,7 +81,7 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
 
 ## Webhook
 
-- `POST /wp-json/resgata-wp/v1/stripe/webhook` (`WebhookController`). É a **única** rota
+- `POST /wp-json/resgata-pet/v1/stripe/webhook` (`WebhookController`). É a **única** rota
   pública do namespace e a única fora de `BaseController::route()`: a autenticação é a
   assinatura do evento, conferida em `WebhookHandler::handle()` sobre o corpo bruto.
 - Evento repetido responde 200 sem efeito; evento mais antigo que o último aplicado é
@@ -102,7 +102,7 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
 
 ## Site
 
-- Blocos `resgata-wp/sponsorship-plans` e `resgata-wp/sponsor-area` (templates
+- Blocos `resgata-pet/sponsorship-plans` e `resgata-pet/sponsor-area` (templates
   `sponsorship-plans.php` e `sponsor-area.php`). Os planos aparecem como cartões, um por
   valor, cada um com o seu botão (o botão envia o plano).
 - Contador público (`Plans::counter()`): assinaturas `active` + ajuste manual. A option
@@ -118,7 +118,7 @@ Chamada nova à Stripe que exija outra permissão entra em `Gateway::PERMISSIONS
   e-mail de boas-vindas).
 - Página de agradecimento (`ThanksPage`): depois de pagar, a Stripe devolve a pessoa para a
   página escolhida nas Configurações (`sponsorship_thanks_page`). O plugin cria a página
-  "Obrigado", com o bloco `resgata-wp/sponsorship-thanks` (template `sponsorship-thanks.php`),
+  "Obrigado", com o bloco `resgata-pet/sponsorship-thanks` (template `sponsorship-thanks.php`),
   ao salvar o primeiro plano ou as Configurações com um plano à venda; se for apagada, nasce
   de novo no próximo salvamento. O conteúdo e o modelo vêm dos filtros
   `resgata_thanks_page_content` e `resgata_thanks_page_template`. O título e o texto do bloco são os

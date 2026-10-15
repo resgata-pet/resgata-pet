@@ -22,7 +22,7 @@ As regras de build e de importação estão em `plugins/CLAUDE.md`; o visual, em
 
 ## API
 
-- Rotas em `resgata-wp/v1`, um controller por área em `src/Modules/Panel/Rest/`, sempre por
+- Rotas em `resgata-pet/v1`, um controller por área em `src/Modules/Panel/Rest/`, sempre por
   `BaseController::route()` (ver `plugins/CLAUDE.md`).
 - Filtros de lista chegam separados por vírgula e são validados por `enum` no schema.
 - `GET /dashboard` devolve `null` nas áreas que a pessoa não pode ver.
@@ -33,7 +33,7 @@ As regras de build e de importação estão em `plugins/CLAUDE.md`; o visual, em
 
 - Tailwind 4 (via `postcss.config.js`, em CommonJS).
 - Componentes shadcn/ui na base **Base UI**, em `resources/painel/components/ui/`. Para
-  acrescentar um: `npx shadcn@latest add <nome>` dentro de `plugins/resgata-wp`.
+  acrescentar um: `npx shadcn@latest add <nome>` dentro de `plugins/resgata-pet`.
 - **Variações escritas à mão**, como em `button.tsx` e `badge.tsx`: se o componente novo vier
   com `cva` (`class-variance-authority`, Apache-2.0, incompatível com GPLv2), reescreva-as.
 - Só modo claro. A linha `@custom-variant dark` em `index.css` impede que as classes `dark:`

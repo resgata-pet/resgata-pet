@@ -8,7 +8,7 @@
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
- * plugin Resgata WP (`resgata-wp/link`), resolvidas a cada exibição.
+ * plugin Resgata Pet (`resgata-pet/link`), resolvidas a cada exibição.
  *
  * @package ResgataTema
  */
@@ -33,7 +33,7 @@ defined( 'ABSPATH' ) || exit;
 
 			<!-- wp:buttons -->
 			<div class="wp-block-buttons">
-				<!-- wp:button {"className":"is-style-resgata-heart","metadata":{"bindings":{"url":{"source":"resgata-wp/link","args":{"key":"help"}}}}} -->
+				<!-- wp:button {"className":"is-style-resgata-heart","metadata":{"bindings":{"url":{"source":"resgata-pet/link","args":{"key":"help"}}}}} -->
 				<div class="wp-block-button is-style-resgata-heart"><a class="wp-block-button__link wp-element-button"><?php esc_html_e( 'Quero ajudar', 'resgata-tema' ); ?></a></div>
 				<!-- /wp:button -->
 			</div>

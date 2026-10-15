@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "resgata-pet/banners",
+	"version": "0.1.0",
+	"title": "Banners",
+	"category": "resgata-pet",
+	"icon": "format-image",
+	"description": "Mostra os banners escolhidos no painel (Banners), com foto, título e botões.",
+	"keywords": [ "banner", "destaque", "início", "capa" ],
+	"textdomain": "resgata-pet",
+	"supports": {
+		"html": false,
+		"align": [ "wide", "full" ],
+		"spacing": { "margin": true }
+	},
+	"editorScript": "resgata-blocks-editor",
+	"style": "resgata-frontend",
+	"render": "file:./render.php"
+}
