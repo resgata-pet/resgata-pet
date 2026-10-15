@@ -222,29 +222,35 @@ final class Sponsors {
 	public static function query( int $page, int $per_page, array $statuses = array(), string $search = '' ): array {
 		global $wpdb;
 
-		$where = array( '1 = 1' );
-		$args  = array( self::table() );
+		// Filtros opcionais com SQL fixo: lista de situações vazia e busca vazia valem como "todas".
+		$status_list = implode( ',', array_map( 'sanitize_key', $statuses ) );
+		$like        = '' !== $search ? '%' . $wpdb->esc_like( $search ) . '%' : '';
+		$table       = self::table();
+		$offset      = ( max( 1, $page ) - 1 ) * $per_page;
 
-		if ( $statuses ) {
-			$where[] = 'status IN (' . implode( ', ', array_fill( 0, count( $statuses ), '%s' ) ) . ')';
-			$args    = array_merge( $args, array_values( $statuses ) );
-		}
-
-		if ( '' !== $search ) {
-			$like    = '%' . $wpdb->esc_like( $search ) . '%';
-			$where[] = '( name LIKE %s OR email LIKE %s )';
-			$args[]  = $like;
-			$args[]  = $like;
-		}
-
-		$where_sql = implode( ' AND ', $where );
-
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- Tabela própria; $where_sql só tem marcadores, preenchidos pelo prepare().
-		$total = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM %i WHERE $where_sql", $args ) );
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery -- Tabela própria; consulta só do painel.
+		$total = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*) FROM %i WHERE ( %s = '' OR FIND_IN_SET( status, %s ) ) AND ( %s = '' OR name LIKE %s OR email LIKE %s )",
+				$table,
+				$status_list,
+				$status_list,
+				$like,
+				$like,
+				$like
+			)
+		);
 		$items = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM %i WHERE $where_sql ORDER BY created_at DESC, id DESC LIMIT %d OFFSET %d",
-				array_merge( $args, array( $per_page, ( max( 1, $page ) - 1 ) * $per_page ) )
+				"SELECT * FROM %i WHERE ( %s = '' OR FIND_IN_SET( status, %s ) ) AND ( %s = '' OR name LIKE %s OR email LIKE %s ) ORDER BY created_at DESC, id DESC LIMIT %d OFFSET %d",
+				$table,
+				$status_list,
+				$status_list,
+				$like,
+				$like,
+				$like,
+				$per_page,
+				$offset
 			),
 			ARRAY_A
 		);

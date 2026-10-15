@@ -73,30 +73,32 @@ final class Payments {
 			$data['payment_intent_id'] = substr( sanitize_text_field( (string) $data['payment_intent_id'] ), 0, 64 );
 		}
 
-		$columns = array( 'invoice_id', 'created_at' );
-		$marks   = array( '%s', '%s' );
-		$values  = array( substr( sanitize_text_field( $invoice_id ), 0, 64 ), current_time( 'mysql', true ) );
-		$updates = array();
+		$invoice_id = substr( sanitize_text_field( $invoice_id ), 0, 64 );
+		$table      = self::table();
 
-		foreach ( $data as $column => $value ) {
-			$columns[] = $column;
-			$marks[]   = $allowed[ $column ];
-			$values[]  = $value;
-			$updates[] = "$column = VALUES($column)";
-		}
-
-		$columns_sql = implode( ', ', $columns );
-		$marks_sql   = implode( ', ', $marks );
-		$updates_sql = implode( ', ', $updates );
-
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- Tabela própria; os nomes de coluna vêm da lista fixa acima e os valores passam pelo prepare().
-		$saved = $wpdb->query(
+		// O primeiro evento cria a linha da fatura (invoice_id é UNIQUE); cada evento grava os seus campos.
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Tabela própria.
+		$created = $wpdb->query(
 			$wpdb->prepare(
-				"INSERT INTO %i ( $columns_sql ) VALUES ( $marks_sql ) ON DUPLICATE KEY UPDATE $updates_sql",
-				array_merge( array( self::table() ), $values )
+				'INSERT IGNORE INTO %i ( invoice_id, created_at ) VALUES ( %s, %s )',
+				$table,
+				$invoice_id,
+				current_time( 'mysql', true )
 			)
 		);
-		// phpcs:enable
+
+		if ( false === $created ) {
+			return false;
+		}
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Tabela própria; os webhooks precisam do dado atual.
+		$saved = $wpdb->update(
+			$table,
+			$data,
+			array( 'invoice_id' => $invoice_id ),
+			array_map( static fn( $column ) => $allowed[ $column ], array_keys( $data ) ),
+			array( '%s' )
+		);
 
 		return false !== $saved;
 	}
