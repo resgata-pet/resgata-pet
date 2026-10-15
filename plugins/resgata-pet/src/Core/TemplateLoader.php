@@ -67,6 +67,19 @@ final class TemplateLoader {
 	}
 
 	/**
+	 * Imprime um template. Cada template escapa os próprios valores.
+	 *
+	 * @param string               $name Nome do arquivo de template.
+	 * @param array<string, mixed> $args Variáveis disponíveis no template em `$resgata_args`.
+	 */
+	public static function display( string $name, array $args = array() ): void {
+		$path = self::locate( $name );
+		if ( '' !== $path ) {
+			self::include_template( $path, $args );
+		}
+	}
+
+	/**
 	 * Inclui o template em um escopo isolado.
 	 *
 	 * @param string               $resgata_path Caminho do template.

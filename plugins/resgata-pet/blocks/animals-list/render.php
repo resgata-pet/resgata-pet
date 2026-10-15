@@ -7,6 +7,7 @@
  * @var array<string, mixed> $attributes Atributos do bloco.
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Modules\Animals\Frontend\ListRenderer;
 
 defined( 'ABSPATH' ) || exit;
@@ -23,5 +24,4 @@ $resgata_html = ListRenderer::render(
 	get_block_wrapper_attributes( array( 'class' => 'resgata-animals' ) )
 );
 
-// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template escapa cada valor; os atributos do wrapper vêm escapados do core.
-echo $resgata_html;
+echo wp_kses( $resgata_html, Html::allowed() );

@@ -30,6 +30,7 @@
  * } $resgata_args
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Icons;
 use ResgataPet\Modules\Animals\Animal;
 
@@ -40,7 +41,6 @@ $resgata_name   = $resgata_args['name'];
 $resgata_has    = static fn( string $resgata_key ): bool => in_array( $resgata_key, $resgata_args['sections'], true );
 $resgata_parts  = array();
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() devolve SVG fixo do plugin, com a classe já escapada.
 
 if ( $resgata_has( 'breadcrumb' ) ) :
 	ob_start();
@@ -49,18 +49,18 @@ if ( $resgata_has( 'breadcrumb' ) ) :
 		<ol class="resgata-breadcrumb__list">
 			<li>
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<?php echo Icons::svg( 'house' ); ?>
+					<?php echo wp_kses( Icons::svg( 'house' ), Html::svg() ); ?>
 					<span class="screen-reader-text"><?php esc_html_e( 'Início', 'resgata-pet' ); ?></span>
 				</a>
 			</li>
 			<?php if ( '' !== $resgata_args['archive_url'] ) : ?>
 				<li>
-					<?php echo Icons::svg( 'chevron-right', 'resgata-breadcrumb__separator' ); ?>
+					<?php echo wp_kses( Icons::svg( 'chevron-right', 'resgata-breadcrumb__separator' ), Html::svg() ); ?>
 					<a href="<?php echo esc_url( $resgata_args['archive_url'] ); ?>"><?php esc_html_e( 'Animais', 'resgata-pet' ); ?></a>
 				</li>
 			<?php endif; ?>
 			<li aria-current="page">
-				<?php echo Icons::svg( 'chevron-right', 'resgata-breadcrumb__separator' ); ?>
+				<?php echo wp_kses( Icons::svg( 'chevron-right', 'resgata-breadcrumb__separator' ), Html::svg() ); ?>
 				<?php echo esc_html( $resgata_name ); ?>
 			</li>
 		</ol>
@@ -98,17 +98,17 @@ if ( $resgata_has( 'gallery' ) && $resgata_args['photos'] ) :
 				<?php endforeach; ?>
 			</ul>
 			<span class="resgata-badge resgata-badge--<?php echo esc_attr( $resgata_animal->status() ); ?> resgata-viewer__status">
-				<?php echo Icons::svg( 'paw-print' ); ?>
+				<?php echo wp_kses( Icons::svg( 'paw-print' ), Html::svg() ); ?>
 				<?php echo esc_html( $resgata_animal->status_label() ); ?>
 			</span>
 			<?php if ( $resgata_total > 1 ) : ?>
 				<?php // As setas só funcionam com o script: nascem escondidas e ele as mostra. ?>
 				<button type="button" class="resgata-viewer__arrow resgata-viewer__arrow--prev" data-resgata-viewer-prev hidden>
-					<?php echo Icons::svg( 'chevron-left' ); ?>
+					<?php echo wp_kses( Icons::svg( 'chevron-left' ), Html::svg() ); ?>
 					<span class="screen-reader-text"><?php esc_html_e( 'Foto anterior', 'resgata-pet' ); ?></span>
 				</button>
 				<button type="button" class="resgata-viewer__arrow resgata-viewer__arrow--next" data-resgata-viewer-next hidden>
-					<?php echo Icons::svg( 'chevron-right' ); ?>
+					<?php echo wp_kses( Icons::svg( 'chevron-right' ), Html::svg() ); ?>
 					<span class="screen-reader-text"><?php esc_html_e( 'Próxima foto', 'resgata-pet' ); ?></span>
 				</button>
 			<?php endif; ?>
@@ -165,7 +165,7 @@ if ( $resgata_has( 'summary' ) ) :
 			<dl class="resgata-facts">
 				<?php foreach ( $resgata_args['facts'] as $resgata_fact ) : ?>
 					<div class="resgata-facts__item">
-						<dt><?php echo Icons::svg( $resgata_fact['icon'], 'resgata-facts__icon' ); ?><?php echo esc_html( $resgata_fact['label'] ); ?></dt>
+						<dt><?php echo wp_kses( Icons::svg( $resgata_fact['icon'], 'resgata-facts__icon' ), Html::svg() ); ?><?php echo esc_html( $resgata_fact['label'] ); ?></dt>
 						<dd><?php echo esc_html( $resgata_fact['value'] ); ?></dd>
 					</div>
 				<?php endforeach; ?>
@@ -184,13 +184,13 @@ if ( $resgata_has( 'summary' ) ) :
 			<p class="resgata-animal__actions">
 				<?php if ( '' !== $resgata_args['adopt_url'] ) : ?>
 					<a class="resgata-button resgata-button--primary wp-element-button" href="<?php echo esc_url( $resgata_args['adopt_url'] ); ?>">
-						<?php echo Icons::svg( 'paw-print' ); ?>
+						<?php echo wp_kses( Icons::svg( 'paw-print' ), Html::svg() ); ?>
 						<?php echo esc_html( $resgata_args['adopt_label'] ); ?>
 					</a>
 				<?php endif; ?>
 				<?php if ( '' !== $resgata_args['whatsapp_url'] ) : ?>
 					<a class="resgata-button resgata-button--outline" href="<?php echo esc_url( $resgata_args['whatsapp_url'] ); ?>" target="_blank" rel="noopener noreferrer">
-						<?php echo Icons::whatsapp(); ?>
+						<?php echo wp_kses( Icons::whatsapp(), Html::svg() ); ?>
 						<?php esc_html_e( 'Falar pelo WhatsApp', 'resgata-pet' ); ?>
 					</a>
 				<?php endif; ?>
@@ -206,14 +206,11 @@ if ( $resgata_has( 'story' ) && '' !== $resgata_args['story'] ) :
 	?>
 	<section class="resgata-animal__section resgata-panel resgata-animal__story">
 		<h2 class="resgata-panel__title">
-			<?php echo Icons::svg( 'file-text' ); ?>
+			<?php echo wp_kses( Icons::svg( 'file-text' ), Html::svg() ); ?>
 			<?php echo esc_html( $resgata_args['story_title'] ); ?>
 		</h2>
 		<div class="resgata-animal__story-text">
-			<?php
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Conteúdo do post, já passado pelos filtros de `the_content`.
-			echo $resgata_args['story'];
-			?>
+			<?php echo wp_kses_post( $resgata_args['story'] ); ?>
 		</div>
 	</section>
 	<?php
@@ -225,14 +222,14 @@ if ( $resgata_has( 'health' ) && ( $resgata_args['health'] || $resgata_args['tes
 	?>
 	<section class="resgata-animal__section resgata-panel resgata-animal__health">
 		<h2 class="resgata-panel__title">
-			<?php echo Icons::svg( 'heart-pulse' ); ?>
+			<?php echo wp_kses( Icons::svg( 'heart-pulse' ), Html::svg() ); ?>
 			<?php esc_html_e( 'Saúde', 'resgata-pet' ); ?>
 		</h2>
 		<?php if ( $resgata_args['health'] ) : ?>
 			<ul class="resgata-checklist">
 				<?php foreach ( $resgata_args['health'] as $resgata_item ) : ?>
 					<li class="resgata-checklist__item<?php echo $resgata_item['done'] ? '' : ' resgata-checklist__item--pending'; ?>">
-						<?php echo Icons::svg( $resgata_item['done'] ? 'circle-check' : 'circle-dashed' ); ?>
+						<?php echo wp_kses( Icons::svg( $resgata_item['done'] ? 'circle-check' : 'circle-dashed' ), Html::svg() ); ?>
 						<?php echo esc_html( $resgata_item['label'] ); ?>
 					</li>
 				<?php endforeach; ?>
@@ -271,7 +268,7 @@ if ( $resgata_has( 'help' ) && $resgata_args['help_links'] ) :
 	?>
 	<section class="resgata-animal__section resgata-panel resgata-animal__help">
 		<h2 class="resgata-panel__title">
-			<?php echo Icons::svg( 'heart' ); ?>
+			<?php echo wp_kses( Icons::svg( 'heart' ), Html::svg() ); ?>
 			<?php esc_html_e( 'Não pode adotar?', 'resgata-pet' ); ?>
 		</h2>
 		<p class="resgata-animal__help-text"><?php esc_html_e( 'Você também pode ajudar de outras formas.', 'resgata-pet' ); ?></p>
@@ -293,13 +290,13 @@ if ( $resgata_has( 'related' ) && $resgata_args['related'] ) :
 	<section class="resgata-animal__section resgata-panel resgata-related" aria-labelledby="resgata-outros-animais">
 		<div class="resgata-related__header">
 			<h2 class="resgata-panel__title" id="resgata-outros-animais">
-				<?php echo Icons::svg( 'paw-print' ); ?>
+				<?php echo wp_kses( Icons::svg( 'paw-print' ), Html::svg() ); ?>
 				<?php esc_html_e( 'Outros animais para adoção', 'resgata-pet' ); ?>
 			</h2>
 			<?php if ( '' !== $resgata_args['archive_url'] ) : ?>
 				<a class="resgata-related__all" href="<?php echo esc_url( $resgata_args['archive_url'] ); ?>">
 					<?php esc_html_e( 'Ver todos', 'resgata-pet' ); ?>
-					<?php echo Icons::svg( 'arrow-right' ); ?>
+					<?php echo wp_kses( Icons::svg( 'arrow-right' ), Html::svg() ); ?>
 				</a>
 			<?php endif; ?>
 		</div>
@@ -329,11 +326,11 @@ if ( $resgata_has( 'related' ) && $resgata_args['related'] ) :
 		</ul>
 			<?php // As setas só funcionam com o script: nascem escondidas e ele as mostra quando a fileira não cabe na tela. ?>
 			<button type="button" class="resgata-viewer__arrow resgata-viewer__arrow--prev" data-resgata-row-prev hidden>
-				<?php echo Icons::svg( 'chevron-left' ); ?>
+				<?php echo wp_kses( Icons::svg( 'chevron-left' ), Html::svg() ); ?>
 				<span class="screen-reader-text"><?php esc_html_e( 'Animais anteriores', 'resgata-pet' ); ?></span>
 			</button>
 			<button type="button" class="resgata-viewer__arrow resgata-viewer__arrow--next" data-resgata-row-next hidden>
-				<?php echo Icons::svg( 'chevron-right' ); ?>
+				<?php echo wp_kses( Icons::svg( 'chevron-right' ), Html::svg() ); ?>
 				<span class="screen-reader-text"><?php esc_html_e( 'Próximos animais', 'resgata-pet' ); ?></span>
 			</button>
 		</div>
@@ -342,7 +339,6 @@ if ( $resgata_has( 'related' ) && $resgata_args['related'] ) :
 	$resgata_parts['related'] = (string) ob_get_clean();
 endif;
 
-// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 // Sem nada para mostrar (ex.: seção "galeria" de um animal sem fotos), não imprime um bloco vazio.
 if ( ! $resgata_parts ) {
@@ -356,25 +352,24 @@ $resgata_group = static function ( array $resgata_keys ) use ( $resgata_parts ):
 $resgata_top   = $resgata_group( array( 'gallery', 'summary' ) );
 $resgata_cards = $resgata_group( array( 'story', 'health', 'help' ) );
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Seções montadas acima, com cada valor escapado; atributos do wrapper escapados na origem.
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<?php
-	echo $resgata_parts['breadcrumb'] ?? '';
+	echo wp_kses( $resgata_parts['breadcrumb'] ?? '', Html::allowed() );
 
 	if ( $resgata_args['is_page'] ) {
 		// Página inteira: fotos ao lado do resumo e, abaixo, os cartões lado a lado.
 		if ( '' !== $resgata_top ) {
-			echo '<div class="resgata-animal__top">' . $resgata_top . '</div>';
+			echo '<div class="resgata-animal__top">' . wp_kses( $resgata_top, Html::allowed() ) . '</div>';
 		}
 		if ( '' !== $resgata_cards ) {
-			echo '<div class="resgata-animal__cards">' . $resgata_cards . '</div>';
+			echo '<div class="resgata-animal__cards">' . wp_kses( $resgata_cards, Html::allowed() ) . '</div>';
 		}
 	} else {
-		echo $resgata_top . $resgata_cards;
+		echo wp_kses( $resgata_top . $resgata_cards, Html::allowed() );
 	}
 
-	echo $resgata_parts['related'] ?? '';
+	echo wp_kses( $resgata_parts['related'] ?? '', Html::allowed() );
 
 	/**
 	 * Disparado no fim da página do animal.
@@ -386,4 +381,3 @@ $resgata_cards = $resgata_group( array( 'story', 'health', 'help' ) );
 	?>
 </div>
 <?php
-// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

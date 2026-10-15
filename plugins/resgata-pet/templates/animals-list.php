@@ -32,7 +32,7 @@ $resgata_filter_fields = array(
 	'size'    => array( ListRenderer::PARAM_SIZE, __( 'Porte', 'resgata-pet' ), __( 'Todos', 'resgata-pet' ) ),
 );
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<?php if ( $resgata_args['show_filters'] ) : ?>
 		<form class="resgata-filters" method="get" action="<?php echo esc_url( $resgata_args['form_action'] ); ?>" aria-label="<?php esc_attr_e( 'Filtrar animais', 'resgata-pet' ); ?>">
 			<?php foreach ( $resgata_args['hidden_fields'] as $resgata_name => $resgata_value ) : ?>
@@ -78,8 +78,7 @@ $resgata_filter_fields = array(
 		<ul class="resgata-grid" style="--resgata-columns: <?php echo esc_attr( (string) $resgata_args['columns'] ); ?>;">
 			<?php
 			foreach ( $resgata_args['animal_ids'] as $resgata_animal_id ) {
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template do cartão escapa cada valor.
-				echo TemplateLoader::render( 'animal-card.php', array( 'animal' => new ResgataPet\Modules\Animals\Animal( $resgata_animal_id ) ) );
+				TemplateLoader::display( 'animal-card.php', array( 'animal' => new ResgataPet\Modules\Animals\Animal( $resgata_animal_id ) ) );
 			}
 			?>
 		</ul>

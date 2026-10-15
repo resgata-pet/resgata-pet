@@ -7,6 +7,7 @@
  * @package ResgataPet
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Modules\Animals\Frontend\ListRenderer;
 
 defined( 'ABSPATH' ) || exit;
@@ -19,8 +20,7 @@ get_header();
 		<p class="resgata-page__lead"><?php esc_html_e( 'Conheça quem está esperando por um lar.', 'resgata-pet' ); ?></p>
 	</header>
 	<?php
-	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML montado por template que escapa cada valor.
-	echo ListRenderer::render( array( 'columns' => 4 ) );
+	echo wp_kses( ListRenderer::render( array( 'columns' => 4 ) ), Html::allowed() );
 	?>
 </main>
 <?php

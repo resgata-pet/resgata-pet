@@ -18,16 +18,16 @@
  * } $resgata_args
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Icons;
 
 defined( 'ABSPATH' ) || exit;
 
 $resgata_pix = $resgata_args['pix'];
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() devolve SVG fixo do plugin; atributos do wrapper escapados na origem.
 ?>
 <section
-	<?php echo $resgata_args['wrapper_attributes']; ?>
+	<?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>
 	aria-labelledby="resgata-pix-titulo"
 	data-resgata-pix
 	data-key="<?php echo esc_attr( $resgata_pix['code_key'] ); ?>"
@@ -36,7 +36,7 @@ $resgata_pix = $resgata_args['pix'];
 >
 	<div class="resgata-pix__intro">
 		<h2 class="resgata-pix__title" id="resgata-pix-titulo">
-			<?php echo Icons::svg( 'heart' ); ?>
+			<?php echo wp_kses( Icons::svg( 'heart' ), Html::svg() ); ?>
 			<?php echo esc_html( $resgata_args['title'] ); ?>
 		</h2>
 		<p class="resgata-pix__text"><?php echo esc_html( $resgata_args['text'] ); ?></p>
@@ -87,7 +87,7 @@ $resgata_pix = $resgata_args['pix'];
 					<dd class="resgata-pix__value">
 						<span class="resgata-pix__key"><?php echo esc_html( $resgata_pix['key'] ); ?></span>
 						<button type="button" class="resgata-pix__copy" data-resgata-pix-copy="<?php echo esc_attr( $resgata_pix['key'] ); ?>" hidden>
-							<?php echo Icons::svg( 'copy' ); ?>
+							<?php echo wp_kses( Icons::svg( 'copy' ), Html::svg() ); ?>
 							<span data-resgata-pix-copy-label data-done="<?php esc_attr_e( 'Copiado!', 'resgata-pet' ); ?>"><?php esc_html_e( 'Copiar chave', 'resgata-pet' ); ?></span>
 						</button>
 					</dd>
@@ -103,7 +103,7 @@ $resgata_pix = $resgata_args['pix'];
 				<div class="resgata-pix__code-row">
 					<input type="text" id="resgata-pix-codigo" class="resgata-pix__payload" data-resgata-pix-payload readonly>
 					<button type="button" class="resgata-button resgata-button--primary wp-element-button resgata-pix__copy-code" data-resgata-pix-copy-code>
-						<?php echo Icons::svg( 'copy' ); ?>
+						<?php echo wp_kses( Icons::svg( 'copy' ), Html::svg() ); ?>
 						<span data-resgata-pix-copy-label data-done="<?php esc_attr_e( 'Copiado!', 'resgata-pet' ); ?>"><?php esc_html_e( 'Copiar código', 'resgata-pet' ); ?></span>
 					</button>
 				</div>
@@ -120,4 +120,3 @@ $resgata_pix = $resgata_args['pix'];
 	</div>
 </section>
 <?php
-// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

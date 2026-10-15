@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<div class="resgata-adoption__success" role="status">
 		<h2 class="resgata-adoption__title"><?php esc_html_e( 'Pedido registrado!', 'resgata-pet' ); ?></h2>
 		<?php if ( '' !== $resgata_args['whatsapp_url'] ) : ?>

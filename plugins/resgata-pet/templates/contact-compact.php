@@ -9,6 +9,7 @@
  * @var array<string, mixed> $resgata_args Os mesmos dados de `contact.php`.
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Icons;
 
 defined( 'ABSPATH' ) || exit;
@@ -34,14 +35,13 @@ if ( ! $resgata_items && ! $resgata_args['networks'] ) {
 	return;
 }
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() e Icons::brand() devolvem SVG do plugin ou do WordPress; atributos do wrapper escapados na origem.
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<?php if ( $resgata_items ) : ?>
 		<ul class="resgata-contact-compact__list">
 			<?php foreach ( $resgata_items as $resgata_item ) : ?>
 				<li>
-					<?php echo $resgata_item[0]; ?>
+					<?php echo wp_kses( $resgata_item[0], Html::svg() ); ?>
 					<span class="screen-reader-text"><?php echo esc_html( $resgata_item[3] ); ?>:</span>
 					<?php if ( '' !== $resgata_item[2] ) : ?>
 						<a href="<?php echo esc_url( $resgata_item[2] ); ?>"<?php echo str_starts_with( $resgata_item[2], 'http' ) ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo esc_html( $resgata_item[1] ); ?></a>
@@ -58,7 +58,7 @@ if ( ! $resgata_items && ! $resgata_args['networks'] ) {
 			<?php foreach ( $resgata_args['networks'] as $resgata_network => $resgata_url ) : ?>
 				<li>
 					<a href="<?php echo esc_url( $resgata_url ); ?>" target="_blank" rel="noopener noreferrer">
-						<?php echo Icons::brand( (string) ( $resgata_args['network_icons'][ $resgata_network ] ?? '' ) ); ?>
+						<?php echo wp_kses( Icons::brand( (string) ( $resgata_args['network_icons'][ $resgata_network ] ?? '' ) ), Html::svg() ); ?>
 						<span class="screen-reader-text"><?php echo esc_html( $resgata_network ); ?></span>
 					</a>
 				</li>
@@ -67,4 +67,3 @@ if ( ! $resgata_items && ! $resgata_args['networks'] ) {
 	<?php endif; ?>
 </div>
 <?php
-// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

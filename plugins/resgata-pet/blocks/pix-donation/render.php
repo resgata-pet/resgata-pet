@@ -5,6 +5,7 @@
  * @package ResgataPet
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Modules\Settings\PixDonation;
 
 defined( 'ABSPATH' ) || exit;
@@ -27,5 +28,4 @@ if ( '' === $resgata_html && wp_is_serving_rest_request() ) {
 	);
 }
 
-// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template escapa cada valor; os atributos do wrapper vêm escapados do core.
-echo $resgata_html;
+echo wp_kses( $resgata_html, Html::allowed() );

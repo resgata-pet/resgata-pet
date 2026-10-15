@@ -17,6 +17,7 @@
  * }
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Icons;
 use ResgataPet\Modules\Sponsorship\Checkout;
 
@@ -25,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 // Cada cartão de plano usa uma das cores de apoio, em sequência.
 $resgata_tones = array( 'green', 'blue', 'orange', 'purple' );
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<?php if ( $resgata_args['show_counter'] ) : ?>
 		<p class="resgata-sponsorship__counter">
 			<strong class="resgata-sponsorship__count"><?php echo esc_html( number_format_i18n( $resgata_args['counter_total'] ) ); ?></strong>
@@ -72,7 +73,7 @@ $resgata_tones = array( 'green', 'blue', 'orange', 'purple' );
 							<span class="resgata-sponsorship__flag"><?php esc_html_e( 'Mais escolhido', 'resgata-pet' ); ?></span>
 						<?php endif; ?>
 						<div class="resgata-sponsorship__plan-head">
-							<span class="resgata-sponsorship__plan-icon"><?php echo Icons::svg( 'paw-print' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG fixo do plugin. ?></span>
+							<span class="resgata-sponsorship__plan-icon"><?php echo wp_kses( Icons::svg( 'paw-print' ), Html::svg() ); ?></span>
 							<?php if ( '' !== $resgata_plan['name'] ) : ?>
 								<h3 class="resgata-sponsorship__plan-name"><?php echo esc_html( $resgata_plan['name'] ); ?></h3>
 							<?php endif; ?>
@@ -88,7 +89,7 @@ $resgata_tones = array( 'green', 'blue', 'orange', 'purple' );
 							<ul class="resgata-sponsorship__benefits">
 								<?php foreach ( $resgata_plan['benefits'] as $resgata_benefit ) : ?>
 									<li>
-										<?php echo Icons::svg( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG fixo do plugin. ?>
+										<?php echo wp_kses( Icons::svg( 'check' ), Html::svg() ); ?>
 										<?php echo esc_html( $resgata_benefit ); ?>
 									</li>
 								<?php endforeach; ?>

@@ -7,6 +7,7 @@
  * @package ResgataPet
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Modules;
 use ResgataPet\Modules\Adoptions\Form as AdoptionForm;
 use ResgataPet\Modules\Animals\Frontend\DetailsRenderer;
@@ -22,13 +23,11 @@ get_header();
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'resgata-page__article' ); ?>>
 			<?php
-			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML montado por template que escapa cada valor.
-			echo DetailsRenderer::render( get_the_ID() );
+			echo wp_kses( DetailsRenderer::render( get_the_ID() ), Html::allowed() );
 
 			if ( Modules::is_enabled( 'adoptions' ) ) {
-				echo AdoptionForm::render( get_the_ID() );
+				echo wp_kses( AdoptionForm::render( get_the_ID() ), Html::allowed() );
 			}
-			// phpcs:enable
 			?>
 		</article>
 		<?php

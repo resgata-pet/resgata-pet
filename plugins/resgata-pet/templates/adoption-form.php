@@ -31,14 +31,14 @@ $resgata_name   = Submission::FIELD;
 
 if ( $resgata_args['show_animal_select'] && ! $resgata_args['animals'] ) :
 	?>
-	<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+	<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 		<p class="resgata-empty"><?php esc_html_e( 'No momento não há animais disponíveis para adoção.', 'resgata-pet' ); ?></p>
 	</div>
 	<?php
 	return;
 endif;
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<h2 class="resgata-adoption__title">
 		<?php
 		echo esc_html(

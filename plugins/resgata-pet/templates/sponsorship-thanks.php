@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<?php if ( '' !== $resgata_args['image_url'] ) : ?>
 		<img class="resgata-sponsorship-thanks__image" src="<?php echo esc_url( $resgata_args['image_url'] ); ?>" alt="" decoding="async">
 	<?php endif; ?>

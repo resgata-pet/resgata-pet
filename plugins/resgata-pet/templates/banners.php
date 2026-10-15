@@ -13,6 +13,7 @@
  * } $resgata_args
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Icons;
 
 defined( 'ABSPATH' ) || exit;
@@ -20,9 +21,8 @@ defined( 'ABSPATH' ) || exit;
 $resgata_banners = $resgata_args['banners'];
 $resgata_total   = count( $resgata_banners );
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() devolve SVG fixo do plugin; atributos do wrapper escapados na origem.
 ?>
-<section <?php echo $resgata_args['wrapper_attributes']; ?> aria-label="<?php esc_attr_e( 'Destaques', 'resgata-pet' ); ?>" data-resgata-viewer>
+<section <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?> aria-label="<?php esc_attr_e( 'Destaques', 'resgata-pet' ); ?>" data-resgata-viewer>
 	<ul class="resgata-banners__track" data-resgata-viewer-track<?php echo $resgata_total > 1 ? ' tabindex="0"' : ''; ?>>
 		<?php
 		foreach ( $resgata_banners as $resgata_index => $resgata_banner ) :
@@ -46,12 +46,12 @@ $resgata_total   = count( $resgata_banners );
 				}
 				?>
 				<div class="resgata-banner__content">
-					<<?php echo $resgata_tag; ?> class="resgata-banner__title">
+					<<?php echo tag_escape( $resgata_tag ); ?> class="resgata-banner__title">
 						<?php echo esc_html( $resgata_banner['title'] ); ?>
 						<?php if ( '' !== $resgata_banner['highlight'] ) : ?>
 							<span class="resgata-banner__highlight"><?php echo esc_html( $resgata_banner['highlight'] ); ?></span>
 						<?php endif; ?>
-					</<?php echo $resgata_tag; ?>>
+					</<?php echo tag_escape( $resgata_tag ); ?>>
 					<?php if ( '' !== $resgata_banner['text'] ) : ?>
 						<p class="resgata-banner__text"><?php echo esc_html( $resgata_banner['text'] ); ?></p>
 					<?php endif; ?>
@@ -63,7 +63,7 @@ $resgata_total   = count( $resgata_banners );
 						<p class="resgata-banner__actions">
 							<?php if ( $resgata_has_button ) : ?>
 								<a class="resgata-button resgata-button--primary wp-element-button" href="<?php echo esc_url( $resgata_banner['button_url'] ); ?>">
-									<?php echo Icons::svg( 'heart' ); ?>
+									<?php echo wp_kses( Icons::svg( 'heart' ), Html::svg() ); ?>
 									<?php echo esc_html( $resgata_banner['button_label'] ); ?>
 								</a>
 							<?php endif; ?>
@@ -82,11 +82,11 @@ $resgata_total   = count( $resgata_banners );
 	<?php if ( $resgata_total > 1 ) : ?>
 		<?php // As setas só funcionam com o script: nascem escondidas e ele as mostra. ?>
 		<button type="button" class="resgata-viewer__arrow resgata-viewer__arrow--prev" data-resgata-viewer-prev hidden>
-			<?php echo Icons::svg( 'chevron-left' ); ?>
+			<?php echo wp_kses( Icons::svg( 'chevron-left' ), Html::svg() ); ?>
 			<span class="screen-reader-text"><?php esc_html_e( 'Banner anterior', 'resgata-pet' ); ?></span>
 		</button>
 		<button type="button" class="resgata-viewer__arrow resgata-viewer__arrow--next" data-resgata-viewer-next hidden>
-			<?php echo Icons::svg( 'chevron-right' ); ?>
+			<?php echo wp_kses( Icons::svg( 'chevron-right' ), Html::svg() ); ?>
 			<span class="screen-reader-text"><?php esc_html_e( 'Próximo banner', 'resgata-pet' ); ?></span>
 		</button>
 		<ul class="resgata-banners__dots">
@@ -106,4 +106,3 @@ $resgata_total   = count( $resgata_banners );
 	<?php endif; ?>
 </section>
 <?php
-// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

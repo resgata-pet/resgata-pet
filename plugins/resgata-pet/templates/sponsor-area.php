@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 $resgata_summary = $resgata_args['summary'] ?? null;
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Já escapado na origem. ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<?php if ( $resgata_summary ) : ?>
 		<div class="resgata-sponsor-area__summary">
 			<p class="resgata-sponsor-area__hello">

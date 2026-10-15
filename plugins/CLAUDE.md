@@ -10,8 +10,8 @@ resgata-pet/
   resgata-pet.php         cabeçalho, constantes RESGATA_*, autoload, hooks de ativação
   uninstall.php           só apaga dados se "Manter os dados" estiver desmarcado
   src/Plugin.php          bootstrap (plugins_loaded): carrega os módulos ativos
-  src/Core/               Activator, Assets, Bindings, Capabilities, Encryption, Icons, Links,
-                          Modules, Schema, TemplateLoader
+  src/Core/               Activator, Assets, Bindings, Capabilities, Encryption, Html, Icons,
+                          Links, Modules, Schema, TemplateLoader
   src/Modules/<Módulo>/   uma classe por responsabilidade
   blocks/<bloco>/         block.json (apiVersion 3) + render.php
   templates/              templates PHP neutros, sobrescrevíveis pelo tema
@@ -78,6 +78,11 @@ Administrador. O teste cria e apaga usuários e animais temporários no site de 
   depois falha na prévia do editor ("Erro ao carregar o bloco").
 - O `render.php` monta os dados e chama um template de `templates/` pelo `TemplateLoader`. A
   marcação é neutra, com classes `.resgata-*`; o visual é do tema.
+- Nada sai sem escape, nem com `phpcs:ignore` (a revisão do WordPress.org cobra isso): HTML
+  montado por template sai com `wp_kses( $html, Html::allowed() )`, ícones com
+  `wp_kses( Icons::svg( ... ), Html::svg() )` e os atributos do wrapper com `wp_kses_data()`.
+  Template dentro de template usa `TemplateLoader::display()`. Tag ou atributo novo no HTML
+  entra em `Core\Html`, senão o `wp_kses()` o remove.
 - Todo `<select>` de template público leva o atributo `data-resgata-select`, e quem o imprime
   chama `Blocks::enqueue_select_assets()`.
 - Ícones do site: `Core\Icons::svg()` (Lucide em SVG embutido) e `Icons::brand()` (redes

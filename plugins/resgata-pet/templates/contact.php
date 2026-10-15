@@ -21,6 +21,7 @@
  * }
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Icons;
 
 defined( 'ABSPATH' ) || exit;
@@ -47,9 +48,8 @@ if ( '' !== $resgata_data['cnpj'] ) {
 
 $resgata_has_content = $resgata_items || $resgata_args['networks'] || '' !== $resgata_args['whatsapp_url'] || $resgata_args['show_pix'];
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() e Icons::brand() devolvem SVG do plugin ou do WordPress; atributos do wrapper escapados na origem.
 ?>
-<div <?php echo $resgata_args['wrapper_attributes']; ?>>
+<div <?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>>
 	<?php if ( ! $resgata_has_content ) : ?>
 		<p class="resgata-empty"><?php esc_html_e( 'Os dados de contato ainda não foram cadastrados.', 'resgata-pet' ); ?></p>
 	<?php endif; ?>
@@ -67,7 +67,7 @@ $resgata_has_content = $resgata_items || $resgata_args['networks'] || '' !== $re
 
 	<?php if ( '' !== $resgata_args['whatsapp_url'] ) : ?>
 		<div class="resgata-contact__whatsapp">
-			<span class="resgata-contact__whatsapp-icon"><?php echo Icons::whatsapp(); ?></span>
+			<span class="resgata-contact__whatsapp-icon"><?php echo wp_kses( Icons::whatsapp(), Html::svg() ); ?></span>
 			<div class="resgata-contact__whatsapp-text">
 				<h2 class="resgata-contact__heading"><?php esc_html_e( 'Fale com a gente pelo WhatsApp', 'resgata-pet' ); ?></h2>
 				<p>
@@ -88,7 +88,7 @@ $resgata_has_content = $resgata_items || $resgata_args['networks'] || '' !== $re
 			<?php foreach ( $resgata_items as $resgata_item ) : ?>
 				<div class="resgata-contact__item">
 					<dt>
-						<span class="resgata-contact__item-icon"><?php echo Icons::svg( $resgata_item[0] ); ?></span>
+						<span class="resgata-contact__item-icon"><?php echo wp_kses( Icons::svg( $resgata_item[0] ), Html::svg() ); ?></span>
 						<?php echo esc_html( $resgata_item[1] ); ?>
 					</dt>
 					<dd>
@@ -110,7 +110,7 @@ $resgata_has_content = $resgata_items || $resgata_args['networks'] || '' !== $re
 				<?php foreach ( $resgata_args['networks'] as $resgata_network => $resgata_url ) : ?>
 					<li>
 						<a href="<?php echo esc_url( $resgata_url ); ?>" target="_blank" rel="noopener noreferrer">
-							<?php echo Icons::brand( (string) ( $resgata_args['network_icons'][ $resgata_network ] ?? '' ) ); ?>
+							<?php echo wp_kses( Icons::brand( (string) ( $resgata_args['network_icons'][ $resgata_network ] ?? '' ) ), Html::svg() ); ?>
 							<?php echo esc_html( $resgata_network ); ?>
 						</a>
 					</li>
@@ -122,7 +122,7 @@ $resgata_has_content = $resgata_items || $resgata_args['networks'] || '' !== $re
 	<?php if ( $resgata_args['show_pix'] ) : ?>
 		<div class="resgata-contact__section resgata-contact__pix">
 			<h2 class="resgata-contact__heading">
-				<?php echo Icons::svg( 'heart' ); ?>
+				<?php echo wp_kses( Icons::svg( 'heart' ), Html::svg() ); ?>
 				<?php esc_html_e( 'Ajude com um Pix', 'resgata-pet' ); ?>
 			</h2>
 			<dl class="resgata-contact__pix-data">
@@ -149,7 +149,7 @@ $resgata_has_content = $resgata_items || $resgata_args['networks'] || '' !== $re
 			<?php if ( '' !== $resgata_args['help_url'] ) : ?>
 				<p class="resgata-contact__pix-link">
 					<a class="resgata-button resgata-button--outline" href="<?php echo esc_url( $resgata_args['help_url'] ); ?>">
-						<?php echo Icons::svg( 'qr-code' ); ?>
+						<?php echo wp_kses( Icons::svg( 'qr-code' ), Html::svg() ); ?>
 						<?php esc_html_e( 'Doar com QR Code', 'resgata-pet' ); ?>
 					</a>
 				</p>
@@ -158,4 +158,3 @@ $resgata_has_content = $resgata_items || $resgata_args['networks'] || '' !== $re
 	<?php endif; ?>
 </div>
 <?php
-// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

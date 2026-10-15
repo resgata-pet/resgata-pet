@@ -17,21 +17,21 @@
  * } $resgata_args
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Core\Icons;
 
 defined( 'ABSPATH' ) || exit;
 
-// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Icons::svg() devolve SVG fixo do plugin; atributos do wrapper escapados na origem.
 ?>
 <aside
-	<?php echo $resgata_args['wrapper_attributes']; ?>
+	<?php echo wp_kses_data( $resgata_args['wrapper_attributes'] ); ?>
 	aria-labelledby="resgata-doe-titulo"
 	data-resgata-pix
 	data-key="<?php echo esc_attr( $resgata_args['pix']['code_key'] ); ?>"
 	data-name="<?php echo esc_attr( $resgata_args['pix']['code_name'] ); ?>"
 	data-city="<?php echo esc_attr( $resgata_args['pix']['code_city'] ); ?>"
 >
-	<span class="resgata-donate__icon"><?php echo Icons::svg( 'heart' ); ?></span>
+	<span class="resgata-donate__icon"><?php echo wp_kses( Icons::svg( 'heart' ), Html::svg() ); ?></span>
 	<div class="resgata-donate__text">
 		<h2 class="resgata-donate__title" id="resgata-doe-titulo"><?php esc_html_e( 'Ajude com qualquer valor', 'resgata-pet' ); ?></h2>
 		<p><?php esc_html_e( 'Doe por Pix em poucos segundos. Cada real vira ração, vacina e cuidado para quem foi resgatado.', 'resgata-pet' ); ?></p>
@@ -40,7 +40,7 @@ defined( 'ABSPATH' ) || exit;
 				<?php esc_html_e( 'Doar por Pix', 'resgata-pet' ); ?>
 			</a>
 			<button type="button" class="resgata-donate__copy" data-resgata-pix-copy-code hidden>
-				<?php echo Icons::svg( 'copy' ); ?>
+				<?php echo wp_kses( Icons::svg( 'copy' ), Html::svg() ); ?>
 				<span data-resgata-pix-copy-label data-done="<?php esc_attr_e( 'Copiado!', 'resgata-pet' ); ?>"><?php esc_html_e( 'Copiar código Pix', 'resgata-pet' ); ?></span>
 			</button>
 		</div>
@@ -53,4 +53,3 @@ defined( 'ABSPATH' ) || exit;
 	</figure>
 </aside>
 <?php
-// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped

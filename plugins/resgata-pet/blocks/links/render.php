@@ -45,7 +45,7 @@ if ( ! $resgata_links ) {
 	return;
 }
 ?>
-<ul <?php echo get_block_wrapper_attributes( array( 'class' => 'resgata-links' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escapado pelo core. ?>>
+<ul <?php echo wp_kses_data( get_block_wrapper_attributes( array( 'class' => 'resgata-links' ) ) ); ?>>
 	<?php foreach ( $resgata_links as $resgata_label => $resgata_url ) : ?>
 		<li><a href="<?php echo esc_url( $resgata_url ); ?>"><?php echo esc_html( $resgata_label ); ?></a></li>
 	<?php endforeach; ?>

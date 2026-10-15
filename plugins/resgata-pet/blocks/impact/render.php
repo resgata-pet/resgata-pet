@@ -5,9 +5,9 @@
  * @package ResgataPet
  */
 
+use ResgataPet\Core\Html;
 use ResgataPet\Modules\Animals\Frontend\Impact;
 
 defined( 'ABSPATH' ) || exit;
 
-// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- O template escapa cada valor; os atributos do wrapper vêm escapados do core.
-echo Impact::render( get_block_wrapper_attributes( array( 'class' => 'resgata-impact' ) ) );
+echo wp_kses( Impact::render( get_block_wrapper_attributes( array( 'class' => 'resgata-impact' ) ) ), Html::allowed() );
