@@ -66,8 +66,12 @@ jobs:
           sudo apt-get install -y -qq subversion
           unzip -q dist/resgata-pet.zip -d dist/wporg
 
+      # O primeiro envio leva vários minutos, e o SVN às vezes perde a conexão esperando a
+      # confirmação de um commit que o servidor já gravou: o passo seguinte decide pelo SVN.
       - name: Envia ao WordPress.org
+        id: wporg
         if: vars.WPORG_SLUG != ''
+        continue-on-error: true
         uses: 10up/action-wordpress-plugin-deploy@54bd289b8525fd23a5c365ec369185f2966529c2 # 2.3.0
         env:
           SLUG: ${{ vars.WPORG_SLUG }}
@@ -75,3 +79,20 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           BUILD_DIR: dist/wporg/resgata-pet
           ASSETS_DIR: plugins/resgata-pet/.wordpress-org
+
+      - name: Confere a versão no WordPress.org
+        if: vars.WPORG_SLUG != '' && steps.wporg.outcome == 'failure'
+        env:
+          SLUG: ${{ vars.WPORG_SLUG }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          url="https://plugins.svn.wordpress.org/$SLUG/tags/$TAG/readme.txt"
+          for attempt in 1 2 3 4 5 6; do
+            if curl -fsS "$url" | grep -q "^Stable tag: $TAG$"; then
+              echo "::warning::O envio perdeu a conexão, mas a versão $TAG está no SVN do WordPress.org."
+              exit 0
+            fi
+            sleep 30
+          done
+          echo "::error::A versão $TAG não chegou ao SVN do WordPress.org. Veja o passo anterior."
+          exit 1
