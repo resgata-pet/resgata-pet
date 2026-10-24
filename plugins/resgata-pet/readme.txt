@@ -4,7 +4,7 @@ Tags: animals, adoption, rescue, donations, nonprofit
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Resgata Pet helps independent animal rescuers publish the animals they have resc
 
 It was built for rescuers in Brazil: the plugin interface is written in Brazilian Portuguese, phone numbers and the Pix key follow Brazilian formats, and sponsorships are charged in BRL.
 
-Modules:
+Modules (the rescuer turns each one on or off in the panel, and the site and the panel show only what is on):
 
 * **Animals** (available): records with profile, health information and a photo gallery (before and after), a public list with filters and an individual page for each animal.
 * **Adoption requests** (available): a questionnaire on the site, sent through the rescuer's WhatsApp, with a queue of requests in the panel.
@@ -79,6 +79,13 @@ The files in `build/` are generated from the TypeScript sources in the `resource
 The `vendor/` folder contains the official Stripe PHP library, installed with Composer (`composer.json` is included).
 
 == Changelog ==
+
+= 0.6.0 =
+* "Recursos do site" tab in the panel settings: the rescuer chooses which modules to use (animals, adoption requests, sponsorship). A site can run with sponsorship and Pix only, without animals or adoption.
+* The panel menu, screens and home page follow the modules that are on.
+* Theme sections that depend on a module (classes `resgata-needs-<module>` and `resgata-without-<module>`) are hidden on the site when the module is off, and grids adjust their columns.
+* Fix: sponsorship and Pix blocks now work in the editor even with the Animals module off.
+* The "Números da protetora" block is always available and shows only the numbers of the modules that are on.
 
 = 0.5.0 =
 * Sponsorship: monthly card plans through Stripe Checkout, sponsor area through a link sent by e-mail (Stripe portal), sponsor counter on the site and list of sponsors in the panel.

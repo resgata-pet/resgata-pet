@@ -3,7 +3,7 @@ Contributors: robertodutra
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.3
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,10 @@ Sim, tudo pelo Editor do Site, sem mexer em código. As paletas prontas trocam t
 Sim. O plugin funciona com qualquer tema e traz um visual neutro próprio.
 
 == Changelog ==
+
+= 1.1.0 =
+* Seções que dependem de um módulo do plugin (animais, adoção, apadrinhamento) somem do site quando o módulo está desligado.
+* Textos alternativos na página 404 e na de contato para sites sem animais ou sem adoção.
 
 = 1.0.3 =
 * Modelos do blog (página de publicações, arquivos e publicação) e patterns do blog.

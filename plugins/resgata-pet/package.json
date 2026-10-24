@@ -1,6 +1,6 @@
 {
 	"name": "resgata-pet",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"private": true,
 	"description": "Código TypeScript do plugin Resgata Pet: painel, blocos e scripts do site.",
 	"license": "GPL-2.0-or-later",

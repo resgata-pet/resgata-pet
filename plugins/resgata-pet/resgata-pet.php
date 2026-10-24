@@ -3,7 +3,7 @@
  * Plugin Name:       Resgata Pet
  * Plugin URI:        https://github.com/resgata-pet/resgata-pet
  * Description:       Kit para protetoras independentes de animais: divulgação de animais para adoção, pedidos de adoção, apadrinhamento e prestação de contas.
- * Version:           0.5.0
+ * Version:           0.6.0
  * Requires at least: 6.9
  * Requires PHP:      8.1
  * Author:            Resgata Pet
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RESGATA_VERSION', '0.5.0' );
+define( 'RESGATA_VERSION', '0.6.0' );
 define( 'RESGATA_DB_VERSION', 6 );
 define( 'RESGATA_PLUGIN_FILE', __FILE__ );
 define( 'RESGATA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
