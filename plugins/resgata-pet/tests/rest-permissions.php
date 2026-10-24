@@ -39,6 +39,7 @@ $resgata_saved_options = array(
 	'resgata_sponsorship'         => get_option( 'resgata_sponsorship', null ),
 	'resgata_sponsorship_counter' => get_option( 'resgata_sponsorship_counter', null ),
 	'resgata_stripe_keys'         => get_option( 'resgata_stripe_keys', null ),
+	'resgata_modules'             => get_option( 'resgata_modules', null ),
 );
 
 // Página "Como ajudar" que já existia antes do teste (ela pode ser só adotada, não criada).
@@ -699,6 +700,42 @@ wp_set_current_user( $resgata_users['protetor admin'] );
 // O DELETE só move para a lixeira.
 $resgata_server->dispatch( new WP_REST_Request( 'DELETE', "$resgata_prefix/animals/$resgata_animal_id" ) );
 $resgata_assert( 'trash' === get_post_status( $resgata_animal_id ), 'Excluir deveria mover para a lixeira, não apagar' );
+
+// Recursos do site (módulos): o painel escolhe, o servidor valida e resolve as dependências.
+$resgata_modules_request = static function ( array $body ) use ( $resgata_server, $resgata_prefix ) {
+	$request = new WP_REST_Request( 'PUT', "$resgata_prefix/modules" );
+	$request->set_header( 'content-type', 'application/json' );
+	$request->set_body( wp_json_encode( $body ) );
+
+	return $resgata_server->dispatch( $request );
+};
+
+$resgata_assert( 400 === $resgata_modules_request( array( 'modules' => array( 'accounting' ) ) )->get_status(), 'Módulo "em breve" não deveria ser aceito' );
+$resgata_assert( 400 === $resgata_modules_request( array( 'modules' => array( 'inexistente' ) ) )->get_status(), 'Módulo desconhecido não deveria ser aceito' );
+
+$resgata_response = $resgata_modules_request( array( 'modules' => array( 'adoptions' ) ) );
+$resgata_assert( 200 === $resgata_response->get_status(), 'Escolher os módulos deveria responder 200' );
+$resgata_assert( array( 'adoptions' ) === ResgataPet\Core\Modules::chosen(), 'A escolha deveria ser guardada como enviada' );
+$resgata_assert( array() === ResgataPet\Core\Modules::enabled(), 'Pedidos de adoção sem o módulo Animais não deveriam valer' );
+
+$resgata_modules_request( array( 'modules' => array() ) );
+$resgata_assert( array() === ResgataPet\Core\Modules::chosen(), 'Desligar tudo deveria ser possível' );
+
+// Seções do tema marcadas para um módulo (Core\ModuleVisibility).
+$resgata_markup = '<!-- wp:group {"layout":{"type":"grid","columnCount":3}} --><div class="wp-block-group">'
+	. '<!-- wp:paragraph {"className":"resgata-needs-animals"} --><p class="resgata-needs-animals">com-animais</p><!-- /wp:paragraph -->'
+	. '<!-- wp:paragraph {"className":"resgata-without-animals"} --><p class="resgata-without-animals">sem-animais</p><!-- /wp:paragraph -->'
+	. '<!-- wp:paragraph {"className":"resgata-needs-desconhecido"} --><p class="resgata-needs-desconhecido">sempre</p><!-- /wp:paragraph -->'
+	. '</div><!-- /wp:group -->';
+$resgata_html   = do_blocks( $resgata_markup );
+$resgata_assert( ! str_contains( $resgata_html, 'com-animais' ) && str_contains( $resgata_html, 'sem-animais' ), 'Com Animais desligado, só a seção "sem animais" deveria aparecer' );
+$resgata_assert( str_contains( $resgata_html, 'sempre' ), 'Classe de módulo desconhecido não deveria esconder o bloco' );
+$resgata_fitted = ResgataPet\Core\ModuleVisibility::fit_grid( parse_blocks( $resgata_markup )[0] );
+$resgata_assert( 2 === ( $resgata_fitted['attrs']['layout']['columnCount'] ?? 0 ), 'A grade deveria ficar com uma coluna por item visível' );
+
+$resgata_modules_request( array( 'modules' => array( 'animals' ) ) );
+$resgata_html = do_blocks( $resgata_markup );
+$resgata_assert( str_contains( $resgata_html, 'com-animais' ) && ! str_contains( $resgata_html, 'sem-animais' ), 'Com Animais ligado, só a seção "com animais" deveria aparecer' );
 
 // Limpeza (definida no começo do arquivo).
 $resgata_cleanup();

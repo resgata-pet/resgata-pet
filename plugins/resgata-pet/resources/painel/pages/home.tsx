@@ -13,12 +13,13 @@ import {
 	ImagesIcon,
 	PawPrintIcon,
 	PlusIcon,
+	PuzzleIcon,
 	SettingsIcon,
 	StethoscopeIcon,
 } from 'lucide-react';
 import { api, errorMessage } from '@/lib/api';
 import { cn } from '@/lib/utils';
-import { config } from '@/lib/config';
+import { config, hasModule } from '@/lib/config';
 import { buttonVariants } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PageHeader } from '@/components/page-header';
@@ -91,6 +92,12 @@ export function HomePage() {
 	const animals = data?.animals ?? null;
 	const newRequests = data?.adoptions?.new ?? 0;
 	const drafts = animals?.drafts ?? 0;
+	let peopleTitle: string = __( 'Adoções e padrinhos', 'resgata-pet' );
+	if ( ! data?.sponsorship ) {
+		peopleTitle = __( 'Adoções', 'resgata-pet' );
+	} else if ( ! data?.adoptions ) {
+		peopleTitle = __( 'Padrinhos', 'resgata-pet' );
+	}
 
 	return (
 		<>
@@ -99,12 +106,18 @@ export function HomePage() {
 					/* translators: %s: primeiro nome da pessoa. */
 					sprintf( __( 'Olá, %s!', 'resgata-pet' ), firstName )
 				}
-				description={ __( 'Veja como estão os resgatados e o que precisa da sua atenção.', 'resgata-pet' ) }
+				description={
+					hasModule( 'animals' )
+						? __( 'Veja como estão os resgatados e o que precisa da sua atenção.', 'resgata-pet' )
+						: __( 'Veja o resumo da protetora e o que precisa da sua atenção.', 'resgata-pet' )
+				}
 				action={
-					<Link to="/animais/novo" className={ buttonVariants( { className: 'w-full sm:w-auto' } ) }>
-						<PlusIcon aria-hidden="true" />
-						{ __( 'Cadastrar animal', 'resgata-pet' ) }
-					</Link>
+					hasModule( 'animals' ) && (
+						<Link to="/animais/novo" className={ buttonVariants( { className: 'w-full sm:w-auto' } ) }>
+							<PlusIcon aria-hidden="true" />
+							{ __( 'Cadastrar animal', 'resgata-pet' ) }
+						</Link>
+					)
 				}
 			/>
 
@@ -166,7 +179,7 @@ export function HomePage() {
 					{ ( data.adoptions || data.sponsorship ) && (
 						<section aria-labelledby="inicio-pessoas">
 							<h2 id="inicio-pessoas" className="mb-3 text-lg font-semibold">
-								{ __( 'Adoções e padrinhos', 'resgata-pet' ) }
+								{ peopleTitle }
 							</h2>
 							<div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
 								{ data.adoptions && (
@@ -243,7 +256,19 @@ export function HomePage() {
 									to="/configuracoes"
 									icon={ SettingsIcon }
 									title={ __( 'Dados da protetora', 'resgata-pet' ) }
-									text={ __( 'WhatsApp, redes sociais, chave Pix e regras de adoção.', 'resgata-pet' ) }
+									text={
+										hasModule( 'adoptions' )
+											? __( 'WhatsApp, redes sociais, chave Pix e regras de adoção.', 'resgata-pet' )
+											: __( 'WhatsApp, redes sociais e chave Pix.', 'resgata-pet' )
+									}
+								/>
+							) }
+							{ config.user.canManageSettings && (
+								<RowLink
+									to="/configuracoes?aba=recursos"
+									icon={ PuzzleIcon }
+									title={ __( 'Recursos do site', 'resgata-pet' ) }
+									text={ __( 'Escolha o que a protetora usa: animais, pedidos de adoção, apadrinhamento.', 'resgata-pet' ) }
 								/>
 							) }
 							<RowLink href={ config.urls.site } icon={ ExternalLinkIcon } title={ __( 'Ver o site', 'resgata-pet' ) } />

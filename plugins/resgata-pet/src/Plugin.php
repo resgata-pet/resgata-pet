@@ -48,11 +48,11 @@ final class Plugin {
 
 		if ( Modules::is_enabled( 'animals' ) ) {
 			( new AnimalsModule() )->register();
+		}
 
-			// Os pedidos de adoção são sempre de um animal: dependem do módulo Animais.
-			if ( Modules::is_enabled( 'adoptions' ) ) {
-				( new AdoptionsModule() )->register();
-			}
+		// Modules::is_enabled() já descarta os pedidos de adoção quando o módulo Animais está desligado.
+		if ( Modules::is_enabled( 'adoptions' ) ) {
+			( new AdoptionsModule() )->register();
 		}
 
 		// Modules::is_enabled() já descarta o apadrinhamento quando a biblioteca da Stripe não está instalada.

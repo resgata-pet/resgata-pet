@@ -88,7 +88,7 @@ final class Page {
 				'email'                => $user->user_email,
 				'isAdmin'              => current_user_can( 'manage_options' ),
 				'canManageSettings'    => current_user_can( Capabilities::SETTINGS ),
-				'canManageAdoptions'   => Modules::is_enabled( 'animals' ) && Modules::is_enabled( 'adoptions' ) && current_user_can( Capabilities::ADOPTIONS ),
+				'canManageAdoptions'   => Modules::is_enabled( 'adoptions' ) && current_user_can( Capabilities::ADOPTIONS ),
 				'canManageSponsorship' => Modules::is_enabled( 'sponsorship' ) && current_user_can( Capabilities::SPONSORSHIP ),
 			),
 			'urls'          => array(

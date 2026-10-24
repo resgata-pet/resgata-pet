@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { config } from '@/lib/config';
+import { config, hasModule } from '@/lib/config';
 import { Toaster } from '@/components/ui/sonner';
 import { Layout } from '@/components/layout';
 import { HomePage } from '@/pages/home';
@@ -21,18 +21,31 @@ const queryClient = new QueryClient( {
 	defaultOptions: { queries: { retry: 1, refetchOnWindowFocus: false } },
 } );
 
+// Só as telas dos módulos ligados: as outras caem em "página não encontrada".
+const moduleRoutes = [
+	...( hasModule( 'animals' )
+		? [
+				{ path: 'animais', element: <AnimalsListPage /> },
+				{ path: 'animais/novo', element: <AnimalFormPage /> },
+				{ path: 'animais/:id', element: <AnimalFormPage /> },
+			]
+		: [] ),
+	...( hasModule( 'adoptions' )
+		? [
+				{ path: 'adocoes', element: <AdoptionsListPage /> },
+				{ path: 'adocoes/:id', element: <AdoptionDetailPage /> },
+			]
+		: [] ),
+	...( hasModule( 'sponsorship' ) ? [ { path: 'apadrinhamento', element: <SponsorshipPage /> } ] : [] ),
+];
+
 const router = createBrowserRouter(
 	[
 		{
 			element: <Layout />,
 			children: [
 				{ index: true, element: <HomePage /> },
-				{ path: 'animais', element: <AnimalsListPage /> },
-				{ path: 'animais/novo', element: <AnimalFormPage /> },
-				{ path: 'animais/:id', element: <AnimalFormPage /> },
-				{ path: 'adocoes', element: <AdoptionsListPage /> },
-				{ path: 'adocoes/:id', element: <AdoptionDetailPage /> },
-				{ path: 'apadrinhamento', element: <SponsorshipPage /> },
+				...moduleRoutes,
 				{ path: 'configuracoes', element: <SettingsPage /> },
 				{ path: 'banners', element: <BannersPage /> },
 				{ path: 'conta', element: <AccountPage /> },

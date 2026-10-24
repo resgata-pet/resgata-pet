@@ -110,7 +110,7 @@ final class DashboardController extends BaseController {
 	 * @return array{new: int}|null
 	 */
 	private function adoptions(): ?array {
-		if ( ! Modules::is_enabled( 'animals' ) || ! Modules::is_enabled( 'adoptions' ) || ! current_user_can( Capabilities::ADOPTIONS ) ) {
+		if ( ! Modules::is_enabled( 'adoptions' ) || ! current_user_can( Capabilities::ADOPTIONS ) ) {
 			return null;
 		}
 

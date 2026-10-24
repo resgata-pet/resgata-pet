@@ -18,7 +18,8 @@ As regras de build e de importação estão em `plugins/CLAUDE.md`; o visual, em
 - Capabilities por área: `resgata_manage_settings`, `resgata_manage_adoptions` e
   `resgata_manage_sponsorship` (Administrador e Protetor admin; o Editor comum não tem nenhuma).
 - Menu: Início, Animais, Adoções, Padrinhos, Banners e Configurações (para quem pode) e Minha
-  conta.
+  conta. Animais, Adoções e Padrinhos (menu e rotas) só existem com o módulo ligado
+  (`hasModule()`); os módulos são escolhidos em Configurações → "Recursos do site".
 
 ## API
 

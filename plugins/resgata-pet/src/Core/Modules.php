@@ -25,6 +25,13 @@ final class Modules {
 	private const AVAILABLE = array( 'animals', 'adoptions', 'sponsorship' );
 
 	/**
+	 * Módulos que só funcionam junto com outro (os pedidos de adoção são sempre de um animal).
+	 */
+	private const REQUIRES = array(
+		'adoptions' => 'animals',
+	);
+
+	/**
 	 * Módulos que podem ser ligados neste site.
 	 *
 	 * O apadrinhamento usa a biblioteca da Stripe (pasta `vendor/`): sem ela, fica indisponível.
@@ -42,7 +49,7 @@ final class Modules {
 	/**
 	 * Todos os módulos previstos no kit.
 	 *
-	 * @return array<string, array{label: string, description: string, available: bool}>
+	 * @return array<string, array{label: string, description: string, available: bool, requires: string}>
 	 */
 	public static function all(): array {
 		return array(
@@ -50,23 +57,36 @@ final class Modules {
 				'label'       => __( 'Animais', 'resgata-pet' ),
 				'description' => __( 'Cadastro dos animais resgatados, listagem pública com filtros e página individual de cada animal.', 'resgata-pet' ),
 				'available'   => in_array( 'animals', self::available(), true ),
+				'requires'    => '',
 			),
 			'adoptions'   => array(
 				'label'       => __( 'Pedidos de adoção', 'resgata-pet' ),
 				'description' => __( 'Questionário público de adoção, enviado pelo WhatsApp, e fila interna de pedidos. Precisa do módulo Animais.', 'resgata-pet' ),
 				'available'   => in_array( 'adoptions', self::available(), true ),
+				'requires'    => self::REQUIRES['adoptions'],
 			),
 			'sponsorship' => array(
 				'label'       => __( 'Apadrinhamento', 'resgata-pet' ),
 				'description' => __( 'Planos mensais de apadrinhamento pagos com cartão pela Stripe, com contador de padrinhos no site.', 'resgata-pet' ),
 				'available'   => in_array( 'sponsorship', self::available(), true ),
+				'requires'    => '',
 			),
 			'accounting'  => array(
 				'label'       => __( 'Prestação de contas', 'resgata-pet' ),
 				'description' => __( 'Receitas, despesas e página pública de transparência.', 'resgata-pet' ),
 				'available'   => false,
+				'requires'    => '',
 			),
 		);
+	}
+
+	/**
+	 * Slugs dos módulos que podem ser ligados neste site (para validar o que chega do painel).
+	 *
+	 * @return string[]
+	 */
+	public static function choices(): array {
+		return self::available();
 	}
 
 	/**
@@ -79,14 +99,33 @@ final class Modules {
 	}
 
 	/**
-	 * Slugs dos módulos ligados.
+	 * Módulos marcados nas configurações, mesmo os que esperam por outro módulo desligado.
+	 *
+	 * É o que as telas de escolha mostram: desligar Animais e ligar de novo traz os
+	 * pedidos de adoção de volta como estavam.
+	 *
+	 * @return string[]
+	 */
+	public static function chosen(): array {
+		$chosen = get_option( self::OPTION, self::defaults() );
+
+		return is_array( $chosen ) ? self::sanitize( $chosen ) : self::defaults();
+	}
+
+	/**
+	 * Slugs dos módulos ligados e em funcionamento (com os módulos de que dependem também ligados).
 	 *
 	 * @return string[]
 	 */
 	public static function enabled(): array {
-		$enabled = get_option( self::OPTION, self::defaults() );
+		$chosen = self::chosen();
 
-		return is_array( $enabled ) ? self::sanitize( $enabled ) : self::defaults();
+		return array_values(
+			array_filter(
+				$chosen,
+				static fn( string $slug ): bool => ! isset( self::REQUIRES[ $slug ] ) || in_array( self::REQUIRES[ $slug ], $chosen, true )
+			)
+		);
 	}
 
 	/**

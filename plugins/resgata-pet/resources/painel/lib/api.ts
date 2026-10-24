@@ -144,6 +144,22 @@ export interface OrganizationSettings {
 	pix_holder: string;
 }
 
+/** Módulo do kit, como a tela "Recursos do site" mostra. */
+export interface SiteModule {
+	slug: string;
+	label: string;
+	description: string;
+	/** Falso quando ainda não existe ("em breve") ou falta algo no servidor. */
+	available: boolean;
+	/** Módulo de que este depende, ou vazio. */
+	requires: string;
+	enabled: boolean;
+}
+
+export interface ModulesResponse {
+	modules: SiteModule[];
+}
+
 export interface SettingsResponse {
 	settings: OrganizationSettings;
 	choices: { states: Record< string, string >; pixKeyTypes: Record< string, string >; pages: Record< string, string > };
@@ -367,6 +383,11 @@ export const api = {
 
 	saveSettings: ( data: OrganizationSettings ) =>
 		apiFetch< SettingsResponse >( { path: `/${ config.restNamespace }/settings`, method: 'PUT', data } ),
+
+	getModules: () => apiFetch< ModulesResponse >( { path: `/${ config.restNamespace }/modules` } ),
+
+	saveModules: ( modules: string[] ) =>
+		apiFetch< ModulesResponse >( { path: `/${ config.restNamespace }/modules`, method: 'PUT', data: { modules } } ),
 
 	getDashboard: () => apiFetch< DashboardSummary >( { path: `/${ config.restNamespace }/dashboard` } ),
 

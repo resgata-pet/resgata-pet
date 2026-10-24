@@ -16,6 +16,7 @@ export interface PanelConfig {
 		canManageSponsorship: boolean;
 	};
 	urls: { site: string; admin: string; logout: string; lostPassword: string };
+	/** Módulos ligados e em funcionamento (`animals`, `adoptions`, `sponsorship`). */
 	modules: string[];
 	options: {
 		statuses: OptionMap;
@@ -38,3 +39,6 @@ declare global {
 }
 
 export const config: PanelConfig = window.resgataPainel;
+
+/** Informa se um módulo está ligado (o menu e as telas acompanham). */
+export const hasModule = ( slug: string ): boolean => config.modules.includes( slug );

@@ -8,19 +8,17 @@
 namespace ResgataPet\Modules\Animals\Frontend;
 
 use ResgataPet\Core\Assets;
-use ResgataPet\Core\Bindings;
-use ResgataPet\Modules\Animals\Options;
-use ResgataPet\Modules\Animals\Taxonomies;
+use ResgataPet\Core\BlockAssets;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registra os blocos (renderizados no servidor) e seus estilos.
+ * Registra os blocos de animais (renderizados no servidor) e os scripts do site.
  */
 final class Blocks {
 
-	public const STYLE_HANDLE   = 'resgata-frontend';
-	public const EDITOR_HANDLE  = 'resgata-blocks-editor';
+	public const STYLE_HANDLE   = BlockAssets::STYLE_HANDLE;
+	public const EDITOR_HANDLE  = BlockAssets::EDITOR_HANDLE;
 	public const GALLERY_HANDLE = 'resgata-animal-gallery';
 	public const SELECT_HANDLE  = 'resgata-site-selects';
 
@@ -28,45 +26,14 @@ final class Blocks {
 	 * Registra os hooks.
 	 */
 	public function register(): void {
-		// Depois das taxonomias, para o editor receber a lista de espécies.
+		// Depois das taxonomias. O estilo, o script do editor e a categoria são do Core\BlockAssets.
 		add_action( 'init', array( $this, 'register_blocks' ), 20 );
-		add_filter( 'block_categories_all', array( $this, 'add_category' ) );
 	}
 
 	/**
-	 * Registra estilos, script do editor e os blocos.
+	 * Registra os scripts do site e os blocos.
 	 */
 	public function register_blocks(): void {
-		/*
-		 * Se o tema declarar `add_theme_support( 'resgata-pet' )`, ele assume o
-		 * visual: registramos o handle vazio para os blocos não carregarem CSS.
-		 */
-		$src = current_theme_supports( 'resgata-pet' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
-		wp_register_style( self::STYLE_HANDLE, $src, array(), RESGATA_VERSION );
-
-		$editor = Assets::script( 'wp/blocks-editor' );
-
-		// Sem o build, o handle fica vazio: os blocos continuam funcionando no site.
-		wp_register_script(
-			self::EDITOR_HANDLE,
-			$editor ? $editor['url'] : false,
-			$editor ? $editor['dependencies'] : array(),
-			$editor ? $editor['version'] : RESGATA_VERSION,
-			true
-		);
-
-		wp_add_inline_script(
-			self::EDITOR_HANDLE,
-			'window.resgataBlocks = ' . wp_json_encode(
-				array(
-					'species'  => Taxonomies::species_options(),
-					'statuses' => Options::statuses(),
-					'bindings' => Bindings::editor_data(),
-				)
-			) . ';',
-			'before'
-		);
-
 		// Setas e miniaturas da galeria da página do animal. Sem o build, a galeria continua rolando com o dedo.
 		$gallery = Assets::script( 'wp/animal-gallery' );
 		if ( $gallery ) {
@@ -77,7 +44,6 @@ final class Blocks {
 
 		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/animals-list' );
 		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/animal-details' );
-		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/impact' );
 	}
 
 	/**
@@ -110,21 +76,5 @@ final class Blocks {
 			wp_enqueue_script( self::SELECT_HANDLE );
 			wp_enqueue_style( self::SELECT_HANDLE );
 		}
-	}
-
-	/**
-	 * Adiciona a categoria "Resgata Pet" no inseridor de blocos.
-	 *
-	 * @param array<int, array<string, mixed>> $categories Categorias existentes.
-	 * @return array<int, array<string, mixed>>
-	 */
-	public function add_category( array $categories ): array {
-		$categories[] = array(
-			'slug'  => 'resgata-pet',
-			'title' => __( 'Resgata Pet', 'resgata-pet' ),
-			'icon'  => null,
-		);
-
-		return $categories;
 	}
 }

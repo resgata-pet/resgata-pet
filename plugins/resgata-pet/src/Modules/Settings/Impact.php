@@ -5,7 +5,7 @@
  * @package ResgataPet
  */
 
-namespace ResgataPet\Modules\Animals\Frontend;
+namespace ResgataPet\Modules\Settings;
 
 use ResgataPet\Core\TemplateLoader;
 use ResgataPet\Modules\Animals\Meta;
@@ -15,6 +15,9 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Bloco `resgata-pet/impact`: faixa com os números contados a partir dos cadastros.
+ *
+ * Fica nas configurações, sempre disponível: cada módulo ligado traz os seus números
+ * (os animais daqui, os padrinhos pelo filtro `resgata_impact_items`).
  */
 final class Impact {
 
@@ -48,6 +51,26 @@ final class Impact {
 	 * @return array<int, array{icon: string, value: int, label: string, tone: string}>
 	 */
 	public static function items(): array {
+		$items = post_type_exists( PostType::SLUG ) ? self::animal_items() : array();
+
+		/**
+		 * Filtra os números da faixa "Números da protetora".
+		 *
+		 * O módulo de apadrinhamento acrescenta os padrinhos ativos.
+		 *
+		 * @param array<int, array{icon: string, value: int, label: string, tone: string}> $items Números.
+		 */
+		$items = (array) apply_filters( 'resgata_impact_items', $items );
+
+		return array_values( array_filter( $items, static fn( $item ): bool => is_array( $item ) && ! empty( $item['value'] ) && ! empty( $item['label'] ) ) );
+	}
+
+	/**
+	 * Números dos animais (módulo Animais ligado).
+	 *
+	 * @return array<int, array{icon: string, value: int, label: string, tone: string}>
+	 */
+	private static function animal_items(): array {
 		$total = (int) ( wp_count_posts( PostType::SLUG )->publish ?? 0 );
 
 		$items = array(
@@ -75,16 +98,7 @@ final class Impact {
 			'tone'  => 'coral',
 		);
 
-		/**
-		 * Filtra os números da faixa "Números da protetora".
-		 *
-		 * O módulo de apadrinhamento acrescenta os padrinhos ativos.
-		 *
-		 * @param array<int, array{icon: string, value: int, label: string, tone: string}> $items Números.
-		 */
-		$items = (array) apply_filters( 'resgata_impact_items', $items );
-
-		return array_values( array_filter( $items, static fn( $item ): bool => is_array( $item ) && ! empty( $item['value'] ) && ! empty( $item['label'] ) ) );
+		return $items;
 	}
 
 	/**

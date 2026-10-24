@@ -6,6 +6,20 @@ Código em `src/Modules/Settings/`. Tudo aqui usa a capability `resgata_manage_s
 A tela "Resgata Pet → Configurações" do wp-admin (módulos ativos e retenção de dados) é outra
 coisa e continua só para o Administrador.
 
+## Recursos do site (módulos)
+
+- Aba "Recursos do site" em `/painel/configuracoes?aba=recursos` (`components/modules-card.tsx`):
+  um interruptor por módulo (Animais, Pedidos de adoção, Apadrinhamento; "Prestação de contas"
+  aparece como "Em breve"). Rotas `GET/PUT /modules` (`ModulesController`), com
+  `resgata_manage_settings`; o PUT só aceita módulos disponíveis (`Modules::choices()`).
+- Pedidos de adoção ficam travados sem Animais. A escolha é guardada como foi feita
+  (`Modules::chosen()`): religar Animais traz a adoção de volta.
+- Desligar não apaga dados. A troca agenda a recriação das regras de URL.
+- Ao salvar, o painel recarrega: menu, rotas e telas vêm de `window.resgataPainel.modules`.
+- No site, os blocos do módulo desligado não são registrados, os links para as páginas dele
+  somem (`Core\Links`, bloco `resgata-pet/links`, banner padrão) e as seções do tema marcadas
+  com `resgata-needs-<módulo>` saem (`Core\ModuleVisibility`, ver `themes/CLAUDE.md`).
+
 ## Configurações da protetora
 
 - Tela em `/painel/configuracoes`; dados na option `resgata_organization`.
@@ -54,8 +68,10 @@ coisa e continua só para o Administrador.
 
 ## Números da protetora
 
-Bloco `resgata-pet/impact` (template `impact.php`): animais resgatados, adoções, esperando um
-lar e padrinhos ativos, contados dos cadastros (filtro `resgata_impact_items`).
+Bloco `resgata-pet/impact` (`Settings\Impact`, template `impact.php`), registrado sempre:
+animais resgatados, adoções e esperando um lar (com o módulo Animais) e padrinhos ativos (o
+módulo de apadrinhamento os acrescenta pelo filtro `resgata_impact_items`). Sem número maior
+que zero, o bloco não aparece.
 
 ## Doação por Pix e página "Como ajudar"
 

@@ -12,6 +12,7 @@ use ResgataPet\Modules\Panel\Rest\AdoptionsController;
 use ResgataPet\Modules\Panel\Rest\AnimalsController;
 use ResgataPet\Modules\Panel\Rest\BannersController;
 use ResgataPet\Modules\Panel\Rest\DashboardController;
+use ResgataPet\Modules\Panel\Rest\ModulesController;
 use ResgataPet\Modules\Panel\Rest\SettingsController;
 use ResgataPet\Modules\Panel\Rest\SponsorshipController;
 
@@ -39,13 +40,14 @@ final class PanelModule {
 		( new DashboardController() )->register_routes();
 		( new SettingsController() )->register_routes();
 		( new BannersController() )->register_routes();
+		( new ModulesController() )->register_routes();
 
 		if ( Modules::is_enabled( 'animals' ) ) {
 			( new AnimalsController() )->register_routes();
+		}
 
-			if ( Modules::is_enabled( 'adoptions' ) ) {
-				( new AdoptionsController() )->register_routes();
-			}
+		if ( Modules::is_enabled( 'adoptions' ) ) {
+			( new AdoptionsController() )->register_routes();
 		}
 
 		if ( Modules::is_enabled( 'sponsorship' ) ) {

@@ -164,17 +164,36 @@ final class Banners {
 	 */
 	public static function fallback(): array {
 		$organization = Organization::get();
+		$animals      = Links::animals();
+		$default_text = '' !== $animals
+			? __( 'Resgatamos, cuidamos e encontramos novas famílias para animais que precisam de uma segunda chance.', 'resgata-pet' )
+			: __( 'Resgatamos e cuidamos de animais que precisam de uma segunda chance.', 'resgata-pet' );
+
+		// Botões das páginas que existem (o primeiro é o de destaque): adotar e apadrinhar.
+		$buttons = array();
+		if ( '' !== $animals ) {
+			$buttons[] = array(
+				'label' => __( 'Quero adotar', 'resgata-pet' ),
+				'url'   => $animals,
+			);
+		}
+		if ( '' !== Links::sponsorship() ) {
+			$buttons[] = array(
+				'label' => __( 'Quero ser padrinho', 'resgata-pet' ),
+				'url'   => Links::sponsorship(),
+			);
+		}
 
 		return array(
 			'image_id'      => 0,
 			'active'        => true,
 			'title'         => __( 'Juntos por mais', 'resgata-pet' ),
 			'highlight'     => __( 'vidas felizes', 'resgata-pet' ),
-			'text'          => '' !== $organization['tagline'] ? $organization['tagline'] : __( 'Resgatamos, cuidamos e encontramos novas famílias para animais que precisam de uma segunda chance.', 'resgata-pet' ),
-			'button_label'  => '' !== Links::animals() ? __( 'Quero adotar', 'resgata-pet' ) : '',
-			'button_url'    => Links::animals(),
-			'button2_label' => '' !== Links::sponsorship() ? __( 'Quero ser padrinho', 'resgata-pet' ) : '',
-			'button2_url'   => Links::sponsorship(),
+			'text'          => '' !== $organization['tagline'] ? $organization['tagline'] : $default_text,
+			'button_label'  => $buttons[0]['label'] ?? '',
+			'button_url'    => $buttons[0]['url'] ?? '',
+			'button2_label' => $buttons[1]['label'] ?? '',
+			'button2_url'   => $buttons[1]['url'] ?? '',
 		);
 	}
 

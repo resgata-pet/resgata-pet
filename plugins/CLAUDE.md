@@ -10,8 +10,8 @@ resgata-pet/
   resgata-pet.php         cabeçalho, constantes RESGATA_*, autoload, hooks de ativação
   uninstall.php           só apaga dados se "Manter os dados" estiver desmarcado
   src/Plugin.php          bootstrap (plugins_loaded): carrega os módulos ativos
-  src/Core/               Activator, Assets, Bindings, Capabilities, Encryption, Html, Icons,
-                          Links, Modules, Schema, TemplateLoader
+  src/Core/               Activator, Assets, BlockAssets, Bindings, Capabilities, Encryption,
+                          Html, Icons, Links, Modules, ModuleVisibility, Schema, TemplateLoader
   src/Modules/<Módulo>/   uma classe por responsabilidade
   blocks/<bloco>/         block.json (apiVersion 3) + render.php
   templates/              templates PHP neutros, sobrescrevíveis pelo tema
@@ -37,12 +37,31 @@ Antes de mexer em um módulo, leia o documento dele (pasta `docs/`, na raiz do r
 Previstos, ainda sem código: doações avulsas por Pix (Stripe Checkout) e prestação de contas
 (lançamentos, fechamento mensal, página pública, conciliação OFX).
 
-Os módulos ligam e desligam em Resgata Pet → Configurações (option `resgata_modules`). Para criar
-um módulo:
+Os módulos ligam e desligam no painel, em Configurações → aba "Recursos do site"
+(`components/modules-card.tsx`, rotas `GET/PUT /modules`, capability `resgata_manage_settings`), e
+no wp-admin em Resgata Pet → Configurações (só o Administrador). Os dois gravam a option
+`resgata_modules`. A protetora pode usar qualquer combinação: só animais e adoção, só
+apadrinhamento e Pix, tudo junto.
 
-1. Acrescente-o em `Core\Modules::all()` e em `AVAILABLE`.
+- `Modules::chosen()` é o que foi marcado; `Modules::enabled()` / `is_enabled()` é o que vale,
+  sem os módulos cujo requisito está desligado (`REQUIRES`: os pedidos de adoção precisam de
+  Animais). O código usa sempre `is_enabled()`.
+- O painel recebe os módulos em `window.resgataPainel.modules` (`hasModule()` em
+  `lib/config.ts`): menu, rotas, a tela inicial e as seções das Configurações acompanham. Ao
+  salvar os recursos, a página recarrega.
+- O que todo bloco usa (estilo `resgata-frontend`, script do editor com `window.resgataBlocks`,
+  categoria "Resgata Pet") fica em `Core\BlockAssets`, carregado sempre: nenhum módulo pode
+  depender de outro para os blocos dele funcionarem no editor.
+- Seções do tema que dependem de um módulo levam a classe `resgata-needs-<módulo>` ou
+  `resgata-without-<módulo>`; `Core\ModuleVisibility` as remove no site e ajusta as colunas da
+  grade (uso em `themes/CLAUDE.md`).
+
+Para criar um módulo:
+
+1. Acrescente-o em `Core\Modules::all()` e em `AVAILABLE` (e em `REQUIRES`, se depender de outro).
 2. Registre-o em `Plugin::boot()`.
-3. Registre as rotas dele em `PanelModule::register_rest_routes()`.
+3. Registre as rotas dele em `PanelModule::register_rest_routes()` e as telas do painel em
+   `resources/painel/index.tsx` e `components/layout.tsx`, atrás de `hasModule()`.
 4. Escreva o `docs/<módulo>.md` e a linha dele na tabela acima.
 
 ## Padrões PHP

@@ -7,9 +7,11 @@
 
 namespace ResgataPet\Modules\Settings;
 
+use ResgataPet\Core\BlockAssets;
 use ResgataPet\Core\Bindings;
 use ResgataPet\Core\Links;
 use ResgataPet\Core\Modules;
+use ResgataPet\Core\ModuleVisibility;
 use ResgataPet\Core\Schema;
 
 defined( 'ABSPATH' ) || exit;
@@ -35,7 +37,11 @@ final class SettingsModule {
 
 		// Ligações de blocos comuns (botões, parágrafos) aos links e dados do plugin, usadas pelos modelos do tema.
 		add_action( 'init', array( Bindings::class, 'register' ) );
-		add_action( 'init', array( $this, 'register_links_block' ), 21 );
+		add_action( 'init', array( $this, 'register_blocks' ), 21 );
+
+		// Arquivos comuns dos blocos e as seções do tema que dependem de um módulo.
+		BlockAssets::register();
+		ModuleVisibility::register();
 
 		// As páginas de apadrinhamento e "Como ajudar" podem ter sido criadas, alteradas ou apagadas.
 		add_action( 'save_post_page', array( Links::class, 'forget_pages' ) );
@@ -50,15 +56,11 @@ final class SettingsModule {
 	}
 
 	/**
-	 * Registra o bloco "Links do site".
+	 * Registra os blocos "Links do site" e "Números da protetora", que servem a qualquer combinação de módulos.
 	 */
-	public function register_links_block(): void {
-		if ( ! wp_style_is( 'resgata-frontend', 'registered' ) ) {
-			$src = current_theme_supports( 'resgata-pet' ) ? false : RESGATA_PLUGIN_URL . 'assets/css/frontend.css';
-			wp_register_style( 'resgata-frontend', $src, array(), RESGATA_VERSION );
-		}
-
+	public function register_blocks(): void {
 		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/links' );
+		register_block_type( RESGATA_PLUGIN_DIR . 'blocks/impact' );
 	}
 
 	/**
@@ -184,7 +186,7 @@ final class SettingsModule {
 	 * Campo com a lista de módulos.
 	 */
 	public function render_modules_field(): void {
-		$enabled = Modules::enabled();
+		$enabled = Modules::chosen();
 
 		echo '<fieldset><legend class="screen-reader-text">' . esc_html__( 'Módulos', 'resgata-pet' ) . '</legend>';
 

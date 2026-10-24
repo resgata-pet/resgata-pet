@@ -6,7 +6,7 @@
  */
 
 use ResgataPet\Core\Html;
-use ResgataPet\Modules\Animals\Frontend\Impact;
+use ResgataPet\Modules\Settings\Impact;
 
 defined( 'ABSPATH' ) || exit;
 

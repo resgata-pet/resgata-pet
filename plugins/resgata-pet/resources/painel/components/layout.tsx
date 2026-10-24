@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ArrowLeftIcon, ExternalLinkIcon, HandCoinsIcon, HeartHandshakeIcon, HomeIcon, ImagesIcon, PawPrintIcon, SettingsIcon, UserIcon } from 'lucide-react';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
-import { config } from '@/lib/config';
+import { config, hasModule } from '@/lib/config';
 
 interface NavItem {
 	to: string;
@@ -22,7 +22,7 @@ interface NavItem {
 
 const items: NavItem[] = [
 	{ to: '/', label: __( 'Início', 'resgata-pet' ), icon: HomeIcon, end: true },
-	{ to: '/animais', label: __( 'Animais', 'resgata-pet' ), icon: PawPrintIcon },
+	...( hasModule( 'animals' ) ? [ { to: '/animais', label: __( 'Animais', 'resgata-pet' ), icon: PawPrintIcon } ] : [] ),
 	...( config.user.canManageAdoptions
 		? [ { to: '/adocoes', label: __( 'Adoções', 'resgata-pet' ), icon: HeartHandshakeIcon, showNewAdoptions: true } ]
 		: [] ),

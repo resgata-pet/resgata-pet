@@ -2,10 +2,10 @@ import { useEffect, useId, useState, type ReactNode } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { __ } from '@wordpress/i18n';
 import { toast } from 'sonner';
-import { ChevronRightIcon, CreditCardIcon, ExternalLinkIcon, HeartHandshakeIcon, ImagesIcon, Loader2Icon } from 'lucide-react';
+import { ChevronRightIcon, CreditCardIcon, ExternalLinkIcon, HeartHandshakeIcon, ImagesIcon, Loader2Icon, PuzzleIcon } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
 import { api, errorMessage, type OrganizationSettings, type SettingsResponse } from '@/lib/api';
-import { config } from '@/lib/config';
+import { config, hasModule } from '@/lib/config';
 import { maskCnpj, maskPhone, type Mask } from '@/lib/masks';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,6 +18,7 @@ import { MaskedInput } from '@/components/masked-input';
 import { OptionSelect } from '@/components/option-select';
 import { PageHeader } from '@/components/page-header';
 import { StripeCard } from '@/components/stripe-card';
+import { ModulesCard } from '@/components/modules-card';
 
 /** Mostra telefones como (11) 91234-5678 (o servidor guarda só os dígitos) e o CNPJ pontuado. */
 function withMasks( settings: OrganizationSettings ): OrganizationSettings {
@@ -31,6 +32,8 @@ function withMasks( settings: OrganizationSettings ): OrganizationSettings {
 
 const TAB_GENERAL = 'protetora';
 const TAB_PAYMENTS = 'pagamentos';
+const TAB_MODULES = 'recursos';
+const TABS = [ TAB_GENERAL, TAB_PAYMENTS, TAB_MODULES ];
 
 function Section( { title, description, children }: { title: string; description?: string; children: ReactNode } ) {
 	return (
@@ -51,8 +54,8 @@ export function SettingsPage() {
 
 	// A aba aberta fica na URL (`?aba=pagamentos`), para o link direto e o botão "voltar" funcionarem.
 	const [ searchParams, setSearchParams ] = useSearchParams();
-	const tab = searchParams.get( 'aba' ) === TAB_PAYMENTS ? TAB_PAYMENTS : TAB_GENERAL;
-	const hasSponsorship = config.modules.includes( 'sponsorship' );
+	const tab = TABS.find( ( item ) => item === searchParams.get( 'aba' ) ) ?? TAB_GENERAL;
+	const hasSponsorship = hasModule( 'sponsorship' );
 
 	const query = useQuery( { queryKey: [ 'settings' ], queryFn: api.getSettings, staleTime: Infinity } );
 
@@ -171,7 +174,7 @@ export function SettingsPage() {
 
 			<Tabs
 				value={ tab }
-				onValueChange={ ( value ) => setSearchParams( value === TAB_PAYMENTS ? { aba: TAB_PAYMENTS } : {}, { replace: true } ) }
+				onValueChange={ ( value ) => setSearchParams( value === TAB_GENERAL ? {} : { aba: String( value ) }, { replace: true } ) }
 			>
 				<TabsList aria-label={ __( 'Seções das configurações', 'resgata-pet' ) }>
 					<TabsTrigger value={ TAB_GENERAL }>
@@ -181,6 +184,10 @@ export function SettingsPage() {
 					<TabsTrigger value={ TAB_PAYMENTS }>
 						<CreditCardIcon aria-hidden="true" />
 						{ hasSponsorship ? __( 'Pagamentos e apadrinhamento', 'resgata-pet' ) : __( 'Pagamentos', 'resgata-pet' ) }
+					</TabsTrigger>
+					<TabsTrigger value={ TAB_MODULES }>
+						<PuzzleIcon aria-hidden="true" />
+						{ __( 'Recursos do site', 'resgata-pet' ) }
 					</TabsTrigger>
 				</TabsList>
 
@@ -259,33 +266,35 @@ export function SettingsPage() {
 						{ text( 'neighborhood', __( 'Bairro ou região (opcional)', 'resgata-pet' ) ) }
 					</Section>
 
-					<Section
-						title={ __( 'Adoção', 'resgata-pet' ) }
-						description={ __( 'Usado pelo formulário de pedidos de adoção.', 'resgata-pet' ) }
-					>
-						{ text( 'adoption_email', __( 'E-mail que recebe os pedidos de adoção', 'resgata-pet' ), {
-							type: 'email',
-							inputMode: 'email',
-							hint: __( 'Não aparece no site.', 'resgata-pet' ),
-						} ) }
-						{ text( 'adoption_fee', __( 'Taxa de adoção', 'resgata-pet' ), {
-							placeholder: __( 'Ex.: não cobramos taxa', 'resgata-pet' ),
-						} ) }
-						<Field
-							className="md:col-span-2"
-							label={ __( 'Regras e requisitos para adotar', 'resgata-pet' ) }
-							htmlFor={ id( 'adoption_rules' ) }
+					{ hasModule( 'adoptions' ) && (
+						<Section
+							title={ __( 'Adoção', 'resgata-pet' ) }
+							description={ __( 'Usado pelo formulário de pedidos de adoção.', 'resgata-pet' ) }
 						>
-							<Textarea
-								id={ id( 'adoption_rules' ) }
-								rows={ 5 }
-								className="bg-card text-base"
-								value={ form.adoption_rules }
-								placeholder={ __( 'Ex.: ser maior de 18 anos, telar janelas, aceitar visita antes da adoção…', 'resgata-pet' ) }
-								onChange={ ( event ) => set( 'adoption_rules', event.target.value ) }
-							/>
-						</Field>
-					</Section>
+							{ text( 'adoption_email', __( 'E-mail que recebe os pedidos de adoção', 'resgata-pet' ), {
+								type: 'email',
+								inputMode: 'email',
+								hint: __( 'Não aparece no site.', 'resgata-pet' ),
+							} ) }
+							{ text( 'adoption_fee', __( 'Taxa de adoção', 'resgata-pet' ), {
+								placeholder: __( 'Ex.: não cobramos taxa', 'resgata-pet' ),
+							} ) }
+							<Field
+								className="md:col-span-2"
+								label={ __( 'Regras e requisitos para adotar', 'resgata-pet' ) }
+								htmlFor={ id( 'adoption_rules' ) }
+							>
+								<Textarea
+									id={ id( 'adoption_rules' ) }
+									rows={ 5 }
+									className="bg-card text-base"
+									value={ form.adoption_rules }
+									placeholder={ __( 'Ex.: ser maior de 18 anos, telar janelas, aceitar visita antes da adoção…', 'resgata-pet' ) }
+									onChange={ ( event ) => set( 'adoption_rules', event.target.value ) }
+								/>
+							</Field>
+						</Section>
+					) }
 
 					<Section
 						title={ __( 'Privacidade', 'resgata-pet' ) }
@@ -415,6 +424,10 @@ export function SettingsPage() {
 						</Section>
 					) }
 				</TabsContent>
+
+				<TabsContent value={ TAB_MODULES } className="flex flex-col gap-6">
+					<ModulesCard />
+				</TabsContent>
 			</Tabs>
 
 			{ /* O formulário é só a barra de salvar, sempre à vista (acima da navegação inferior no celular):
@@ -422,6 +435,7 @@ export function SettingsPage() {
 			     próprio formulário, pode ficar no meio da aba. */ }
 			<form
 				id={ formId }
+				hidden={ tab === TAB_MODULES }
 				noValidate
 				className="bg-background/95 sticky bottom-16 z-20 mt-6 flex justify-end border-t py-4 backdrop-blur md:bottom-0"
 				onSubmit={ ( event ) => {

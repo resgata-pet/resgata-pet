@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-15T13:14:33+00:00\n"
+"POT-Creation-Date: 2026-10-22T17:37:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: resgata-pet\n"
@@ -17,9 +17,9 @@ msgstr ""
 #. Plugin Name of the plugin
 #. Author of the plugin
 #: resgata-pet.php
-#: src/Modules/Animals/Frontend/Blocks.php:124
-#: src/Modules/Settings/SettingsModule.php:91
-#: src/Modules/Settings/SettingsModule.php:92
+#: src/Core/BlockAssets.php:90
+#: src/Modules/Settings/SettingsModule.php:93
+#: src/Modules/Settings/SettingsModule.php:94
 msgid "Resgata Pet"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr ""
 msgid "© %1$s %2$s. Todos os direitos reservados."
 msgstr ""
 
-#: src/Core/Modules.php:50
+#: src/Core/Modules.php:57
 #: src/Modules/Animals/PostType.php:24
 #: src/Modules/Animals/PostType.php:26
 #: src/Modules/Animals/PostType.php:37
@@ -129,35 +129,35 @@ msgstr ""
 msgid "Animais"
 msgstr ""
 
-#: src/Core/Modules.php:51
+#: src/Core/Modules.php:58
 msgid "Cadastro dos animais resgatados, listagem pública com filtros e página individual de cada animal."
 msgstr ""
 
-#: src/Core/Modules.php:55
+#: src/Core/Modules.php:63
 #: src/Modules/Adoptions/PostType.php:58
 #: build/painel/index.js:11
 #: build/painel/index.js:15
 msgid "Pedidos de adoção"
 msgstr ""
 
-#: src/Core/Modules.php:56
+#: src/Core/Modules.php:64
 msgid "Questionário público de adoção, enviado pelo WhatsApp, e fila interna de pedidos. Precisa do módulo Animais."
 msgstr ""
 
-#: src/Core/Modules.php:60
+#: src/Core/Modules.php:69
 #: build/painel/index.js:19
 msgid "Apadrinhamento"
 msgstr ""
 
-#: src/Core/Modules.php:61
+#: src/Core/Modules.php:70
 msgid "Planos mensais de apadrinhamento pagos com cartão pela Stripe, com contador de padrinhos no site."
 msgstr ""
 
-#: src/Core/Modules.php:65
+#: src/Core/Modules.php:75
 msgid "Prestação de contas"
 msgstr ""
 
-#: src/Core/Modules.php:66
+#: src/Core/Modules.php:76
 msgid "Receitas, despesas e página pública de transparência."
 msgstr ""
 
@@ -608,7 +608,7 @@ msgid "Teste de FeLV"
 msgstr ""
 
 #: src/Modules/Animals/Frontend/DetailsRenderer.php:343
-#: src/Modules/Settings/Banners.php:176
+#: src/Modules/Settings/Banners.php:182
 #: templates/sponsorship-plans.php:99
 msgid "Quero ser padrinho"
 msgstr ""
@@ -619,22 +619,6 @@ msgstr ""
 
 #: src/Modules/Animals/Frontend/DetailsRenderer.php:360
 msgid "Outras formas de ajudar"
-msgstr ""
-
-#: src/Modules/Animals/Frontend/Impact.php:57
-msgid "Animal resgatado"
-msgid_plural "Animais resgatados"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/Modules/Animals/Frontend/Impact.php:68
-msgid "Adoção realizada"
-msgid_plural "Adoções realizadas"
-msgstr[0] ""
-msgstr[1] ""
-
-#: src/Modules/Animals/Frontend/Impact.php:74
-msgid "Esperando um lar"
 msgstr ""
 
 #: src/Modules/Animals/Frontend/ListRenderer.php:247
@@ -1099,21 +1083,41 @@ msgstr ""
 msgid "Acesso negado"
 msgstr ""
 
-#: src/Modules/Settings/Banners.php:171
-msgid "Juntos por mais"
-msgstr ""
-
-#: src/Modules/Settings/Banners.php:172
-msgid "vidas felizes"
-msgstr ""
-
-#: src/Modules/Settings/Banners.php:173
+#: src/Modules/Settings/Banners.php:169
 msgid "Resgatamos, cuidamos e encontramos novas famílias para animais que precisam de uma segunda chance."
 msgstr ""
 
-#: src/Modules/Settings/Banners.php:174
+#: src/Modules/Settings/Banners.php:170
+msgid "Resgatamos e cuidamos de animais que precisam de uma segunda chance."
+msgstr ""
+
+#: src/Modules/Settings/Banners.php:176
 #: templates/adoption-form.php:48
 msgid "Quero adotar"
+msgstr ""
+
+#: src/Modules/Settings/Banners.php:190
+msgid "Juntos por mais"
+msgstr ""
+
+#: src/Modules/Settings/Banners.php:191
+msgid "vidas felizes"
+msgstr ""
+
+#: src/Modules/Settings/Impact.php:80
+msgid "Animal resgatado"
+msgid_plural "Animais resgatados"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Modules/Settings/Impact.php:91
+msgid "Adoção realizada"
+msgid_plural "Adoções realizadas"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Modules/Settings/Impact.php:97
+msgid "Esperando um lar"
 msgstr ""
 
 #: src/Modules/Settings/Organization.php:71
@@ -1149,55 +1153,55 @@ msgstr ""
 msgid "Qualquer valor ajuda a pagar ração, vacinas e consultas dos resgatados. A doação cai na hora, direto na conta da protetora."
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:102
+#: src/Modules/Settings/SettingsModule.php:104
 msgid "Configurações do Resgata Pet"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:103
-#: src/Modules/Settings/SettingsModule.php:257
+#: src/Modules/Settings/SettingsModule.php:105
+#: src/Modules/Settings/SettingsModule.php:259
 #: build/painel/index.js:1
 #: build/painel/index.js:19
 msgid "Configurações"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:138
+#: src/Modules/Settings/SettingsModule.php:140
 msgid "Módulos ativos"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:140
+#: src/Modules/Settings/SettingsModule.php:142
 msgid "Ligue somente o que a sua protetora vai usar. Desligar um módulo não apaga os dados dele."
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:147
-#: src/Modules/Settings/SettingsModule.php:189
+#: src/Modules/Settings/SettingsModule.php:149
+#: src/Modules/Settings/SettingsModule.php:191
 msgid "Módulos"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:155
+#: src/Modules/Settings/SettingsModule.php:157
 msgid "Dados"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:162
+#: src/Modules/Settings/SettingsModule.php:164
 msgid "Ao excluir o plugin"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:199
+#: src/Modules/Settings/SettingsModule.php:201
 msgid "(em breve)"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:217
+#: src/Modules/Settings/SettingsModule.php:219
 msgid "Manter os dados (animais, fotos e configurações)"
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:218
+#: src/Modules/Settings/SettingsModule.php:220
 msgid "Recomendado. Se você desmarcar, todos os dados do Resgata Pet serão apagados para sempre quando o plugin for excluído."
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:227
+#: src/Modules/Settings/SettingsModule.php:229
 msgid "Você não tem permissão para acessar esta página."
 msgstr ""
 
-#: src/Modules/Settings/SettingsModule.php:238
+#: src/Modules/Settings/SettingsModule.php:240
 #: build/painel/index.js:19
 msgid "Salvar configurações"
 msgstr ""
@@ -2006,8 +2010,16 @@ msgstr ""
 msgid "Voltar ao WordPress"
 msgstr ""
 
+#: build/painel/index.js:1
+msgid "Adoções e padrinhos"
+msgstr ""
+
 #: build/painel/index.js:2
 msgid "Veja como estão os resgatados e o que precisa da sua atenção."
+msgstr ""
+
+#: build/painel/index.js:2
+msgid "Veja o resumo da protetora e o que precisa da sua atenção."
 msgstr ""
 
 #: build/painel/index.js:2
@@ -2030,10 +2042,6 @@ msgstr ""
 
 #: build/painel/index.js:2
 msgid "Já adotados"
-msgstr ""
-
-#: build/painel/index.js:2
-msgid "Adoções e padrinhos"
 msgstr ""
 
 #: build/painel/index.js:2
@@ -2087,6 +2095,19 @@ msgstr ""
 
 #: build/painel/index.js:4
 msgid "WhatsApp, redes sociais, chave Pix e regras de adoção."
+msgstr ""
+
+#: build/painel/index.js:4
+msgid "WhatsApp, redes sociais e chave Pix."
+msgstr ""
+
+#: build/painel/index.js:4
+#: build/painel/index.js:19
+msgid "Recursos do site"
+msgstr ""
+
+#: build/painel/index.js:4
+msgid "Escolha o que a protetora usa: animais, pedidos de adoção, apadrinhamento."
 msgstr ""
 
 #: build/painel/index.js:4
@@ -2893,6 +2914,27 @@ msgstr ""
 
 #: build/painel/index.js:19
 msgid "Endereço para cadastrar na Stripe (webhook):"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Escolha o que a sua protetora usa. O site e o painel mostram só o que estiver ligado. Desligar não apaga nada: os cadastros voltam quando você ligar de novo."
+msgstr ""
+
+#: build/painel/index.js:19
+#, js-format
+msgid "Ligue \"%s\" para usar"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Em breve"
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Ao salvar, o painel recarrega com os menus novos."
+msgstr ""
+
+#: build/painel/index.js:19
+msgid "Salvar recursos"
 msgstr ""
 
 #: build/painel/index.js:19
