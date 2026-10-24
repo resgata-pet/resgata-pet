@@ -4,7 +4,7 @@
  * Slug: resgata-tema/home-animais
  * Categories: resgata-tema, featured
  * Keywords: animais, adoção, destaque
- * Description: Quatro animais disponíveis para adoção, com link para ver todos.
+ * Description: Quatro animais disponíveis para adoção, com link para ver todos. Some do site com o módulo Animais desligado.
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
@@ -15,8 +15,8 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide">
+<!-- wp:group {"align":"wide","className":"resgata-needs-animals","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide resgata-needs-animals">
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
 	<div class="wp-block-group">
 		<!-- wp:group {"style":{"spacing":{"blockGap":"0.35rem"}},"layout":{"type":"default"}} -->

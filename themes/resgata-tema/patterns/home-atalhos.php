@@ -4,7 +4,7 @@
  * Slug: resgata-tema/home-atalhos
  * Categories: resgata-tema
  * Keywords: atalhos, adoção, padrinho, doação
- * Description: Quatro atalhos logo abaixo dos banners: adotar, doar, apadrinhar e falar com a protetora.
+ * Description: Quatro atalhos logo abaixo dos banners: adotar, doar, apadrinhar e falar com a protetora. Os de adotar e apadrinhar somem com o módulo desligado, e a grade fica com uma coluna por atalho.
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
@@ -17,8 +17,8 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"align":"wide","layout":{"type":"grid","columnCount":4,"minimumColumnWidth":"14rem"}} -->
 <div class="wp-block-group alignwide">
-	<!-- wp:group {"className":"is-style-resgata-icon-paw","layout":{"type":"default"}} -->
-	<div class="wp-block-group is-style-resgata-icon-paw">
+	<!-- wp:group {"className":"is-style-resgata-icon-paw resgata-needs-animals","layout":{"type":"default"}} -->
+	<div class="wp-block-group is-style-resgata-icon-paw resgata-needs-animals">
 		<!-- wp:heading {"fontSize":"medium"} -->
 		<h2 class="wp-block-heading has-medium-font-size"><?php esc_html_e( 'Adoção responsável', 'resgata-tema' ); ?></h2>
 		<!-- /wp:heading -->
@@ -57,8 +57,8 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:group {"className":"is-style-resgata-icon-hand-heart","layout":{"type":"default"}} -->
-	<div class="wp-block-group is-style-resgata-icon-hand-heart">
+	<!-- wp:group {"className":"is-style-resgata-icon-hand-heart resgata-needs-sponsorship","layout":{"type":"default"}} -->
+	<div class="wp-block-group is-style-resgata-icon-hand-heart resgata-needs-sponsorship">
 		<!-- wp:heading {"fontSize":"medium"} -->
 		<h2 class="wp-block-heading has-medium-font-size"><?php esc_html_e( 'Seja um padrinho', 'resgata-tema' ); ?></h2>
 		<!-- /wp:heading -->

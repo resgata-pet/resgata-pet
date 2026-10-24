@@ -6,7 +6,7 @@
  * Keywords: ajudar, doar, doação, pix, padrinho, adotar
  * Block Types: core/post-content
  * Post Types: page
- * Description: Página completa com as formas de ajudar: doação por Pix (com QR Code), apadrinhamento e adoção. Use com o modelo "Página sem título".
+ * Description: Página completa com as formas de ajudar: doação por Pix (com QR Code), apadrinhamento e adoção. As seções de apadrinhamento e de adoção somem com o módulo desligado. Use com o modelo "Página sem título".
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
 		<!-- /wp:heading -->
 
 		<!-- wp:paragraph {"fontSize":"large"} -->
-		<p class="has-large-font-size"><?php esc_html_e( 'Todo o trabalho de resgate depende de quem acredita nele. Você pode doar qualquer valor por Pix, ajudar todo mês como padrinho ou dar um lar a um dos nossos resgatados.', 'resgata-tema' ); ?></p>
+		<p class="has-large-font-size"><?php esc_html_e( 'Todo o trabalho de resgate depende de quem acredita nele. Escolha abaixo o jeito de ajudar que combina com você: cada gesto faz diferença.', 'resgata-tema' ); ?></p>
 		<!-- /wp:paragraph -->
 
 		<!-- wp:buttons -->

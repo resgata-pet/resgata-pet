@@ -4,7 +4,7 @@
  * Slug: resgata-tema/gatos-em-destaque
  * Categories: resgata-tema, featured
  * Keywords: gatos, adoção, animais, destaque
- * Description: Três gatos disponíveis para adoção, com botão para ver todos os animais.
+ * Description: Três gatos disponíveis para adoção, com botão para ver todos os animais. Some do site com o módulo Animais desligado.
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
@@ -15,8 +15,8 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<!-- wp:group {"align":"full","backgroundColor":"accent-5","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull has-accent-5-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
+<!-- wp:group {"align":"full","className":"resgata-needs-animals","backgroundColor":"accent-5","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignfull resgata-needs-animals has-accent-5-background-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
 	<!-- wp:heading {"textAlign":"center"} -->
 	<h2 class="wp-block-heading has-text-align-center"><?php esc_html_e( 'Gatos em destaque', 'resgata-tema' ); ?></h2>
 	<!-- /wp:heading -->

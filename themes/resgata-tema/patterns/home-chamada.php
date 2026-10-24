@@ -4,7 +4,7 @@
  * Slug: resgata-tema/home-chamada
  * Categories: resgata-tema, call-to-action
  * Keywords: padrinho, apadrinhar, ajudar, chamada
- * Description: Faixa que fecha a página convidando a apadrinhar.
+ * Description: Faixa que fecha a página convidando a apadrinhar. Some do site com o módulo Apadrinhamento desligado.
  * Viewport Width: 1400
  *
  * Marcação de blocos pura: os links dos botões vêm das ligações de blocos do
@@ -15,8 +15,8 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<!-- wp:group {"align":"wide","className":"is-style-resgata-band-hug","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
-<div class="wp-block-group alignwide is-style-resgata-band-hug">
+<!-- wp:group {"align":"wide","className":"is-style-resgata-band-hug resgata-needs-sponsorship","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+<div class="wp-block-group alignwide is-style-resgata-band-hug resgata-needs-sponsorship">
 	<!-- wp:group {"style":{"spacing":{"blockGap":"0.5rem"},"layout":{"selfStretch":"fill"}},"layout":{"type":"default"}} -->
 	<div class="wp-block-group">
 		<!-- wp:heading {"className":"is-style-text-subtitle"} -->

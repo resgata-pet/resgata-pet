@@ -25,8 +25,12 @@ defined( 'ABSPATH' ) || exit;
 		<h1 class="wp-block-heading is-style-text-display"><?php esc_html_e( 'Fale com a gente', 'resgata-tema' ); ?><br><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-accent-3-color"><?php esc_html_e( 'vamos conversar!', 'resgata-tema' ); ?></mark></h1>
 		<!-- /wp:heading -->
 
-		<!-- wp:paragraph {"fontSize":"large"} -->
-		<p class="has-large-font-size"><?php esc_html_e( 'Quer adotar, ajudar ou tirar uma dúvida? Escolha o jeito mais fácil para você. Respondemos assim que possível.', 'resgata-tema' ); ?></p>
+		<!-- wp:paragraph {"className":"resgata-needs-adoptions","fontSize":"large"} -->
+		<p class="resgata-needs-adoptions has-large-font-size"><?php esc_html_e( 'Quer adotar, ajudar ou tirar uma dúvida? Escolha o jeito mais fácil para você. Respondemos assim que possível.', 'resgata-tema' ); ?></p>
+		<!-- /wp:paragraph -->
+
+		<!-- wp:paragraph {"className":"resgata-without-adoptions","fontSize":"large"} -->
+		<p class="resgata-without-adoptions has-large-font-size"><?php esc_html_e( 'Quer ajudar ou tirar uma dúvida? Escolha o jeito mais fácil para você. Respondemos assim que possível.', 'resgata-tema' ); ?></p>
 		<!-- /wp:paragraph -->
 	</div>
 	<!-- /wp:group -->

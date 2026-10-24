@@ -163,8 +163,8 @@ defined( 'ABSPATH' ) || exit;
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide">
+<!-- wp:group {"align":"wide","className":"resgata-needs-animals","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide resgata-needs-animals">
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"bottom"}} -->
 	<div class="wp-block-group">
 		<!-- wp:group {"style":{"spacing":{"blockGap":"0.35rem"}},"layout":{"type":"default"}} -->

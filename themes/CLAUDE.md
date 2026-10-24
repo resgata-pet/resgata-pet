@@ -27,6 +27,15 @@ isso:
   - Listas de links (rodapé) usam o bloco `resgata-pet/links`, que só lista as páginas que
     existem.
   - O editor mostra os valores reais (`resgataBlocks.bindings`).
+- **Seções que dependem de um módulo do plugin** levam uma classe em "Avançado → Classes CSS
+  adicionais", e o plugin (`Core\ModuleVisibility`) as tira do site quando não valem:
+  `resgata-needs-animals`, `resgata-needs-adoptions`, `resgata-needs-sponsorship` (só com o
+  módulo ligado) e `resgata-without-<módulo>` (só com ele desligado, para um texto
+  alternativo). Numa grade com colunas fixas, as colunas acompanham os itens que sobram. O
+  editor mostra tudo. Hoje: a seção de animais (`home-animais`, `gatos-em-destaque` e a de
+  `pagina-apadrinhamento`), a faixa `home-chamada`, os atalhos de adotar e apadrinhar
+  (`home-atalhos`), o texto e o botão "Ver os animais" da 404 e o texto da chamada de
+  `pagina-contato`. Seção nova que fale de animais, adoção ou padrinhos ganha a classe.
 - **Aparência no `theme.json` e em estilos de bloco**, em vez de classes soltas. Cores, raios
   (`settings.border.radiusSizes`), sombras, botões (inclusive o contornado), campos de
   formulário, título do site e menu ficam no `theme.json`. Os estilos de bloco ("Cartão",
